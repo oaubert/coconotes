@@ -45,6 +45,9 @@ class Resource(Element):
                              blank=True,
                              max_length=250)
 
+    license = models.ForeignKey(License,
+                                null=True)
+
     # FIXME: to clarify
     # metadata = ???
 
@@ -71,8 +74,6 @@ class Video(Resource):
     length = models.FloatField(_("Length"),
                                  help_text=_("Video length in seconds"),
                                  default=0)
-    license = models.ForeignKey(License,
-                                null=True)
     slides = models.ForeignKey(Resource,
                                null=True)
 
