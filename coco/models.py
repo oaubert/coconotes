@@ -40,6 +40,15 @@ class Element(models.Model):
 
     tags = TaggableManager(blank=True)
 
+class License(models.Model):
+    title = models.CharField(_("Title"),
+                             blank=True,
+                             max_length=250)
+
+    url = models.URLField(_("URL"),
+                             blank=True,
+                             max_length=250)
+
 class Resource(Element):
     url = models.URLField(_("URL"),
                              blank=True,
@@ -50,15 +59,6 @@ class Resource(Element):
 
     # FIXME: to clarify
     # metadata = ???
-
-class License(models.Model):
-    title = models.CharField(_("Title"),
-                             blank=True,
-                             max_length=250)
-
-    url = models.URLField(_("URL"),
-                             blank=True,
-                             max_length=250)
 
 class Course(Element):
     syllabus = models.TextField(_("Syllabus"),
@@ -75,7 +75,8 @@ class Video(Resource):
                                  help_text=_("Video length in seconds"),
                                  default=0)
     slides = models.ForeignKey(Resource,
-                               null=True)
+                               null=True,
+                               related_name="source_video")
 
 class UserContent(Element):
     syllabus = models.TextField(_("Content"),
