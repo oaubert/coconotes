@@ -1,5 +1,6 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 from django.views.generic import TemplateView, ListView, DetailView
+import coco.views as views
 from .models import Course
 
 urlpatterns = patterns('',
@@ -20,12 +21,5 @@ urlpatterns = patterns('',
                                                       url(r'^video/(?P<pk>[\d\w]+)/$',
                                                           views.VideoDetail.as_view(),
                                                           name='api-video-detail'),
-                                                      url(r'^tag/$',
-                                                          views.taglist_as_json,
-                                                          name='api-tag-list'),
-                                                      url(r'^tag/(?P<kw>.+)$',
-                                                          views.tag_as_json,
-                                                          name='api-tag-detail'),
                                                       )))
                        )
-)
