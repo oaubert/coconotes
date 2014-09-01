@@ -1,0 +1,172 @@
+*, :before, :after {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+html, body {
+    background-color: white;
+    margin: 0px;
+    padding: 0px;
+    font-family: sans-serif;
+}
+
+#header {
+    height: 6em;
+    background-color: #9db8a5;
+}
+#content {
+    width: 100%;
+}
+#main:before {
+    clear: both;
+}
+#main {
+    margin: 2px 3em 0px 3em;
+}
+#main:after {
+    clear: both;
+}
+
+/* Header content */
+#header .logo {
+    float: left;
+    width: 20%;
+    margin-left: 3em;
+    margin-top: 1em;
+    vertical-align: bottom;
+}
+#header .logo img {
+    width: 100%;
+    max-width: 222px;
+    vertical-align: top;
+}
+
+#header form {
+    margin-top: 2em;
+    line-height: 2em;
+    float: left;
+    width: 45%;
+    display: inline-block;
+    vertical-align: bottom;
+}
+#header form input {
+    border-radius: 5px;
+    height: 2em;
+}
+#header .searchfield {
+    width: 80%;
+}
+#header searchbutton {
+    width: 16%;
+    min-width: 5em;
+}
+#header logininfo {
+    display: inline-block;
+    line-height: 2em;
+    margin-right: 3em;
+    margin-top: 2em;
+    vertical-align: bottom;
+    float: right;
+    width: 19%;
+    text-align: right;
+    color: #5f7165;
+}
+
+#footer {
+    
+}
+
+.column {
+    float: left;
+    padding: 5px;
+}
+
+.column3 {
+    width: 25%;
+}
+
+.column4 {
+    width: 33%;
+}
+
+.column6 {
+    width: 50%;
+}
+
+.column8 {
+    width: 66%;
+}
+
+.column h1 {
+    font-size: 110%;
+    width: 100%;
+    background-color: #9db8a5;
+    font-weight: normal;
+    line-height: 2em;
+    padding-left: .5em;
+}
+
+.result_count {
+    font-size: 80%;
+}
+
+.capsule {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    clear: both;
+    overflow-y: hidden;
+}
+
+.fixedheight {
+    height: 200px;
+    max-height: 200px;
+}
+
+.capsule img {
+    width: 50%;
+    float: left;
+    padding-right: .5em;
+}
+
+.capsule h4 {
+    font-size: 100%;
+    color: #312891;
+}
+
+.capsule_description {
+}
+
+.profile_avatar {
+    width: 20%;
+    min-width: 48px;
+    max-width: 320px;
+    float: left;
+    padding-right: .5em;
+}
+
+.capsule .thumbnail_mini {
+    width: 20%;
+    min-width: 48px;
+    max-width: 128px;
+    float: left;
+    padding-right: .5em;
+}
+
+.group_profile {
+    padding-top: 1em;
+    text-align: center;
+}
+
+.group_profile img {
+    width: 50%;
+}
+
+.group_profile button {
+    padding: .8em;
+    border-radius: 5px;
+    font-size: 110%;
+    margin-top: 2em;
+    margin-right: 1em;
+    margin-left: 1em;
+}
