@@ -67,7 +67,7 @@ class Module(Element):
 class Activity(Element):
     pass
 
-class Video(Element):
+class Video(Resource):
     length = models.FloatField(_("Length"),
                                  help_text=_("Video length in seconds"),
                                  default=0)
