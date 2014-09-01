@@ -65,12 +65,14 @@ class Course(Element):
                                 blank=True)
 
 class Module(Element):
-    pass
+    course = models.ForeignKey(Course)
 
 class Activity(Element):
-    pass
+    module = models.ForeignKey(Module)
 
 class Video(Resource):
+    activity = models.ForeignKey(Activity,
+                                 null=True)
     length = models.FloatField(_("Length"),
                                  help_text=_("Video length in seconds"),
                                  default=0)
