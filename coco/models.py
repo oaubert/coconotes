@@ -9,14 +9,14 @@ class Element(models.Model):
     class Meta:
         abstract = True
 
-    creator = models.ForeignKey(User, related_name='%(class)s_created_by')
+    creator = models.ForeignKey(User, related_name='created_%(class)s')
 
     created = models.DateTimeField(_('Creation date'),
                                    help_text=_('Element creation date'),
                                    null=True, editable=True,
                                    auto_now_add=True)
 
-    contributor = models.ForeignKey(User, related_name='%(class)s_modified_by')
+    contributor = models.ForeignKey(User, related_name='modified_%(class)s')
 
     modified = models.DateTimeField(_('Modification date'),
                                     help_text=_('Element modification date'),
