@@ -41,6 +41,8 @@ class Element(models.Model):
     tags = TaggableManager(blank=True)
 
 class License(models.Model):
+    slug = models.SlugField(max_length=16)
+
     title = models.CharField(_("Title"),
                              blank=True,
                              max_length=250)
@@ -48,6 +50,8 @@ class License(models.Model):
     url = models.URLField(_("URL"),
                              blank=True,
                              max_length=250)
+
+    thumbnail = ImageField(upload_to='thumbnails')
 
 class Resource(Element):
     url = models.URLField(_("URL"),
