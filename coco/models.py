@@ -95,7 +95,7 @@ class Annotation(UserContent):
     end = models.FloatField(_("End"),
                               help_text=_("Annotation end time (in seconds)"),
                               default=0)
-    resource = models.ForeignKey(Resource)
+    video = models.ForeignKey(Video)
     category = models.CharField(_("Category"),
                                 max_length=64,
                                 help_text=_("Category (question, suggestion...)"),
