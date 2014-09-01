@@ -9,14 +9,14 @@ class Element(models.Model):
     class Meta:
         abstract = True
 
-    creator = models.ForeignKey(User)
+    creator = models.ForeignKey(User, related_name='%(class)s_created_by')
 
     created = models.DateTimeField(_('Creation date'),
                                    help_text=_('Element creation date'),
                                    null=True, editable=True,
                                    auto_now_add=True)
 
-    contributor = models.ForeignKey(User)
+    contributor = models.ForeignKey(User, related_name='%(class)s_modified_by')
 
     modified = models.DateTimeField(_('Modification date'),
                                     help_text=_('Element modification date'),
@@ -24,7 +24,7 @@ class Element(models.Model):
                                     auto_now_add=True)
 
     state = models.CharField(_("State"),
-                             help_text=_("State (active, draft, published)"),
+                             max_length=16,
                              blank=True, default="draft")
 
     title = models.CharField(_("Title"),
