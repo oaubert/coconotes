@@ -69,6 +69,10 @@ class Resource(Element):
     # metadata = ???
 
 class Course(Element):
+    category = models.CharField(_("Catégorie"),
+                                blank=True,
+                                max_length=20)
+                            
     syllabus = models.TextField(_("Syllabus"),
                                 blank=True)
 
