@@ -30,6 +30,10 @@ class Element(models.Model):
     title = models.CharField(_("Title"),
                              blank=True,
                              max_length=250)
+    
+    shorttitle = models.CharField(_("Shorttitle"),
+                                  blank=True,
+                                  max_length=16)
 
     description = models.TextField(_("Description"),
                                    blank=True)
