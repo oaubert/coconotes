@@ -776,9 +776,6 @@ label:hover:before {
 .minicapsule .content {
     margin: 20px;
 }
-.minicapsule.double {
-    width: 48%;
-}
 .minicapsule img {
     width: 100%;
     max-height: 100px;
@@ -786,7 +783,10 @@ label:hover:before {
     margin-bottom: 1em;
 }
 
-.minicapsule.double img {
+.la_une .minicapsule:nth-of-type(1) {
+    width: 48%;
+}
+.la_une .minicapsule:nth-of-type(1) img {
     max-height: 212px;
 }
 
