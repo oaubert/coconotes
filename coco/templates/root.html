@@ -41,66 +41,33 @@
     <section class="la_une">
       <h1>À la une</h1>
 
-      <article class="minicapsule fixedheight">
-        <img src="thumbnails/speech.jpg">
-        <div class="content">
-          <h5>Français langue étrangère</h5>
-          <a href="player.html"><h4>Les pronoms directs</h4></a>
-          <span class="description">Le sljljks sdops lskjs  sbnq bsijq eoihsak khkamb oah j akh jhjm asfdhgbkjshdfsdkdfkj </span>
-          <span class="detail">Cours de <span class="result_count">9</span> vidéos</span>
-        </div>
-      </article>
 
+      {% for item in une_items %}
       <article class="minicapsule fixedheight">
-        <img src="thumbnails/biologie.jpg">
+        <img src="{{ item.thumbnail }}">
         <div class="content">
-          <h5>Psychologie</h5>
-          <h4><a href="player.html">Psychologie: une introduction</a></h4>
-          <span class="detail">Cours de <span class="result_count">22</span> vidéos</span>
+          <h5>{{ item.title }}</h5>
+          <a href="player.html"><h4>{{ item.subtitle }}</h4></a>
+          <span class="description">{{ item.description|truncatechars_html:40 }}</span>
+          <span class="detail">{{ item.element_description }}</span>
         </div>
       </article>
-
-      <article class="minicapsule fixedheight">
-        <img src="thumbnails/fle.jpg">
-        <div class="content">
-          <h5>Management</h5>
-          <h4><a href="player.html">La gestion de projets</a></h4>
-          <span class="detail">Conférence-débat de <span class="result_count">2</span> vidéos</span>
-        </div>
-      </article>
+      {% endfor %}
 
     </section>
 
     <section class="last_videos">
       <h2>Les dernières vidéos</h2>
 
-      <article class="minicapsule microcapsule">
-        <img src="thumbnails/fle.jpg">
-        <div class="content">
-          <h4><a href="player.html">FLE - la grammaire</a></h4>
-        </div>
-      </article>
 
+      {% for items in last_videos %}
       <article class="minicapsule microcapsule">
-        <img src="thumbnails/biologie.jpg">
+        <img src="{{ item.thumbnail }}">
         <div class="content">
-          <h4><a href="player.html">Introduction à la bioinformatique</a></h4>
+          <h4><a href="{{ item.absolute_url }}">{{ item.title }}</a></h4>
         </div>
       </article>
-
-      <article class="minicapsule microcapsule">
-        <img src="thumbnails/adn_info.jpg">
-        <div class="content">
-          <h4><a href="player.html">Notre code génétique</a></h4>
-        </div>
-      </article>
-
-      <article class="minicapsule microcapsule">
-        <img src="thumbnails/solutions.jpg">
-        <div class="content">
-          <h4><a href="player.html">La gestion de projets</a></h4>
-        </div>
-      </article>
+      {% endfor %}
 
     </section>
 
