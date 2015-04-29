@@ -17,7 +17,7 @@
         <div id="logo">
           <a href="/"><img src="{% static "img/logo_coconotes.svg" %}" /></a>
         </div>
-        <div id="profilemenu"><a href="profile.html"><span id="loginname" class="profilemenu_item">Marie</span></a><a href="group.html"><span id="mygroups" class="profilemenu_item">Mes groupes</span></a></div>
+        <div id="profilemenu"><a href="profile.html"><span id="loginname" class="profilemenu_item">{{ username }}</span></a><a href="group.html"><span id="mygroups" class="profilemenu_item">Mes groupes</span></a></div>
         <div id="langswitch"><span class="lang_item lang_fr active">FR</span><span class="lang_item lang_en">EN</span></div>
         <form action="search.html" id="form">
           <input id="searchfield" type="search" placeholder="Rechercher des vidéos ou des cours"/>
