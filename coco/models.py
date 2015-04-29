@@ -129,3 +129,13 @@ class Comment(UserContent):
                                      null=True)
     parent_comment = models.ForeignKey('self',
                                        null=True)
+
+class Newsitem(Element):
+    subtitle = models.CharField(_("Subtitle"),
+                                max_length=64,
+                                blank=True,
+                                default="")
+
+    published = models.DateTimeField(_('Publication date'),
+                                     help_text=_('Publication date'),
+                                     null=True, editable=True)
