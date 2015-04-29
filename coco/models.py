@@ -79,9 +79,12 @@ class Course(Element):
     category = models.CharField(_("Category"),
                                 blank=True,
                                 max_length=20)
-                            
+
     syllabus = models.TextField(_("Syllabus"),
                                 blank=True)
+
+    def element_description(self):
+        return _("Course of %d videos") % 1
 
 class Module(Element):
     course = models.ForeignKey(Course)
