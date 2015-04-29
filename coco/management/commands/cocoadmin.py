@@ -7,7 +7,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import User
 import json
 
-from coco.models import Activity, Course, Video, Module, License, Annotation, Comment, Resource
+from coco.models import Activity, Course, Video, Module, License, Annotation, Comment, Resource, Newsitem
 
 class Command(BaseCommand):
     args = '[command] [param]'
@@ -48,10 +48,19 @@ class Command(BaseCommand):
                     activity=activity,
                     title=activity_title, shorttitle=activity_title[:16], url=url)
         vid.save()
+
+    def _postnews(self, title, subtitle, data):
+        """Post a newsitem message.
+        """
+        user = User.objects.get(pk=1)
+        n = Newsitem(creator=user, title=title, subtitle=subtitle, description=data)
+        n.save()
+
         
     def handle(self, *args, **options):
         dispatcher = {
             'info': self._import_info,
+            'postnews': self._postnews,
             }
         self.help = self.help + "\n\n" + "\n".join("\t%s: %s" % (k, v.__doc__) for (k, v) in dispatcher.items())
         if not args:
