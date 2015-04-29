@@ -13,25 +13,29 @@
     {% endblock %}
   </head>
   <body>
-      <div id="header">
-        <div class="logo">
-          <img src="{% static "img/logo_coco.svg" %}" />
+      <header>
+        <div id="logo">
+          <a href="/"><img src="{% static "img/logo_coconotes.svg" %}" /></a>
         </div>
-        <form class="searchform">
-          <input class="searchfield" type="search" placeholder="Rechercher des videos ou des cours"/>
-          <input class="searchbutton" type="submit" value="Chercher"  />
+        <div id="profilemenu"><a href="profile.html"><span id="loginname" class="profilemenu_item">Marie</span></a><a href="group.html"><span id="mygroups" class="profilemenu_item">Mes groupes</span></a></div>
+        <div id="langswitch"><span class="lang_item lang_fr active">FR</span><span class="lang_item lang_en">EN</span></div>
+        <form action="search.html" id="form">
+          <input id="searchfield" type="search" placeholder="Rechercher des vidéos ou des cours"/>
         </form>
-        <div class="logininfo">{{ logininfo }}</div>
-      </div>
+        <div class="topmenu">
+          <span class="topmenu_item active">Accueil</span>
+          <span class="topmenu_item">Tous les cours</span>
+        </div>
+      </header>
 
       <div id="content">
+
         <div id="main">
 
           {% block content %}
           {% endblock %}
 
-        </div> <!-- #main -->
-
+        </div>
       </div> <!-- #content -->
 
       <div id="footer">
@@ -43,6 +47,5 @@
         {% block extrajs %}
         {% endblock %}
       </div>
-
   </body>
 </html>

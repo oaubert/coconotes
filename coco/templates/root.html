@@ -7,8 +7,105 @@
 
 {% block content %}
 
-<div class="column column9">
-  <h1>COCo platform</h1>
-</div>
+<section class="column" id="home_content">
+
+  <section class="column column4" id="home_column">
+
+    <h1 class="highlighted">Bienvenue</h1>
+
+    <article class="welcome">
+      <p class="subtitle">COCo platform is a place to find open education
+        resources that are free to use/reuse and of high
+        quality.</p>
+      <p>Feel free to use our tools when going through the
+        resources, they were designed to help you in your learning path.</p>
+    </article>
+
+    <article class="capsule home_news">
+      <h1>Les nouvelles</h1>
+      {% for item in news %}
+      <article class="newsitem">
+        <h5>{{ item.subtitle }}</h5>
+        <h4>{{ item.title }}</h4>
+        <span class="description">{{ item.description|truncatechars_html:40 }}<span class="readmore">Lire plus</span>
+        </span>
+      </article>
+      {% endfor %}
+      </article>
+    </article>
+
+  </section>
+
+  <section class="column column8 home_content">
+
+    <section>
+      <h1>À la une</h1>
+
+      <article class="minicapsule double fixedheight">
+        <img src="thumbnails/speech.jpg">
+        <div class="content">
+          <h5>Français langue étrangère</h5>
+          <a href="player.html"><h4>Les pronoms directs</h4></a>
+          <span class="description">Le sljljks sdops lskjs  sbnq bsijq eoihsak khkamb oah j akh jhjm asfdhgbkjshdfsdkdfkj </span>
+          <span class="detail">Cours de <span class="result_count">9</span> vidéos</span>
+        </div>
+      </article>
+
+      <article class="minicapsule fixedheight">
+        <img src="thumbnails/biologie.jpg">
+        <div class="content">
+          <h5>Psychologie</h5>
+          <h4><a href="player.html">Psychologie: une introduction</a></h4>
+          <span class="detail">Cours de <span class="result_count">22</span> vidéos</span>
+        </div>
+      </article>
+
+      <article class="minicapsule fixedheight">
+        <img src="thumbnails/fle.jpg">
+        <div class="content">
+          <h5>Management</h5>
+          <h4><a href="player.html">La gestion de projets</a></h4>
+          <span class="detail">Conférence-débat de <span class="result_count">2</span> vidéos</span>
+        </div>
+      </article>
+
+    </section>
+
+    <section class="last_videos">
+      <h2>Les dernières vidéos</h2>
+
+      <article class="minicapsule microcapsule">
+        <img src="thumbnails/fle.jpg">
+        <div class="content">
+          <h4><a href="player.html">FLE - la grammaire</a></h4>
+        </div>
+      </article>
+
+      <article class="minicapsule microcapsule">
+        <img src="thumbnails/biologie.jpg">
+        <div class="content">
+          <h4><a href="player.html">Introduction à la bioinformatique</a></h4>
+        </div>
+      </article>
+
+      <article class="minicapsule microcapsule">
+        <img src="thumbnails/adn_info.jpg">
+        <div class="content">
+          <h4><a href="player.html">Notre code génétique</a></h4>
+        </div>
+      </article>
+
+      <article class="minicapsule microcapsule">
+        <img src="thumbnails/solutions.jpg">
+        <div class="content">
+          <h4><a href="player.html">La gestion de projets</a></h4>
+        </div>
+      </article>
+
+    </section>
+
+  </section>
+
+</section>
 
 {% endblock %}
