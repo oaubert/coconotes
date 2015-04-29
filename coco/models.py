@@ -16,7 +16,7 @@ class Element(models.Model):
                                    null=True, editable=True,
                                    auto_now_add=True)
 
-    contributor = models.ForeignKey(User, related_name='modified_%(class)s')
+    contributor = models.ForeignKey(User, related_name='modified_%(class)s', null=True)
 
     modified = models.DateTimeField(_('Modification date'),
                                     help_text=_('Element modification date'),
@@ -38,9 +38,12 @@ class Element(models.Model):
     description = models.TextField(_("Description"),
                                    blank=True)
 
-    slug = models.SlugField(max_length=128)
+    slug = models.SlugField(max_length=128,
+                            blank=True)
 
-    thumbnail = ImageField(upload_to='thumbnails')
+    thumbnail = ImageField(upload_to='thumbnails',
+                           blank=True,
+                           null=True)
 
     tags = TaggableManager(blank=True)
 
