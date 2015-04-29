@@ -1,3 +1,7 @@
+django
+django-taggit
+django-taggit-autosuggest
 django-user-accounts
 sorl-thumbnail
-
+djangorestframework
+django-allauth
