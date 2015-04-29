@@ -44,6 +44,10 @@ class Element(models.Model):
 
     tags = TaggableManager(blank=True)
 
+    def __unicode__(self):
+        return u"%s (%s)" % (self.title,
+                             self.__class__.__name__)
+
 class License(models.Model):
     slug = models.SlugField(max_length=16)
 
