@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% load admin_urls %}
+{% load url from future %}
+
+{% block title %}COCo platform - {{ item.title }}{% endblock %}
+
+{% block content %}
+
+<article class="newsitem">
+  <h5>{{ item.subtitle }}</h5>
+  <h4>{{ item.title }}</h4>
+  {% if item.thumbnail %}
+  <img src="{{ item.thumbnail.url }}">
+  {% endif %}
+  <span class="description">{{ item.description }}</span>
+</article>
+
+{% endblock %}
