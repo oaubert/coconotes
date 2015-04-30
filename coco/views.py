@@ -28,4 +28,5 @@ def home(request, **kw):
         'une_items': Module.objects.order_by('-created')[:3],
         'last_videos': Video.objects.order_by('-created')[:4],
         'username': request.user.username,
+        'current_document': 'home',
     }, context_instance=RequestContext(request))

@@ -27,14 +27,15 @@
           <input id="searchfield" type="search" placeholder="Rechercher des vidéos ou des cours"/>
         </form>
         <div class="topmenu">
-          <span class="topmenu_item active"><a href="/">Accueil</a></span>
-          <span class="topmenu_item"><a href="/course/">Tous les cours</a></span>
+          <span class="topmenu_item {% ifequal current_document "home" %}active{% endifequal %}"><a href="/">Accueil</a></span>
+          <span class="topmenu_item {% if course_list %}active{% endif %}"><a href="/course/">Tous les cours</a></span>
         </div>
       </header>
 
       <div id="content">
 
         <div id="main">
+
 
           {% block content %}
           {% endblock %}
