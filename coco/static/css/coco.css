@@ -698,6 +698,7 @@ label:hover:before {
 
 .capsule_container {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .capsule {
