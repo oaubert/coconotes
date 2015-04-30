@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load admin_urls %}
+{% load url from future %}
+
+{% block title %}Activity {{ activity.title }}{% endblock %}
+
+{% block content %}
+
+<div class="activity_description">
+  <h1>Activity {{ activity.title }}</h1>
+  
+  <p class="activity_module">{{ activity.module }}
+  
+  <div class="capsule_container">
+    {% for video in activity.video_set.all %}
+    {% include "item_capsule.html" with item=video %}
+    {% endfor %}
+  </div>
+
+</div>
+
+{% endblock %}

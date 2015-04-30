@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load admin_urls %}
+{% load url from future %}
+
+{% block title %}Module {{ module.title }}{% endblock %}
+
+{% block content %}
+
+<div class="course_description">
+  <h1>Module {{ module.title }}</h1>
+  
+  <p class="module_course">{{ module.course }}
+  
+  <div class="capsule_container">
+    {% for activity in module.activity_set.all %}
+    {% include "item_capsule.html" with item=activity %}
+    {% endfor %}
+  </div>
+
+</div>
+
+{% endblock %}

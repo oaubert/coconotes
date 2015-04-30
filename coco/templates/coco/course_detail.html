@@ -7,12 +7,17 @@
 
 {% block content %}
 
-<h1>{{ course.title }}</h1>
+<div class="course_description">
+  <h1>{{ course.title }}</h1>
 
-<ul>
-{% for module in course.modules %}
-<li><a href="{{ module.url }}">{{ module.title }}</a></li>
-{% endfor %}
-</ul>
+  <p class="course_category">{{ course.category }}
+  <p class="course_syllabus">{{ course.syllabus }}</p>
 
+  <div class="capsule_container">
+    {% for module in course.module_set.all %}
+    {% include "item_capsule.html" with item=module %}
+    {% endfor %}
+  </div>
+
+</div>
 {% endblock %}
