@@ -1,9 +1,15 @@
+import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
 from taggit_autosuggest.managers import TaggableManager
 from sorl.thumbnail import ImageField
 
 from gettext import gettext as _
+
+class AutoDateTimeField(models.DateTimeField):
+    def pre_save(self, model_instance, add):
+        return datetime.datetime.now()
 
 class Element(models.Model):
     class Meta:
@@ -14,14 +20,13 @@ class Element(models.Model):
     created = models.DateTimeField(_('Creation date'),
                                    help_text=_('Element creation date'),
                                    null=True, editable=True,
-                                   auto_now_add=True)
+                                   default=datetime.datetime.now)
 
     contributor = models.ForeignKey(User, related_name='modified_%(class)s', null=True)
 
-    modified = models.DateTimeField(_('Modification date'),
-                                    help_text=_('Element modification date'),
-                                    null=True, editable=True,
-                                    auto_now_add=True)
+    modified = AutoDateTimeField(_('Modification date'),
+                                 help_text=_('Element modification date'),
+                                 null=True, editable=True)
 
     state = models.CharField(_("State"),
                              max_length=16,
