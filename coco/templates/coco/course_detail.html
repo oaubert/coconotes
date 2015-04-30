@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% load admin_urls %}
+{% load url from future %}
+
+{% block title %}Course {{ course.title }}{% endblock %}
+
+{% block content %}
+
+<h1>{{ course.title }}</h1>
+
+<ul>
+{% for module in course.modules %}
+<li><a href="{{ module.url }}">{{ module.title }}</a></li>
+{% endfor %}
+</ul>
+
+{% endblock %}
