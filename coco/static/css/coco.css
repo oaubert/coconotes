@@ -133,6 +133,10 @@ header {
     font-size: 14px;
     font-family: Roboto;
 }
+.topmenu_item a {
+    text-decoration: none;
+    color: #fff;
+}
 .topmenu_item {
     display: inline-block;
     height: 32px;
