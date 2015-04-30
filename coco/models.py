@@ -134,10 +134,13 @@ class Video(Resource):
     slides = models.ForeignKey(Resource,
                                null=True,
                                related_name="source_video")
-
     @property
     def subtitle(self):
         return self.activity.shorttitle
+
+    @property
+    def course(self):
+        return self.activity.module.course
 
 class UserContent(Element):
     syllabus = models.TextField(_("Content"),
