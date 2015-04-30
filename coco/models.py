@@ -2,6 +2,7 @@ import datetime
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from taggit_autosuggest.managers import TaggableManager
 from sorl.thumbnail import ImageField
 
@@ -51,6 +52,9 @@ class Element(models.Model):
                            null=True)
 
     tags = TaggableManager(blank=True)
+
+    def get_absolute_url(self):
+        return reverse('%s-detail' % self.__class__.__name__.lower(), args=[str(self.pk)])
 
     def __unicode__(self):
         return u"%s (%s)" % (self.title,
