@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+
+{% block title %}Courses{% endblock %}
+
+{% block content %}
+
+<div class="capsule_container">
+{% for course in course_list %}
+{% include "item_capsule.html" with item=course %}
+{% endfor %}
+</div>
+
+{% endblock %}

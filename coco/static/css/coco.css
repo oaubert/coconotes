@@ -696,6 +696,10 @@ label:hover:before {
     width: 66%;
 }
 
+.capsule_container {
+    display: flex;
+}
+
 .capsule {
     padding-top: 40px;
     clear: both;
