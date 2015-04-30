@@ -44,7 +44,7 @@
 
       {% for item in une_items %}
       <article class="minicapsule fixedheight">
-        <img src="{{ item.thumbnail }}">
+        <img src="{{ item.thumbnail_url }}">
         <div class="content">
           <h5>{{ item.title }}</h5>
           <a href="player.html"><h4>{{ item.subtitle }}</h4></a>
@@ -62,7 +62,7 @@
 
       {% for items in last_videos %}
       <article class="minicapsule microcapsule">
-        <img src="{{ item.thumbnail }}">
+        <img src="{{ item.thumbnail_url }}">
         <div class="content">
           <h4><a href="{{ item.absolute_url }}">{{ item.title }}</a></h4>
         </div>

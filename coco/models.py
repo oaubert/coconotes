@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from taggit_autosuggest.managers import TaggableManager
 from sorl.thumbnail import ImageField
-
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from gettext import gettext as _
 
 class AutoDateTimeField(models.DateTimeField):
@@ -52,6 +52,14 @@ class Element(models.Model):
                            null=True)
 
     tags = TaggableManager(blank=True)
+
+    def thumbnail_url(self):
+        """Return the thumbnail URL.
+        """
+        if self.thumbnail:
+            return self.thumbnail.url
+        else:
+            return static("img/default.png")
 
     def get_absolute_url(self):
         return reverse('%s-detail' % self.__class__.__name__.lower(), args=[str(self.pk)])
