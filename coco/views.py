@@ -25,7 +25,7 @@ class VideoDetail(generics.RetrieveUpdateDestroyAPIView):
 def home(request, **kw):
     return render_to_response('root.html', {
         'news': Newsitem.objects.order_by('-published')[:3],
-        'une_items': Module.objects.order_by('-created')[:4],
+        'une_items': Module.objects.order_by('-created')[:3],
         'last_videos': Video.objects.order_by('-created')[:4],
         'username': request.user.username,
     }, context_instance=RequestContext(request))
