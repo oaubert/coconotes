@@ -2,10 +2,11 @@
 
 import sys
 import os
+import json
 
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import User
-import json
+from django.core.files import File
 
 from coco.models import Activity, Course, Video, Module, License, Annotation, Comment, Resource, Newsitem
 
@@ -48,6 +49,11 @@ class Command(BaseCommand):
         vid = Video(creator=user, contributor=user,
                     activity=activity,
                     title=activity_title, shorttitle=activity_title[:16], url=url)
+        pic = os.path.join(dirname, 'imagecache', '00.png')
+        if not os.path.exists(pic):
+            pic = os.path.join(dirname, 'imagecache', '000.png')
+        with open(pic, 'rb') as f:
+            vid.thumbnail.save(os.path.basename(pic), File(f))
         vid.save()
 
     def _postnews(self, title, subtitle, data):
@@ -57,7 +63,6 @@ class Command(BaseCommand):
         n = Newsitem(creator=user, title=title, subtitle=subtitle, description=data)
         n.save()
 
-        
     def handle(self, *args, **options):
         dispatcher = {
             'info': self._import_info,
@@ -74,4 +79,3 @@ class Command(BaseCommand):
             m(*args)
         else:
             raise CommandError("Unknown command")
-
