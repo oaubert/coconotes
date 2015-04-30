@@ -36,7 +36,7 @@ class Element(models.Model):
     title = models.CharField(_("Title"),
                              blank=True,
                              max_length=250)
-    
+
     shorttitle = models.CharField(_("Shorttitle"),
                                   blank=True,
                                   max_length=16)
@@ -52,6 +52,10 @@ class Element(models.Model):
                            null=True)
 
     tags = TaggableManager(blank=True)
+
+    @property
+    def subtitle(self):
+        return ""
 
     def thumbnail_url(self):
         """Return the thumbnail URL.
@@ -100,14 +104,26 @@ class Course(Element):
     syllabus = models.TextField(_("Syllabus"),
                                 blank=True)
 
+    @property
+    def subtitle(self):
+        return self.category
+
     def element_description(self):
         return _("Course of %d videos") % 1
 
 class Module(Element):
     course = models.ForeignKey(Course)
 
+    @property
+    def subtitle(self):
+        return self.course.shorttitle
+
 class Activity(Element):
     module = models.ForeignKey(Module)
+
+    @property
+    def subtitle(self):
+        return self.module.shorttitle
 
 class Video(Resource):
     activity = models.ForeignKey(Activity,
@@ -119,6 +135,10 @@ class Video(Resource):
                                null=True,
                                related_name="source_video")
 
+    @property
+    def subtitle(self):
+        return self.activity.shorttitle
+
 class UserContent(Element):
     syllabus = models.TextField(_("Content"),
                                 blank=True)
@@ -126,6 +146,9 @@ class UserContent(Element):
                                   max_length=16,
                                   help_text=_("Visibility (private, group, public)"),
                                   default="private")
+    @property
+    def subtitle(self):
+        return _("User content")
 
 class Annotation(UserContent):
     begin = models.FloatField(_("Begin"),
@@ -141,6 +164,10 @@ class Annotation(UserContent):
                                 blank=True,
                                 default="")
 
+    @property
+    def subtitle(self):
+        return self.category
+
 
 class Comment(UserContent):
     parent_annotation = models.ForeignKey(Annotation,
@@ -151,7 +178,7 @@ class Comment(UserContent):
                                        null=True)
 
 class Newsitem(Element):
-    subtitle = models.CharField(_("Subtitle"),
+    category = models.CharField(_("Category"),
                                 max_length=64,
                                 blank=True,
                                 default="")
@@ -159,3 +186,7 @@ class Newsitem(Element):
     published = models.DateTimeField(_('Publication date'),
                                      help_text=_('Publication date'),
                                      null=True, editable=True)
+
+    @property
+    def subtitle(self):
+        return self.category
