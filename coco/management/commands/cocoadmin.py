@@ -22,14 +22,15 @@ class Command(BaseCommand):
         user = User.objects.get(pk=1)
         dirname = os.path.dirname(os.path.abspath(info))
         try:
-            c = Course.objects.get(title=cours, shorttitle=cours[:16])
+            c = Course.objects.get(title=cours)
         except Course.DoesNotExist:
-            c = Course(creator=user, contributor=user, title=cours)
+            c = Course(creator=user, contributor=user, title=cours, shorttitle=cours[:16])
+
             c.save()
         try:
-            module = Module.objects.get(title=module, shorttitle=module[:16], course=c)
+            module = Module.objects.get(title=module, course=c)
         except Module.DoesNotExist:
-            module = Module(creator=user, contributor=user, title=module, course=c)
+            module = Module(creator=user, contributor=user, course=c, title=module, shorttitle=module[:16])
             module.save()
 
         activity_title = data.get("title", "Titre inconnu")
