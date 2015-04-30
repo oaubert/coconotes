@@ -27,7 +27,7 @@
       <article class="newsitem">
         <h5>{{ item.subtitle }}</h5>
         <h4>{{ item.title }}</h4>
-        <span class="description">{{ item.description|truncatechars_html:40 }}<span class="readmore">Lire plus</span>
+        <span class="description">{{ item.description|truncatechars_html:40 }}<a href="{{ item.get_absolute_url }}" class="readmore">Lire plus</a>
         </span>
       </article>
       {% endfor %}
@@ -46,8 +46,8 @@
       <article class="minicapsule fixedheight">
         <img src="{{ item.thumbnail_url }}">
         <div class="content">
-          <h5>{{ item.title }}</h5>
-          <a href="player.html"><h4>{{ item.subtitle }}</h4></a>
+          <h5>{{ item.subtitle }}</h5>
+          <a href="{{ item.get_absolute_url }}"><h4>{{ item.title }}</h4></a>
           <span class="description">{{ item.description|truncatechars_html:40 }}</span>
           <span class="detail">{{ item.element_description }}</span>
         </div>
@@ -64,7 +64,7 @@
       <article class="minicapsule microcapsule">
         <img src="{{ item.thumbnail_url }}">
         <div class="content">
-          <h4><a href="{{ item.absolute_url }}">{{ item.title }}</a></h4>
+          <h4><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h4>
         </div>
       </article>
       {% endfor %}
