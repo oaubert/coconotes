@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+
+{% block title %}All activities{% endblock %}
+
+{% block content %}
+
+<div class="capsule_container">
+{% for activity in activity_list %}
+{% include "item_capsule.html" with item=activity %}
+{% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+
+{% block title %}All videos{% endblock %}
+
+{% block content %}
+
+<div class="capsule_container">
+{% for video in video_list %}
+{% include "item_capsule.html" with item=video %}
+{% endfor %}
+</div>
+
+{% endblock %}
