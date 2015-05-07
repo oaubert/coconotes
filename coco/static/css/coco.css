@@ -901,3 +901,24 @@ label:hover:before {
     position: relative;
     top: 40px;
 }
+
+@media only screen and (max-width: 767px) {
+    /* phones */
+    body {
+        margin: 0 1em;
+    }
+
+    #home_column {
+        display: none;
+    }
+    .home_content {
+        width: 100%;
+    }
+    #form {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 767px) and (orientation: portrait) {
+    /* portrait phones */
+}    
