@@ -156,7 +156,7 @@ header {
 }
 
 /* Main content */
-.column h1 {
+h1.pagetitle, .column h1 {
     font-family: Roboto;
     font-weight: 800;
     font-size: 32px;
