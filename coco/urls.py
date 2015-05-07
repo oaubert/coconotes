@@ -7,6 +7,8 @@ from .models import Course, Module, Activity, Video, Newsitem
 urlpatterns = patterns('',
                        url(r'^$', views.home, name='root'),
 
+                       url(r'^accounts/profile', views.profile, name='profile'),
+
                        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 
                        url(r'^course/$', ListView.as_view(model=Course), name='course-list'),

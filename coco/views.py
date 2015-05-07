@@ -30,3 +30,9 @@ def home(request, **kw):
         'username': request.user.username,
         'current_document': 'home',
     }, context_instance=RequestContext(request))
+
+def profile(request, **kw):
+    return render_to_response('profile.html', {
+        'username': request.user.username,
+        'current_document': 'profile',
+    }, context_instance=RequestContext(request))

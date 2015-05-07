@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% load admin_urls %}
+{% load url from future %}
+
+{% block title %}COCo platform - {{ user.username }}{% endblock %}
+
+{% block content %}
+
+          <section class="column column8" id="profile_data">
+            <h1>Mon profil</h1>
+
+            <article class="capsule">
+              <img class="profile_avatar" src="thumbnails/marie.jpg">
+              <h4>{{ user.get_full_name }}</h4>
+              <span class="profile_status">{{ user.status }}</span>
+              <span class="profile_email">{{ user.email }}</span>
+
+              <div class="profile_description">{{ user.description }}</div>
+            </article>
+
+            <h1>Mes groupes</h1>
+
+            {% for group in user.groups.all %}
+            <article class="capsule">
+              <img class="thumbnail_mini" src="{{ group.thumbnail.url }}">
+              <h4><a href="{{ group.get_absolute_url }}">{{ group.name }}</a></h4>
+              <div class="group_description">{{ group.description }}</div>
+            </article>
+            {% endfor %}
+            
+            <h1>Mes annotations</h1>
+
+            {% for group in user.user_content.all %}
+            <article class="capsule">
+              <img class="thumbnail_mini" src="{{ group.thumbnail.url }}">
+              <h4><a href="{{ group.get_absolute_url }}">{{ group.name }}</a></h4>
+              <div class="group_description">{{ group.description }}</div>
+            </article>
+            {% endfor %}
+
+          </section>
+
+          <section class="column column4" id="profile_info">
+
+            <section class="profile_info">
+
+              <h1>Recommandés</h1>
+
+              <article class="capsule">
+                <img class="thumbnail_mini" src="thumbnails/pronoms.jpg">
+                <h4><a href="player.html">Cours: 2.4 Les types des pronoms</a></h4>
+                <span class="capsule_description">Marie: anyone has an exercice to practice this?<br/>Pierre: I do! www.exercices.com</span>
+              </article>
+
+              <article class="capsule">
+                <img class="thumbnail_mini" src="thumbnails/biogenetics.jpg">
+                <h4><a href="player.html">Séminaire: research in biogenetics</a></h4>
+                <span class="capsule_description">Marie: this resource shows it<br/> Pierre: news! I just tested it...</span>
+              </article>
+
+            </section>
+
+            <section class="profile_info">
+
+              <h1>Dernières visualisations</h1>
+
+              <article class="capsule">
+                <img class="thumbnail_mini" src="thumbnails/adn.jpg">
+                <h4><a href="player.html">Cours: 2.4 Les types des pronoms</a></h4>
+                <span class="capsule_description">Marie: anyone has an exercice to practice this?<br/>Pierre: I do! www.exercices.com</span>
+              </article>
+
+              <article class="capsule">
+                <img class="thumbnail_mini" src="thumbnails/solutions.jpg">
+                <h4><a href="player.html">Séminaire: research in biogenetics</a></h4>
+                <span class="capsule_description">Marie: this resource shows it<br/> Pierre: news! I just tested it...</span>
+              </article>
+
+            </section>
+
+          </section>
+
+
+{% endblock %}
