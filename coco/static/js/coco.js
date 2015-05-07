@@ -74,4 +74,15 @@ $(document).ready( function () {
             $(".tabcomponent ." + tabname[0]).addClass("selected");
         }
     });
+
+    $(".tabcontrol_checkbox").on("click", function () {
+        var classname = Array.prototype.slice.call(this.classList).filter( function (s) { return s != "tabcontrol_checkbox"; });
+        if (classname.length) {
+            if ($(this).is(':checked')) {
+                $(".annotationlist ." + classname[0]).show(300);
+            } else {
+                $(".annotationlist ." + classname[0]).hide(300);
+            }
+        }
+    });
 });
