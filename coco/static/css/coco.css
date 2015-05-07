@@ -444,8 +444,11 @@ h1.highlighted {
     position: relative;
     overflow-y: hidden;
     height: 100%;
+    display: none;
 }
-
+.tabcontent.selected {
+    display: block;
+}
 .tabcontrols {
     height: 36px;
     padding: 9px 0px 6px 0px;

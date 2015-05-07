@@ -67,4 +67,11 @@ $(document).ready( function () {
         }
     });
 
+    $(".tabnames li").on("click", function () {
+        var tabname = Array.prototype.slice.call(this.classList).filter( function (s) { return s.indexOf("tab-") == 0; });
+        if (tabname.length) {
+            $(".tabcomponent .selected").removeClass("selected");
+            $(".tabcomponent ." + tabname[0]).addClass("selected");
+        }
+    });
 });
