@@ -47,7 +47,7 @@ header {
 #logo {
     float: left;
     padding-top: 20px;
-    padding-left: 12px;
+    padding-left: 0px;
     vertical-align: bottom;
 }
 #logo img {
@@ -58,7 +58,7 @@ header {
 #form {
     position: absolute;
     bottom: 6px;
-    right: 6px;
+    right: 0px;
     width: 540px;
     display: inline-block;
     vertical-align: bottom;
@@ -84,7 +84,7 @@ header {
     text-align: right;
     position: absolute;
     top: 6px;
-    right: 70px;
+    right: 48px;
     font-family: Roboto;
     font-size: 14px;
     text-transform: uppercase;
@@ -104,7 +104,7 @@ header {
 #langswitch {
     position: absolute;
     top: 3px;
-    right: 6px;
+    right: 0px;
     font-family: Arial, Verdana;
     color: #fff;
     font-size: 8px;
