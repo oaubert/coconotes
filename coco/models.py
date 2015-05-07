@@ -105,11 +105,17 @@ class Course(Element):
                                 blank=True)
 
     @property
+    def videos(self):
+        """Videos associated with the course.
+        """
+        return Video.objects.filter(activity__module__course=self)
+
+    @property
     def subtitle(self):
         return self.category
 
     def element_description(self):
-        return _("Course of %d videos") % 1
+        return _("Course of %d videos") % len(self.videos)
 
 class Module(Element):
     course = models.ForeignKey(Course)
