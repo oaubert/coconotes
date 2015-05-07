@@ -44,13 +44,12 @@ INSTALLED_APPS = (
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.bitbucket',
-    'allauth.socialaccount.providers.facebook',
+    #'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.openid',
     'allauth.socialaccount.providers.twitter',
-    'allauth.socialaccount.providers.vimeo',
+    #'allauth.socialaccount.providers.vimeo',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -110,3 +109,7 @@ URL_FIELD_NAME = 'href'
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 STATIC_URL = '/static/'
 STATIC_ROOT = APPROOT + 'static/'
+
+# Allauth configuration
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+
