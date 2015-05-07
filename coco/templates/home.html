@@ -41,10 +41,11 @@
     <section class="la_une">
       <h1>À la une</h1>
 
-
+      <div class="capsule_container">
       {% for item in une_items %}
       {% include "item_capsule.html" with item=item %}
       {% endfor %}
+      </div>
 
     </section>
 
@@ -52,14 +53,16 @@
       <h2>Les dernières vidéos</h2>
 
 
-      {% for item in last_videos %}
-      <article class="minicapsule microcapsule">
-        <img src="{{ item.thumbnail_url }}">
-        <div class="content">
+      <div class="capsule_container">
+        {% for item in last_videos %}
+        <article class="minicapsule microcapsule">
+          <img src="{{ item.thumbnail_url }}">
+          <div class="content">
           <h4><a title="{{ item.title }}" href="{{ item.get_absolute_url }}">{{ item.shorttitle }}</a></h4>
-        </div>
-      </article>
-      {% endfor %}
+          </div>
+        </article>
+        {% endfor %}
+      </div>
 
     </section>
 
