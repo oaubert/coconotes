@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
 {% load admin_urls %}
 {% load url from future %}
 
@@ -371,6 +372,6 @@
 {% endblock %}
 
 {% block extrajs %}
-<script type="text/javascript" src="jquery.min.js"></script>
-<script src="coco.js"></script>
+<script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/coco.js" %}"></script>
 {% endblock %}
