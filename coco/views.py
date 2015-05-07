@@ -1,10 +1,9 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from rest_framework import generics
-from rest_framework.response import Response
-from rest_framework.reverse import reverse
-from .models import Course, Video, Newsitem, Module
+from .models import Course, Video, Newsitem, Module, Activity, Annotation, Comment
 from .serializers import CourseSerializer, VideoSerializer
+from .utils import generic_search
 
 class CourseList(generics.ListCreateAPIView):
     model = Course
@@ -34,5 +33,27 @@ def home(request, **kw):
 def profile(request, **kw):
     return render_to_response('profile.html', {
         'username': request.user.username,
+        'current_document': 'profile',
+    }, context_instance=RequestContext(request))
+
+MODEL_MAP = {
+    #Element: ["title", "shorttitle", "description" ],
+    Course: ["title", "shorttitle", "description", "category", "syllabus" ],
+    Module: [ "title", "shorttitle", "description" ],
+    Activity: ["title", "shorttitle", "description" ],
+    Video: ["title", "shorttitle", "description" ],
+    Annotation: ["title", "shorttitle", "description", "syllabus" ],
+    Comment: ["title", "shorttitle", "description", "syllabus" ],
+    Newsitem: ["title", "shorttitle", "description", "category" ],
+}
+def search(request, **kw):
+    elements = []
+    for model,fields in MODEL_MAP.iteritems():
+        elements += generic_search(request, model, fields, 'q')
+
+    return render_to_response('search.html', {
+        'elements': elements,
+        'username': request.user.username,
+        'query_string' : request.GET.get('q', ''),
         'current_document': 'profile',
     }, context_instance=RequestContext(request))

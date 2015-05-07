@@ -11,6 +11,8 @@ urlpatterns = patterns('',
 
                        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 
+                       url(r'^search/$', views.search, name='search'),
+
                        url(r'^course/$', ListView.as_view(model=Course), name='course-list'),
                        url(r'^course/(?P<pk>[\w\d_]+)/$', DetailView.as_view(model=Course, context_object_name='course'), name='course-detail'),
                        url(r'^module/$', ListView.as_view(model=Module), name='module-list'),

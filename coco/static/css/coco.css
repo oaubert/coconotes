@@ -737,6 +737,18 @@ label:hover:before {
     color: #6cf;
 }
 
+.searchcapsule {
+    margin-top: 1em;
+}
+.searchcapsule:hover {
+    background-color: #dcf0ff;
+}
+
+.searchcapsule_type {
+    background-color: #ccc;
+    padding: 3px;
+    color: #fff;
+}
 .capsule_description {
 }
 
