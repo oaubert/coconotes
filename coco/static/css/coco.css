@@ -804,6 +804,7 @@ label:hover:before {
     color: #000;
     text-overflow: ellipsis;
     max-width: 100%;
+    width: 100%;
     overflow: hidden;
 }
 
