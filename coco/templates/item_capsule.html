@@ -2,7 +2,7 @@
   <a title="{{ item.title }}" href="{{ item.get_absolute_url }}"><img src="{{ item.thumbnail_url }}"></a>
   <div class="content">
     <h5>{{ item.subtitle }}</h5>
-    <a title="{{ item.title }}" href="{{ item.get_absolute_url }}"><h4>{{ item.shorttitle }}</h4></a>
+    <h4><a title="{{ item.title }}" href="{{ item.get_absolute_url }}">{{ item.shorttitle }}</a></h4>
     <span class="description">{{ item.description|truncatechars_html:40 }}</span>
     <span class="detail">{{ item.element_description }}</span>
   </div>
