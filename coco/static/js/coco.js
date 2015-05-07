@@ -46,7 +46,7 @@ $(document).ready( function () {
 
     $(".Ldt-AnnotationsList-li").on("click", function (e) {
         e.preventDefault();
-        player.currentTime = li.dataset.begin / 1000;
+        player.currentTime = this.dataset.begin / 1000;
     });
 
     $(".playbutton").on("click", function () {
