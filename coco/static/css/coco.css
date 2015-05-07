@@ -38,7 +38,7 @@ header {
 #main {
     margin: 0px;
     height: 100%;
-    padding-top: 30px;
+    padding-top: 6px;
 }
 #main:after {
     clear: both;
@@ -175,6 +175,9 @@ h1.highlighted {
     margin-top: 40px;
 }
 
+#home_content {
+    margin-top: 24px;
+}
 /* Player */
 
 .player {
@@ -183,7 +186,6 @@ h1.highlighted {
     width: calc(50% - 6px);
     padding: 0px;
     vertical-align: top;
-    margin-top: 6px;
     margin-left: 6px;
     background-color: #000;
     color: #fff;
@@ -192,7 +194,6 @@ h1.highlighted {
     float: right;
     display: inline-block;
     width: calc(50% - 6px);
-    margin-top: 6px;
     margin-right: 6px;
     height: calc(100% - 80px);
 }
@@ -674,7 +675,8 @@ label:hover:before {
 
 .column {
     float: left;
-    padding: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .column2 {
@@ -860,7 +862,6 @@ label:hover:before {
 .last_videos {
     margin-top: 40px;
 }
-
 
 #home_column {
     height: 100%;
