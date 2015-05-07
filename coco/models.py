@@ -72,6 +72,10 @@ class Element(models.Model):
         return u"%s (%s)" % (self.title,
                              self.__class__.__name__)
 
+    @property
+    def element_type(self):
+        return self.__class__.__name__
+
 class License(models.Model):
     slug = models.SlugField(max_length=16)
 
