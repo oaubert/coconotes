@@ -802,6 +802,9 @@ label:hover:before {
 .minicapsule h4 {
     font-size: 100%;
     color: #000;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .minicapsule h4 a, .minicapsule h4 a:visited {
@@ -829,6 +832,7 @@ label:hover:before {
 .microcapsule h4, .microcapsule h4 a {
     color: #fff !important;
     font-size: 14px;
+    overflow: visible;
 }
 
 .minicapsule .detail {
