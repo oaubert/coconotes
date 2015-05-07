@@ -38,6 +38,7 @@ header {
 #main {
     margin: 0px;
     height: 100%;
+    padding-top: 30px;
 }
 #main:after {
     clear: both;
@@ -856,9 +857,6 @@ label:hover:before {
     font-size: 11px;
 }
 
-#home_content {
-    margin-top: 30px;
-}
 .last_videos {
     margin-top: 40px;
 }
