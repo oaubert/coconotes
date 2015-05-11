@@ -2,16 +2,20 @@
 import os
 APPROOT = os.path.dirname(os.path.dirname(__file__)) + os.sep
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
+# local_settings should define a 'options' dictionary with
+# configuration values.
+try:
+    from local_settings import options
+except ImportError:
+    options = {}
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'lz9u^$sca56-uyr=9*-!pclxulr34*=2@c#1#zsg6@c!0h^k*7'
+SECRET_KEY = options.get('secret_key', 'no_secret_at_all_key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = options.get('development', False)
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = options.get('development', False)
 
 ALLOWED_HOSTS = []
 
@@ -74,6 +78,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 SITE_ID = 1
 
+RAVEN_CONFIG = {
+    'dsn': options.get('raven_dsn', ''),
+}
+
 ROOT_URLCONF = 'project.urls'
 
 WSGI_APPLICATION = 'project.wsgi.application'
@@ -84,8 +92,12 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(APPROOT, 'db.sqlite3'),
+        'ENGINE': options.get('db_engine', 'django.db.backends.sqlite3'),
+        'NAME': options.get('db_name', APPROOT + 'db.sqlite3'),
+        'USER': options.get('db_user', ''),
+        'PASSWORD': options.get('db_password', ''),
+        'HOST': options.get('db_host', ''),
+        'PORT': options.get('db_port', ''),
     }
 }
 
@@ -113,3 +125,8 @@ STATIC_ROOT = APPROOT + 'static/'
 # Allauth configuration
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 
+if options.get('raven_dsn'):
+    INSTALLED_APPS += ( 'raven.contrib.django.raven_compat', )
+    
+if options.get('development'):
+    INSTALLED_APPS += ( 'django_extensions', )
