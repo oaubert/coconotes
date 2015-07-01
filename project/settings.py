@@ -28,9 +28,20 @@ MEDIA_ROOT = os.path.join(APPROOT, "media/")
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
 MEDIA_URL = '/media/'
 
+if options.get('redis_cache'):
+    # Configure session cache
+    CACHES = {
+        'default': {
+            'BACKEND': 'redis_cache.RedisCache',
+            'LOCATION': options.get('redis_cache', 'localhost:6379'),
+            'OPTIONS': {
+            'DB': 1,
+            },
+        },
+    }
+    SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
 # Application definition
-
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
