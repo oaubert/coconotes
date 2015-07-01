@@ -4,6 +4,11 @@
 {% load admin_urls %}
 {% load url from future %}
 
+{% block extrajs %}
+<script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/coco.js" %}"></script>
+{% endblock %}
+
 {% block title %}COCo platform - {{ video.title }}{% endblock %}
 
 {% block content %}
@@ -379,9 +384,4 @@
 
 </div>   <!-- #metadata -->
 
-{% endblock %}
-
-{% block extrajs %}
-<script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
-<script type="text/javascript" src="{% static "js/coco.js" %}"></script>
 {% endblock %}
