@@ -144,6 +144,10 @@ class Video(Resource):
     slides = models.ForeignKey(Resource,
                                null=True,
                                related_name="source_video")
+    package_id = models.CharField(_("Package id"),
+                                  max_length=255,
+                                  help_text=_("Package identifier"),
+                                  blank=True)
     @property
     def subtitle(self):
         return self.activity.shorttitle

@@ -17,11 +17,11 @@ class ElementAdmin(admin.ModelAdmin):
 
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'title', 'shorttitle', 'slug', 'creator', 'created', 'activity', 'thumbnail')
-    list_editable = ('title', 'shorttitle', 'slug', 'creator', 'created', 'activity', 'thumbnail')
+    list_display = ('pk', 'title', 'shorttitle', 'package_id', 'slug', 'creator', 'created', 'activity', 'thumbnail')
+    list_editable = ('title', 'shorttitle', 'package_id', 'slug', 'creator', 'created', 'activity', 'thumbnail')
     list_display_links = ('pk', )
     list_filter = ( 'creator', 'activity' )
-    search_fields = ('title', 'shorttitle')
+    search_fields = ('title', 'shorttitle', 'package_id')
 
     prepopulated_fields = {'slug': ('title', )}
 
