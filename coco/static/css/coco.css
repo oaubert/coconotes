@@ -31,6 +31,7 @@ header {
     height: 100%;
     /* Substract header size */
     height: calc(100% - 104px);
+    padding: 6px 0 0 6px;
 }
 #main:before {
     clear: both;
@@ -38,7 +39,11 @@ header {
 #main {
     margin: 0px;
     height: 100%;
-    padding-top: 6px;
+    background-color: #fff;
+    /* 1x1 black pixel */
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNg+A8AAQIBANEay48AAAAASUVORK5CYII=);
+    background-size: 16px 72px;
+    background-repeat: no-repeat;
 }
 #main:after {
     clear: both;
@@ -61,6 +66,7 @@ header {
     bottom: 6px;
     right: 0px;
     width: 540px;
+    max-width: calc(100% - 224px);
     display: inline-block;
     vertical-align: bottom;
 }
@@ -178,6 +184,15 @@ h1.highlighted {
 #home_content {
     margin-top: 24px;
 }
+
+#main .splitter-bar {
+    background-color: #fff;
+    /* 1x1 black pixel */
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNg+A8AAQIBANEay48AAAAASUVORK5CYII=);
+    background-size: 16px 72px;
+    background-repeat: no-repeat;
+}
+
 /* Player */
 
 .player {
@@ -191,9 +206,11 @@ h1.highlighted {
     color: #fff;
 }
 #metadata {
+    background-color: #fff;
     float: right;
     display: inline-block;
     width: calc(50% - 6px);
+    min-width: 368px;
     margin-right: 6px;
     height: calc(100% - 80px);
 }
@@ -211,7 +228,7 @@ h1.highlighted {
     text-transform: uppercase;
 }
 .playertitle {
-    padding-top: 8px;    
+    padding-top: 8px;
 }
 .videotitle {
     display: inline-block;
@@ -247,6 +264,7 @@ h1.highlighted {
     position: relative;
     margin: auto;
     text-align: center;
+    min-height: 300px;
 }
 .aspectratiokeeper {
   width: 100%;
@@ -341,7 +359,7 @@ h1.highlighted {
     width: 32px;
     height: 22px;
     margin-left: 4px;
-    margin-top: 6px;    
+    margin-top: 6px;
 }
 .videocontrols .playbutton {
     background: url("res/video_control_play.svg");
@@ -382,7 +400,6 @@ h1.highlighted {
     height: 72px;
     background-color: black;
     color: #fff;
-    padding-left: 20px;
     overflow-x: hidden;
     overflow-y: hidden;
 }
@@ -412,7 +429,6 @@ h1.highlighted {
 }
 
 .tabcontent {
-    margin-left: 20px;
     position: relative;
     overflow-y: hidden;
     height: 100%;
@@ -421,17 +437,11 @@ h1.highlighted {
 .tabcontent.selected {
     display: block;
 }
-.tabcontrols {
-    height: 36px;
-    padding: 9px 0px 6px 0px;
-    border-bottom: 1px solid #000;
-}
 
 .annotationlist {
     font-family: Roboto;
-    font-size: 14px;
+    font-size: 14px !important;
     list-style: none;
-    font-size: 10pt;
     overflow-y: auto;
     height: calc(100% - 86px);
     width: 100%;
@@ -575,7 +585,7 @@ p.Ldt-AnnotationsList-Description {
 }
 
 #footer {
-    
+
 }
 
 .column {
@@ -835,8 +845,12 @@ p.Ldt-AnnotationsList-Description {
     .home_content {
         width: 100%;
     }
+    .topmenu {
+        display: none;
+    }
     #form {
         width: 100%;
+        max-width: 100%;
     }
 }
 
@@ -848,4 +862,4 @@ p.Ldt-AnnotationsList-Description {
 
 @media only screen and (max-width: 767px) and (orientation: portrait) {
     /* portrait phones */
-}    
+}
