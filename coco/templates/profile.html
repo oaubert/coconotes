@@ -11,7 +11,7 @@
           <section class="column column8" id="profile_data">
 
             <article class="capsule">
-              <img class="profile_avatar" src="thumbnails/marie.jpg">
+              <img class="profile_avatar" src="user.thumbnail_url">
               <h4>{{ user.get_full_name }}</h4>
               <span class="profile_status">{{ user.status }}</span>
               <span class="profile_email">{{ user.email }}</span>
@@ -23,17 +23,17 @@
 
             {% for group in user.groups.all %}
             <article class="capsule">
-              <img class="thumbnail_mini" src="{{ group.thumbnail.url }}">
+              <img class="thumbnail_mini" src="{{ group.thumbnail_url }}">
               <h4><a href="{{ group.get_absolute_url }}">{{ group.name }}</a></h4>
               <div class="group_description">{{ group.description }}</div>
             </article>
             {% endfor %}
-            
+
             <h1>Mes annotations</h1>
 
             {% for group in user.user_content.all %}
             <article class="capsule">
-              <img class="thumbnail_mini" src="{{ group.thumbnail.url }}">
+              <img class="thumbnail_mini" src="{{ group.thumbnail_url }}">
               <h4><a href="{{ group.get_absolute_url }}">{{ group.name }}</a></h4>
               <div class="group_description">{{ group.description }}</div>
             </article>
@@ -48,13 +48,13 @@
               <h1>Recommandés</h1>
 
               <article class="capsule">
-                <img class="thumbnail_mini" src="thumbnails/pronoms.jpg">
+                <img class="thumbnail_mini" src="">
                 <h4><a href="player.html">Cours: 2.4 Les types des pronoms</a></h4>
                 <span class="capsule_description">Marie: anyone has an exercice to practice this?<br/>Pierre: I do! www.exercices.com</span>
               </article>
 
               <article class="capsule">
-                <img class="thumbnail_mini" src="thumbnails/biogenetics.jpg">
+                <img class="thumbnail_mini" src="">
                 <h4><a href="player.html">Séminaire: research in biogenetics</a></h4>
                 <span class="capsule_description">Marie: this resource shows it<br/> Pierre: news! I just tested it...</span>
               </article>
@@ -66,13 +66,13 @@
               <h1>Dernières visualisations</h1>
 
               <article class="capsule">
-                <img class="thumbnail_mini" src="thumbnails/adn.jpg">
+                <img class="thumbnail_mini" src="">
                 <h4><a href="player.html">Cours: 2.4 Les types des pronoms</a></h4>
                 <span class="capsule_description">Marie: anyone has an exercice to practice this?<br/>Pierre: I do! www.exercices.com</span>
               </article>
 
               <article class="capsule">
-                <img class="thumbnail_mini" src="thumbnails/solutions.jpg">
+                <img class="thumbnail_mini" src="">
                 <h4><a href="player.html">Séminaire: research in biogenetics</a></h4>
                 <span class="capsule_description">Marie: this resource shows it<br/> Pierre: news! I just tested it...</span>
               </article>
