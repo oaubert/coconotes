@@ -4,8 +4,22 @@
 {% load admin_urls %}
 {% load url from future %}
 
+{% block extra_head %}
+<link rel="stylesheet" href="{% static "libs/jquery.touchsplitter.css" %}">
+{% endblock %}
+
 {% block extrajs %}
+<script type="text/javascript">
+    var metadata = {
+        video_url: "{{video.url}}",
+        url: "http://localhost:5000/api/package/{{video.package_id}}",
+        format: 'ldt'
+    };
+</script>
+<script type="text/javascript" src="{% static "metadataplayer/LdtPlayer-core.js" %}"></script>
 <script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+<script type="text/javascript" src="{% static "libs/jquery.touchsplitter.js" %}"></script>
 <script type="text/javascript" src="{% static "js/coco.js" %}"></script>
 {% endblock %}
 
@@ -25,54 +39,25 @@
   </div>
   <div class="videocontainer">
     <div class="aspectratiokeeper">
-      <video class="videoplayer" id="videoplayer" controls="" preload="auto" poster="{{ video.thumbnail_url }}" src="{{ video.url }}"></video>
+      <div id="VideoContainer" class="VideoContainer"></div>
       <div class="videooverlay"></div>
     </div>
   </div>
-  <div class="slidepreview">
-    <div class="slidepreviewitem"><img src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/00.png"></div>
-    <div class="slidepreviewitem"><img src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/01.png"></div>
-    <div class="slidepreviewitem"><img src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/02.png"></div>
-    <div class="slidepreviewitem"><img src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/03.png"></div>
-    <div class="slidepreviewitem"><img src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/04.png"></div>
-    <div class="slidepreviewitem"><img src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/05.png"></div>
-    <div class="slidepreviewitem"><img src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/06.png"></div>
-    <div class="slidepreviewitem"><img src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/07.png"></div>
-    <div class="slidepreviewitem"><img src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/08.png"></div>
-    <div class="slidepreviewitem"><img src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/09.png"></div>
-    <div class="slidepreviewitem"><img src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/10.png"></div>
-    <div class="slidepreviewitem"><img src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/11.png"></div>
-    <div class="slidepreviewitem"><img src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/12.png"></div>
-    <div class="slidepreviewitem"><img src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/13.png"></div>
-    <div class="slidepreviewitem"><img src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/14.png"></div>
-    <div class="slidepreviewitem"><img src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/15.png"></div>
-    <div class="slidepreviewitem"><img src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/16.png"></div>
-    <div class="slidepreviewitem"><img src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/17.png"></div>
-  </div>
-  <div class="videoslider">
-    <div class="sliderbar"></div>
-    <div class="currentbar"></div>
-    <div class="currentbarhead rightarrow"></div>
-    <div class="barmark"></div>
-    <div class="barmark"></div>
-    <div class="barmark"></div>
-    <div class="barmark"></div>
-    <div class="barmark"></div>
-    <div class="barmark"></div>
-  </div>
-  <div class="videocontrols">
-    <div class="button playbutton"></div>
-    <div class="timeinfo">
-      <div class="currenttime">--:--</div> / <div class="totaltime">-:--:--</div>
+  <div id="ControlsContainer">
+    <div id="SlidePreviewContainer" class="slidepreview"></div>
+    <div class="videoslider">
+      <div class="sliderbar"></div>
+      <div class="currentbar"></div>
+      <div class="currentbarhead rightarrow"></div>
+      <div class="barmark"></div>
+      <div class="barmark"></div>
+      <div class="barmark"></div>
+      <div class="barmark"></div>
+      <div class="barmark"></div>
+      <div class="barmark"></div>
     </div>
-    <div class="rightcontrols">
-      <div class="socialbuttons">
-        <div class="social-twitter"></div>
-        <div class="social-facebook"></div>
-      </div>
-      <div class="button volumebutton"></div>
-      <div class="button fullscreenbutton"></div>
-    </div>
+    <div id="VideoControlContainer" class="videocontrols"></div>
+    <div id="MiscControlsContainer"></div>
   </div>
 </div>
 <div id="metadata" class="tabcomponent">
@@ -87,301 +72,21 @@
   </div>
   <div class="tabcontent selected tab-mynotes">
     <div class="tabcontrols">
+    </div>
+    <div id="AnnotationsContainer" class="annotationlist">
+    </div>
+    <div class="Ldt-AnnotationsList-Input">
       <form>
-        <input id="teacher_note_checkbox" checked class="tabcontrol_checkbox teacher_note" type="checkbox">
-        <label for="teacher_note_checkbox" class="tabcontrol_label teacher_note">Notes Enseignant</label>
-        <input id="other_note_checkbox" checked class="tabcontrol_checkbox other_note" type="checkbox">
-        <label for="other_note_checkbox" class="tabcontrol_label other_note">Notes Autres</label>
-        <input id="simplified_plan_checkbox" class="tabcontrol_checkbox simplified_plan" type="checkbox">
-        <label for="simplified_plan_checkbox" lass="tabcontrol_label simplified_plan">Plan simplifié</label>
-        <input id="slide_display_checkbox" checked class="tabcontrol_checkbox slide_display" type="checkbox">
-        <label for="slide_display_checkbox" class="tabcontrol_label slide_display">Diapo<br/>&nbsp;</label>
-        <input class="inside_search_input" type="search" placeholder="Recherchez"/>
+        <input type="text" class="Ldt-AnnotationsList-InputText" placeholder="??:?? Notez ici">
       </form>
     </div>
-    <div class="annotationlist">
-      <ul>
-        <li class="Ldt-AnnotationsList-li Ldt-Highlighter-Annotation Ldt-TraceMe" data-annotation="a54"
-            data-begin="96000"
-            data-end="126000"
-            trace-info="annotation-id:a54,
-                        media-id:m1"
-            style="">
-          <div class="Ldt-AnnotationsList-Duration">01:36</div>
-          <div class="Ldt-AnnotationsList-ThumbContainer slide_display"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a54"
-                                                             draggable="true"><img title="01:36 - [Claire] Interet pour systèmes hybrides" class="Ldt-AnnotationsList-Thumbnail" src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/01.png"></a></div>
-          <div class="Ldt-AnnotationsList-Content">
-            <span class="Ldt-AnnotationsList-Title">Les MOOCs: une occasion historique pour redonner du sens à la présence...</span><span class="Ldt-AnnotationsList-Note teacher_note"
-                                                                                                                                          draggable="true"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a54">
-                Interet pour systèmes
-                hybrides</a></span><span class="creator teacher_note">Claire</span>
-            <p class="Ldt-AnnotationsList-Description"></p></div></li>
-        <li class="Ldt-AnnotationsList-li
-                   Ldt-Highlighter-Annotation
-                   Ldt-TraceMe"
-            data-annotation="a53"
-            data-begin="101000"
-            data-end="131000"
-            trace-info="annotation-id:a53,
-                        media-id:m1"
-            style="">
-          <div class="Ldt-AnnotationsList-Duration">01:41</div>
-          <div class="Ldt-AnnotationsList-ThumbContainer slide_display"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a53"
-                                                             draggable="true"><img title="01:41
-                                                                                          -
-                                                                                          [Anonyme]
-                                                                                          theme"
-                                                                                   class="Ldt-AnnotationsList-Thumbnail"
-                                                                                   src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/02.png"></a></div>
-          <div class="Ldt-AnnotationsList-Content">
-            <span class="Ldt-AnnotationsList-Title">Les technologies</span></div></li>
-        <li class="Ldt-AnnotationsList-li
-                   Ldt-Highlighter-Annotation
-                   Ldt-TraceMe"
-            data-annotation="a55"
-            data-begin="143000"
-            data-end="213000"
-            trace-info="annotation-id:a55,
-                        media-id:m1"
-            style="">
-          <div class="Ldt-AnnotationsList-Duration">02:23</div>
-          <div class="Ldt-AnnotationsList-ThumbContainer slide_display"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a55"
-                                                             draggable="true"><img title="02:23 - [Claire] redonner du sens à la présence même à distance : remettre de la présence dans la distance"
-                                                                                   class="Ldt-AnnotationsList-Thumbnail"
-                                                                                   src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/03.png"></a></div>
-          <div class="Ldt-AnnotationsList-Content">
-            <span class="Ldt-AnnotationsList-Title">Vers un principe de cohérence</span><span class="Ldt-AnnotationsList-Note other_note"
-                                                                                              draggable="true"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a55">
-                redonner du sens à la présence même à distance : remettre de
-                la présence dans la distance</a></span><span class="creator other_note">Claire</span><p class="Ldt-AnnotationsList-Description"></p></div></li>
-        <li class="Ldt-AnnotationsList-li
-                   Ldt-Highlighter-Annotation
-                   Ldt-TraceMe
-                   selected"
-            data-annotation="a56"
-            data-begin="193000"
-            data-end="245000"
-            trace-info="annotation-id:a56,
-                        media-id:m1"
-            style="">
-          <div class="Ldt-AnnotationsList-Duration">03:13</div>
-          <div class="Ldt-AnnotationsList-ThumbContainer slide_display"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a56"
-                                                             draggable="true"><img title="03:13 - [Anonyme] Avant son exposé, sur le slide de départ, Marcel fait une assez longue présentation. -&amp;gt; peut-être pourrait-elle être structuré par un support ?" class="Ldt-AnnotationsList-Thumbnail"
-                                                                                   src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/04.png"></a></div>
-          <div class="Ldt-AnnotationsList-Content">
-            <span class="Ldt-AnnotationsList-Title">Vers un principe de cohérence</span><span class="Ldt-AnnotationsList-Note other_note"
-                                                                                              draggable="true"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a56">
-                Avant son exposé, sur le slide de départ, Marcel fait une assez longue présentation. -&gt; peut-être pourrait-elle être structurée par un support ?</a></span><span class="creator other_note">Anonyme</span><p class="Ldt-AnnotationsList-Description"></p></div></li>
-        <li class="Ldt-AnnotationsList-li
-                   Ldt-Highlighter-Annotation
-                   Ldt-TraceMe"
-            data-annotation="a57"
-            data-begin="277000"
-            data-end="308000"
-            trace-info="annotation-id:a57,
-                        media-id:m1"
-            style="">
-          <div class="Ldt-AnnotationsList-Duration">04:37</div>
-          <div class="Ldt-AnnotationsList-ThumbContainer slide_display"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a57"
-                                                             draggable="true"><img title="04:37 - [Alain] Deuxième partie introductive pour susciter l'intérêt de l'audience en prenant à témoin les présents !" class="Ldt-AnnotationsList-Thumbnail"
-                                                                                   src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/05.png"></a></div>
-          <div class="Ldt-AnnotationsList-Content">
-            <span class="Ldt-AnnotationsList-Title">Questions d'objectifs. Des nécessités</span><span class="Ldt-AnnotationsList-Note teacher_note"
-                                                                                                      draggable="true"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a57">
-                Deuxième partie introductive pour susciter l'intérêt de l'audience en prenant à témoin les présents !</a></span><span class="creator teacher_note">Alain</span><p class="Ldt-AnnotationsList-Description"></p></div></li>
-        <li class="Ldt-AnnotationsList-li
-                   Ldt-Highlighter-Annotation
-                   Ldt-TraceMe"
-            data-annotation="a58"
-            data-begin="317000"
-            data-end="347000"
-            trace-info="annotation-id:a58,
-                        media-id:m1"
-            style="">
-          <div class="Ldt-AnnotationsList-Duration">05:17</div>
-          <div class="Ldt-AnnotationsList-ThumbContainer slide_display"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a58"
-                                                             draggable="true"><img title="05:17 - [slide,Christelle] slide" class="Ldt-AnnotationsList-Thumbnail"
-                                                                                   src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/06.png"></a></div>
-          <div class="Ldt-AnnotationsList-Content">
-            <span class="Ldt-AnnotationsList-Title">Définir les compétences</span><span class="Ldt-AnnotationsList-Note"
-                                                                                        draggable="true"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a58">
-                slide</a></span><span class="creator">Christelle</span><p class="Ldt-AnnotationsList-Description"></p></div></li>
-        <li class="Ldt-AnnotationsList-li
-                   Ldt-Highlighter-Annotation
-                   Ldt-TraceMe"
-            data-annotation="a64"
-            data-begin="317000"
-            data-end="353000"
-            trace-info="annotation-id:a64,
-                        media-id:m1"
-            style="">
-          <div class="Ldt-AnnotationsList-Duration">05:17</div>
-          <div class="Ldt-AnnotationsList-ThumbContainer slide_display"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a64"
-                                                             draggable="true"><img title="05:17 - [Alain] Après la présentation du néolithique, c'est le dieu Thot (Dieu des technologues) qui apparaît (de profil) à l'écran." class="Ldt-AnnotationsList-Thumbnail" src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/07.png"></a></div>
-          <div class="Ldt-AnnotationsList-Content">
-            <span class="Ldt-AnnotationsList-Title">Définir compétences</span><span class="Ldt-AnnotationsList-Note"
-                                                                                    draggable="true"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a64">
-                Après la présentation du
-                néolithique, c'est le dieu Thot
-                (Dieu des technologues) qui
-                apparaît (de profil) à
-                l'écran.</a></span><span class="creator">Alain</span><p class="Ldt-AnnotationsList-Description"></p></div></li>
-        <li class="Ldt-AnnotationsList-li
-                   Ldt-Highlighter-Annotation
-                   Ldt-TraceMe"
-            data-annotation="a59"
-            data-begin="322000"
-            data-end="352000"
-            trace-info="annotation-id:a59,
-                        media-id:m1"
-            style="">
-          <div class="Ldt-AnnotationsList-Duration">05:22</div>
-          <div class="Ldt-AnnotationsList-ThumbContainer slide_display"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a59"
-                                                             draggable="true"><img title="05:22
-                                                                                          - [concept,Claire] concept"
-                                                                                   class="Ldt-AnnotationsList-Thumbnail"
-                                                                                   src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/08.png"></a></div>
-          <div class="Ldt-AnnotationsList-Content">
-            <span class="Ldt-AnnotationsList-Title">Savoir, savoir-agir</span><span class="Ldt-AnnotationsList-Note"
-                                                                                    draggable="true"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a59">
-                concept</a></span><span class="creator">Claire</span><p class="Ldt-AnnotationsList-Description"></p></div></li>
-        <li class="Ldt-AnnotationsList-li
-                   Ldt-Highlighter-Annotation
-                   Ldt-TraceMe"
-            data-annotation="a61"
-            data-begin="327000"
-            data-end="357000"
-            trace-info="annotation-id:a61,
-                        media-id:m1"
-            style="">
-          <div class="Ldt-AnnotationsList-Duration">05:27</div>
-          <div class="Ldt-AnnotationsList-ThumbContainer slide_display"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a61"
-                                                             draggable="true"><img title="05:27
-                                                                                          - [concept,Claire] Les
-                                                                                          technologies"
-                                                                                   class="Ldt-AnnotationsList-Thumbnail"
-                                                                                   src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/09.png"></a></div>
-          <div class="Ldt-AnnotationsList-Content">
-            <span class="Ldt-AnnotationsList-Title">Des compétences individuelles</span><span class="Ldt-AnnotationsList-Note"
-                                                                                              draggable="true"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a61">
-                Les
-                technologies</a></span><span class="creator">Claire</span><p class="Ldt-AnnotationsList-Description"></p></div></li>
-        <li class="Ldt-AnnotationsList-li
-                   Ldt-Highlighter-Annotation
-                   Ldt-TraceMe"
-            data-annotation="a60"
-            data-begin="333000"
-            data-end="363000"
-            trace-info="annotation-id:a60,
-                        media-id:m1"
-            style="">
-          <div class="Ldt-AnnotationsList-Duration">05:33</div>
-          <div class="Ldt-AnnotationsList-ThumbContainer slide_display"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a60"
-                                                             draggable="true"><img title="05:33
-                                                                                          - [theme,Christelle] theme"
-                                                                                   class="Ldt-AnnotationsList-Thumbnail"
-                                                                                   src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/10.png"></a></div>
-          <div class="Ldt-AnnotationsList-Content">
-            <span class="Ldt-AnnotationsList-Title">Une intelligence répartie</span><span class="Ldt-AnnotationsList-Note"
-                                                                                          draggable="true"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a60">
-                theme</a></span><span class="creator">Christelle</span><p class="Ldt-AnnotationsList-Description"></p>
-            <span class="Ldt-AnnotationsList-Note"
-                  draggable="true"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a60">
-                test deuxième note</a></span><span class="creator">COCo</span><p class="Ldt-AnnotationsList-Description"></>
-
-</div></li>
-<li class="Ldt-AnnotationsList-li
-           Ldt-Highlighter-Annotation
-           Ldt-TraceMe"
-    data-annotation="a62"
-    data-begin="342000"
-    data-end="372000"
-    trace-info="annotation-id:a62,
-                media-id:m1"
-    style="">
-  <div class="Ldt-AnnotationsList-Duration">05:42</div>
-  <div class="Ldt-AnnotationsList-ThumbContainer slide_display"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a62"
-                                                     draggable="true"><img title="05:42
-                                                                                  - [exemple,Claire] exemple"
-                                                                           class="Ldt-AnnotationsList-Thumbnail"
-                                                                           src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/11.png"></a></div>
-  <div class="Ldt-AnnotationsList-Content">
-    <span class="Ldt-AnnotationsList-Title">Bloom, sur sa tête</span><span class="Ldt-AnnotationsList-Note"
-                                                                           draggable="true"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a62">
-        exemple</a></span><span class="creator">Claire</span><p class="Ldt-AnnotationsList-Description"></p></div></li>
-<li class="Ldt-AnnotationsList-li
-           Ldt-Highlighter-Annotation
-           Ldt-TraceMe"
-    data-annotation="a63"
-    data-begin="345000"
-    data-end="375000"
-    trace-info="annotation-id:a63,
-                media-id:m1"
-    style="">
-  <div class="Ldt-AnnotationsList-Duration">05:45</div>
-  <div class="Ldt-AnnotationsList-ThumbContainer slide_display"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a63"
-                                                     draggable="true"><img title="05:45
-                                                                                  - [Claire] Histoire du
-                                                                                  dieu Theut et de l'écriture"
-                                                                           class="Ldt-AnnotationsList-Thumbnail"
-                                                                           src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/12.png"></a></div>
-  <div class="Ldt-AnnotationsList-Content">
-    <span class="Ldt-AnnotationsList-Title">Slide...</span><span class="Ldt-AnnotationsList-Note"
-                                                                 draggable="true"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a63">
-        Histoire du dieu Theut et de
-        l'écriture</a></span><span class="creator">Claire</span><p class="Ldt-AnnotationsList-Description"></p></div></li>
-<li class="Ldt-AnnotationsList-li
-           Ldt-Highlighter-Annotation
-           Ldt-TraceMe"
-    data-annotation="a66"
-    data-begin="387000"
-    data-end="417000"
-    trace-info="annotation-id:a66,
-                media-id:m1"
-    style="">
-  <div class="Ldt-AnnotationsList-Duration">06:27</div>
-  <div class="Ldt-AnnotationsList-ThumbContainer slide_display"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a66"
-                                                     draggable="true"><img title="06:27 - [Claire] pharmakon est un poison et un remède."  class="Ldt-AnnotationsList-Thumbnail"
-                                                                           src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/13.png"></a></div>
-  <div class="Ldt-AnnotationsList-Content">
-    <span class="Ldt-AnnotationsList-Title">Slide...</span><span class="Ldt-AnnotationsList-Note"
-                                                                 draggable="true"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a66">
-        pharmakon est un poison et un
-        remède.</a></span><span class="creator">Claire</span><p class="Ldt-AnnotationsList-Description"></p></div></li>
-<li class="Ldt-AnnotationsList-li
-           Ldt-Highlighter-Annotation
-           Ldt-TraceMe"
-    data-annotation="a65"
-    data-begin="403000"
-    data-end="433000"
-    trace-info="annotation-id:a65,
-                media-id:m1"
-    style="">
-  <div class="Ldt-AnnotationsList-Duration">06:43</div>
-  <div class="Ldt-AnnotationsList-ThumbContainer slide_display"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a65"
-                                                     draggable="true"><img title="06:43
-                                                                                  - [slide,Christelle] slide"
-                                                                           class="Ldt-AnnotationsList-Thumbnail"
-                                                                           src="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun/imagecache/14.png"></a></div>
-  <div class="Ldt-AnnotationsList-Content">
-    <span class="Ldt-AnnotationsList-Title">Slide...</span><span class="Ldt-AnnotationsList-Note"
-                                                                 draggable="true"><a href="http://comin-ocw.org/contents/lecture/20140707-marcel_lebrun-groupe1/#id=a65">
-        slide</a></span><span class="creator">Christelle</span><p class="Ldt-AnnotationsList-Description"></p></div></li>
-</ul>
-</div>
-<div class="Ldt-AnnotationsList-Input">
-  <form>
-    <input type="text" class="Ldt-AnnotationsList-InputText" placeholder="??:?? Notez ici">
-  </form>
-</div>
-</div> <!-- #tabcontent -->
-<div class="tabcontent tab-group">
+  </div> <!-- #tabcontent -->
+  <div class="tabcontent tab-group">
     <p>Group tab content</p>
   </div>
   <div class="tabcontent tab-public">
     <p>Public tab content</p>
   </div>
-
 </div>   <!-- #metadata -->
 
 {% endblock %}
