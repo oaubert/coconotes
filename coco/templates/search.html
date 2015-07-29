@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% load admin_urls %}
+{% load url from future %}
+
+{% block title %}COCo platform - recherche {{ query_string }}{% endblock %}
+
+{% block content %}
+
+<section class="search_results">
+  {% if elements %}
+  <h2>{{ elements|length }} résultats.</h2>
+  {% endif %}
+  {% for item in elements %}
+  <article class="capsule searchcapsule">
+    <a title="{{ item.title }}" href="{{ item.get_absolute_url }}"><img src="{{ item.thumbnail_url }}"></a>
+    <div class="content">
+      <h5><span class="searchcapsule_type">{{ item.element_type }}</span> {{ item.subtitle }}</h5>
+      <h4><a title="{{ item.title }}" href="{{ item.get_absolute_url }}">{{ item.title }}</a></h4>
+      <span class="description">{{ item.description|truncatechars_html:40 }}</span>
+      <span class="detail">{{ item.element_description }}</span>
+    </div>
+  </article>
+  {% empty %}
+  <h1>Aucun résultat.</h1>
+  {% endfor %}
+</section>
+
+{% endblock %}
