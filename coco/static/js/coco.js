@@ -83,8 +83,8 @@ $(document).ready( function () {
                     return videoname;
                 }
             },
-            { type: "Slider",
-              container: "ControlledVideoPlayer"
+            { type: "BarSlider",
+              container: "BarSliderContainer"
             },
             { type: "Controller",
               container: "VideoControlContainer",

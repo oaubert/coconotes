@@ -40,10 +40,6 @@ header {
     margin: 0px;
     height: 100%;
     background-color: #fff;
-    /* 1x1 black pixel */
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNg+A8AAQIBANEay48AAAAASUVORK5CYII=);
-    background-size: 16px 72px;
-    background-repeat: no-repeat;
 }
 #main:after {
     clear: both;
@@ -282,71 +278,6 @@ h1.highlighted {
 .videooverlay, .videoplayer {
     max-width: 100%;
     max-height: 100%;
-}
-.videoslider {
-    background-color: black;
-    height: 36px;
-    width: 100%;
-    border-bottom: 1px dashed #666;
-    position: relative;
-}
-.videoslider .sliderbar {
-    background-color: #999;
-    position: absolute;
-    top: 12px;
-    left: 4px;
-    right: 4px;
-    bottom: 11px;
-}
-.videoslider .currentbar {
-    background-color: #fff;
-    position: absolute;
-    top: 14px;
-    left: 4px;
-    bottom: 13px;
-    width: 50px;
-}
-.rightarrow {
-    width: 0px;
-    height: 0px;
-    border-style: solid;
-    border-color: transparent transparent transparent #ffffff;
-    border-width: 3px 0 3px 5px;
-}
-.leftarrow {
-    width: 0px;
-    height: 0px;
-    border-style: solid;
-    border-color: transparent transparent transparent #ffffff;
-    border-width: 3px 5px 3px 0;
-}
-.videoslider .currentbarhead {
-    position: absolute;
-    top: 15px;
-    left: 54px;
-}
-.barmark {
-    width: 1px;
-    position: absolute;
-    top: 4px;
-    bottom: 4px;
-    background-color: #ccc;
-}
-
-.barmark:nth-of-type(4) {
-    left: 20px;
-}
-.barmark:nth-of-type(5) {
-    left: 50px;
-}
-.barmark:nth-of-type(6) {
-    left: 90px;
-}
-.barmark:nth-of-type(7) {
-    left: 140px;
-}
-.barmark:nth-of-type(8) {
-    left: 200px;
 }
 .videocontrols {
     background-color: black;
