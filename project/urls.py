@@ -8,4 +8,5 @@ urlpatterns = patterns('',
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^accounts/', include('allauth.urls')),
                        url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
+                       url(r'^admin_tools/', include('admin_tools.urls')),
 )

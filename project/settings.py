@@ -14,7 +14,6 @@ SECRET_KEY = options.get('secret_key', 'no_secret_at_all_key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = options.get('development', False)
-
 TEMPLATE_DEBUG = options.get('development', False)
 
 ALLOWED_HOSTS = []
@@ -43,6 +42,10 @@ if options.get('redis_cache'):
 
 # Application definition
 INSTALLED_APPS = (
+    'admin_tools',
+    'admin_tools.theming',
+    'admin_tools.menu',
+    'admin_tools.dashboard',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

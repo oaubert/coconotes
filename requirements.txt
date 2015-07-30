@@ -6,3 +6,4 @@ sorl-thumbnail
 djangorestframework
 django-allauth
 django-redis-cache
+django-admin-tools
