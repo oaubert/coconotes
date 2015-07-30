@@ -20,7 +20,7 @@ class VideoAdmin(admin.ModelAdmin):
     list_display = ('pk', 'title', 'shorttitle', 'package_id', 'slug', 'creator', 'created', 'activity', 'thumbnail')
     list_editable = ('title', 'shorttitle', 'package_id', 'slug', 'creator', 'created', 'activity', 'thumbnail')
     list_display_links = ('pk', )
-    list_filter = ( 'creator', 'activity' )
+    list_filter = ( 'creator', )
     search_fields = ('title', 'shorttitle', 'package_id')
 
     prepopulated_fields = {'slug': ('title', )}
