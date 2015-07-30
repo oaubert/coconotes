@@ -157,8 +157,12 @@ class Video(Resource):
         return self.activity.module.course
 
 class UserContent(Element):
-    syllabus = models.TextField(_("Content"),
-                                blank=True)
+    contentdata = models.TextField(_("Content"),
+                                   blank=True)
+    contenttype = models.CharField(_("Content-Type"),
+                                   max_length=127,
+                                   default="text/plain",
+                                   blank=True)
     visibility = models.CharField(_("Visibility"),
                                   max_length=16,
                                   help_text=_("Visibility (private, group, public)"),
