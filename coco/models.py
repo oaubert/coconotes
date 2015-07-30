@@ -1,7 +1,7 @@
 import datetime
 
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.core.urlresolvers import reverse
 from taggit_autosuggest.managers import TaggableManager
 from sorl.thumbnail import ImageField
@@ -181,6 +181,8 @@ class Annotation(UserContent):
                                 blank=True,
                                 default="")
 
+    group = models.ForeignKey(Group,
+                              null=True)
     @property
     def subtitle(self):
         return self.category
@@ -193,6 +195,8 @@ class Comment(UserContent):
                                      null=True)
     parent_comment = models.ForeignKey('self',
                                        null=True)
+    group = models.ForeignKey(Group,
+                              null=True)
 
 class Newsitem(Element):
     category = models.CharField(_("Category"),
