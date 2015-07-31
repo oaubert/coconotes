@@ -1,4 +1,5 @@
 import datetime
+import uuid
 
 from django.db import models
 from django.contrib.auth.models import User, Group
@@ -15,6 +16,10 @@ class AutoDateTimeField(models.DateTimeField):
 class Element(models.Model):
     class Meta:
         abstract = True
+
+    uuid = models.UUIDField(primary_key=True,
+                            default=uuid.uuid4,
+                            editable=False)
 
     creator = models.ForeignKey(User, related_name='created_%(class)s')
 
