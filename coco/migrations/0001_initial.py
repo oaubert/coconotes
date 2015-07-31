@@ -7,6 +7,7 @@ import datetime
 import taggit_autosuggest.managers
 import coco.models
 from django.conf import settings
+import uuid
 
 
 class Migration(migrations.Migration):
@@ -14,13 +15,14 @@ class Migration(migrations.Migration):
     dependencies = [
         ('taggit', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('auth', '0006_require_contenttypes_0002'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='Activity',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('uuid', models.UUIDField(default=uuid.uuid4, serialize=False, editable=False, primary_key=True)),
                 ('created', models.DateTimeField(default=datetime.datetime.now, help_text=b'Element creation date', null=True, verbose_name=b'Creation date')),
                 ('modified', coco.models.AutoDateTimeField(help_text=b'Element modification date', null=True, verbose_name=b'Modification date')),
                 ('state', models.CharField(default=b'draft', max_length=16, verbose_name=b'State', blank=True)),
@@ -37,9 +39,29 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
+            name='AnnotationType',
+            fields=[
+                ('uuid', models.UUIDField(default=uuid.uuid4, serialize=False, editable=False, primary_key=True)),
+                ('created', models.DateTimeField(default=datetime.datetime.now, help_text=b'Element creation date', null=True, verbose_name=b'Creation date')),
+                ('modified', coco.models.AutoDateTimeField(help_text=b'Element modification date', null=True, verbose_name=b'Modification date')),
+                ('state', models.CharField(default=b'draft', max_length=16, verbose_name=b'State', blank=True)),
+                ('title', models.CharField(max_length=250, verbose_name=b'Title', blank=True)),
+                ('shorttitle', models.CharField(max_length=16, verbose_name=b'Shorttitle', blank=True)),
+                ('description', models.TextField(verbose_name=b'Description', blank=True)),
+                ('slug', models.SlugField(max_length=128, blank=True)),
+                ('thumbnail', sorl.thumbnail.fields.ImageField(null=True, upload_to=b'thumbnails', blank=True)),
+                ('contributor', models.ForeignKey(related_name='modified_annotationtype', to=settings.AUTH_USER_MODEL, null=True)),
+                ('creator', models.ForeignKey(related_name='created_annotationtype', to=settings.AUTH_USER_MODEL)),
+                ('tags', taggit_autosuggest.managers.TaggableManager(to='taggit.Tag', through='taggit.TaggedItem', blank=True, help_text='A comma-separated list of tags.', verbose_name='Tags')),
+            ],
+            options={
+                'abstract': False,
+            },
+        ),
+        migrations.CreateModel(
             name='Course',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('uuid', models.UUIDField(default=uuid.uuid4, serialize=False, editable=False, primary_key=True)),
                 ('created', models.DateTimeField(default=datetime.datetime.now, help_text=b'Element creation date', null=True, verbose_name=b'Creation date')),
                 ('modified', coco.models.AutoDateTimeField(help_text=b'Element modification date', null=True, verbose_name=b'Modification date')),
                 ('state', models.CharField(default=b'draft', max_length=16, verbose_name=b'State', blank=True)),
@@ -71,7 +93,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Module',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('uuid', models.UUIDField(default=uuid.uuid4, serialize=False, editable=False, primary_key=True)),
                 ('created', models.DateTimeField(default=datetime.datetime.now, help_text=b'Element creation date', null=True, verbose_name=b'Creation date')),
                 ('modified', coco.models.AutoDateTimeField(help_text=b'Element modification date', null=True, verbose_name=b'Modification date')),
                 ('state', models.CharField(default=b'draft', max_length=16, verbose_name=b'State', blank=True)),
@@ -92,7 +114,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Newsitem',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('uuid', models.UUIDField(default=uuid.uuid4, serialize=False, editable=False, primary_key=True)),
                 ('created', models.DateTimeField(default=datetime.datetime.now, help_text=b'Element creation date', null=True, verbose_name=b'Creation date')),
                 ('modified', coco.models.AutoDateTimeField(help_text=b'Element modification date', null=True, verbose_name=b'Modification date')),
                 ('state', models.CharField(default=b'draft', max_length=16, verbose_name=b'State', blank=True)),
@@ -101,7 +123,7 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(verbose_name=b'Description', blank=True)),
                 ('slug', models.SlugField(max_length=128, blank=True)),
                 ('thumbnail', sorl.thumbnail.fields.ImageField(null=True, upload_to=b'thumbnails', blank=True)),
-                ('subtitle', models.CharField(default=b'', max_length=64, verbose_name=b'Category', blank=True)),
+                ('category', models.CharField(default=b'', max_length=64, verbose_name=b'Category', blank=True)),
                 ('published', models.DateTimeField(help_text=b'Publication date', null=True, verbose_name=b'Publication date')),
                 ('contributor', models.ForeignKey(related_name='modified_newsitem', to=settings.AUTH_USER_MODEL, null=True)),
                 ('creator', models.ForeignKey(related_name='created_newsitem', to=settings.AUTH_USER_MODEL)),
@@ -114,7 +136,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Resource',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('uuid', models.UUIDField(default=uuid.uuid4, serialize=False, editable=False, primary_key=True)),
                 ('created', models.DateTimeField(default=datetime.datetime.now, help_text=b'Element creation date', null=True, verbose_name=b'Creation date')),
                 ('modified', coco.models.AutoDateTimeField(help_text=b'Element modification date', null=True, verbose_name=b'Modification date')),
                 ('state', models.CharField(default=b'draft', max_length=16, verbose_name=b'State', blank=True)),
@@ -132,7 +154,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='UserContent',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('uuid', models.UUIDField(default=uuid.uuid4, serialize=False, editable=False, primary_key=True)),
                 ('created', models.DateTimeField(default=datetime.datetime.now, help_text=b'Element creation date', null=True, verbose_name=b'Creation date')),
                 ('modified', coco.models.AutoDateTimeField(help_text=b'Element modification date', null=True, verbose_name=b'Modification date')),
                 ('state', models.CharField(default=b'draft', max_length=16, verbose_name=b'State', blank=True)),
@@ -141,7 +163,8 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(verbose_name=b'Description', blank=True)),
                 ('slug', models.SlugField(max_length=128, blank=True)),
                 ('thumbnail', sorl.thumbnail.fields.ImageField(null=True, upload_to=b'thumbnails', blank=True)),
-                ('syllabus', models.TextField(verbose_name=b'Content', blank=True)),
+                ('contentdata', models.TextField(verbose_name=b'Content', blank=True)),
+                ('contenttype', models.CharField(default=b'text/plain', max_length=127, verbose_name=b'Content-Type', blank=True)),
                 ('visibility', models.CharField(default=b'private', help_text=b'Visibility (private, group, public)', max_length=16, verbose_name=b'Visibility')),
             ],
             options={
@@ -154,7 +177,8 @@ class Migration(migrations.Migration):
                 ('usercontent_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='coco.UserContent')),
                 ('begin', models.FloatField(default=0, help_text=b'Annotation begin time (in seconds)', verbose_name=b'Begin')),
                 ('end', models.FloatField(default=0, help_text=b'Annotation end time (in seconds)', verbose_name=b'End')),
-                ('category', models.CharField(default=b'', help_text=b'Category (question, suggestion...)', max_length=64, verbose_name=b'Category', blank=True)),
+                ('annotationtype', models.ForeignKey(to='coco.AnnotationType', null=True)),
+                ('group', models.ForeignKey(to='auth.Group', null=True)),
             ],
             options={
                 'abstract': False,
@@ -165,6 +189,7 @@ class Migration(migrations.Migration):
             name='Comment',
             fields=[
                 ('usercontent_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='coco.UserContent')),
+                ('group', models.ForeignKey(to='auth.Group', null=True)),
                 ('parent_annotation', models.ForeignKey(to='coco.Annotation', null=True)),
                 ('parent_comment', models.ForeignKey(to='coco.Comment', null=True)),
             ],
@@ -178,6 +203,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('resource_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='coco.Resource')),
                 ('length', models.FloatField(default=0, help_text=b'Video length in seconds', verbose_name=b'Length')),
+                ('package_id', models.CharField(help_text=b'Package identifier', max_length=255, verbose_name=b'Package id', blank=True)),
             ],
             options={
                 'abstract': False,
