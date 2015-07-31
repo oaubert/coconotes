@@ -156,6 +156,26 @@ class Video(Resource):
     def course(self):
         return self.activity.module.course
 
+    def cinelab(self):
+        """Return a cinelab serialization.
+        """
+        return {
+            "id": self.uuid,
+            "origin": "0",
+            "unit": "ms",
+            "http://advene.liris.cnrs.fr/ns/frame_of_reference/ms": "o=0",
+            "url": self.url,
+            "meta": {
+                "dc:contributor": self.contributor,
+                "dc:creator": self.creator,
+                "dc:created": self.created,
+                "dc:modified": self.modified,
+                "dc:title": self.title,
+                "dc:description": self.description,
+                "dc:duration": long(1000 * self.length),
+            }
+        }
+
 class UserContent(Element):
     contentdata = models.TextField(_("Content"),
                                    blank=True)
@@ -191,6 +211,33 @@ class Annotation(UserContent):
     def subtitle(self):
         return _("Annotation")
 
+    def cinelab(self):
+        """Return a cinelab serialization.
+        """
+        return {
+            "id": self.uuid,
+            "media": self.video.uuid,
+            "type": self.annotationtype.uuid,
+            "meta": {
+                "id-ref": self.annotationtype.uuid,
+                "dc:contributor": self.contributor,
+                "dc:creator": self.creator,
+                "dc:created": self.created,
+                "dc:modified": self.modified,
+                "dc:title": self.title,
+                "dc:description": self.description,
+            },
+            "content": {
+                "mimetype": self.contenttype,
+                # FIXME: investigate in MDP content.title vs meta.dc:title
+                "title": self.title,
+                "description": self.contentdata,
+                "img": {
+                    "src": self.thumbnail.url
+                },
+            },
+            "tags": self.tags
+        }
 
 class Comment(UserContent):
     parent_annotation = models.ForeignKey(Annotation,
