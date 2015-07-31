@@ -196,6 +196,26 @@ class UserContent(Element):
     def subtitle(self):
         return _("User content")
 
+class AnnotationType(Element):
+    """Annotation Type element
+
+    It does not need more info than the one provided in Element.
+    """
+    def cinelab(self):
+        """Return a cinelab serialization.
+        """
+        return {
+            "id": self.uuid,
+            "meta": {
+                "dc:contributor": self.contributor,
+                "dc:creator": self.creator,
+                "dc:created": self.created,
+                "dc:modified": self.modified,
+                "dc:title": self.title,
+                "dc:description": self.description,
+            }
+        }
+
 class Annotation(UserContent):
     begin = models.FloatField(_("Begin"),
                               help_text=_("Annotation begin time (in seconds)"),
@@ -204,12 +224,8 @@ class Annotation(UserContent):
                               help_text=_("Annotation end time (in seconds)"),
                               default=0)
     video = models.ForeignKey(Video)
-    category = models.CharField(_("Category"),
-                                max_length=64,
-                                help_text=_("Category (question, suggestion...)"),
-                                blank=True,
-                                default="")
-
+    annotationtype = models.ForeignKey(AnnotationType,
+                                       null=True)
     group = models.ForeignKey(Group,
                               null=True)
     @property
