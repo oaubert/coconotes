@@ -189,7 +189,7 @@ class Annotation(UserContent):
                               null=True)
     @property
     def subtitle(self):
-        return self.category
+        return _("Annotation")
 
 
 class Comment(UserContent):
