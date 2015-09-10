@@ -2,7 +2,6 @@ from django.contrib import admin
 from .models import Course, Video, Module, License, AnnotationType, Annotation, Comment, Resource, Newsitem, Activity
 
 admin.site.register(License)
-admin.site.register(Annotation)
 admin.site.register(Resource)
 admin.site.register(Comment)
 admin.site.register(Newsitem)
@@ -51,5 +50,15 @@ class ActivityAdmin(admin.ModelAdmin):
     list_display_links = ('pk', )
     list_filter = ( 'creator', 'module' )
     search_fields = ('title', 'shorttitle')
+
+    prepopulated_fields = {'slug': ('title', )}
+
+@admin.register(Annotation)
+class AnnotationAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'title', 'shorttitle', 'creator', 'created', )
+    list_editable = ('title', 'shorttitle', )
+    list_display_links = ('pk', )
+    list_filter = ( 'creator', )
+    search_fields = ('title', 'shorttitle', )
 
     prepopulated_fields = {'slug': ('title', )}
