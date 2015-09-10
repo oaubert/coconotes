@@ -3,12 +3,16 @@
 import sys
 import os
 import json
+import urllib
+import logging
 
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import User
 from django.core.files import File
 
-from coco.models import Activity, Course, Video, Module, License, Annotation, Comment, Resource, Newsitem
+from coco.models import Activity, Course, Video, Module, License, Annotation, Comment, Resource, Newsitem, AnnotationType
+
+logger = logging.getLogger(__name__)
 
 class Command(BaseCommand):
     args = '[command] [param]'
@@ -55,6 +59,40 @@ class Command(BaseCommand):
         with open(pic, 'rb') as f:
             vid.thumbnail.save(os.path.basename(pic), File(f))
         vid.save()
+
+        # Read data.json if available
+        packageurl = data.get('dataurl', os.path.join(dirname, 'data.json'))
+        if packageurl.startswith('http') or os.path.exists(packageurl):
+            logger.info("Loading data from ", packageurl)
+            f = urllib.urlopen(packageurl)
+            package = json.loads("".join(f.readlines()))
+            f.close()
+            ats = {}
+            for atjson in package['annotation-types']:
+                try:
+                    at = AnnotationType.objects.get(title=atjson['dc:title'])
+                except AnnotationType.DoesNotExist:
+                    # Create the AnnotationType matching dc:title
+                    at = AnnotationType(creator=user,
+                                        title=atjson['dc:title'],
+                                        description=atjson['dc:description'])
+                    at.save()
+                ats[atjson['id']] = at
+            for a in package['annotations']:
+                at = ats[a['meta']['id-ref']]
+                an = Annotation(creator=user, contributor=user,
+                                annotationtype=at,
+                                video=vid,
+                                title=a['content']['title'],
+                                description=a['content']['description'])
+                if 'data' in a['content']:
+                    an.contenttype = a['content'].get('mimetype', 'text/plain')
+                    an.contentdata = json.dumps(a['content']['data'])
+                if 'img' in a['content']:
+                    pic = os.path.join(dirname, a['content']['img']['src'])
+                    with open(pic, 'rb') as f:
+                        an.thumbnail.save(os.path.basename(pic), File(f))
+                an.save()
 
     def _postnews(self, title, subtitle, data):
         """Post a newsitem message.
