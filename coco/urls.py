@@ -21,6 +21,8 @@ urlpatterns = patterns('',
                        url(r'^activity/(?P<pk>[\w\d_-]+)/$', DetailView.as_view(model=Activity, context_object_name='activity'), name='activity-detail'),
                        url(r'^video/$', ListView.as_view(model=Video), name='video-list'),
                        url(r'^video/(?P<pk>[\w\d_-]+)/$', DetailView.as_view(model=Video, context_object_name='video'), name='video-detail'),
+                       url(r'^video/(?P<video>[\w\d_-]+)/cinelab$', views.cinelab, name='video-cinelab'),
+
                        url(r'^news/$', ListView.as_view(model=Newsitem), name='newsitem-list'),
                        url(r'^news/(?P<pk>[\w\d_-]+)/$', DetailView.as_view(model=Newsitem, context_object_name='item'), name='newsitem-detail'),
 

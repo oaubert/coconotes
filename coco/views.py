@@ -57,3 +57,31 @@ def search(request, **kw):
         'query_string' : request.GET.get('q', ''),
         'current_document': 'profile',
     }, context_instance=RequestContext(request))
+
+def cinelab(request, video=None, **kw):
+    """Generate a cinelab package in json format for the given video.
+    """
+    v = get_object_or_404(Video, pk=video)
+    data = {
+        "tags": [],
+        "views": [],
+        "lists": [],
+        "medias": [],
+        "annotations": [],
+        "annotation-types": []
+    }
+    data['meta'] = {
+        "dc:contributor": request.user.username,
+        "dc:creator": request.user.username,
+        "dc:title": v.title,
+        "id": "package_" + v.uuid,
+        "dc:modified": datetime.datetime.now(),
+        "dc:created": v.created,
+        "main_media": v.uuid,
+        "dc:description": ""
+    }
+    data['medias'].append(v.cinelab())
+    data['annotations'].extend(a.cinelab() for a in Annotation.object.filter(video=v))
+    # Add defined annotation types + a selection of basic types
+    data['annotation-types'].extend(at.cinelab() for a in AnnotationType.object.all())
+    return data
