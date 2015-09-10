@@ -126,7 +126,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 # Custom URL field name for django-rest-framework:
 URL_FIELD_NAME = 'href'
