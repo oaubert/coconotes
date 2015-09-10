@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Course, Video
+from .models import Course, Video, Annotation, AnnotationType
 from django.contrib.auth.models import User
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -24,6 +24,28 @@ class CourseSerializer(serializers.HyperlinkedModelSerializer):
     contributor = UserSerializer(many=False)
     class Meta:
         model = Course
+        fields = ('id',
+                  'creator', 'created', 'contributor', 'modified',
+                  'state', 'title', 'description', 'slug',
+                  'thumbnail', 'description')
+
+class AnnotationSerializer(serializers.HyperlinkedModelSerializer):
+    creator = UserSerializer(many=False)
+    contributor = UserSerializer(many=False)
+    class Meta:
+        model = Annotation
+        fields = ('id',
+                  'creator', 'created', 'contributor', 'modified',
+                  'state', 'title', 'description', 'slug',
+                  'thumbnail', 'description',
+                  'begin', 'end', 'video', 'annotationtype',
+                  'group')
+
+class AnnotationTypeSerializer(serializers.HyperlinkedModelSerializer):
+    creator = UserSerializer(many=False)
+    contributor = UserSerializer(many=False)
+    class Meta:
+        model = AnnotationType
         fields = ('id',
                   'creator', 'created', 'contributor', 'modified',
                   'state', 'title', 'description', 'slug',
