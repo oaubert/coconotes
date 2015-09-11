@@ -214,14 +214,12 @@ class AnnotationType(Element):
         """
         return {
             "id": self.uuid,
-            "meta": {
-                "dc:contributor": self.contributor,
-                "dc:creator": self.creator,
-                "dc:created": self.created,
-                "dc:modified": self.modified,
-                "dc:title": self.title,
-                "dc:description": self.description,
-            }
+            "dc:contributor": self.contributor,
+            "dc:creator": self.creator,
+            "dc:created": self.created,
+            "dc:modified": self.modified,
+            "dc:title": self.title,
+            "dc:description": self.description,
         }
 
 class Annotation(UserContent):
