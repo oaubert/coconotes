@@ -30,7 +30,6 @@ class Command(BaseCommand):
             c = Course.objects.get(title=cours)
         except Course.DoesNotExist:
             c = Course(creator=user, contributor=user, title=cours, shorttitle=cours[:16])
-
             c.save()
         try:
             module = Module.objects.get(title=module, course=c)
@@ -52,7 +51,11 @@ class Command(BaseCommand):
             url = "https://comin-ocw.org/contents/%s/camera.mp4" % dirname.split('/contents/')[-1]
         vid = Video(creator=user, contributor=user,
                     activity=activity,
-                    title=activity_title, shorttitle=activity_title[:16], url=url)
+                    title=activity_title,
+                    shorttitle=activity_title[:16],
+                    url=url)
+        # Note: length is not initialized. We will get its duration
+        # from the package just below.
         pic = os.path.join(dirname, 'imagecache', '00.png')
         if not os.path.exists(pic):
             pic = os.path.join(dirname, 'imagecache', '000.png')
@@ -67,6 +70,9 @@ class Command(BaseCommand):
             f = urllib.urlopen(packageurl)
             package = json.loads("".join(f.readlines()))
             f.close()
+            # Update video length
+            vid.length = package['medias'][0]['meta']['dc:duration'] / 1000.0
+            vid.slug = package['medias'][0]['id']
             ats = {}
             for atjson in package['annotation-types']:
                 try:
