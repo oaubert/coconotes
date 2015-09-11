@@ -83,6 +83,8 @@ class Command(BaseCommand):
                 an = Annotation(creator=user, contributor=user,
                                 annotationtype=at,
                                 video=vid,
+                                begin=a['begin'] / 1000.0,
+                                end=a['end'] / 1000.0,
                                 title=a['content']['title'],
                                 description=a['content']['description'])
                 if 'data' in a['content']:
