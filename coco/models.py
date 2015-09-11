@@ -1,14 +1,21 @@
 import datetime
+import json
 import uuid
+from gettext import gettext as _
 
 from django.db import models
 from django.contrib.auth.models import User, Group
 from django.core.urlresolvers import reverse
-from taggit_autosuggest.managers import TaggableManager
-from sorl.thumbnail import ImageField
 from django.contrib.staticfiles.templatetags.staticfiles import static
-from gettext import gettext as _
 
+from taggit_autosuggest.managers import TaggableManager
+
+from sorl.thumbnail import ImageField
+
+JSON_MIMETYPES = [
+    'application/json',
+    'application/x-video-quiz'
+    ]
 class AutoDateTimeField(models.DateTimeField):
     def pre_save(self, model_instance, add):
         return datetime.datetime.now()
@@ -233,12 +240,21 @@ class Annotation(UserContent):
         return _("Annotation")
 
     def cinelab(self):
-        """Return a cinelab serialization.
+        """Return a cinelab JSON serialization.
         """
+        thumb = self.thumbnail.url if self.thumbnail.name else ''
+        data = self.contentdata
+        if self.contenttype in JSON_MIMETYPES:
+            try:
+                data = json.loads(self.contentdata)
+            except ValueError:
+                pass
         return {
             "id": self.uuid,
             "media": self.video.uuid,
             "type": self.annotationtype.uuid,
+            "begin": long(self.begin * 1000),
+            "end": long(self.end * 1000),
             "meta": {
                 "id-ref": self.annotationtype.uuid,
                 "dc:contributor": self.contributor,
@@ -252,12 +268,13 @@ class Annotation(UserContent):
                 "mimetype": self.contenttype,
                 # FIXME: investigate in MDP content.title vs meta.dc:title
                 "title": self.title,
-                "description": self.contentdata,
+                "description": self.description,
+                "data": data,
                 "img": {
-                    "src": self.thumbnail.url
+                    "src": thumb
                 },
             },
-            "tags": self.tags
+            "tags": list(self.tags.values('name'))
         }
 
 class Comment(UserContent):
