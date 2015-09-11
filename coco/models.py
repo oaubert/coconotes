@@ -57,7 +57,7 @@ class Element(models.Model):
                                    blank=True)
 
     slug = models.SlugField(max_length=128,
-                            blank=True)
+                            null=True, unique=True, blank=True)
 
     thumbnail = ImageField(upload_to='thumbnails',
                            blank=True,
@@ -89,7 +89,8 @@ class Element(models.Model):
         return self.__class__.__name__
 
 class License(models.Model):
-    slug = models.SlugField(max_length=16)
+    slug = models.SlugField(max_length=16,
+                            null=True, unique=True, blank=True)
 
     title = models.CharField(_("Title"),
                              blank=True,
