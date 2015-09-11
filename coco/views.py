@@ -1,9 +1,15 @@
-from django.shortcuts import render_to_response
+import datetime
+import json
+
+from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+from django.http import HttpResponse
 from rest_framework import generics
-from .models import Course, Video, Newsitem, Module, Activity, Annotation, Comment
+from rest_framework.decorators import api_view
+
+from .models import Course, Video, Newsitem, Module, Activity, Annotation, Comment, AnnotationType
 from .serializers import CourseSerializer, VideoSerializer
-from .utils import generic_search
+from .utils import generic_search, COCoEncoder
 
 class CourseList(generics.ListCreateAPIView):
     model = Course
@@ -58,6 +64,7 @@ def search(request, **kw):
         'current_document': 'profile',
     }, context_instance=RequestContext(request))
 
+@api_view(('GET',))
 def cinelab(request, video=None, **kw):
     """Generate a cinelab package in json format for the given video.
     """
@@ -74,14 +81,16 @@ def cinelab(request, video=None, **kw):
         "dc:contributor": request.user.username,
         "dc:creator": request.user.username,
         "dc:title": v.title,
-        "id": "package_" + v.uuid,
+        "id": u"package_" + unicode(v.uuid),
         "dc:modified": datetime.datetime.now(),
         "dc:created": v.created,
-        "main_media": v.uuid,
+        "main_media": unicode(v.uuid),
         "dc:description": ""
     }
     data['medias'].append(v.cinelab())
-    data['annotations'].extend(a.cinelab() for a in Annotation.object.filter(video=v))
+    data['annotations'].extend(a.cinelab() for a in Annotation.objects.filter(video=v))
     # Add defined annotation types + a selection of basic types
-    data['annotation-types'].extend(at.cinelab() for a in AnnotationType.object.all())
-    return data
+    data['annotation-types'].extend(a.cinelab() for a in AnnotationType.objects.all())
+    return HttpResponse(json.dumps(data, cls=COCoEncoder, indent=1),
+                        content_type="application/json")
+
