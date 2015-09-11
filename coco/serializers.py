@@ -12,7 +12,7 @@ class VideoSerializer(serializers.HyperlinkedModelSerializer):
     contributor = UserSerializer(many=False)
     class Meta:
         model = Video
-        fields = ('id',
+        fields = ('uuid',
                   'creator', 'created', 'contributor', 'modified',
                   'state', 'title', 'description', 'slug',
                   'thumbnail', 'description',
@@ -24,7 +24,7 @@ class CourseSerializer(serializers.HyperlinkedModelSerializer):
     contributor = UserSerializer(many=False)
     class Meta:
         model = Course
-        fields = ('id',
+        fields = ('uuid',
                   'creator', 'created', 'contributor', 'modified',
                   'state', 'title', 'description', 'slug',
                   'thumbnail', 'description')
@@ -34,7 +34,7 @@ class AnnotationSerializer(serializers.HyperlinkedModelSerializer):
     contributor = UserSerializer(many=False)
     class Meta:
         model = Annotation
-        fields = ('id',
+        fields = ('uuid',
                   'creator', 'created', 'contributor', 'modified',
                   'state', 'title', 'description', 'slug',
                   'thumbnail', 'description',
@@ -46,7 +46,7 @@ class AnnotationTypeSerializer(serializers.HyperlinkedModelSerializer):
     contributor = UserSerializer(many=False)
     class Meta:
         model = AnnotationType
-        fields = ('id',
+        fields = ('uuid',
                   'creator', 'created', 'contributor', 'modified',
                   'state', 'title', 'description', 'slug',
                   'thumbnail', 'description')
