@@ -14,7 +14,7 @@ then
     rm db.sqlite3
     ./manage.py migrate
     # superuser.json is a simple json file with username, mail and password properties
-    jq "\"from django.contrib.auth.models import User; User.objects.create_superuser('\(.username)', '\(.mail)', '\(.password)')\"" $CONFIRM | python manage.py shell
+    jq -r "\"from django.contrib.auth.models import User; User.objects.create_superuser('\(.username)', '\(.mail)', '\(.password)')\"" $CONFIG | python manage.py shell --plain
     ./scripts/populate
 else
     echo "Run with confirm as first parameter"
