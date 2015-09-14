@@ -9,6 +9,20 @@ from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
 
 from taggit_autosuggest.managers import TaggableManager
+from taggit.models import TaggedItemBase
+
+class TaggedCourse(TaggedItemBase):
+    content_object = models.ForeignKey('Course')
+class TaggedModule(TaggedItemBase):
+    content_object = models.ForeignKey('Module')
+class TaggedActivity(TaggedItemBase):
+    content_object = models.ForeignKey('Activity')
+class TaggedVideo(TaggedItemBase):
+    content_object = models.ForeignKey('Video')
+class TaggedAnnotation(TaggedItemBase):
+    content_object = models.ForeignKey('Annotation')
+class TaggedComment(TaggedItemBase):
+    content_object = models.ForeignKey('Comment')
 
 from sorl.thumbnail import ImageField
 
@@ -35,7 +49,8 @@ class Element(models.Model):
                                    null=True, editable=True,
                                    default=datetime.datetime.now)
 
-    contributor = models.ForeignKey(User, related_name='modified_%(class)s', null=True)
+    contributor = models.ForeignKey(User, related_name='modified_%(class)s',
+                                    blank=True, null=True)
 
     modified = AutoDateTimeField(_('Modification date'),
                                  help_text=_('Element modification date'),
@@ -62,8 +77,6 @@ class Element(models.Model):
     thumbnail = ImageField(upload_to='thumbnails',
                            blank=True,
                            null=True)
-
-    tags = TaggableManager(blank=True)
 
     @property
     def subtitle(self):
@@ -112,6 +125,7 @@ class Resource(Element):
                              max_length=250)
 
     license = models.ForeignKey(License,
+                                blank=True,
                                 null=True)
 
     # FIXME: to clarify
@@ -124,6 +138,8 @@ class Course(Element):
 
     syllabus = models.TextField(_("Syllabus"),
                                 blank=True)
+
+    tags = TaggableManager(blank=True, through=TaggedCourse)
 
     @property
     def videos(self):
@@ -141,6 +157,8 @@ class Course(Element):
 class Module(Element):
     course = models.ForeignKey(Course)
 
+    tags = TaggableManager(blank=True, through=TaggedModule)
+
     @property
     def subtitle(self):
         return self.course.shorttitle
@@ -148,23 +166,29 @@ class Module(Element):
 class Activity(Element):
     module = models.ForeignKey(Module)
 
+    tags = TaggableManager(blank=True, through=TaggedActivity)
+
     @property
     def subtitle(self):
         return self.module.shorttitle
 
 class Video(Resource):
     activity = models.ForeignKey(Activity,
+                                 blank=True,
                                  null=True)
     length = models.FloatField(_("Length"),
                                  help_text=_("Video length in seconds"),
                                  default=0)
     slides = models.ForeignKey(Resource,
+                               blank=True,
                                null=True,
                                related_name="source_video")
     package_id = models.CharField(_("Package id"),
                                   max_length=255,
                                   help_text=_("Package identifier"),
                                   blank=True)
+    tags = TaggableManager(blank=True, through=TaggedVideo)
+
     @property
     def subtitle(self):
         return self.activity.shorttitle
@@ -204,6 +228,7 @@ class UserContent(Element):
                                   max_length=16,
                                   help_text=_("Visibility (private, group, public)"),
                                   default="private")
+
     @property
     def subtitle(self):
         return _("User content")
@@ -237,7 +262,9 @@ class Annotation(UserContent):
     annotationtype = models.ForeignKey(AnnotationType,
                                        null=True)
     group = models.ForeignKey(Group,
+                              blank=True,
                               null=True)
+    tags = TaggableManager(blank=True, through=TaggedAnnotation)
     @property
     def subtitle(self):
         return _("Annotation")
@@ -282,13 +309,18 @@ class Annotation(UserContent):
 
 class Comment(UserContent):
     parent_annotation = models.ForeignKey(Annotation,
+                                          blank=True,
                                           null=True)
     parent_video = models.ForeignKey(Video,
+                                     blank=True,
                                      null=True)
     parent_comment = models.ForeignKey('self',
+                                       blank=True,
                                        null=True)
     group = models.ForeignKey(Group,
+                              blank=True,
                               null=True)
+    tags = TaggableManager(blank=True, through=TaggedComment)
 
 class Newsitem(Element):
     category = models.CharField(_("Category"),
