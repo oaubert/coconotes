@@ -369,6 +369,10 @@ h1.highlighted {
     display: block;
 }
 
+.Ldt-Ctrl {
+    width: 100%;
+}
+
 .annotationlist {
     font-family: Roboto;
     font-size: 14px !important;
@@ -641,6 +645,7 @@ p.Ldt-AnnotationsList-Description {
     overflow-y: hidden;
     background-color: #dcf0ff;
     width: calc(25% - 12px);
+    position: relative;
 }
 
 .minicapsule .content {
@@ -762,6 +767,22 @@ p.Ldt-AnnotationsList-Description {
     display: block;
     position: relative;
     top: 40px;
+}
+
+.minicapsule .adminactions {
+    display: none;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}
+.minicapsule:hover .adminactions {
+    display: inline-block;
+}
+.adminactions .editelement {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url("res/edit.png");
 }
 
 @media only screen and (max-width: 767px) {

@@ -6,4 +6,7 @@
     <span class="description">{{ item.description|truncatechars_html:40 }}</span>
     <span class="detail">{{ item.element_description }}</span>
   </div>
+  {% if user.is_staff %}
+  <div class="adminactions"><a href="{{ item.edit_url }}" class="editelement"></a></div>
+  {% endif %}
 </article>

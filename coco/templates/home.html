@@ -60,6 +60,9 @@
           <div class="content">
             <h4><a title="{{ item.title }}" href="{{ item.get_absolute_url }}">{{ item.shorttitle }}</a></h4>
           </div>
+          {% if user.is_staff %}
+          <div class="adminactions"><a href="{{ item.edit_url }}" class="editelement"></a></div>
+          {% endif %}
         </article>
         {% endfor %}
       </div>
