@@ -5,27 +5,38 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.http import HttpResponse
 from rest_framework import generics
-from rest_framework.decorators import api_view
 
-from .models import Course, Video, Newsitem, Module, Activity, Annotation, Comment, AnnotationType
+from .models import Course, Video, Newsitem, Module, Activity, Annotation, Comment, AnnotationType, Resource
 from .serializers import CourseSerializer, VideoSerializer
 from .utils import generic_search, COCoEncoder
 
 class CourseList(generics.ListCreateAPIView):
-    model = Course
+    queryset = Course.objects.all()
+    lookup_field = 'uuid'
     serializer_class = CourseSerializer
 
 class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
     model = Course
+    lookup_field = 'uuid'
     serializer_class = CourseSerializer
 
 class VideoList(generics.ListCreateAPIView):
-    model = Video
+    queryset = Video.objects.all()
+    lookup_field = 'uuid'
     serializer_class = VideoSerializer
 
 class VideoDetail(generics.RetrieveUpdateDestroyAPIView):
-    model = Video
+    queryset = Video.objects.all()
+    lookup_field = 'uuid'
     serializer_class = VideoSerializer
+
+class ResourceList(generics.ListCreateAPIView):
+    queryset = Resource.objects.all()
+    lookup_field = 'uuid'
+
+class ResourceDetail(generics.RetrieveUpdateDestroyAPIView):
+    model = Resource
+    lookup_field = 'uuid'
 
 def home(request, **kw):
     return render_to_response('home.html', {
@@ -64,7 +75,6 @@ def search(request, **kw):
         'current_document': 'profile',
     }, context_instance=RequestContext(request))
 
-@api_view(('GET',))
 def cinelab(request, video=None, **kw):
     """Generate a cinelab package in json format for the given video.
     """
