@@ -66,7 +66,7 @@ class Command(BaseCommand):
         # Read data.json if available
         packageurl = data.get('dataurl', os.path.join(dirname, 'data.json'))
         if packageurl.startswith('http') or os.path.exists(packageurl):
-            logger.info("Loading data from ", packageurl)
+            self.stdout.write("Loading data from %s" % packageurl)
             f = urllib.urlopen(packageurl)
             package = json.loads("".join(f.readlines()))
             f.close()
@@ -84,8 +84,11 @@ class Command(BaseCommand):
                                         description=atjson['dc:description'])
                     at.save()
                 ats[atjson['id']] = at
+            self.stdout.write("Copying %d annotations" % len(package['annotations']))
             for a in package['annotations']:
                 at = ats[a['meta']['id-ref']]
+                self.stdout.write(".", ending="")
+                self.stdout.flush()
                 an = Annotation(creator=user, contributor=user,
                                 annotationtype=at,
                                 video=vid,
