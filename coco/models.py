@@ -85,6 +85,10 @@ class Element(models.Model):
                              self.__class__.__name__)
 
     @property
+    def edit_url(self):
+        return reverse("admin:%s_%s_change" % (self._meta.app_label, self._meta.model_name), args=(self.pk,))
+
+    @property
     def element_type(self):
         return self.__class__.__name__
 
