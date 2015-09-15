@@ -41,7 +41,7 @@ if options.get('redis_cache'):
     SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
 # Application definition
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'admin_tools',
     'admin_tools.theming',
     'admin_tools.menu',
@@ -68,7 +68,9 @@ INSTALLED_APPS = (
     'allauth.socialaccount.providers.openid',
     'allauth.socialaccount.providers.twitter',
     #'allauth.socialaccount.providers.vimeo',
-)
+]
+if DEBUG:
+    INSTALLED_APPS.insert(-1, 'debug_toolbar')
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -141,6 +143,6 @@ ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 
 if options.get('raven_dsn'):
     INSTALLED_APPS += ( 'raven.contrib.django.raven_compat', )
-    
+
 if options.get('development'):
     INSTALLED_APPS += ( 'django_extensions', )
