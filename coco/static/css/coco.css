@@ -8,7 +8,11 @@
 }
 
 html, body {
-    background-color: black;
+    background-color: #fff;
+    /* 1x1 black pixel */
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNg+A8AAQIBANEay48AAAAASUVORK5CYII=);
+    background-size: 100% 104px;
+    background-repeat: no-repeat;
     margin: 0px;
     padding: 0px;
     font-family: Merriweather;
@@ -198,9 +202,14 @@ h1.highlighted {
     padding: 0px;
     vertical-align: top;
     margin-left: 6px;
+    background-color: #fff;
+    color: #000;
+}
+.player .titleblock {
     background-color: #000;
     color: #fff;
 }
+
 #metadata {
     background-color: #fff;
     float: right;
