@@ -73,6 +73,7 @@ class Command(BaseCommand):
             # Update video length
             vid.length = package['medias'][0]['meta']['dc:duration'] / 1000.0
             vid.slug = package['medias'][0]['id']
+            vid.save()
             ats = {}
             for atjson in package['annotation-types']:
                 try:
