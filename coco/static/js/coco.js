@@ -87,12 +87,9 @@ $(document).ready( function () {
             { type: "BarSlider",
               container: "BarSliderContainer"
             },
-            { type: "Controller",
+            { type: "CocoController",
               container: "VideoControlContainer",
-              disable_annotate_btn: true,
-              always_show_search: true,
-              disable_fullscreen: false,
-              fullscreen_widget: '#VideoContainer'
+              fullscreen_widget: '.videoplayer'
             },
             {
                 type: "SlidePreview",

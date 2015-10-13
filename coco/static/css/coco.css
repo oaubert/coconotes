@@ -271,6 +271,9 @@ h1.highlighted {
     text-align: center;
     min-height: 300px;
 }
+.controlscontainer {
+    background-color: #000;
+}
 .aspectratiokeeper {
   width: 100%;
   display: inline-block;
@@ -287,53 +290,6 @@ h1.highlighted {
 .videooverlay, .videoplayer {
     max-width: 100%;
     max-height: 100%;
-}
-.videocontrols {
-    background-color: black;
-    height: 36px;
-}
-.videocontrols div {
-    display: inline-block;
-}
-.videocontrols .button {
-    width: 32px;
-    height: 22px;
-    margin-left: 4px;
-    margin-top: 6px;
-}
-.videocontrols .playbutton {
-    background: url("res/video_control_play.svg");
-}
-.timeinfo {
-    font-family: Roboto;
-    font-size: 14px;
-    height: 32px;
-    margin-left: 6px;
-    vertical-align: middle;
-}
-.videocontrols .social-twitter {
-    width: 18px;
-    height: 18px;
-    margin-left: 4px;
-    margin-bottom: 2px;
-    background: url("res/button_twitter.svg");
-}
-.videocontrols .social-facebook {
-    width: 18px;
-    height: 18px;
-    margin-left: 4px;
-    margin-bottom: 2px;
-    background: url("res/button_facebook.svg");
-}
-.videocontrols .rightcontrols {
-    float: right;
-    margin-right: 4px;
-}
-.videocontrols .volumebutton {
-    background: url("res/video_control_sound.svg");
-}
-.videocontrols .fullscreenbutton {
-    background: url("res/video_control_fullscreen.svg");
 }
 
 .tabnames {
