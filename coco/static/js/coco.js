@@ -67,7 +67,8 @@ $(document).ready( function () {
         css : IriSP.widgetsDir + '/LdtPlayer-core.css',
         widgets: [
             {
-                type: "HtmlPlayer",
+                type: "SlideVideoPlayer",
+                mode: "pip",
                 video: metadata.video_url,
                 container: "VideoContainer",
                 width: '100%',
@@ -90,6 +91,7 @@ $(document).ready( function () {
               container: "VideoControlContainer",
               disable_annotate_btn: true,
               always_show_search: true,
+              disable_fullscreen: false,
               fullscreen_widget: '#VideoContainer'
             },
             {
@@ -100,7 +102,8 @@ $(document).ready( function () {
             {
                 type: "EnrichedPlan",
                 container: "AnnotationsContainer",
-                annotation_type: "Slides"
+                annotation_type: "Slides",
+                annotation_types: [ "Contributions" ]
             },
             { type: "Trace",
               url: "http://comin-ocw.org/trace/",

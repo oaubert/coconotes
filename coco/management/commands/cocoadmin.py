@@ -2,6 +2,7 @@
 
 import sys
 import os
+import re
 import json
 import urllib
 import logging
@@ -10,7 +11,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import User
 from django.core.files import File
 
-from coco.models import Activity, Course, Video, Module, License, Annotation, Comment, Resource, Newsitem, AnnotationType
+from coco.models import Activity, Course, Video, Module, Annotation, Newsitem, AnnotationType
 
 logger = logging.getLogger(__name__)
 
@@ -73,6 +74,9 @@ class Command(BaseCommand):
             # Update video length
             vid.length = package['medias'][0]['meta']['dc:duration'] / 1000.0
             vid.slug = package['medias'][0]['id']
+            if re.match('^\d', vid.slug):
+                # id starting with a number. Add a "m" (media) prefix.
+                vid.slug = "m" + vid.slug
             vid.save()
             ats = {}
             for atjson in package['annotation-types']:
