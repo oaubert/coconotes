@@ -59,8 +59,8 @@ MODEL_MAP = {
     Module: [ "title", "shorttitle", "description" ],
     Activity: ["title", "shorttitle", "description" ],
     Video: ["title", "shorttitle", "description" ],
-    Annotation: ["title", "shorttitle", "description", "syllabus" ],
-    Comment: ["title", "shorttitle", "description", "syllabus" ],
+    Annotation: ["title", "shorttitle", "description", "contentdata" ],
+    Comment: ["title", "shorttitle", "description", "contentdata" ],
     Newsitem: ["title", "shorttitle", "description", "category" ],
 }
 def search(request, **kw):
