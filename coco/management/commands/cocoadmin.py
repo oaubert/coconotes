@@ -11,10 +11,16 @@ import dateutil.parser
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import User
 from django.core.files import File
+from django.utils.timezone import make_naive, is_aware
 
 from coco.models import Activity, Course, Video, Module, Annotation, Newsitem, AnnotationType
 
 logger = logging.getLogger(__name__)
+
+def convert_date(d):
+    if is_aware(d):
+        d = make_naive(d)
+    return d
 
 class Command(BaseCommand):
     args = '[command] [param]'
@@ -69,8 +75,9 @@ class Command(BaseCommand):
         pic = os.path.join(dirname, 'imagecache', '00.png')
         if not os.path.exists(pic):
             pic = os.path.join(dirname, 'imagecache', '000.png')
-        with open(pic, 'rb') as f:
-            vid.thumbnail.save(os.path.basename(pic), File(f))
+        if os.path.exists(pic):
+            with open(pic, 'rb') as f:
+                vid.thumbnail.save(os.path.basename(pic), File(f))
         vid.save()
 
         # Read data.json if available
@@ -94,7 +101,7 @@ class Command(BaseCommand):
                 except AnnotationType.DoesNotExist:
                     # Create the AnnotationType matching dc:title
                     at = AnnotationType(creator=adminuser,
-                                        created=dateutil.parser.parse(atjson['dc:created']),
+                                        created=convert_date(dateutil.parser.parse(atjson['dc:created'])),
                                         title=atjson['dc:title'],
                                         description=atjson['dc:description'])
                     at.save()
@@ -113,12 +120,12 @@ class Command(BaseCommand):
                     if data[0][0]:
                         tags.append(data[0][0].strip(','))
                 an = Annotation(creator=get_user(creator), contributor=get_user(contributor),
-                                created=dateutil.parser.parse(a['meta']['dc:created']),
-                                modified=dateutil.parser.parse(a['meta']['dc:modified']),
+                                created=convert_date(dateutil.parser.parse(a['meta']['dc:created'])),
+                                modified=convert_date(dateutil.parser.parse(a['meta']['dc:modified'])),
                                 annotationtype=at,
                                 video=vid,
-                                begin=a['begin'] / 1000.0,
-                                end=a['end'] / 1000.0,
+                                begin=long(a['begin']) / 1000.0,
+                                end=long(a['end']) / 1000.0,
                                 title=a['content']['title'],
                                 description=a['content']['description'])
                 # FIXME: handle tags
@@ -127,8 +134,9 @@ class Command(BaseCommand):
                     an.contentdata = json.dumps(a['content']['data'])
                 if 'img' in a['content']:
                     pic = os.path.join(dirname, a['content']['img']['src'])
-                    with open(pic, 'rb') as f:
-                        an.thumbnail.save(os.path.basename(pic), File(f))
+                    if os.path.exists(pic):
+                        with open(pic, 'rb') as f:
+                            an.thumbnail.save(os.path.basename(pic), File(f))
                 an.save()
                 for t in tags:
                     an.tags.add(t)
