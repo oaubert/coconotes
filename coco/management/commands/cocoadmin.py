@@ -6,6 +6,7 @@ import re
 import json
 import urllib
 import logging
+import dateutil.parser
 
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import User
@@ -22,26 +23,34 @@ class Command(BaseCommand):
     def _import_info(self, cours, module, info):
         """Import video/module/course info from info.json files. Params: course_title module_title info.json
         """
+        def get_user(username):
+            if username == "":
+                username = "anonyme"
+            username = username.lower()
+            user, created = User.objects.get_or_create(username=username)
+            return user
+
         with open(info, 'r') as f:
             data = json.load(f)
         self.stdout.write("Saving %s\n" % data.get("title"))
-        user = User.objects.get(pk=1)
+
+        adminuser = get_user('admin')
         dirname = os.path.dirname(os.path.abspath(info))
         try:
             c = Course.objects.get(title=cours)
         except Course.DoesNotExist:
-            c = Course(creator=user, contributor=user, title=cours, shorttitle=cours[:16])
+            c = Course(creator=adminuser, contributor=adminuser, title=cours, shorttitle=cours[:16])
             c.save()
         try:
             module = Module.objects.get(title=module, course=c)
         except Module.DoesNotExist:
-            module = Module(creator=user, contributor=user, course=c, title=module, shorttitle=module[:16])
+            module = Module(creator=adminuser, contributor=adminuser, course=c, title=module, shorttitle=module[:16])
             module.save()
 
         activity_title = data.get("title", "Titre inconnu")
         descr = "%s - %s" % (data.get("date", "Date inconnue"),
                              data.get("author", "Auteur inconnu"))
-        activity = Activity(creator=user, contributor=user,
+        activity = Activity(creator=adminuser, contributor=adminuser,
                             title=activity_title, shorttitle=activity_title[:16],
                             module=module, description=descr)
         activity.save()
@@ -50,7 +59,7 @@ class Command(BaseCommand):
         if not url:
             # Default url
             url = "https://comin-ocw.org/contents/%s/camera.mp4" % dirname.split('/contents/')[-1]
-        vid = Video(creator=user, contributor=user,
+        vid = Video(creator=adminuser, contributor=adminuser,
                     activity=activity,
                     title=activity_title,
                     shorttitle=activity_title[:16],
@@ -84,7 +93,8 @@ class Command(BaseCommand):
                     at = AnnotationType.objects.get(title=atjson['dc:title'])
                 except AnnotationType.DoesNotExist:
                     # Create the AnnotationType matching dc:title
-                    at = AnnotationType(creator=user,
+                    at = AnnotationType(creator=adminuser,
+                                        created=dateutil.parser.parse(atjson['dc:created']),
                                         title=atjson['dc:title'],
                                         description=atjson['dc:description'])
                     at.save()
@@ -94,13 +104,24 @@ class Command(BaseCommand):
                 at = ats[a['meta']['id-ref']]
                 self.stdout.write(".", ending="")
                 self.stdout.flush()
-                an = Annotation(creator=user, contributor=user,
+                tags = []
+                creator = a['meta']['dc:creator']
+                contributor = a['meta']['dc:contributor']
+                data = re.findall("^\[(\w+,)?(\w+)]", a['content']['title'])
+                if len(data):
+                    creator = contributor = data[0][1]
+                    if data[0][0]:
+                        tags.append(data[0][0].strip(','))
+                an = Annotation(creator=get_user(creator), contributor=get_user(contributor),
+                                created=dateutil.parser.parse(a['meta']['dc:created']),
+                                modified=dateutil.parser.parse(a['meta']['dc:modified']),
                                 annotationtype=at,
                                 video=vid,
                                 begin=a['begin'] / 1000.0,
                                 end=a['end'] / 1000.0,
                                 title=a['content']['title'],
                                 description=a['content']['description'])
+                # FIXME: handle tags
                 if 'data' in a['content']:
                     an.contenttype = a['content'].get('mimetype', 'text/plain')
                     an.contentdata = json.dumps(a['content']['data'])
@@ -109,12 +130,14 @@ class Command(BaseCommand):
                     with open(pic, 'rb') as f:
                         an.thumbnail.save(os.path.basename(pic), File(f))
                 an.save()
+                for t in tags:
+                    an.tags.add(t)
 
     def _postnews(self, title, subtitle, data):
         """Post a newsitem message.
         """
-        user = User.objects.get(pk=1)
-        n = Newsitem(creator=user, title=title, subtitle=subtitle, description=data)
+        adminuser = User.objects.get(username='admin')
+        n = Newsitem(creator=adminuser, title=title, subtitle=subtitle, description=data)
         n.save()
 
     def handle(self, *args, **options):
