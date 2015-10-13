@@ -56,7 +56,7 @@
       <div class="capsule_container">
         {% for item in last_videos %}
         <article class="minicapsule microcapsule">
-          <img src="{{ item.thumbnail_url }}">
+          <a title="{{ item.title }}" href="{{ item.get_absolute_url }}"><img src="{{ item.thumbnail_url }}"></a>
           <div class="content">
             <h4><a title="{{ item.title }}" href="{{ item.get_absolute_url }}">{{ item.shorttitle }}</a></h4>
           </div>
