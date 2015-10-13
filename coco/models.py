@@ -278,6 +278,14 @@ class Annotation(UserContent):
     def subtitle(self):
         return _("Annotation")
 
+    @property
+    def contextualized_link(self):
+        """Return the link to the contextualized annotation.
+        """
+        return "%s#t=%d&id=%s" % (reverse('video-detail', args=[str(self.video.pk)]),
+                                  self.begin,
+                                  self.uuid)
+
     def cinelab(self):
         """Return a cinelab JSON serialization.
         """
@@ -296,6 +304,7 @@ class Annotation(UserContent):
             "end": long(self.end * 1000),
             "meta": {
                 "slug": self.slug or "",
+                "group": self.group.id if self.group else "",
                 "id-ref": self.annotationtype.uuid,
                 "dc:contributor": self.contributor,
                 "dc:creator": self.creator,
