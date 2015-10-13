@@ -90,7 +90,8 @@ $(document).ready(function () {
             },
             { type: "CocoController",
               container: "VideoControlContainer",
-              fullscreen_widget: '.videoplayer'
+              fullscreen_widget: '.videoplayer',
+              width: '100%'
             },
             {
                 type: "SlidePreview",
@@ -103,8 +104,30 @@ $(document).ready(function () {
                 annotation_type: "Slides",
                 annotation_types: [ "Contributions" ]
             },
+            {
+                type: "EnrichedPlan",
+                container: "GroupAnnotationsContainer",
+                annotation_type: "Slides",
+                annotation_types: [ "Contributions" ],
+                show_controls: false,
+                show_slides: true,
+                show_teacher_notes: false,
+                show_other_notes: true,
+                show_own_notes: false
+            },
+            {
+                type: "EnrichedPlan",
+                container: "PublicAnnotationsContainer",
+                annotation_type: "Slides",
+                annotation_types: [ "Contributions" ],
+                show_controls: false,
+                show_slides: true,
+                show_teacher_notes: false,
+                show_other_notes: true,
+                show_own_notes: false
+            },
             { type: "Trace",
-              url: "http://comin-ocw.org/trace/",
+              url: "https://comin-ocw.org/trace/",
               requestmode: "GET",
               default_subject: "comin"
             },

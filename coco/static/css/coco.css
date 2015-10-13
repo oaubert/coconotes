@@ -338,7 +338,7 @@ h1.highlighted {
     width: 100%;
 }
 
-.annotationlist {
+.AnnotationsListContainer {
     font-family: Roboto;
     font-size: 14px !important;
     list-style: none;
