@@ -30,6 +30,14 @@ JSON_MIMETYPES = [
     'application/json',
     'application/x-video-quiz'
     ]
+
+# Visibility constants
+VISIBILITY_PRIVATE = 1
+VISIBILITY_GROUP = 2
+VISIBILITY_PUBLIC = 3
+VISIBILITY_CHOICES = ( (VISIBILITY_PRIVATE, _("Privé")),
+                       (VISIBILITY_GROUP, _("Groupe")),
+                       (VISIBILITY_PUBLIC, _("Public")) )
 class AutoDateTimeField(models.DateTimeField):
     def pre_save(self, model_instance, add):
         return datetime.datetime.now()
@@ -224,10 +232,10 @@ class UserContent(Element):
                                    max_length=127,
                                    default="text/plain",
                                    blank=True)
-    visibility = models.CharField(_("Visibility"),
-                                  max_length=16,
-                                  help_text=_("Visibility (private, group, public)"),
-                                  default="private")
+    visibility = models.ChoiceField(_("Visibility"),
+                                    choices = VISIBILITY_CHOICES,
+                                    help_text=_("Content visibility"),
+                                    default=VISIBILITY_PRIVATE)
 
     @property
     def subtitle(self):
