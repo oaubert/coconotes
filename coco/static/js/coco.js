@@ -1,4 +1,5 @@
-$(document).ready( function () {
+
+$(document).ready(function () {
     function pad(n, x, b) {
         b = b || 10;
         var s = (x).toString(b);
@@ -32,7 +33,7 @@ $(document).ready( function () {
     };
 
     $(".tabnames li").on("click", function () {
-        var tabname = Array.prototype.slice.call(this.classList).filter( function (s) { return s.indexOf("tab-") == 0; });
+        var tabname = Array.prototype.slice.call(this.classList).filter(function (s) { return s.indexOf("tab-") == 0; });
         if (tabname.length) {
             $(".tabcomponent .selected").removeClass("selected");
             $(".tabcomponent ." + tabname[0]).addClass("selected");
@@ -44,9 +45,9 @@ $(document).ready( function () {
         .on("blur", function () {
             set_username($("#username").val());
         });
-    function generateUuid () {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            var r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);
+    function generateUuid() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);
         });
     }
@@ -72,7 +73,7 @@ $(document).ready( function () {
                 video: metadata.video_url,
                 container: "VideoContainer",
                 width: '100%',
-                url_transform: function(n) {
+                url_transform: function (n) {
                     var elements = /(.+)\.(\w\w\w)$/.exec(n);
                     var videoname = null;
                     var v = document.createElement("video");
@@ -115,14 +116,14 @@ $(document).ready( function () {
     _myPlayer.on("trace-ready", function () {
         var tracer = tracemanager.get_trace("test");
         tracer.trace("PlayerStart", { url: document.URL });
-        IriSP.jQuery(".TraceMe").on("mousedown mouseenter mouseleave", function(_e) {
+        IriSP.jQuery(".TraceMe").on("mousedown mouseenter mouseleave", function (_e) {
             tracer.trace('Mdp_' + _e.type,
                          {
                              "widget": "coco",
                              "target": this.id
                          });
         });
-        document.addEventListener("visibilitychange", function() {
+        document.addEventListener("visibilitychange", function () {
             tracer.trace("VisibilityChange", {
                 "state": document.visibilityState,
                 "url": document.URL
@@ -146,12 +147,12 @@ $(document).ready( function () {
         localStorage.setItem('mla-username', u);
         _myPlayer.config.username = u;
         // Find CreateAnnotation widget and update creator_name
-        find_widgets_by_type("CreateAnnotation").forEach( function (w) { w.creator_name = u; });
-        find_widgets_by_type("Quiz").forEach( function (w) { w.user = u; w.userid=user_uuid; w.creator_name = u;});
+        find_widgets_by_type("CreateAnnotation").forEach(function (w) { w.creator_name = u; });
+        find_widgets_by_type("Quiz").forEach(function (w) { w.user = u; w.userid = user_uuid; w.creator_name = u;});
     };
 
     var get_tab_index = function (id) {
-        var l = $("#tab > ul > li a").map(function (i, tab) { if (id == tab.getAttribute('href')) return i;});
+        var l = $("#tab > ul > li a").map(function (i, tab) { if (id == tab.getAttribute('href')) { return i; } });
         // Return 0 index if the id is not found
         return l[0] || 0;
     };
@@ -160,12 +161,12 @@ $(document).ready( function () {
     var _paq = _paq || [];
     _paq.push(['trackPageView']);
     _paq.push(['enableLinkTracking']);
-    (function() {
-        var u="//comin-ocw.org/analytics/";
-        _paq.push(['setTrackerUrl', u+'piwik.php']);
+    (function () {
+        var u = "//comin-ocw.org/analytics/";
+        _paq.push(['setTrackerUrl', u + 'piwik.php']);
         _paq.push(['setSiteId', 1]);
-        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+        var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+        g.type = 'text/javascript'; g.async = true; g.defer = true; g.src = u + 'piwik.js'; s.parentNode.insertBefore(g, s);
     })();
     /* Piwik */
 
