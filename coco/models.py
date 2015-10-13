@@ -35,8 +35,8 @@ JSON_MIMETYPES = [
 VISIBILITY_PRIVATE = 1
 VISIBILITY_GROUP = 2
 VISIBILITY_PUBLIC = 3
-VISIBILITY_CHOICES = ( (VISIBILITY_PRIVATE, _("Privé")),
-                       (VISIBILITY_GROUP, _("Groupe")),
+VISIBILITY_CHOICES = ( (VISIBILITY_PRIVATE, _("Private")),
+                       (VISIBILITY_GROUP, _("Group")),
                        (VISIBILITY_PUBLIC, _("Public")) )
 class AutoDateTimeField(models.DateTimeField):
     def pre_save(self, model_instance, add):
@@ -215,6 +215,7 @@ class Video(Resource):
             "http://advene.liris.cnrs.fr/ns/frame_of_reference/ms": "o=0",
             "url": self.url,
             "meta": {
+                "slug": self.slug or "",
                 "dc:contributor": self.contributor,
                 "dc:creator": self.creator,
                 "dc:created": self.created,
@@ -232,10 +233,10 @@ class UserContent(Element):
                                    max_length=127,
                                    default="text/plain",
                                    blank=True)
-    visibility = models.ChoiceField(_("Visibility"),
-                                    choices = VISIBILITY_CHOICES,
-                                    help_text=_("Content visibility"),
-                                    default=VISIBILITY_PRIVATE)
+    visibility = models.SmallIntegerField(_("Visibility"),
+                                          choices = VISIBILITY_CHOICES,
+                                          help_text=_("Content visibility"),
+                                          default=VISIBILITY_PRIVATE)
 
     @property
     def subtitle(self):
@@ -294,6 +295,7 @@ class Annotation(UserContent):
             "begin": long(self.begin * 1000),
             "end": long(self.end * 1000),
             "meta": {
+                "slug": self.slug or "",
                 "id-ref": self.annotationtype.uuid,
                 "dc:contributor": self.contributor,
                 "dc:creator": self.creator,
