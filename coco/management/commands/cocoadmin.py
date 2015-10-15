@@ -89,10 +89,14 @@ class Command(BaseCommand):
             f.close()
             # Update video duration
             vid.duration = package['medias'][0]['meta']['dc:duration'] / 1000.0
-            vid.slug = package['medias'][0]['id']
-            if re.match('^\d', vid.slug):
+            slug = package['medias'][0]['id']
+            if re.match('^\d', slug):
                 # id starting with a number. Add a "m" (media) prefix.
-                vid.slug = "m" + vid.slug
+                slug = "m" + slug
+            if Video.objects.filter(slug=slug).exists():
+                self.stdout.write("Duplicate video slug: " + slug)
+            else:
+                vid.slug = slug
             vid.save()
             ats = {}
             for atjson in package['annotation-types']:
