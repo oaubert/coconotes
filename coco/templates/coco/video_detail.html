@@ -50,30 +50,32 @@
     <div id="MiscControlsContainer"></div>
   </div>
 </div>
-<div id="metadata" class="tabcomponent">
-  <ul class="tabnames">
-    <li class="tab-plan">Plan</li>
-    <li class="tab-mynotes selected">Mes notes</li>
-    <li class="tab-group">Notes groupe</li>
-    <li class="tab-public">Notes publiques</li>
-  </ul>
-  <div class="tabcontent tab-plan">
-    <p>Plan tab content</p>
-  </div>
-  <div class="tabcontent selected tab-mynotes">
-    <div id="AnnotationsContainer" class="AnnotationsListContainer"></div>
-    <div class="Ldt-AnnotationsList-Input">
-      <form>
-        <input type="text" class="Ldt-AnnotationsList-InputText" placeholder="??:?? Notez ici">
-      </form>
+<div class="coco_rightcolumn">
+  <div id="metadata" class="tabcomponent">
+    <ul class="tabnames">
+      <li class="tab-plan">Plan</li>
+      <li class="tab-mynotes selected">Mes notes</li>
+      <li class="tab-group">Notes groupe</li>
+      <li class="tab-public">Notes publiques</li>
+    </ul>
+    <div class="tabcontent tab-plan">
+      <p>Plan tab content</p>
     </div>
-  </div> <!-- #tabcontent -->
-  <div class="tabcontent tab-group">
-    <div id="GroupAnnotationsContainer" class="AnnotationsListContainer"></div>
+    <div class="tabcontent selected tab-mynotes">
+      <div id="AnnotationsContainer" class="AnnotationsListContainer"></div>
+    </div> <!-- #tabcontent -->
+    <div class="tabcontent tab-group">
+      <div id="GroupAnnotationsContainer" class="AnnotationsListContainer"></div>
+    </div>
+    <div class="tabcontent tab-public">
+      <div id="PublicAnnotationsContainer" class="AnnotationsListContainer"></div>
+    </div>
+  </div>   <!-- #metadata -->
+  <div class="coco_annotation_input_widget">
+    <form>
+      <input type="text" class="coco_annotation_input" autofocus placeholder="??:?? Notez ici">
+    </form>
   </div>
-  <div class="tabcontent tab-public">
-    <div id="PublicAnnotationsContainer" class="AnnotationsListContainer"></div>
-  </div>
-</div>   <!-- #metadata -->
+</div>
 
 {% endblock %}

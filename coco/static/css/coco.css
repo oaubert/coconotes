@@ -162,7 +162,7 @@ header {
 }
 
 /* Main content */
-h1.pagetitle, .column h1 {
+h1.pagetitle, .column h1, #main h1 {
     font-family: Roboto;
     font-weight: 800;
     font-size: 32px;
@@ -210,14 +210,23 @@ h1.highlighted {
     color: #fff;
 }
 
+.coco_rightcolumn {
+    width: calc(50% - 6px);
+}
+
 #metadata {
     background-color: #fff;
-    float: right;
-    display: inline-block;
-    width: calc(50% - 6px);
+    display: block;
+    width: 100%;
     min-width: 368px;
     margin-right: 6px;
     height: calc(100% - 80px);
+}
+
+.coco_annotation_input {
+    width: 100%;
+    font-family: Roboto;
+    font-size: 16px;
 }
 
 .titleblock {
