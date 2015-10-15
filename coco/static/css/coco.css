@@ -756,7 +756,7 @@ p.Ldt-AnnotationsList-Description {
     display: inline-block;
     width: 16px;
     height: 16px;
-    background: url("res/edit.png");
+    background: url("img/notes_edit.png");
 }
 
 @media only screen and (max-width: 767px) {
