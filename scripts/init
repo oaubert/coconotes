@@ -13,8 +13,10 @@ if [ "$1" = "confirm" ]
 then
     rm db.sqlite3
     ./manage.py migrate
-    # superuser.json is a simple json file with username, mail and password properties
-    jq -r "\"from django.contrib.auth.models import User; User.objects.create_superuser('\(.username)', '\(.mail)', '\(.password)')\"" $CONFIG | python manage.py shell --plain
+    # superuser.json is a simple json file with username, mail and password properties, using the following structure:
+    # { "superusers": [ { "username": ..., "mail": ..., "password": ... }, { ... } ] }
+    (echo "from django.contrib.auth.models import User"
+     jq -r ".superusers | map(\"User.objects.create_superuser('\(.username)', '\(.mail)', '\(.password)')\") | join(\"\n\")" $CONFIG) | python manage.py shell --plain
     ./scripts/populate
 else
     echo "Run with confirm as first parameter"
