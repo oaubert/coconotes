@@ -215,7 +215,7 @@ class Video(Resource):
             "http://advene.liris.cnrs.fr/ns/frame_of_reference/ms": "o=0",
             "url": self.url,
             "meta": {
-                "slug": self.slug or "",
+                "coco:slug": self.slug or "",
                 "dc:contributor": self.contributor,
                 "dc:creator": self.creator,
                 "dc:created": self.created,
@@ -303,8 +303,8 @@ class Annotation(UserContent):
             "begin": long(self.begin * 1000),
             "end": long(self.end * 1000),
             "meta": {
-                "slug": self.slug or "",
-                "group": self.group.id if self.group else "",
+                "coco:slug": self.slug or "",
+                "coco:group": self.group.id if self.group else "",
                 "id-ref": self.annotationtype.uuid,
                 "dc:contributor": self.contributor,
                 "dc:creator": self.creator,
