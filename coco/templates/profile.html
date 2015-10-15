@@ -11,8 +11,10 @@
           <section class="column column8" id="profile_data">
 
             <article class="capsule">
+              {% if user.thumbnail_url %}
               <img class="profile_avatar" src="user.thumbnail_url">
-              <h4>{{ user.get_full_name }}</h4>
+              {% endif %}
+              <h4>Nom : {{ user.get_full_name }}</h4>
               <span class="profile_status">{{ user.status }}</span>
               <span class="profile_email">{{ user.email }}</span>
 
@@ -29,13 +31,13 @@
             </article>
             {% endfor %}
 
-            <h1>Mes annotations</h1>
+            <h1>Mes annotations ({{ annotationscount }})</h1>
 
-            {% for group in user.user_content.all %}
+            {% for annotation in annotations %}
             <article class="capsule">
-              <img class="thumbnail_mini" src="{{ group.thumbnail_url }}">
-              <h4><a href="{{ group.get_absolute_url }}">{{ group.name }}</a></h4>
-              <div class="group_description">{{ group.description }}</div>
+              <img class="thumbnail_mini" src="{{ annotation.thumbnail_url }}">
+              <h4><a href="{{ annotation.contextualized_link }}">{{ annotation.title }}</a></h4>
+              <div class="annotation_description">{{ annotation.contentdata }}</div>
             </article>
             {% endfor %}
 

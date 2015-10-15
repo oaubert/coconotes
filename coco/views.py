@@ -50,6 +50,8 @@ def home(request, **kw):
 def profile(request, **kw):
     return render_to_response('profile.html', {
         'username': request.user.username,
+        'annotationscount': Annotation.objects.filter(creator=request.user).count(),
+        'annotations': Annotation.objects.filter(creator=request.user).order_by("-created")[:10],
         'current_document': 'profile',
     }, context_instance=RequestContext(request))
 
