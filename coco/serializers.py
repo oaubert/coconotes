@@ -16,7 +16,7 @@ class VideoSerializer(serializers.HyperlinkedModelSerializer):
                   'creator', 'created', 'contributor', 'modified',
                   'state', 'title', 'description', 'slug',
                   'thumbnail', 'description',
-                  'url', 'license', 'activity', 'length', 'slides',
+                  'url', 'license', 'activity', 'duration', 'slides',
         )
 
 class CourseSerializer(serializers.HyperlinkedModelSerializer):

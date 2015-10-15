@@ -87,8 +87,8 @@ class Command(BaseCommand):
             f = urllib.urlopen(packageurl)
             package = json.loads("".join(f.readlines()))
             f.close()
-            # Update video length
-            vid.length = package['medias'][0]['meta']['dc:duration'] / 1000.0
+            # Update video duration
+            vid.duration = package['medias'][0]['meta']['dc:duration'] / 1000.0
             vid.slug = package['medias'][0]['id']
             if re.match('^\d', vid.slug):
                 # id starting with a number. Add a "m" (media) prefix.

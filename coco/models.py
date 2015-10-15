@@ -184,8 +184,8 @@ class Video(Resource):
     activity = models.ForeignKey(Activity,
                                  blank=True,
                                  null=True)
-    length = models.FloatField(_("Length"),
-                                 help_text=_("Video length in seconds"),
+    duration = models.FloatField(_("Duration"),
+                                 help_text=_("Video duration in seconds"),
                                  default=0)
     slides = models.ForeignKey(Resource,
                                blank=True,
@@ -222,7 +222,7 @@ class Video(Resource):
                 "dc:modified": self.modified,
                 "dc:title": self.title,
                 "dc:description": self.description,
-                "dc:duration": long(1000 * self.length),
+                "dc:duration": long(1000 * self.duration),
             }
         }
 
