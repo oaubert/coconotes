@@ -99,10 +99,10 @@ def cinelab(request, video=None, **kw):
         "main_media": unicode(v.uuid),
         "dc:description": ""
     }
-    data['medias'].append(v.cinelab())
-    data['annotations'].extend(a.cinelab() for a in Annotation.objects.filter(video=v))
+    data['medias'].append(v.cinelab(for_user=request.user.username))
+    data['annotations'].extend(a.cinelab(for_user=request.user.username) for a in Annotation.objects.filter(video=v))
     # Add defined annotation types + a selection of basic types
-    data['annotation-types'].extend(a.cinelab() for a in AnnotationType.objects.all())
+    data['annotation-types'].extend(a.cinelab(for_user=request.user.username) for a in AnnotationType.objects.all())
     return HttpResponse(json.dumps(data, cls=COCoEncoder, indent=1),
                         content_type="application/json")
 
