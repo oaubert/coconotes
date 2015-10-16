@@ -288,9 +288,10 @@ class Annotation(UserContent):
                                   self.begin,
                                   self.uuid)
 
-    @property
     def coco_category(self, context=None):
         cat = 'other'
+        if context is None:
+            return cat
         if self.creator.username == context.username:
             cat = 'own'
         elif self.creator.username in context.teacher_set:
