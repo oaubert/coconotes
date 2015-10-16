@@ -5,5 +5,9 @@ django-user-accounts
 sorl-thumbnail
 djangorestframework
 django-allauth
-django-redis-cache
 django-admin-tools
+django-crispy-forms
+django-debug-toolbar
+django-extensions
+Pillow
+
