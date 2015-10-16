@@ -1,3 +1,5 @@
 /media/
 /static/
 db.sqlite3*
+project/local_settings.py
+.rsync-filter
