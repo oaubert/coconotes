@@ -99,10 +99,14 @@ def cinelab(request, video=None, **kw):
         "main_media": unicode(v.uuid),
         "dc:description": ""
     }
-    data['medias'].append(v.cinelab(for_user=request.user.username))
-    data['annotations'].extend(a.cinelab(for_user=request.user.username) for a in Annotation.objects.filter(video=v))
+    context = {
+        'username': request.user.username,
+        'teacher_set': [],
+        'current_group': '' # FIXME: get from cookie/session info?
+    }
+    data['medias'].append(v.cinelab(context=context))
+    data['annotations'].extend(a.cinelab(context=context) for a in Annotation.objects.filter(video=v))
     # Add defined annotation types + a selection of basic types
-    data['annotation-types'].extend(a.cinelab(for_user=request.user.username) for a in AnnotationType.objects.all())
+    data['annotation-types'].extend(a.cinelab(context=context) for a in AnnotationType.objects.all())
     return HttpResponse(json.dumps(data, cls=COCoEncoder, indent=1),
                         content_type="application/json")
-

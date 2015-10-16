@@ -205,7 +205,7 @@ class Video(Resource):
     def course(self):
         return self.activity.module.course
 
-    def cinelab(self, for_user=None):
+    def cinelab(self, context=None):
         """Return a cinelab serialization.
         """
         return {
@@ -216,7 +216,7 @@ class Video(Resource):
             "url": self.url,
             "meta": {
                 "coco:slug": self.slug or "",
-                "coco:can_edit": self.creator.username == for_user,
+                "coco:can_edit": self.creator.username == context.username,
                 "dc:contributor": self.contributor,
                 "dc:creator": self.creator,
                 "dc:created": self.created,
@@ -248,7 +248,7 @@ class AnnotationType(Element):
 
     It does not need more info than the one provided in Element.
     """
-    def cinelab(self, for_user=None):
+    def cinelab(self, context=None):
         """Return a cinelab serialization.
         """
         return {
@@ -257,7 +257,7 @@ class AnnotationType(Element):
             "dc:creator": self.creator,
             "dc:created": self.created,
             "dc:modified": self.modified,
-            "coco:can_edit": self.creator.username == for_user,
+            "coco:can_edit": self.creator.username == context.username,
             "dc:title": self.title,
             "dc:description": self.description,
         }
@@ -288,7 +288,16 @@ class Annotation(UserContent):
                                   self.begin,
                                   self.uuid)
 
-    def cinelab(self, for_user=None):
+    @property
+    def coco_category(self, context=None):
+        cat = 'other'
+        if self.creator.username == context.username:
+            cat = 'own'
+        elif self.creator.username in context.teacher_set:
+            cat = 'teacher'
+        return cat
+
+    def cinelab(self, context=None):
         """Return a cinelab JSON serialization.
         """
         thumb = self.thumbnail.url if self.thumbnail.name else ''
@@ -307,7 +316,8 @@ class Annotation(UserContent):
             "meta": {
                 "coco:slug": self.slug or "",
                 "coco:group": self.group.id if self.group else "",
-                "coco:can_edit": self.creator.username == for_user,
+                "coco:category": self.coco_category(context),
+                "coco:can_edit": self.creator.username == context.username,
                 "id-ref": self.annotationtype.uuid,
                 "dc:contributor": self.contributor,
                 "dc:creator": self.creator,
