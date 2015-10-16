@@ -1,0 +1,9 @@
+{% extends  "formbase.html" %}
+{% load crispy_forms_tags %}
+
+{% block form %}
+<form action="/annotation/{{ object.uuid }}/" method="post">{% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" value="OK" />
+</form>
+{% endblock %}
