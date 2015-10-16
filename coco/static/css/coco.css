@@ -333,6 +333,10 @@ h1.highlighted {
     height: 55px;
 }
 
+.coco_tabcontents {
+    height: calc(100% - 72px);
+}
+
 .tabcontent {
     position: relative;
     overflow-y: hidden;
@@ -347,12 +351,12 @@ h1.highlighted {
     width: 100%;
 }
 
-.AnnotationsListContainer {
+.EnrichedPlanContainer {
     font-family: Roboto;
     font-size: 14px !important;
     list-style: none;
     overflow-y: auto;
-    height: calc(100% - 86px);
+    height: 100%;
     width: 100%;
     margin-top: 12px;
 }
@@ -364,81 +368,6 @@ h1.highlighted {
     font-size: 16px;
 }
 
-.Ldt-AnnotationsList-li {
-    position: relative;
-    border-bottom: 2px dotted #ccc;
-    list-style: none;
-    min-height: 100px;
-}
-.Ldt-AnnotationsList-li:hover {
-    background-color: #ededed;
-}
-
-/*******************************************/
-
-.Ldt-AnnotationsList-ThumbContainer {
-    width: 180px !important;
-    height: 100px !important;
-    display: inline-block;
-    padding-left: 10px;
-    box-shadow: none !important;
-    margin: 0 !important;
-}
-
-.Ldt-AnnotationsList-ThumbContainer img {
-    max-width: 180px !important;
-    max-height: 100px !important;
-    margin: auto;
-    border: 1px solid #ccc;
-}
-.Ldt-AnnotationsList-Duration {
-    display: inline-block;
-    color: #999 !important;
-    font-size: 9px !important;
-    width: 24px;
-    position: absolute;
-    left: 0px;
-}
-.Ldt-AnnotationsList-Content {
-    display: inline-block;
-    width: calc(100% - 220px);
-    position: absolute;
-    top: 0px;
-}
-.Ldt-AnnotationsList-Title {
-    display: inline-block;
-    font-size: 13px;
-    text-transform: uppercase;
-    width: 100%;
-    height: 1em;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    margin: 2px 0 2px 182px !important;
-}
-.Ldt-AnnotationsList-Title a {
-    color: black !important;
-    font-family: Roboto;
-    font-size: 13px;
-}
-p.Ldt-AnnotationsList-Description {
-    margin: 16px 0 2px 182px !important;
-}
-
-.Ldt-AnnotationsList-Note {
-    display: inline;
-    font-weight: normal;
-    font-style: italic;
-    font-size: 14px;
-}
-.Ldt-AnnotationsList-Note a {
-    text-decoration: none;
-    color: black;
-}
 .teacher_note, .teacher_note a {
     color: #e5007e;
 }
