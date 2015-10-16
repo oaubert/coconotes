@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'taggit',
     'sorl.thumbnail',
     'rest_framework',
-    # The Django sites framework is required
+    # The Django sites framework is required by allauth
     'django.contrib.sites',
 
     'allauth',
@@ -89,8 +89,6 @@ AUTHENTICATION_BACKENDS = (
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.request',
-    'allauth.account.context_processors.account',
-    'allauth.socialaccount.context_processors.socialaccount',
 )
 SITE_ID = 1
 
