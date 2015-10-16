@@ -15,12 +15,20 @@ then
     ./manage.py migrate
     # superuser.json is a simple json file with username, mail and password properties, using the following structure:
     # { "superusers": [ { "username": ..., "mail": ..., "password": ... }, { ... } ],
-    #   "users": [ { "username": ..., "mail": ..., "password": ... }, { ... } ] }
-    (echo "from django.contrib.auth.models import User"
+    #   "users": [ { "username": ..., "mail": ..., "password": ... }, { ... } ],
+    #   "groups": [ { "name": ..., "members": [ "...", "..." ] } ]
+    # }
+    (echo "from django.contrib.auth.models import User, Group"
      jq -r ".superusers | map(\"User.objects.create_superuser('\(.username)', '\(.mail)', '\(.password)')\") | join(\"\n\")" "$CONFIG"
      jq -r ".users | map(\"User.objects.create_user('\(.username)', '\(.mail)', '\(.password)')\") | join(\"\n\")" "$CONFIG"
+     jq -r ".groups | map(\"g=Group.objects.create(name='\(.name)')\n\" + (.members | map(\"g.user_set.add(User.objects.get('\(.)'))\") | join(\"\n\"))) | join(\"\n\")" "$CONFIG"
     ) | python manage.py shell --plain
     ./scripts/populate
 else
     echo "Run with confirm as first parameter"
 fi
+
+
+exit 0
+
+
