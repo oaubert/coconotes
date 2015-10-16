@@ -56,9 +56,10 @@ INSTALLED_APPS = [
     'taggit',
     'sorl.thumbnail',
     'rest_framework',
+    'crispy_forms',
+
     # The Django sites framework is required by allauth
     'django.contrib.sites',
-
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
