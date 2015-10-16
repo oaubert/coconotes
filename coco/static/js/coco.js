@@ -59,7 +59,8 @@ $(document).ready(function () {
     IriSP.widgetsDir = "../../static/metadataplayer";
     IriSP.language = "fr";
 
-    var _config = {
+    var _myPlayer,
+        _config = {
         width : '100%',
         container : 'MiscControlsContainer',
         default_options: {
@@ -156,6 +157,17 @@ $(document).ready(function () {
     });
     document._myPlayer = _myPlayer;
 
+    _myPlayer.on("Annotation.create", function () {
+        e.preventDefault();
+        IriSP.jQuery('<div/>', {'class': 'element-form-dialog', 'id': IriSP.generateUuid() })
+            .load("/annotation/add/").appendTo('body').dialog({ width: "90%" });
+    });
+
+    _myPlayer.on("Annotation.edit", function (annotation_id) {
+        IriSP.jQuery('<div/>', {'class': 'element-form-dialog', 'id': IriSP.generateUuid() })
+            .load("/annotation/" + annotation_id + "/").appendTo('body').dialog({ width: "90%" });
+    });
+
     function find_widgets_by_type(typ) {
         if (_myPlayer.widgets) {
             return _myPlayer.widgets.filter(function (w) {
@@ -166,7 +178,7 @@ $(document).ready(function () {
     }
 
     function set_username(u) {
-        name = u;
+        var name = u;
         localStorage.setItem('mla-username', u);
         _myPlayer.config.username = u;
         // Find CreateAnnotation widget and update creator_name
