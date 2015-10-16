@@ -13,6 +13,9 @@ if [ "$1" = "confirm" ]
 then
     rm db.sqlite3
     ./manage.py migrate
+    # Update Site info
+    echo "from django.contrib.sites.models import Site; Site.objects.filter(pk=1).update(name='COCoNotes', domain='coconotes.comin-ocw.org')" | python manage.py shell --plain
+
     # superuser.json is a simple json file with username, mail and password properties, using the following structure:
     # { "superusers": [ { "username": ..., "mail": ..., "password": ... }, { ... } ],
     #   "users": [ { "username": ..., "mail": ..., "password": ... }, { ... } ],
