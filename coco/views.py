@@ -1,5 +1,6 @@
 import datetime
 import json
+from collections import namedtuple
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -77,6 +78,8 @@ def search(request, **kw):
         'current_document': 'profile',
     }, context_instance=RequestContext(request))
 
+CocoContext = namedtuple('Context', [ 'username', 'teacher_set', 'current_group' ])
+
 def cinelab(request, video=None, **kw):
     """Generate a cinelab package in json format for the given video.
     """
@@ -99,11 +102,9 @@ def cinelab(request, video=None, **kw):
         "main_media": unicode(v.uuid),
         "dc:description": ""
     }
-    context = {
-        'username': request.user.username,
-        'teacher_set': [],
-        'current_group': '' # FIXME: get from cookie/session info?
-    }
+    context = CocoContext(username=request.user.username,
+                          teacher_set=[],
+                          current_group='') # FIXME: get from cookie/session info?
     data['medias'].append(v.cinelab(context=context))
     data['annotations'].extend(a.cinelab(context=context) for a in Annotation.objects.filter(video=v))
     # Add defined annotation types + a selection of basic types
