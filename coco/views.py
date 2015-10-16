@@ -6,6 +6,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.http import HttpResponse
 from rest_framework import generics
+from django.views.generic import CreateView, UpdateView, DeleteView, RedirectView
 
 from .models import Course, Video, Newsitem, Module, Activity, Annotation, Comment, AnnotationType, Resource
 from .serializers import CourseSerializer, VideoSerializer
@@ -38,6 +39,44 @@ class ResourceList(generics.ListCreateAPIView):
 class ResourceDetail(generics.RetrieveUpdateDestroyAPIView):
     model = Resource
     lookup_field = 'uuid'
+
+class AnnotationDetailView(RedirectView):
+    permanent = False
+    def get_redirect_url(self, *args, **kwargs):
+        annotation = get_object_or_404(Annotation, pk=kwargs['pk'])
+        return annotation.contextualized_link
+
+class AnnotationCreateView(CreateView):
+    model = Annotation
+    fields = ('begin', 'end', 'group',
+              'title', 'shorttitle',
+              'description', 'slug', 'thumbnail',
+              'annotationtype', 'video',
+              'contenttype', 'contentdata',
+              'visibility')
+
+    def form_valid(self, form):
+        form.instance.creator = self.request.user
+        form.instance.contributor = self.request.user
+        form.instance.modified = datetime.datetime.now()
+        return super(AnnotationCreateView, self).form_valid(form)
+
+class AnnotationUpdateView(UpdateView):
+    model = Annotation
+    fields = ('begin', 'end', 'group',
+              'title', 'shorttitle',
+              'description', 'slug', 'thumbnail',
+              'annotationtype', 'video',
+              'contenttype', 'contentdata',
+              'visibility')
+
+    def form_valid(self, form):
+        form.instance.contributor = self.request.user
+        form.instance.modified = datetime.datetime.now()
+        return super(AnnotationCreateView, self).form_valid(form)
+
+class AnnotationDeleteView(DeleteView):
+    model = Annotation
 
 def home(request, **kw):
     return render_to_response('home.html', {

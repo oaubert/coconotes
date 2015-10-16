@@ -28,6 +28,11 @@ urlpatterns = patterns('',
                        url(r'^news/$', ListView.as_view(model=Newsitem), name='newsitem-list'),
                        url(r'^news/(?P<pk>[\w\d_-]+)/$', DetailView.as_view(model=Newsitem, context_object_name='item'), name='newsitem-detail'),
 
+                       url(r'^annotation/add$', views.AnnotationCreateView.as_view(), name='annotation-create'),
+                       url(r'^annotation/(?P<pk>[\w\d_-]+)/$', views.AnnotationDetailView.as_view(), name='annotation-detail'),
+                       url(r'^annotation/(?P<pk>[\w\d_-]+)/edit$', views.AnnotationUpdateView.as_view(), name='annotation-update'),
+                       url(r'^annotation/(?P<pk>[\w\d_-]+)/delete/$', views.AnnotationDeleteView.as_view(), name='annotation-delete'),
+
                        # REST API
                        url(r'^api/', include(patterns('',
                                                       url(r'^course/$',
