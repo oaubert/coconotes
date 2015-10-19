@@ -32,15 +32,15 @@ input, text-area {
 }
 
 ::-webkit-scrollbar-track {
-    border-radius: 8px;
-    background-color: #393939;
-    background-color: rgba(57, 57, 57, .6);
+    border-radius: 6px;
+    background-color: #dddddd;
+    background-color: rgba(221, 221, 221, .6);
 }
 
 ::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-    background-color: #9c9c9c;
-    background-color: rgba(156, 156, 156, .6);
+    border-radius: 6px;
+    background-color: #bbbbbb;
+    background-color: rgba(187, 187, 187, .6);
 }
 
 body {
