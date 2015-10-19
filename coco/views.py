@@ -119,10 +119,16 @@ def search(request, **kw):
 
 CocoContext = namedtuple('Context', [ 'username', 'teacher_set', 'current_group' ])
 
-def cinelab(request, video=None, **kw):
+def cinelab(request, slug=None, pk=None, **kw):
     """Generate a cinelab package in json format for the given video.
     """
-    v = get_object_or_404(Video, pk=video)
+    if pk is not None:
+        v = get_object_or_404(Video, pk=pk)
+    elif slug is not None:
+        v = get_object_or_404(Video, slug=slug)
+    else:
+        return HttpResponse(status=422)
+
     data = {
         "tags": [],
         "views": [],
