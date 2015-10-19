@@ -165,7 +165,7 @@ $(document).ready(function () {
 
     _myPlayer.on("Annotation.edit", function (annotation_id) {
         IriSP.jQuery('<div/>', {'class': 'element-form-dialog', 'id': IriSP.generateUuid() })
-            .load("/annotation/" + annotation_id + "/").appendTo('body').dialog({ width: "90%" });
+            .load("/annotation/" + annotation_id + "/edit/").appendTo('body').dialog({ width: "90%" });
     });
 
     function find_widgets_by_type(typ) {
