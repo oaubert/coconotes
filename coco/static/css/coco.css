@@ -335,6 +335,7 @@ h1.highlighted {
 
 .coco_tabcontents {
     height: calc(100% - 72px);
+    overflow-y: hidden;
 }
 
 .tabcontent {
