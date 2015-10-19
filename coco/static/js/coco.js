@@ -103,7 +103,12 @@ $(document).ready(function () {
                 type: "EnrichedPlan",
                 container: "AnnotationsContainer",
                 annotation_type: "Slides",
-                annotation_types: [ "Contributions" ]
+                annotation_types: [ "Contributions" ],
+                show_controls: true,
+                show_slides: true,
+                show_teacher_notes: false,
+                show_other_notes: false,
+                show_own_notes: true
             },
             {
                 type: "EnrichedPlan",
