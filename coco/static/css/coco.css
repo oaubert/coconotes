@@ -19,13 +19,32 @@ html, body {
     height: 100%;
 }
 
+/* Safari/iOS related fixes */
+
 input, text-area {
     -webkit-appearance: none;
     -webkit-border-radius: 0;
 }
 
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background-color: #393939;
+    background-color: rgba(57, 57, 57, .6);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: #9c9c9c;
+    background-color: rgba(156, 156, 156, .6);
+}
+
 body {
-    margin: 0px 5em;
+    margin: 0 5em;
 }
 
 header {
