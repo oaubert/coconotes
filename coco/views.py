@@ -1,6 +1,6 @@
 import datetime
 import json
-from collections import namedtuple
+from collections import namedtuple, OrderedDict
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -95,16 +95,16 @@ def profile(request, **kw):
         'current_document': 'profile',
     }, context_instance=RequestContext(request))
 
-MODEL_MAP = {
-    #Element: ["title", "shorttitle", "description" ],
-    Course: ["title", "shorttitle", "description", "category", "syllabus" ],
-    Module: [ "title", "shorttitle", "description" ],
-    Activity: ["title", "shorttitle", "description" ],
-    Video: ["title", "shorttitle", "description" ],
-    Annotation: ["title", "shorttitle", "description", "contentdata" ],
-    Comment: ["title", "shorttitle", "description", "contentdata" ],
-    Newsitem: ["title", "shorttitle", "description", "category" ],
-}
+#Element: ["title", "shorttitle", "description" ],
+MODEL_MAP = OrderedDict((
+    (Course, ["title", "shorttitle", "description", "category", "syllabus" ]),
+    (Video, ["title", "shorttitle", "description" ]),
+    (Module, [ "title", "shorttitle", "description" ]),
+    (Activity, ["title", "shorttitle", "description" ]),
+    (Annotation, ["title", "shorttitle", "description", "contentdata" ]),
+    (Comment, ["title", "shorttitle", "description", "contentdata" ]),
+    (Newsitem, ["title", "shorttitle", "description", "category" ]),
+))
 def search(request, **kw):
     elements = []
     for model,fields in MODEL_MAP.iteritems():
