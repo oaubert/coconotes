@@ -118,11 +118,13 @@ class Command(BaseCommand):
                 tags = []
                 creator = a['meta']['dc:creator']
                 contributor = a['meta']['dc:contributor']
-                data = re.findall("^\[(\w+,)?(\w+)]", a['content']['title'])
-                if len(data):
-                    creator = contributor = data[0][1]
-                    if data[0][0]:
-                        tags.append(data[0][0].strip(','))
+                title = a['content']['title']
+                m = re.match("^\[(\w+,)?(\w+)](.*)", title)
+                if m:
+                    creator = contributor = m.group(2)
+                    if m.group(1) is not None:
+                        tags.append(m.group(1).strip(',').strip())
+                    title = m.group(3).strip()
                 an = Annotation(creator=get_user(creator), contributor=get_user(contributor),
                                 created=convert_date(dateutil.parser.parse(a['meta']['dc:created'])),
                                 modified=convert_date(dateutil.parser.parse(a['meta']['dc:modified'])),
@@ -130,7 +132,7 @@ class Command(BaseCommand):
                                 video=vid,
                                 begin=long(a['begin']) / 1000.0,
                                 end=long(a['end']) / 1000.0,
-                                title=a['content']['title'],
+                                title=title,
                                 description=a['content']['description'])
                 # FIXME: handle tags
                 if 'data' in a['content']:
