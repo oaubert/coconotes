@@ -99,7 +99,7 @@ class Element(models.Model):
             return static("img/default.png")
 
     def get_absolute_url(self):
-        return reverse('%s-detail' % self.__class__.__name__.lower(), args=[str(self.pk)])
+        return reverse('view-%s-detail' % self.__class__.__name__.lower(), args=[str(self.pk)])
 
     def __unicode__(self):
         return u"%s (%s)" % (self.title,
@@ -284,7 +284,7 @@ class Annotation(UserContent):
     def contextualized_link(self):
         """Return the link to the contextualized annotation.
         """
-        return "%s#t=%d&id=%s" % (reverse('video-detail', args=[str(self.video.pk)]),
+        return "%s#t=%d&id=%s" % (reverse('view-video-detail', args=[str(self.video.pk)]),
                                   self.begin,
                                   self.uuid)
 
