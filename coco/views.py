@@ -2,43 +2,116 @@ import datetime
 import json
 from collections import namedtuple, OrderedDict
 
-from django.shortcuts import render_to_response, get_object_or_404
-from django.template import RequestContext
 from django.http import HttpResponse
-from rest_framework import generics
+from django.template import RequestContext
+from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic import CreateView, UpdateView, DeleteView, RedirectView
 
-from .models import Course, Video, Newsitem, Module, Activity, Annotation, Comment, AnnotationType, Resource
-from .serializers import CourseSerializer, VideoSerializer
-from .utils import generic_search, COCoEncoder
+from rest_framework import permissions, viewsets
 
-class CourseList(generics.ListCreateAPIView):
+from .models import Course, Video, Newsitem, Module, Activity, Annotation, Comment, AnnotationType, Resource
+from .serializers import CourseSerializer, ModuleSerializer, ActivitySerializer, VideoSerializer, AnnotationSerializer, CommentSerializer, ResourceSerializer, NewsitemSerializer, AnnotationTypeSerializer
+from .utils import generic_search, COCoEncoder
+from .permissions import IsOwnerOrReadOnly
+
+class CourseViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly,)
     queryset = Course.objects.all()
     lookup_field = 'uuid'
     serializer_class = CourseSerializer
 
-class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
-    model = Course
-    lookup_field = 'uuid'
-    serializer_class = CourseSerializer
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user,
+                        contributor=self.request.user)
 
-class VideoList(generics.ListCreateAPIView):
+class ModuleViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly,)
+    queryset = Module.objects.all()
+    lookup_field = 'uuid'
+    serializer_class = ModuleSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user,
+                        contributor=self.request.user)
+
+class ActivityViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly,)
+    queryset = Activity.objects.all()
+    lookup_field = 'uuid'
+    serializer_class = ActivitySerializer
+
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user,
+                        contributor=self.request.user)
+
+class VideoViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly,)
     queryset = Video.objects.all()
     lookup_field = 'uuid'
     serializer_class = VideoSerializer
 
-class VideoDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Video.objects.all()
-    lookup_field = 'uuid'
-    serializer_class = VideoSerializer
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user,
+                        contributor=self.request.user)
 
-class ResourceList(generics.ListCreateAPIView):
+class AnnotationViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly,)
+    queryset = Annotation.objects.all()
+    lookup_field = 'uuid'
+    serializer_class = AnnotationSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user,
+                        contributor=self.request.user)
+
+class AnnotationTypeViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly,)
+    queryset = AnnotationType.objects.all()
+    lookup_field = 'uuid'
+    serializer_class = AnnotationTypeSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user,
+                        contributor=self.request.user)
+
+class CommentViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly,)
+    queryset = Comment.objects.all()
+    lookup_field = 'uuid'
+    serializer_class = CommentSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user,
+                        contributor=self.request.user)
+
+class ResourceViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly,)
     queryset = Resource.objects.all()
     lookup_field = 'uuid'
+    serializer_class = ResourceSerializer
 
-class ResourceDetail(generics.RetrieveUpdateDestroyAPIView):
-    model = Resource
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user,
+                        contributor=self.request.user)
+
+class NewsitemViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly,)
+    queryset = Newsitem.objects.all()
     lookup_field = 'uuid'
+    serializer_class = NewsitemSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user,
+                        contributor=self.request.user)
 
 class AnnotationDetailView(RedirectView):
     permanent = False

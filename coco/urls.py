@@ -3,8 +3,20 @@ from django.conf import settings
 from django.views.generic import ListView, DetailView
 import coco.views as views
 from .models import Course, Module, Activity, Video, Newsitem, Resource
+from rest_framework.routers import DefaultRouter
 
 uuid_regexp = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
+
+# Create a router and register our viewsets with it.
+router = DefaultRouter()
+router.register(r'resource', views.ResourceViewSet)
+router.register(r'course', views.CourseViewSet)
+router.register(r'module', views.ModuleViewSet)
+router.register(r'activity', views.ActivityViewSet)
+router.register(r'video', views.VideoViewSet)
+router.register(r'annotation', views.AnnotationViewSet)
+router.register(r'annotationtype', views.AnnotationTypeViewSet)
+router.register(r'news', views.NewsitemViewSet)
 
 urlpatterns = patterns('',
                        url(r'^$', views.home, name='root'),
@@ -44,24 +56,5 @@ urlpatterns = patterns('',
                        url(r'^annotation/(?P<pk>[\w\d_-]+)/delete/$', views.AnnotationDeleteView.as_view(), name='annotation-delete'),
 
                        # REST API
-                       url(r'^api/', include(patterns('',
-                                                      url(r'^course/$',
-                                                          views.CourseList.as_view(),
-                                                          name='api-course-list'),
-                                                      url(r'^course/(?P<uuid>[-\d\w]+)/$',
-                                                          views.CourseDetail.as_view(),
-                                                          name='api-course-detail'),
-                                                      url(r'^video/$',
-                                                          views.VideoList.as_view(),
-                                                          name='api-video-list'),
-                                                      url(r'^video/(?P<uuid>[-\d\w]+)/$',
-                                                          views.VideoDetail.as_view(),
-                                                          name='api-video-detail'),
-                                                      url(r'^resource/$',
-                                                          views.ResourceList.as_view(),
-                                                          name='api-resource-list'),
-                                                      url(r'^video/(?P<uuid>[-\d\w]+)/$',
-                                                          views.ResourceDetail.as_view(),
-                                                          name='api-resource-detail'),
-                                                      )))
-                       )
+                       url(r'^api/', include(router.urls))
+)
