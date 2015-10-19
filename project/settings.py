@@ -145,3 +145,8 @@ if options.get('raven_dsn'):
 
 if options.get('development'):
     INSTALLED_APPS += ( 'django_extensions', )
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
+}
