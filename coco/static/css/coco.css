@@ -298,20 +298,19 @@ h1.highlighted {
     padding-left: 6px;
 }
 
-.videocontainer {
-    position: relative;
-    margin: auto;
-    text-align: center;
-    min-height: 300px;
+.VideoContainer {
+    height: 100%;
 }
+
 .controlscontainer {
     background-color: #000;
 }
 .aspectratiokeeper {
-  width: 100%;
-  display: inline-block;
-  position: relative;
-  margin: auto;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    position: relative;
+    margin: auto;
 }
 .aspectratiokeeper:after {
     /* padding % is in % of width! */
