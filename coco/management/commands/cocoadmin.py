@@ -77,6 +77,21 @@ class Command(BaseCommand):
         if os.path.exists(pic):
             with open(pic, 'rb') as f:
                 vid.thumbnail.save(os.path.basename(pic), File(f))
+            if not vid.activity.thumbnail:
+                # Use same thumbnail
+                with open(pic, 'rb') as f:
+                    vid.activity.thumbnail.save(os.path.basename(pic), File(f))
+                vid.activity.save()
+            if not vid.activity.module.thumbnail:
+                # Use same thumbnail
+                with open(pic, 'rb') as f:
+                    vid.activity.module.thumbnail.save(os.path.basename(pic), File(f))
+                vid.activity.module.save()
+            if not vid.activity.module.course.thumbnail:
+                # Use same thumbnail
+                with open(pic, 'rb') as f:
+                    vid.activity.module.course.thumbnail.save(os.path.basename(pic), File(f))
+                vid.activity.module.course.save()
         vid.save()
 
         # Read data.json if available
