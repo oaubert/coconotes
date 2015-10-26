@@ -122,7 +122,7 @@ class AnnotationDetailView(RedirectView):
 class AnnotationCreateView(CreateView):
     model = Annotation
     fields = ('begin', 'end', 'group',
-              'title', 'shorttitle',
+              'title',
               'description', 'slug', 'thumbnail',
               'annotationtype', 'video',
               'contenttype', 'contentdata',
@@ -137,7 +137,7 @@ class AnnotationCreateView(CreateView):
 class AnnotationUpdateView(UpdateView):
     model = Annotation
     fields = ('begin', 'end', 'group',
-              'title', 'shorttitle',
+              'title',
               'description', 'slug', 'thumbnail',
               'annotationtype', 'video',
               'contenttype', 'contentdata',
@@ -168,15 +168,15 @@ def profile(request, **kw):
         'current_document': 'profile',
     }, context_instance=RequestContext(request))
 
-#Element: ["title", "shorttitle", "description" ],
+#Element: ["title", "description" ],
 MODEL_MAP = OrderedDict((
-    (Course, ["title", "shorttitle", "description", "category", "syllabus" ]),
-    (Video, ["title", "shorttitle", "description" ]),
-    (Module, [ "title", "shorttitle", "description" ]),
-    (Activity, ["title", "shorttitle", "description" ]),
-    (Annotation, ["title", "shorttitle", "description", "contentdata" ]),
-    (Comment, ["title", "shorttitle", "description", "contentdata" ]),
-    (Newsitem, ["title", "shorttitle", "description", "category" ]),
+    (Course, ["title", "description", "category", "syllabus" ]),
+    (Video, ["title", "description" ]),
+    (Module, [ "title", "description" ]),
+    (Activity, ["title", "description" ]),
+    (Annotation, ["title", "description", "contentdata" ]),
+    (Comment, ["title", "description", "contentdata" ]),
+    (Newsitem, ["title", "description", "category" ]),
 ))
 def search(request, **kw):
     elements = []

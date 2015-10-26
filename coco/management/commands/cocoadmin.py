@@ -45,19 +45,19 @@ class Command(BaseCommand):
         try:
             c = Course.objects.get(title=cours)
         except Course.DoesNotExist:
-            c = Course(creator=adminuser, contributor=adminuser, title=cours, shorttitle=cours[:16])
+            c = Course(creator=adminuser, contributor=adminuser, title=cours)
             c.save()
         try:
             module = Module.objects.get(title=module, course=c)
         except Module.DoesNotExist:
-            module = Module(creator=adminuser, contributor=adminuser, course=c, title=module, shorttitle=module[:16])
+            module = Module(creator=adminuser, contributor=adminuser, course=c, title=module)
             module.save()
 
         activity_title = data.get("title", "Titre inconnu")
         descr = "%s - %s" % (data.get("date", "Date inconnue"),
                              data.get("author", "Auteur inconnu"))
         activity = Activity(creator=adminuser, contributor=adminuser,
-                            title=activity_title, shorttitle=activity_title[:16],
+                            title=activity_title,
                             module=module, description=descr)
         activity.save()
 
@@ -68,7 +68,6 @@ class Command(BaseCommand):
         vid = Video(creator=adminuser, contributor=adminuser,
                     activity=activity,
                     title=activity_title,
-                    shorttitle=activity_title[:16],
                     url=url)
         # Note: length is not initialized. We will get its duration
         # from the package just below.

@@ -58,7 +58,7 @@
         <article class="minicapsule microcapsule">
           <a title="{{ item.title }}" href="{{ item.get_absolute_url }}"><img src="{{ item.thumbnail_url }}"></a>
           <div class="content">
-            <h4><a title="{{ item.title }}" href="{{ item.get_absolute_url }}">{{ item.shorttitle }}</a></h4>
+            <h4><a title="{{ item.title }}" href="{{ item.get_absolute_url }}">{{ item.title }}</a></h4>
           </div>
           {% if user.is_staff %}
           <div class="adminactions"><a href="{{ item.edit_url }}" class="editelement"></a></div>

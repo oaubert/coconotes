@@ -15,50 +15,50 @@ class ElementAdmin(admin.ModelAdmin):
 
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'title', 'shorttitle', 'package_id', 'slug', 'creator', 'created', 'activity', 'thumbnail')
-    list_editable = ('title', 'shorttitle', 'package_id', 'slug', 'creator', 'created', 'activity', 'thumbnail')
+    list_display = ('pk', 'title', 'package_id', 'slug', 'creator', 'created', 'activity', 'thumbnail')
+    list_editable = ('title', 'package_id', 'slug', 'creator', 'created', 'activity', 'thumbnail')
     list_display_links = ('pk', )
     list_filter = ( 'creator', )
-    search_fields = ('title', 'shorttitle', 'package_id')
+    search_fields = ('title', 'package_id')
 
     prepopulated_fields = {'slug': ('title', )}
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'title', 'shorttitle', 'slug', 'creator', 'created', 'thumbnail', 'category')
-    list_editable = ('title', 'shorttitle', 'slug', 'creator', 'created', 'thumbnail', 'category')
+    list_display = ('pk', 'title', 'slug', 'creator', 'created', 'thumbnail', 'category')
+    list_editable = ('title', 'slug', 'creator', 'created', 'thumbnail', 'category')
     list_display_links = ('pk', )
     list_filter = ( 'creator', 'category' )
-    search_fields = ('title', 'shorttitle')
+    search_fields = ('title', )
 
     prepopulated_fields = {'slug': ('title', )}
 
 @admin.register(Module)
 class ModuleAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'title', 'shorttitle', 'slug', 'creator', 'created', 'thumbnail', 'course')
-    list_editable = ('title', 'shorttitle', 'slug', 'creator', 'created', 'thumbnail', 'course')
+    list_display = ('pk', 'title', 'slug', 'creator', 'created', 'thumbnail', 'course')
+    list_editable = ('title', 'slug', 'creator', 'created', 'thumbnail', 'course')
     list_display_links = ('pk', )
     list_filter = ( 'creator', 'course' )
-    search_fields = ('title', 'shorttitle')
+    search_fields = ('title', )
 
     prepopulated_fields = {'slug': ('title', )}
 
 @admin.register(Activity)
 class ActivityAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'title', 'shorttitle', 'slug', 'creator', 'created', 'thumbnail', 'module')
-    list_editable = ('title', 'shorttitle', 'slug', 'creator', 'created', 'thumbnail', 'module')
+    list_display = ('pk', 'title', 'slug', 'creator', 'created', 'thumbnail', 'module')
+    list_editable = ('title', 'slug', 'creator', 'created', 'thumbnail', 'module')
     list_display_links = ('pk', )
     list_filter = ( 'creator', 'module' )
-    search_fields = ('title', 'shorttitle')
+    search_fields = ('title', )
 
     prepopulated_fields = {'slug': ('title', )}
 
 @admin.register(Annotation)
 class AnnotationAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'title', 'shorttitle', 'creator', 'created', )
-    list_editable = ('title', 'shorttitle', )
+    list_display = ('pk', 'title', 'creator', 'created', )
+    list_editable = ('title', )
     list_display_links = ('pk', )
     list_filter = ( 'creator', )
-    search_fields = ('title', 'shorttitle', )
+    search_fields = ('title', )
 
     prepopulated_fields = {'slug': ('title', )}

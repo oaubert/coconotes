@@ -72,10 +72,6 @@ class Element(models.Model):
                              blank=True,
                              max_length=250)
 
-    shorttitle = models.CharField(_("Shorttitle"),
-                                  blank=True,
-                                  max_length=16)
-
     description = models.TextField(_("Description"),
                                    blank=True)
 
@@ -169,7 +165,7 @@ class Module(Element):
 
     @property
     def subtitle(self):
-        return self.course.shorttitle
+        return self.course.title
 
 class Activity(Element):
     module = models.ForeignKey(Module)
@@ -178,7 +174,7 @@ class Activity(Element):
 
     @property
     def subtitle(self):
-        return self.module.shorttitle
+        return self.module.title
 
 class Video(Resource):
     activity = models.ForeignKey(Activity,
@@ -199,7 +195,7 @@ class Video(Resource):
 
     @property
     def subtitle(self):
-        return self.activity.shorttitle
+        return self.activity.title
 
     @property
     def course(self):
