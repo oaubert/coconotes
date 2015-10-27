@@ -751,7 +751,7 @@ h1.highlighted {
     }
 }
 
-@media only screen and (max-width: 320px) {
+@media only screen and (max-width: 640px) {
     .minicapsule {
         width: calc(50% - 12px);
     }
