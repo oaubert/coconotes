@@ -569,7 +569,7 @@ h1.highlighted {
 }
 
 .minicapsule {
-    margin: 0px 12px 0px 0px;
+    margin: 0 12px 12px 0;
     float: left;
     overflow-y: hidden;
     background-color: #dcf0ff;
