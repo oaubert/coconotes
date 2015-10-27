@@ -211,9 +211,7 @@ h1.highlighted {
 
 #main .splitter-bar {
     background-color: #fff;
-    /* 1x1 black pixel */
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNg+A8AAQIBANEay48AAAAASUVORK5CYII=);
-    background-size: 16px 72px;
+    background-image: url(../img/splitter-background.png);
     background-repeat: no-repeat;
 }
 
