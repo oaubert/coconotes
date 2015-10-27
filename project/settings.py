@@ -72,6 +72,7 @@ INSTALLED_APPS = [
 ]
 if DEBUG:
     INSTALLED_APPS.insert(-1, 'debug_toolbar')
+SHELL_PLUS = "ipython"
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
