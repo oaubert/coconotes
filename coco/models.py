@@ -163,6 +163,8 @@ class Module(Element):
 
     tags = TaggableManager(blank=True, through=TaggedModule)
 
+    teachers = models.ManyToManyField(User, related_name="teacher_for")
+
     @property
     def subtitle(self):
         return self.course.title
