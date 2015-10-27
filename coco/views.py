@@ -1,11 +1,12 @@
 import datetime
 import json
-from collections import namedtuple, OrderedDict
+from collections import namedtuple, OrderedDict, Counter
 
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic import CreateView, UpdateView, DeleteView, RedirectView
+from django.template.defaultfilters import pluralize
 
 from rest_framework import permissions, viewsets
 
@@ -183,7 +184,15 @@ def search(request, **kw):
     for model,fields in MODEL_MAP.iteritems():
         elements += generic_search(request, model, fields, 'q')
 
+    counts = Counter(el.element_type for el in elements)
+    # Reorder counter info to match MODEL_MAP key order
+    counts = [ (counts[name], name)
+               for name in (k.__name__ for k in MODEL_MAP.keys())
+               if counts[name] > 0 ]
+    summary = ", ".join("%d %s%s" % (count, name, pluralize(count))
+                        for (count, name) in counts)
     return render_to_response('search.html', {
+        'summary': summary,
         'elements': elements,
         'username': request.user.username,
         'query_string' : request.GET.get('q', ''),

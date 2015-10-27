@@ -9,7 +9,7 @@
 
 <section class="search_results">
   {% if elements %}
-  <h2>{{ elements|length }} résultats.</h2>
+  <h2>{{ elements|length }} résultats : {{ summary }}</h2>
   {% endif %}
   {% for item in elements %}
   <article class="capsule searchcapsule">
