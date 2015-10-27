@@ -230,7 +230,7 @@ def cinelab(request, slug=None, pk=None, **kw):
         "dc:description": ""
     }
     context = CocoContext(username=request.user.username,
-                          teacher_set=[],
+                          teacher_set=[ u.username for u in v.activity.module.teachers.all() ],
                           current_group='') # FIXME: get from cookie/session info?
     data['medias'].append(v.cinelab(context=context))
     data['annotations'].extend(a.cinelab(context=context) for a in Annotation.objects.filter(video=v))
