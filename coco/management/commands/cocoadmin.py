@@ -54,6 +54,8 @@ class Command(BaseCommand):
             module.save()
 
         activity_title = data.get("title", "Titre inconnu")
+        if activity_title.startswith("Langage C -"):
+            activity_title = activity_title.replace("Langage C -", "")
         descr = "%s - %s" % (data.get("date", "Date inconnue"),
                              data.get("author", "Auteur inconnu"))
         activity = Activity(creator=adminuser, contributor=adminuser,
