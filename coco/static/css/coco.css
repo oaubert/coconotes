@@ -21,7 +21,7 @@ html, body {
 
 /* Safari/iOS related fixes */
 
-input, text-area {
+input, textarea {
     -webkit-appearance: none;
     -webkit-border-radius: 0;
 }
