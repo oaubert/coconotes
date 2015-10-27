@@ -1,5 +1,7 @@
 <article class="minicapsule fixedheight">
-  <a title="{{ item.title }}" href="{{ item.get_absolute_url }}"><img src="{{ item.thumbnail_url }}"></a>
+  <div class="minicapsule_thumbnail">
+    <a title="{{ item.title }}" href="{{ item.get_absolute_url }}"><img src="{{ item.thumbnail_url }}"></a>
+  </div>
   <div class="content">
     <h5>{{ item.subtitle }}</h5>
     <h4 class="multiline_ellipsis"><a title="{{ item.title }}" href="{{ item.get_absolute_url }}">{{ item.title }}</a></h4>
