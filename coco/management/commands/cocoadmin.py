@@ -154,6 +154,9 @@ class Command(BaseCommand):
                 if 'data' in a['content']:
                     an.contenttype = a['content'].get('mimetype', 'text/plain')
                     an.contentdata = json.dumps(a['content']['data'])
+                elif 'level' in a['content']:
+                    an.contenttype = 'application/json'
+                    an.contentdata = json.dumps({ 'level': a['content']['level'] })
                 if 'img' in a['content']:
                     pic = os.path.join(dirname, a['content']['img']['src'])
                     if os.path.exists(pic):
