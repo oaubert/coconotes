@@ -95,7 +95,7 @@ class Element(models.Model):
             return static("img/default.png")
 
     def get_absolute_url(self):
-        return reverse('view-%s-detail' % self.__class__.__name__.lower(), args=[str(self.pk)])
+        return reverse('view-%s-detail' % self.__class__.__name__.lower(), args=[str(self.slug or self.pk)])
 
     def __unicode__(self):
         return u"%s (%s)" % (self.title,
