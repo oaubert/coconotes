@@ -4,6 +4,8 @@
 ./manage.py cocoadmin postnews "Launch" "Champagne!" "Launch of the COCo platform. Is there anything more to add?"
 ./manage.py cocoadmin postnews "Welcome onboard" "Welcome" "Welcome onboard of the COCo platform, enjoy our content"
 
+./manage.py cocoadmin info "Séminaires" "Pédagogie" ~/www/comin-ocw/contents/lecture/20140707-marcel_lebrun_notes/info.json
+
 for c in 20140825-e2phy1 20140825-e2phy2 20140825-gilles_cohen_tannoudji1 20140825-gilles_cohen_tannoudji2
 do
     ./manage.py cocoadmin info "Séminaires" "Astrophysique" ~/www/comin-ocw/contents/lecture/$c/info.json
@@ -14,18 +16,13 @@ do
     ./manage.py cocoadmin info "Séminaires" "Medialab SpeedTraining" ~/www/comin-ocw/contents/medialab/$c/info.json
 done
 
-for c in 20131212-gilles_dowek 20140227-denis_bouyssou 20140326-giuseppe_longo 20141002-guy_pujolle
-do
-    ./manage.py cocoadmin info "Séminaires" "LINA" ~/www/comin-ocw/contents/lecture/$c/info.json
-done
-
 for i in ~/www/comin-ocw/contents/infol1/20131*/info.json; do
     ./manage.py cocoadmin info "Informatique L1" "Cours-conférence" "$i"
 done
 
-for c in 20140707-marcel_lebrun_notes
+for c in 20131212-gilles_dowek 20140227-denis_bouyssou 20140326-giuseppe_longo 20141002-guy_pujolle
 do
-    ./manage.py cocoadmin info "Séminaires" "Pédagogie" ~/www/comin-ocw/contents/lecture/$c/info.json
+    ./manage.py cocoadmin info "Séminaires" "LINA" ~/www/comin-ocw/contents/lecture/$c/info.json
 done
 
 #exit 0
