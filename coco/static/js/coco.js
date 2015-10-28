@@ -234,6 +234,13 @@ $(document).ready(function () {
             // on_resize();
         });
 
+    $(".videodetails").on("click touchstart", function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        IriSP.jQuery('<div/>', {'class': 'element-form-dialog', 'id': IriSP.generateUuid() })
+            .load("/video/" + metadata.video_id + "/info/").appendTo('body').dialog({ width: "90%" });
+    });
+
     /*
     // Splitter between the video player and the rest of the metadataplayer
     splitter2 = $("#PlayerContainer").touchSplit({orientation:"vertical", topMin: 220});
