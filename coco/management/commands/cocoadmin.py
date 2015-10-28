@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 from django.core.files import File
 from django.utils.timezone import make_naive, is_aware
 
-from coco.models import Activity, Course, Video, Module, Annotation, Newsitem, AnnotationType
+from coco.models import Activity, Course, Video, Module, Annotation, Newsitem, AnnotationType, License
 
 logger = logging.getLogger(__name__)
 
@@ -73,6 +73,12 @@ class Command(BaseCommand):
                     url=url)
         # Note: length is not initialized. We will get its duration
         # from the package just below.
+
+        # Migrate license info
+        licenses = [ license for license in ('cc-by', 'cc-by-nc', 'cc-by-sa', 'cc-by-nc-sa') if data.get(license) ]
+        if licenses:
+            # Associate license
+            vid.license = License.objects.get(slug=licenses[0])
         pic = os.path.join(dirname, 'imagecache', '00.png')
         if not os.path.exists(pic):
             pic = os.path.join(dirname, 'imagecache', '000.png')
