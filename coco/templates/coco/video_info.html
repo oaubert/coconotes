@@ -2,6 +2,7 @@
   <h4>Video {{object.title}}</h4>
   <div>
     <p>Description: {{object.description}}</p>
+    <p>License: {% if object.license %}{{object.license}}{% else %}Inconnue{% endif %}</p>
     <p>Activity <a href="{{object.activity.get_absolute_url}}">{{object.activity.title}}</a></p>
   </div>
 </div>
