@@ -9,13 +9,17 @@
 
 <div class="course_description">
   <h1>Module {{ module.title }}</h1>
-  
+
   <p class="module_course">{{ module.course }}
-  
+
   <div class="capsule_container">
+    {% ifequal module.activity_set.length 1 %}
+    {% include "item_capsule.html" with item=activity.video %}
+    {% else %}
     {% for activity in module.activity_set.all %}
     {% include "item_capsule.html" with item=activity %}
     {% endfor %}
+    {% endifequal %}
   </div>
 
 </div>
