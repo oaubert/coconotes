@@ -520,6 +520,10 @@ h1.highlighted {
     color: #fff;
 }
 
+.searchcapsule img {
+    max-width: 160px;
+}
+
 .profile_avatar {
     width: 20%;
     min-width: 48px;
