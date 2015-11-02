@@ -57,7 +57,7 @@ $(document).ready(function () {
     /* Customized metadataplayer configuration */
     IriSP.libFiles.defaultDir = "../../static/libs/";
     IriSP.widgetsDir = "../../static/metadataplayer";
-    IriSP.language = "fr";
+    IriSP.language = metadata.lang || "fr";
 
     var _myPlayer,
         _config = {

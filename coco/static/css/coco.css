@@ -141,7 +141,12 @@ header {
     font-size: 8px;
     vertical-align: middle;
 }
-#langswitch .lang_item {
+#langswitch form {
+    display: inline-block;
+}
+.lang_item {
+    font-family: Arial, Verdana;
+    font-size: 8px;
     display: inline-block;
     height: 18px;
     width: 18px;
@@ -149,6 +154,8 @@ header {
     border: 1px solid #fff;
     padding: 3px;
     margin: 2px;
+    color: white;
+    background-color: black;
 }
 .lang_item.active {
     color: black;
@@ -640,7 +647,7 @@ h1.highlighted {
     font-size: 11px;
 }
 
-.last_videos {
+.latest_videos {
     margin-top: 40px;
 }
 
@@ -693,7 +700,7 @@ h1.highlighted {
 .newsitem {
     margin-bottom: 20px;
 }
-.last_videos {
+.latest_videos {
     display: block;
     position: relative;
     top: 40px;

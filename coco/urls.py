@@ -21,6 +21,8 @@ router.register(r'news', views.NewsitemViewSet)
 urlpatterns = patterns('',
                        url(r'^$', views.home, name='root'),
 
+                       url(r'^i18n/', include('django.conf.urls.i18n')),
+
                        url(r'^accounts/profile', views.profile, name='profile'),
 
                        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),

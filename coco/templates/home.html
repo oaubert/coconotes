@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+
+{% load i18n %}
 {% load admin_urls %}
 {% load url from future %}
 
@@ -11,23 +13,25 @@
 
   <section class="column column4" id="home_column">
 
-    <h1 class="highlighted">Bienvenue</h1>
+    <h1 class="highlighted">{% trans "Welcome" %}</h1>
 
     <article class="welcome">
+      {% blocktrans %}
       <p class="subtitle">COCo platform is a place to find open education
         resources that are free to use/reuse and of high
         quality.</p>
       <p>Feel free to use our tools when going through the
         resources, they were designed to help you in your learning path.</p>
+      {% endblocktrans %}
     </article>
 
     <article class="capsule home_news">
-      <h1>Les nouvelles</h1>
+      <h1>{% trans "News" %}</h1>
       {% for item in news %}
       <article class="newsitem">
         <h5>{{ item.subtitle }}</h5>
         <h4>{{ item.title }}</h4>
-        <span class="description">{{ item.description|truncatechars_html:40 }}<a href="{{ item.get_absolute_url }}" class="readmore">Lire plus</a>
+        <span class="description">{{ item.description|truncatechars_html:40 }}<a href="{{ item.get_absolute_url }}" class="readmore">{% trans "Read more" %}</a>
         </span>
       </article>
       {% endfor %}
@@ -39,7 +43,7 @@
   <section class="column column8 home_content">
 
     <section class="la_une">
-      <h1>À la une</h1>
+      <h1>{% trans "Featured" %}</h1>
 
       <div class="capsule_container">
       {% for item in une_items %}
@@ -49,8 +53,8 @@
 
     </section>
 
-    <section class="last_videos">
-      <h2>Les dernières vidéos</h2>
+    <section class="latest_videos">
+      <h2>{% trans "Latest videos" %}</h2>
 
 
       <div class="capsule_container">

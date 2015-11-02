@@ -2,6 +2,8 @@
 import os
 APPROOT = os.path.dirname(os.path.dirname(__file__)) + os.sep
 
+from django.utils.translation import ugettext_lazy as _
+
 # local_settings should define a 'options' dictionary with
 # configuration values.
 try:
@@ -76,6 +78,7 @@ SHELL_PLUS = "ipython"
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -127,6 +130,11 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_L10N = True
+
+LANGUAGES = (
+  ('fr', _('French')),
+  ('en', _('English')),
+)
 
 USE_TZ = False
 

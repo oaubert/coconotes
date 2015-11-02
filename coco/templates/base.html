@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load i18n %}
 
 <!doctype html>
 <html>
@@ -20,15 +21,19 @@
         <div id="profilemenu">{% if user.is_authenticated %}
           <a href="/accounts/profile"><span id="loginname" class="profilemenu_item">{{ user.username }}</span></a><a href="/accounts/logout/"><span class="profilemenu_item">Log out</span></a>
           {% else %}
-          <a href="/accounts/login/"><span class="profilemenu_item">Log in / Sign in</span></a>
+          <a href="/accounts/login/"><span class="profilemenu_item">{% trans "Log in / Sign in" %}</span></a>
           {% endif %}</div>
-        <div id="langswitch"><span class="lang_item lang_fr active">FR</span><span class="lang_item lang_en">EN</span></div>
+        <div id="langswitch">
+          {% get_current_language as LANGUAGE_CODE %}
+          <form action="{% url 'set_language' %}" method="post">{% csrf_token %}<input name="language" type="hidden" value="fr" /><input type="submit" class="lang_item lang_fr {% if "fr" == LANGUAGE_CODE %}active{% endif %}" value="FR"></input></form>
+          <form action="{% url 'set_language' %}" method="post">{% csrf_token %}<input name="language" type="hidden" value="en" /><input type="submit" class="lang_item lang_en {% if "en" == LANGUAGE_CODE %}active{% endif %}" value="EN"></input></form>
+        </div>
         <form action="/search" id="form">
-          <input id="searchfield" name="q" type="search" value="{{ query_string }}" placeholder="Rechercher des vidéos ou des cours"/>
+          <input id="searchfield" name="q" type="search" value="{{ query_string }}" placeholder="{% trans "Search for videos or lectures" %}"/>
         </form>
         <div class="topmenu">
-          <span class="topmenu_item {% ifequal current_document "home" %}active{% endifequal %}"><a href="/">Accueil</a></span>
-          <span class="topmenu_item {% if course_list %}active{% endif %}"><a href="/course/">Tous les cours</a></span>
+          <span class="topmenu_item {% ifequal current_document "home" %}active{% endifequal %}"><a href="/">{% trans "Home" %}</a></span>
+          <span class="topmenu_item {% if course_list %}active{% endif %}"><a href="/course/">{% trans "All lectures" %}</a></span>
         </div>
       </header>
 

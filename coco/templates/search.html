@@ -3,13 +3,13 @@
 {% load admin_urls %}
 {% load url from future %}
 
-{% block title %}COCo platform - recherche {{ query_string }}{% endblock %}
+{% block title %}COCo platform - {% trans "search for" %} {{ query_string }}{% endblock %}
 
 {% block content %}
 
 <section class="search_results">
   {% if elements %}
-  <h2>{{ elements|length }} résultats : {{ summary }}</h2>
+  <h2>{{ elements|length }} {% trans "results" %} : {{ summary }}</h2>
   {% endif %}
   {% for item in elements %}
   <article class="capsule searchcapsule">
@@ -22,7 +22,7 @@
     </div>
   </article>
   {% empty %}
-  <h1>Aucun résultat.</h1>
+  <h1>{% trans "No result" %}.</h1>
   {% endfor %}
 </section>
 
