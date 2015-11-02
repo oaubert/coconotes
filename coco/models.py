@@ -1,12 +1,12 @@
 import datetime
 import json
 import uuid
-from gettext import gettext as _
 
 from django.db import models
 from django.contrib.auth.models import User, Group
 from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
+from django.utils.translation import ugettext_lazy as _
 
 from taggit_autosuggest.managers import TaggableManager
 from taggit.models import TaggedItemBase
@@ -107,7 +107,7 @@ class Element(models.Model):
 
     @property
     def element_type(self):
-        return self.__class__.__name__
+        return _(self.__class__.__name__)
 
 class License(models.Model):
     slug = models.SlugField(max_length=16,
@@ -145,6 +145,10 @@ class Course(Element):
 
     tags = TaggableManager(blank=True, through=TaggedCourse)
 
+    class Meta:
+        verbose_name = _('a course')
+        verbose_name_plural = _('courses')
+
     @property
     def videos(self):
         """Videos associated with the course.
@@ -165,6 +169,10 @@ class Module(Element):
 
     teachers = models.ManyToManyField(User, related_name="teacher_for")
 
+    class Meta:
+        verbose_name = _('a module')
+        verbose_name_plural = _('modules')
+
     @property
     def subtitle(self):
         return self.course.title
@@ -173,6 +181,10 @@ class Activity(Element):
     module = models.ForeignKey(Module)
 
     tags = TaggableManager(blank=True, through=TaggedActivity)
+
+    class Meta:
+        verbose_name = _('an activity')
+        verbose_name_plural = _('activities')
 
     @property
     def subtitle(self):
@@ -194,6 +206,10 @@ class Video(Resource):
                                   help_text=_("Package identifier"),
                                   blank=True)
     tags = TaggableManager(blank=True, through=TaggedVideo)
+
+    class Meta:
+        verbose_name = _('a video')
+        verbose_name_plural = _('videos')
 
     @property
     def subtitle(self):
@@ -246,6 +262,10 @@ class AnnotationType(Element):
 
     It does not need more info than the one provided in Element.
     """
+    class Meta:
+        verbose_name = _('an annotation type')
+        verbose_name_plural = _('annotation types')
+
     def cinelab(self, context=None):
         """Return a cinelab serialization.
         """
@@ -274,6 +294,11 @@ class Annotation(UserContent):
                               blank=True,
                               null=True)
     tags = TaggableManager(blank=True, through=TaggedAnnotation)
+
+    class Meta:
+        verbose_name = _('an annotation')
+        verbose_name_plural = _('annotations')
+
     @property
     def subtitle(self):
         return _("Annotation")
@@ -339,6 +364,10 @@ class Annotation(UserContent):
         }
 
 class Comment(UserContent):
+    class Meta:
+        verbose_name = _('a comment')
+        verbose_name_plural = _('comments')
+
     parent_annotation = models.ForeignKey(Annotation,
                                           blank=True,
                                           null=True)
@@ -354,6 +383,10 @@ class Comment(UserContent):
     tags = TaggableManager(blank=True, through=TaggedComment)
 
 class Newsitem(Element):
+    class Meta:
+        verbose_name = _('a news item')
+        verbose_name_plural = _('news items')
+
     category = models.CharField(_("Category"),
                                 max_length=64,
                                 blank=True,
