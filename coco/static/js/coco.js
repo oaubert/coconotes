@@ -100,6 +100,11 @@ $(document).ready(function () {
                 annotation_type: "Slides"
             },
             {
+                type: "CocoCreateAnnotation",
+                container: "coco_annotation_input_widget",
+                annotation_type: "Contributions"
+            },
+            {
                 type: "EnrichedPlan",
                 container: "PlanContainer",
                 annotation_type: "Slides",

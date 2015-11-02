@@ -244,12 +244,6 @@ h1.highlighted {
     height: calc(100% - 80px);
 }
 
-.coco_annotation_input {
-    width: 100%;
-    font-family: Roboto;
-    font-size: 16px;
-}
-
 .titleblock {
     height: 72px;
     padding: 6px;
