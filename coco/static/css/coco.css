@@ -721,7 +721,7 @@ h1.highlighted {
     background: url("img/notes_edit.png");
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 780px) {
     /* phones */
     body {
         margin: 0 1em;
@@ -748,6 +748,6 @@ h1.highlighted {
     }
 }
 
-@media only screen and (max-width: 767px) and (orientation: portrait) {
+@media only screen and (max-width: 780px) and (orientation: portrait) {
     /* portrait phones */
 }
