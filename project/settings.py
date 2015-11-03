@@ -44,6 +44,7 @@ if options.get('redis_cache'):
 
 # Application definition
 INSTALLED_APPS = [
+    'coco',
     'admin_tools',
     'admin_tools.theming',
     'admin_tools.menu',
@@ -54,7 +55,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'coco',
     'taggit',
     'sorl.thumbnail',
     'rest_framework',
@@ -135,6 +135,8 @@ LANGUAGES = (
   ('fr', _('French')),
   ('en', _('English')),
 )
+
+LOCALEPATH = APPROOT + 'coco/locale/'
 
 USE_TZ = False
 
