@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"Report-Msgid-Bugs-To: COCo project <communication@comin-ocw.org>\n"
-"POT-Creation-Date: 2015-11-03 10:54+0100\n"
-"PO-Revision-Date: 2015-11-03 10:57+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-03 11:36+0100\n"
+"PO-Revision-Date: 2015-11-03 11:38+0100\n"
 "Last-Translator: Olivier Aubert <olivier.aubert@univ-nantes.fr>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -69,12 +69,12 @@ msgid "Syllabus"
 msgstr "Syllabus"
 
 #: models.py:149
-msgid "a course"
-msgstr "un cours"
+msgid "course"
+msgstr "cours"
 
 #: models.py:150
 msgid "courses"
-msgstr "des cours"
+msgstr "cours"
 
 #: models.py:163
 #, python-format
@@ -82,20 +82,20 @@ msgid "Course of %d videos"
 msgstr "Cours de %d vidéos"
 
 #: models.py:173
-msgid "a module"
-msgstr "un module"
+msgid "module"
+msgstr "module"
 
 #: models.py:174
 msgid "modules"
-msgstr "des modules"
+msgstr "modules"
 
 #: models.py:186
-msgid "an activity"
-msgstr "une activité"
+msgid "activity"
+msgstr "activité"
 
 #: models.py:187
 msgid "activities"
-msgstr "des activités"
+msgstr "activités"
 
 #: models.py:197
 msgid "Duration"
@@ -114,12 +114,12 @@ msgid "Package identifier"
 msgstr "Identifiant du recueil"
 
 #: models.py:211
-msgid "a video"
-msgstr "une vidéo"
+msgid "video"
+msgstr "vidéo"
 
 #: models.py:212
 msgid "videos"
-msgstr "des vidéos"
+msgstr "vidéos"
 
 #: models.py:245
 msgid "Content"
@@ -142,12 +142,12 @@ msgid "User content"
 msgstr "Contenu utilisateur"
 
 #: models.py:266
-msgid "an annotation type"
-msgstr "un type d'annotation"
+msgid "annotation type"
+msgstr "type d'annotation"
 
 #: models.py:267
 msgid "annotation types"
-msgstr "des types d'annotation"
+msgstr "types d'annotation"
 
 #: models.py:284
 msgid "Begin"
@@ -166,32 +166,32 @@ msgid "Annotation end time (in seconds)"
 msgstr "Temps de fin de l'annotation (en secondes)"
 
 #: models.py:299
-msgid "an annotation"
-msgstr "une annotation"
+msgid "annotation"
+msgstr "annotation"
 
 #: models.py:300
 msgid "annotations"
-msgstr "des annotations"
+msgstr "annotations"
 
 #: models.py:304
 msgid "Annotation"
 msgstr "Annotation"
 
 #: models.py:368
-msgid "a comment"
-msgstr "un commentaire"
+msgid "comment"
+msgstr "commentaire"
 
 #: models.py:369
 msgid "comments"
-msgstr "des commentaires"
+msgstr "commentaires"
 
 #: models.py:387
-msgid "a news item"
-msgstr "une nouvelle"
+msgid "news item"
+msgstr "nouvelle"
 
 #: models.py:388
 msgid "news items"
-msgstr "des nouvelles"
+msgstr "nouvelles"
 
 #: models.py:395 models.py:396
 msgid "Publication date"
@@ -297,15 +297,40 @@ msgstr "À la une"
 msgid "Latest videos"
 msgstr "Les dernières vidéos"
 
+#: templates/search.html:7
+msgid "COCo project"
+msgstr "Projet COCo"
+
 # recherche de
-#: templates/search.html:6
+#: templates/search.html:7
 msgid "search for"
 msgstr "recherche de"
 
-#: templates/search.html:12
+#: templates/search.html:13
 msgid "results"
 msgstr "résultats"
 
-#: templates/search.html:25
+#: templates/search.html:26
 msgid "No result"
 msgstr "Pas de résultat"
+
+#~ msgid "a course"
+#~ msgstr "un cours"
+
+#~ msgid "a module"
+#~ msgstr "un module"
+
+#~ msgid "a video"
+#~ msgstr "une vidéo"
+
+#~ msgid "an annotation type"
+#~ msgstr "un type d'annotation"
+
+#~ msgid "an annotation"
+#~ msgstr "une annotation"
+
+#~ msgid "a comment"
+#~ msgstr "un commentaire"
+
+#~ msgid "a news item"
+#~ msgstr "une nouvelle"
