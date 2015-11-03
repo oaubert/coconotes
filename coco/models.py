@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.utils.translation import ugettext_lazy as _
 
+from annoying.fields import AutoOneToOneField
 from taggit_autosuggest.managers import TaggableManager
 from taggit.models import TaggedItemBase
 
@@ -399,3 +400,20 @@ class Newsitem(Element):
     @property
     def subtitle(self):
         return self.category
+
+class GroupMetadata(Element):
+    group = AutoOneToOneField(Group)
+
+class UserMetadata(models.Model):
+    user = AutoOneToOneField(User)
+
+    title = models.CharField(_("Title"),
+                             blank=True,
+                             max_length=250)
+
+    description = models.TextField(_("Description"),
+                                   blank=True)
+
+    thumbnail = ImageField(upload_to='thumbnails',
+                           blank=True,
+                           null=True)
