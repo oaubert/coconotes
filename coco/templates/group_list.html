@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load admin_urls %}
+{% load url from future %}
+
+{% block title %}{% blocktrans %}COCo platform{% endblocktrans %} - {% blocktrans %}Groups{% endblocktrans %}{% endblock %}
+
+{% block content %}
+          <h1 class="pagetitle">{% blocktrans %}Groups{% endblocktrans %}</h1>
+
+          {% for group in group_list %}
+          <article class="capsule">
+            {% if group.thumbnail_url %}
+            <img class="thumbnail_mini" src="{{ group.thumbnail_url }}">
+            {% endif %}
+            <h4><a href="{{ group.get_absolute_url }}">{{ group.name }}</a> ({{ group.user_set.count }})</h4>
+          </article>
+          {% endfor %}
+
+{% endblock %}
