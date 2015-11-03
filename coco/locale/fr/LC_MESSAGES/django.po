@@ -1,14 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# COCo platform
+# Copyright (C) 2015 Olivier Aubert
+# This file is distributed under the same license as the COCo platform package.
+# Olivier Aubert <olivier.aubert@univ-nantes.fr>, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-03 09:36+0000\n"
-"PO-Revision-Date: 2015-11-02 17:54+0100\n"
+"Report-Msgid-Bugs-To: COCo project <communication@comin-ocw.org>\n"
+"POT-Creation-Date: 2015-11-03 10:54+0100\n"
+"PO-Revision-Date: 2015-11-03 10:57+0100\n"
 "Last-Translator: Olivier Aubert <olivier.aubert@univ-nantes.fr>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -16,193 +16,193 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: coco/models.py:38
+#: models.py:38
 msgid "Private"
 msgstr "Privé"
 
-#: coco/models.py:39
+#: models.py:39
 msgid "Group"
 msgstr "Groupe"
 
-#: coco/models.py:40
+#: models.py:40
 msgid "Public"
 msgstr "Public"
 
-#: coco/models.py:55
+#: models.py:55
 msgid "Creation date"
 msgstr "Date de création"
 
-#: coco/models.py:56
+#: models.py:56
 msgid "Element creation date"
 msgstr "Date de création de l'élément"
 
-#: coco/models.py:63
+#: models.py:63
 msgid "Modification date"
 msgstr "Date de  modification"
 
-#: coco/models.py:64
+#: models.py:64
 msgid "Element modification date"
 msgstr "Date de modification de l'élément"
 
-#: coco/models.py:67
+#: models.py:67
 msgid "State"
 msgstr "État"
 
-#: coco/models.py:71 coco/models.py:116
+#: models.py:71 models.py:116
 msgid "Title"
 msgstr "Titre"
 
-#: coco/models.py:75
+#: models.py:75
 msgid "Description"
 msgstr "Description"
 
-#: coco/models.py:120 coco/models.py:127
+#: models.py:120 models.py:127
 msgid "URL"
 msgstr "URL"
 
-#: coco/models.py:139 coco/models.py:390
+#: models.py:139 models.py:390
 msgid "Category"
 msgstr "Catégorie"
 
-#: coco/models.py:143
+#: models.py:143
 msgid "Syllabus"
 msgstr "Syllabus"
 
-#: coco/models.py:149
+#: models.py:149
 msgid "a course"
 msgstr "un cours"
 
-#: coco/models.py:150
+#: models.py:150
 msgid "courses"
 msgstr "des cours"
 
-#: coco/models.py:163
+#: models.py:163
 #, python-format
 msgid "Course of %d videos"
 msgstr "Cours de %d vidéos"
 
-#: coco/models.py:173
+#: models.py:173
 msgid "a module"
 msgstr "un module"
 
-#: coco/models.py:174
+#: models.py:174
 msgid "modules"
 msgstr "des modules"
 
-#: coco/models.py:186
+#: models.py:186
 msgid "an activity"
 msgstr "une activité"
 
-#: coco/models.py:187
+#: models.py:187
 msgid "activities"
 msgstr "des activités"
 
-#: coco/models.py:197
+#: models.py:197
 msgid "Duration"
 msgstr "Durée"
 
-#: coco/models.py:198
+#: models.py:198
 msgid "Video duration in seconds"
 msgstr "Durée de la vidéo en secondes"
 
-#: coco/models.py:204
+#: models.py:204
 msgid "Package id"
 msgstr "Id recueil"
 
-#: coco/models.py:206
+#: models.py:206
 msgid "Package identifier"
 msgstr "Identifiant du recueil"
 
-#: coco/models.py:211
+#: models.py:211
 msgid "a video"
 msgstr "une vidéo"
 
-#: coco/models.py:212
+#: models.py:212
 msgid "videos"
 msgstr "des vidéos"
 
-#: coco/models.py:245
+#: models.py:245
 msgid "Content"
 msgstr "Contenu"
 
-#: coco/models.py:247
+#: models.py:247
 msgid "Content-Type"
 msgstr "Type de contenu"
 
-#: coco/models.py:251
+#: models.py:251
 msgid "Visibility"
 msgstr "Visibilité"
 
-#: coco/models.py:253
+#: models.py:253
 msgid "Content visibility"
 msgstr "Visibilité du contenu"
 
-#: coco/models.py:258
+#: models.py:258
 msgid "User content"
 msgstr "Contenu utilisateur"
 
-#: coco/models.py:266
+#: models.py:266
 msgid "an annotation type"
 msgstr "un type d'annotation"
 
-#: coco/models.py:267
+#: models.py:267
 msgid "annotation types"
 msgstr "des types d'annotation"
 
-#: coco/models.py:284
+#: models.py:284
 msgid "Begin"
 msgstr "Début"
 
-#: coco/models.py:285
+#: models.py:285
 msgid "Annotation begin time (in seconds)"
 msgstr "Temps de début de l'annotation (en secondes)"
 
-#: coco/models.py:287
+#: models.py:287
 msgid "End"
 msgstr "Fin"
 
-#: coco/models.py:288
+#: models.py:288
 msgid "Annotation end time (in seconds)"
 msgstr "Temps de fin de l'annotation (en secondes)"
 
-#: coco/models.py:299
+#: models.py:299
 msgid "an annotation"
 msgstr "une annotation"
 
-#: coco/models.py:300
+#: models.py:300
 msgid "annotations"
 msgstr "des annotations"
 
-#: coco/models.py:304
+#: models.py:304
 msgid "Annotation"
 msgstr "Annotation"
 
-#: coco/models.py:368
+#: models.py:368
 msgid "a comment"
 msgstr "un commentaire"
 
-#: coco/models.py:369
+#: models.py:369
 msgid "comments"
 msgstr "des commentaires"
 
-#: coco/models.py:387
+#: models.py:387
 msgid "a news item"
 msgstr "une nouvelle"
 
-#: coco/models.py:388
+#: models.py:388
 msgid "news items"
 msgstr "des nouvelles"
 
-#: coco/models.py:395 coco/models.py:396
+#: models.py:395 models.py:396
 msgid "Publication date"
 msgstr "Date de publication"
 
-#: coco/templates/accounts/login.html:6 coco/templates/accounts/login.html:10
-#: coco/templates/accounts/login.html:43
+#: templates/accounts/login.html:6 templates/accounts/login.html.py:10
+#: templates/accounts/login.html:43
 msgid "Sign In"
 msgstr "Connexion"
 
-#: coco/templates/accounts/login.html:15
+#: templates/accounts/login.html:15
 #, python-format
 msgid ""
 "Please sign in with one\n"
@@ -212,11 +212,11 @@ msgstr ""
 "Connectez-vous avec un de vos comptes externes. Or, <a href=\"%(signup_url)s\">inscrivez-vous</a>\n"
 "pour un compte %(site_name)s et connectez-vous ci-dessous :"
 
-#: coco/templates/accounts/login.html:25
+#: templates/accounts/login.html:25
 msgid "or"
 msgstr "ou"
 
-#: coco/templates/accounts/login.html:32
+#: templates/accounts/login.html:32
 #, python-format
 msgid ""
 "If you have not created an account yet, then please\n"
@@ -225,47 +225,47 @@ msgstr ""
 "Si vous n'avez pas encore créé de compte, alors\n"
 "<a href=\"%(signup_url)s\">inscrivez-vous</a> d'abord."
 
-#: coco/templates/accounts/login.html:42
+#: templates/accounts/login.html:42
 msgid "Forgot Password?"
 msgstr "Mot de passe oublié ?"
 
-#: coco/templates/base.html:24
+#: templates/base.html:24
 msgid "Log in / Sign in"
 msgstr "Connexion / Inscription"
 
-#: coco/templates/base.html:32
+#: templates/base.html:32
 msgid "Search for videos or lectures"
 msgstr "Cherchez des vidéos ou des cours"
 
-#: coco/templates/base.html:35
+#: templates/base.html:35
 msgid "Home"
 msgstr "Accueil"
 
-#: coco/templates/base.html:36
+#: templates/base.html:36
 msgid "All lectures"
 msgstr "Tous les cours"
 
-#: coco/templates/coco/video_detail.html:58
+#: templates/coco/video_detail.html:58
 msgid "Plan"
 msgstr "Plan"
 
-#: coco/templates/coco/video_detail.html:59
+#: templates/coco/video_detail.html:59
 msgid "Own notes"
 msgstr "Notes perso."
 
-#: coco/templates/coco/video_detail.html:60
+#: templates/coco/video_detail.html:60
 msgid "Group notes"
 msgstr "Notes de groupe"
 
-#: coco/templates/coco/video_detail.html:61
+#: templates/coco/video_detail.html:61
 msgid "Public notes"
 msgstr "Notes publiques"
 
-#: coco/templates/home.html:16
+#: templates/home.html:16
 msgid "Welcome"
 msgstr "Bienvenue"
 
-#: coco/templates/home.html:19
+#: templates/home.html:19
 msgid ""
 "\n"
 "      <p class=\"subtitle\">COCo platform is a place to find open education\n"
@@ -280,32 +280,32 @@ msgstr ""
 "      <p>Utilisez nos outils pour consulter ces ressources, ils ont été conçus pour vous aider dans votre apprentissage.</p>\n"
 "      "
 
-#: coco/templates/home.html:29
+#: templates/home.html:29
 msgid "News"
 msgstr "Nouvelles"
 
-#: coco/templates/home.html:34
+#: templates/home.html:34
 msgid "Read more"
 msgstr "Lire plus"
 
-#: coco/templates/home.html:46
+#: templates/home.html:46
 msgid "Featured"
 msgstr "À la une"
 
 # Les dernières vidéos
-#: coco/templates/home.html:57
+#: templates/home.html:57
 msgid "Latest videos"
 msgstr "Les dernières vidéos"
 
 # recherche de
-#: coco/templates/search.html:6
+#: templates/search.html:6
 msgid "search for"
 msgstr "recherche de"
 
-#: coco/templates/search.html:12
+#: templates/search.html:12
 msgid "results"
 msgstr "résultats"
 
-#: coco/templates/search.html:25
+#: templates/search.html:25
 msgid "No result"
 msgstr "Pas de résultat"
