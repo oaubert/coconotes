@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"Report-Msgid-Bugs-To: communication@comin-ocw.org\n"
-"POT-Creation-Date: 2015-11-02 16:44+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-03 09:36+0000\n"
 "PO-Revision-Date: 2015-11-02 17:54+0100\n"
 "Last-Translator: Olivier Aubert <olivier.aubert@univ-nantes.fr>\n"
 "Language: fr\n"
@@ -206,8 +206,7 @@ msgstr "Connexion"
 #, python-format
 msgid ""
 "Please sign in with one\n"
-"of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign "
-"up</a>\n"
+"of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign up</a>\n"
 "for a %(site_name)s account and sign in below:"
 msgstr ""
 "Connectez-vous avec un de vos comptes externes. Or, <a href=\"%(signup_url)s\">inscrivez-vous</a>\n"
@@ -234,15 +233,15 @@ msgstr "Mot de passe oublié ?"
 msgid "Log in / Sign in"
 msgstr "Connexion / Inscription"
 
-#: coco/templates/base.html:28
+#: coco/templates/base.html:32
 msgid "Search for videos or lectures"
 msgstr "Cherchez des vidéos ou des cours"
 
-#: coco/templates/base.html:31
+#: coco/templates/base.html:35
 msgid "Home"
 msgstr "Accueil"
 
-#: coco/templates/base.html:32
+#: coco/templates/base.html:36
 msgid "All lectures"
 msgstr "Tous les cours"
 
@@ -273,8 +272,7 @@ msgid ""
 "        resources that are free to use/reuse and of high\n"
 "        quality.</p>\n"
 "      <p>Feel free to use our tools when going through the\n"
-"        resources, they were designed to help you in your learning path.</"
-"p>\n"
+"        resources, they were designed to help you in your learning path.</p>\n"
 "      "
 msgstr ""
 "\n"
