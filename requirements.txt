@@ -10,4 +10,4 @@ django-crispy-forms
 django-debug-toolbar
 django-extensions
 Pillow
-
+django-annoying
