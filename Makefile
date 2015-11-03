@@ -12,3 +12,7 @@ ${LOCALEDIR}/django.mo: ${LOCALEDIR}/django.po
 
 ${LOCALEDIR}/django.po: ${SOURCE} ${TEMPLATES}
 	cd ${TOPDIR}/coco ; django-admin makemessages --no-wrap --locale fr
+
+upload:
+	${TOPDIR}/upload
+
