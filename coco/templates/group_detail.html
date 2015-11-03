@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load admin_urls %}
+{% load url from future %}
+
+{% block title %}{% blocktrans %}COCo platform{% endblocktrans %} - {% blocktrans %}Group{% endblocktrans %} {{ group.name }}{% endblock %}
+
+{% block content %}
+          <section class="column column3">
+
+            <h1>{% trans "My groups" %}</h1>
+
+            {% for group in user.groups.all %}
+            <article class="capsule">
+              {% if group.thumbnail_url %}
+              <img class="thumbnail_mini" src="{{ group.thumbnail_url }}">
+              {% endif %}
+              <h4><a href="{{ group.get_absolute_url }}">{{ group.name }}</a></h4>
+              <div class="group_description">{{ group.description }}</div>
+            </article>
+            {% endfor %}
+
+          </section>
+
+          <section class="column column6">
+            <h1>{% trans "Group" %} {{ group.name }}</h1>
+
+
+            <article class="capsule">
+              <p>Some information about the group...</p>
+            </article>
+
+            <h1>{% trans "Activity" %}</h1>
+
+            {% for c in group.comment_set.all %}
+            <article class="capsule">
+              <h4>{{ c.title|default:c.description }}</h4>
+              <div class="description">{{ c.description }}</div>
+            </article>
+            {% endfor %}
+
+
+          </section>
+
+          <section class="column column3">
+            <h1>{% trans "Members" %}</h1>
+
+            {% for u in group.user_set.all %}
+            <article class="capsule">
+              <h4>{{ u.get_full_name|default:u.username }}</h4>
+              <div class="description"></div>
+            </article>
+            {% endfor %}
+          </section>
+
+{% endblock %}
