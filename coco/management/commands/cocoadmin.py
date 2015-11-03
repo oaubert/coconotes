@@ -9,7 +9,7 @@ import logging
 import dateutil.parser
 
 from django.core.management.base import BaseCommand, CommandError
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.core.files import File
 from django.utils.timezone import make_naive, is_aware
 
@@ -27,6 +27,13 @@ def register(f):
     REGISTERED[f.__name__.strip('_')] = f
     return f
 
+def get_user(username):
+    if username == "":
+        username = "anonyme"
+    username = username.lower()
+    user, created = User.objects.get_or_create(username=username)
+    return user
+
 class Command(BaseCommand):
     args = '[command] [param]'
     help = """Administration commands for COCo
@@ -35,13 +42,6 @@ class Command(BaseCommand):
     def _info(self, cours, module, info):
         """Import video/module/course info from info.json files. Params: course_title module_title info.json
         """
-        def get_user(username):
-            if username == "":
-                username = "anonyme"
-            username = username.lower()
-            user, created = User.objects.get_or_create(username=username)
-            return user
-
         with open(info, 'r') as f:
             data = json.load(f)
         self.stdout.write("Saving %s\n" % data.get("title"))
@@ -186,13 +186,23 @@ class Command(BaseCommand):
         n = Newsitem(creator=adminuser, title=title, subtitle=subtitle, description=data)
         n.save()
 
+    @register
+    def add_to_group(self, groupname, *names):
+        """Add specified usernames to given groupname, creating items as necessary.
+        """
+        g, created = Group.objects.get_or_create(name=groupname)
+        for username in names:
+            u = get_user(username)
+            g.user_set.add(u)
+
     def handle(self, *args, **options):
-        self.help = self.help + "\n\n" + "\n".join("\t%s: %s" % (k, v.__doc__) for (k, v) in REGISTERED.items())
+        self.help = self.help + "\n\n" + "\n\n".join("\t%s: %s" % (k, v.__doc__) for (k, v) in REGISTERED.items())
         if not args:
             self.print_help(sys.argv[0], sys.argv[1])
             return
         command = args[0]
-        args = args[1:]
+        # We registered unbound methods, so put self as first parameter when calling
+        args = [ self ] + list(args[1:])
         m = REGISTERED.get(command)
         if m is not None:
             m(*args)
