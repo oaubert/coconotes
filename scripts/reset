@@ -1,5 +1,0 @@
-#! /bin/sh
-
-./manage.py migrate
-./manage.py createsuperuser --username oa --email contact@olivieraubert.net
-./scripts/populate
