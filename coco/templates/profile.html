@@ -4,7 +4,7 @@
 {% load admin_urls %}
 {% load url from future %}
 
-{% block title %}COCo platform - {{ user.username }}{% endblock %}
+{% block title %}{% blocktrans %}COCo platform{% endblocktrans %} - {{ user.username }}{% endblock %}
 
 {% block content %}
           <h1 class="pagetitle">{% trans "My profile" %}</h1>
@@ -15,7 +15,7 @@
               {% if user.thumbnail_url %}
               <img class="profile_avatar" src="user.thumbnail_url">
               {% endif %}
-              <h4>{% trans "Name"%} : {{ user.get_full_name }}</h4>
+              <h4>{{ user.get_full_name|default:user.username }}</h4>
               <span class="profile_status">{{ user.status }}</span>
               <span class="profile_email">{{ user.email }}</span>
 
@@ -26,8 +26,10 @@
 
             {% for group in user.groups.all %}
             <article class="capsule">
+              {% if group.thumbnail.url %}
               <img class="thumbnail_mini" src="{{ group.thumbnail_url }}">
-              <h4><a href="{{ group.get_absolute_url }}">{{ group.name }}</a></h4>
+              {% endif %}
+              <h4><a href="/group/{{ group.pk }}/">{{ group.name }}</a></h4>
               <div class="group_description">{{ group.description }}</div>
             </article>
             {% endfor %}
@@ -50,13 +52,11 @@
               <h1>{% trans "Suggestions" %}</h1>
 
               <article class="capsule">
-                <img class="thumbnail_mini" src="">
                 <h4><a href="player.html">Cours: 2.4 Les types des pronoms</a></h4>
                 <span class="capsule_description">Marie: anyone has an exercice to practice this?<br/>Pierre: I do! www.exercices.com</span>
               </article>
 
               <article class="capsule">
-                <img class="thumbnail_mini" src="">
                 <h4><a href="player.html">Séminaire: research in biogenetics</a></h4>
                 <span class="capsule_description">Marie: this resource shows it<br/> Pierre: news! I just tested it...</span>
               </article>
@@ -68,13 +68,11 @@
               <h1>{% trans "Last viewed" %}</h1>
 
               <article class="capsule">
-                <img class="thumbnail_mini" src="">
                 <h4><a href="player.html">Cours: 2.4 Les types des pronoms</a></h4>
                 <span class="capsule_description">Marie: anyone has an exercice to practice this?<br/>Pierre: I do! www.exercices.com</span>
               </article>
 
               <article class="capsule">
-                <img class="thumbnail_mini" src="">
                 <h4><a href="player.html">Séminaire: research in biogenetics</a></h4>
                 <span class="capsule_description">Marie: this resource shows it<br/> Pierre: news! I just tested it...</span>
               </article>
