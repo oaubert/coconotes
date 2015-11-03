@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 
+{% load i18n %}
 {% load admin_urls %}
 {% load url from future %}
 
-{% block title %}Course {{ title }}{% endblock %}
+{% block title %}{% blocktrans %}Course{% endblocktrans %} {{ title }}{% endblock %}
 
 {% block content %}
 

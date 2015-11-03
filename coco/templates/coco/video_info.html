@@ -1,8 +1,9 @@
+{% load i18n %}
 <div class="videoinfo">
-  <h4>Video {{object.title}}</h4>
+  <h4>{% blocktrans %}Video{% endblocktrans %} {{object.title}}</h4>
   <div>
-    <p>Description: {{object.description}}</p>
-    <p>License: {% if object.license %}{{object.license}}{% else %}Inconnue{% endif %}</p>
-    <p>Activity <a href="{{object.activity.get_absolute_url}}">{{object.activity.title}}</a></p>
+    <p>{% blocktrans %}Description{% endblocktrans %}: {{object.description}}</p>
+    <p>{% blocktrans %}License{% endblocktrans %}: {% if object.license %}{{object.license}}{% else %}{% blocktrans %}Unknown{% endblocktrans %}{% endif %}</p>
+    <p>{% blocktrans %}Activity{% endblocktrans %} <a href="{{object.activity.get_absolute_url}}">{{object.activity.title}}</a></p>
   </div>
 </div>

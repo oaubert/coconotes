@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 
+{% load i18n %}
 {% load admin_urls %}
 {% load url from future %}
 
 {% block title %}COCo platform - {{ user.username }}{% endblock %}
 
 {% block content %}
-          <h1 class="pagetitle">Mon profil</h1>
+          <h1 class="pagetitle">{% trans "My profile" %}</h1>
 
           <section class="column column8" id="profile_data">
 
@@ -14,14 +15,14 @@
               {% if user.thumbnail_url %}
               <img class="profile_avatar" src="user.thumbnail_url">
               {% endif %}
-              <h4>Nom : {{ user.get_full_name }}</h4>
+              <h4>{% trans "Name"%} : {{ user.get_full_name }}</h4>
               <span class="profile_status">{{ user.status }}</span>
               <span class="profile_email">{{ user.email }}</span>
 
               <div class="profile_description">{{ user.description }}</div>
             </article>
 
-            <h1>Mes groupes</h1>
+            <h1>{% trans "My groups" %}</h1>
 
             {% for group in user.groups.all %}
             <article class="capsule">
@@ -31,7 +32,7 @@
             </article>
             {% endfor %}
 
-            <h1>Mes annotations ({{ annotationscount }})</h1>
+            <h1>{% trans "My notes" %} ({{ annotationscount }})</h1>
 
             {% for annotation in annotations %}
             <article class="capsule">
@@ -46,7 +47,7 @@
 
             <section class="profile_info">
 
-              <h1>Recommandés</h1>
+              <h1>{% trans "Suggestions" %}</h1>
 
               <article class="capsule">
                 <img class="thumbnail_mini" src="">
@@ -64,7 +65,7 @@
 
             <section class="profile_info">
 
-              <h1>Dernières visualisations</h1>
+              <h1>{% trans "Last viewed" %}</h1>
 
               <article class="capsule">
                 <img class="thumbnail_mini" src="">

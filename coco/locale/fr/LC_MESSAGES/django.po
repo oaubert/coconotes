@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-03 11:36+0100\n"
-"PO-Revision-Date: 2015-11-03 11:38+0100\n"
+"POT-Creation-Date: 2015-11-03 11:45+0100\n"
+"PO-Revision-Date: 2015-11-03 11:46+0100\n"
 "Last-Translator: Olivier Aubert <olivier.aubert@univ-nantes.fr>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -52,7 +52,7 @@ msgstr "État"
 msgid "Title"
 msgstr "Titre"
 
-#: models.py:75
+#: models.py:75 templates/coco/video_info.html:5
 msgid "Description"
 msgstr "Description"
 
@@ -245,6 +245,39 @@ msgstr "Accueil"
 msgid "All lectures"
 msgstr "Tous les cours"
 
+#: templates/coco/activity_detail.html:7 templates/coco/activity_detail.html:12
+#: templates/coco/video_info.html:7
+msgid "Activity"
+msgstr "Activité"
+
+#: templates/coco/activity_list.html:6
+msgid "All activities"
+msgstr "Toutes les activités"
+
+#: templates/coco/course.html:7 templates/coco/course_detail.html:7
+msgid "Course"
+msgstr "Cours"
+
+#: templates/coco/course_list.html:6
+msgid "Courses"
+msgstr "Cours"
+
+#: templates/coco/element_list.html:6
+msgid "All elements"
+msgstr "Tous les éléments"
+
+#: templates/coco/module_detail.html:7 templates/coco/module_detail.html:12
+msgid "Module"
+msgstr "Module"
+
+#: templates/coco/module_list.html:6
+msgid "All modules"
+msgstr "Tous les modules"
+
+#: templates/coco/newsitem_detail.html:7
+msgid "COCo platform"
+msgstr "Plateforme COCo"
+
 #: templates/coco/video_detail.html:58
 msgid "Plan"
 msgstr "Plan"
@@ -260,6 +293,22 @@ msgstr "Notes de groupe"
 #: templates/coco/video_detail.html:61
 msgid "Public notes"
 msgstr "Notes publiques"
+
+#: templates/coco/video_info.html:3
+msgid "Video"
+msgstr "Vidéo"
+
+#: templates/coco/video_info.html:6
+msgid "License"
+msgstr "Licence"
+
+#: templates/coco/video_info.html:6
+msgid "Unknown"
+msgstr "Inconnue"
+
+#: templates/coco/video_list.html:6
+msgid "All videos"
+msgstr "Toutes les vidéos"
 
 #: templates/home.html:16
 msgid "Welcome"
@@ -296,6 +345,31 @@ msgstr "À la une"
 #: templates/home.html:57
 msgid "Latest videos"
 msgstr "Les dernières vidéos"
+
+#: templates/profile.html:10
+msgid "My profile"
+msgstr "Mon profil"
+
+#: templates/profile.html:18
+msgid "Name"
+msgstr "Nom"
+
+#: templates/profile.html:25
+msgid "My groups"
+msgstr "Mes groupes"
+
+#: templates/profile.html:35
+msgid "My notes"
+msgstr "Mes notes"
+
+#: templates/profile.html:50
+msgid "Suggestions"
+msgstr "Suggestions"
+
+# Les dernières vidéos
+#: templates/profile.html:68
+msgid "Last viewed"
+msgstr "Dernières vues"
 
 #: templates/search.html:7
 msgid "COCo project"
