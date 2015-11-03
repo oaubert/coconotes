@@ -27,11 +27,26 @@ def register(f):
     REGISTERED[f.__name__.strip('_')] = f
     return f
 
-def get_user(username):
+def get_group(annotationtype):
+    """Return the group corresponding to a given annotation type
+    """
+    g = re.search("at_converted(\d+)", annotationtype)
+    if g:
+        group, created = User.objects.get_or_create(name='Groupe ' + g.group(1))
+    else:
+        group = None
+    return group
+
+def get_user(username, context=None):
     if username == "":
         username = "anonyme"
     username = username.lower()
     user, created = User.objects.get_or_create(username=username)
+    # Create groups matching at_converted\d+ annotation types
+    if created and context is not None and username != 'anonyme':
+        g = get_group(context)
+        if g:
+            g.user_set.add(user)
     return user
 
 class Command(BaseCommand):
@@ -153,7 +168,8 @@ class Command(BaseCommand):
                     if m.group(1) is not None:
                         tags.append(m.group(1).strip(',').strip())
                     title = m.group(3).strip()
-                an = Annotation(creator=get_user(creator), contributor=get_user(contributor),
+                an = Annotation(creator=get_user(creator, context=a['meta']['id-ref']),
+                                contributor=get_user(contributor, context=a['meta']['id-ref']),
                                 created=convert_date(dateutil.parser.parse(a['meta']['dc:created'])),
                                 modified=convert_date(dateutil.parser.parse(a['meta']['dc:modified'])),
                                 annotationtype=at,
@@ -161,6 +177,7 @@ class Command(BaseCommand):
                                 begin=long(a['begin']) / 1000.0,
                                 end=long(a['end']) / 1000.0,
                                 title=title,
+                                group=get_group(a['meta']['id-ref']),
                                 description=a['content']['description'])
                 # FIXME: handle tags
                 if 'data' in a['content']:
