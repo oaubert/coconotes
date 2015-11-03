@@ -22,11 +22,17 @@ def convert_date(d):
         d = make_naive(d)
     return d
 
+REGISTERED = {}
+def register(f):
+    REGISTERED[f.__name__.strip('_')] = f
+    return f
+
 class Command(BaseCommand):
     args = '[command] [param]'
     help = """Administration commands for COCo
 """
-    def _import_info(self, cours, module, info):
+    @register
+    def _info(self, cours, module, info):
         """Import video/module/course info from info.json files. Params: course_title module_title info.json
         """
         def get_user(username):
@@ -172,6 +178,7 @@ class Command(BaseCommand):
                 for t in tags:
                     an.tags.add(t)
 
+    @register
     def _postnews(self, title, subtitle, data):
         """Post a newsitem message.
         """
@@ -180,17 +187,13 @@ class Command(BaseCommand):
         n.save()
 
     def handle(self, *args, **options):
-        dispatcher = {
-            'info': self._import_info,
-            'postnews': self._postnews,
-            }
-        self.help = self.help + "\n\n" + "\n".join("\t%s: %s" % (k, v.__doc__) for (k, v) in dispatcher.items())
+        self.help = self.help + "\n\n" + "\n".join("\t%s: %s" % (k, v.__doc__) for (k, v) in REGISTERED.items())
         if not args:
             self.print_help(sys.argv[0], sys.argv[1])
             return
         command = args[0]
         args = args[1:]
-        m = dispatcher.get(command)
+        m = REGISTERED.get(command)
         if m is not None:
             m(*args)
         else:
