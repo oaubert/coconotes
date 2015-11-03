@@ -146,7 +146,7 @@ class Course(Element):
     tags = TaggableManager(blank=True, through=TaggedCourse)
 
     class Meta:
-        verbose_name = _('a course')
+        verbose_name = _('course')
         verbose_name_plural = _('courses')
 
     @property
@@ -170,7 +170,7 @@ class Module(Element):
     teachers = models.ManyToManyField(User, related_name="teacher_for")
 
     class Meta:
-        verbose_name = _('a module')
+        verbose_name = _('module')
         verbose_name_plural = _('modules')
 
     @property
@@ -183,7 +183,7 @@ class Activity(Element):
     tags = TaggableManager(blank=True, through=TaggedActivity)
 
     class Meta:
-        verbose_name = _('an activity')
+        verbose_name = _('activity')
         verbose_name_plural = _('activities')
 
     @property
@@ -208,7 +208,7 @@ class Video(Resource):
     tags = TaggableManager(blank=True, through=TaggedVideo)
 
     class Meta:
-        verbose_name = _('a video')
+        verbose_name = _('video')
         verbose_name_plural = _('videos')
 
     @property
@@ -263,7 +263,7 @@ class AnnotationType(Element):
     It does not need more info than the one provided in Element.
     """
     class Meta:
-        verbose_name = _('an annotation type')
+        verbose_name = _('annotation type')
         verbose_name_plural = _('annotation types')
 
     def cinelab(self, context=None):
@@ -296,7 +296,7 @@ class Annotation(UserContent):
     tags = TaggableManager(blank=True, through=TaggedAnnotation)
 
     class Meta:
-        verbose_name = _('an annotation')
+        verbose_name = _('annotation')
         verbose_name_plural = _('annotations')
 
     @property
@@ -365,7 +365,7 @@ class Annotation(UserContent):
 
 class Comment(UserContent):
     class Meta:
-        verbose_name = _('a comment')
+        verbose_name = _('comment')
         verbose_name_plural = _('comments')
 
     parent_annotation = models.ForeignKey(Annotation,
@@ -384,7 +384,7 @@ class Comment(UserContent):
 
 class Newsitem(Element):
     class Meta:
-        verbose_name = _('a news item')
+        verbose_name = _('news item')
         verbose_name_plural = _('news items')
 
     category = models.CharField(_("Category"),
