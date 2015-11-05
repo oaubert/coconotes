@@ -1,0 +1,48 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+
+<div class="login_content">
+  <h1 class="highlighted">{% trans "Sign In" %}</h1>
+
+  {% get_providers as socialaccount_providers %}
+
+  <form class="login_form" method="POST" action="{% url 'account_login' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+    {% endif %}
+    <div class="forgot_password">
+      <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+    </div>
+    <button class="primaryAction" type="submit">{% trans "Connect" %}</button>
+
+  {% if socialaccount_providers %}
+    <p class="login_connect_with">{% blocktrans %}or connect with{% endblocktrans %}</p>
+
+    <div class="socialaccount_ballot">
+
+      <ul class="socialaccount_providers">
+        {% include "socialaccount/snippets/provider_list.html" %}
+      </ul>
+
+  </div>
+
+  {% include "socialaccount/snippets/login_extra.html" %}
+
+  </form>
+  {% else %}
+</form>
+{% endif %}
+
+
+<p class="login_signup">{% blocktrans with site.name as site_name %}New on  {{ site_name }}? Please <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+
+</div>
+{% endblock %}

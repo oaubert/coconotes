@@ -222,7 +222,112 @@ h1.highlighted {
     background-repeat: no-repeat;
 }
 
-/* Player */
+/* Login/logout */
+.login_content {
+    font-family: Roboto;
+    margin: auto;
+    width: 33%;
+    padding-top: 5em;
+}
+
+.login_form {
+    border: 1px solid #cfcfcf;
+    background-color: #f4f4f4;
+    margin-top: 1em;
+    padding: 3em 1em;
+}
+
+.login_form label,
+#id_remember {
+    display: none;
+}
+.login_form input {
+    font-size: 16px;
+    width: 100%;
+    padding: 4px;
+    border: 1px solid #cfcfcf;
+    margin-bottom: 2px;
+}
+
+.login_form .forgot_password {
+    width: 100%;
+    text-align: right;
+}
+
+.login_form .secondaryAction {
+    font-size: 10px;
+    color: #66ccff;
+    text-decoration: none;
+    font-style: italic;
+}
+
+.login_form .primaryAction {
+    font-weight: bold;
+    font-size: 18px;
+    width: 100%;
+    color: #fff;
+    border: none;
+    background-color: #000;
+    text-transform: uppercase;
+    padding: 4px;
+    margin-top: 1em;
+    margin-bottom: 3em;
+}
+
+.login_form .errorlist {
+    list-style: none;
+    text-align: right;
+    font-size: 9px;
+    color: #f44;
+}
+.login_connect_with {
+    text-align: center;
+    color: #767676;
+    margin-bottom: 2em;
+}
+
+.socialaccount_providers {
+    list-style: none;
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.socialaccount_providers li {
+    display: inline-block;
+    background-color: #28f;
+    width: 30%;
+    padding: 6px 0;
+    text-align: center;
+}
+.socialaccount_providers li:nth-child(1) {
+    background-color: #3765a2;
+}
+.socialaccount_providers li:nth-child(2) {
+    background-color: #de5549;
+}
+.socialaccount_providers li:nth-child(3) {
+    background-color: #f7931e;
+}
+
+.socialaccount_providers li a {
+    text-decoration: none;
+    color: #fff;
+}
+.login_signup {
+    text-align: center;
+    font-style: italic;
+    color: #999;
+    font-size: 16px;
+}
+
+.login_signup a {
+    text-decoration: none;
+    color: #66ccff;
+}
+/* player */
 
 .player {
     display: inline-block;
