@@ -327,6 +327,17 @@ h1.highlighted {
     text-decoration: none;
     color: #66ccff;
 }
+/* Popups */
+.ui-corner-all {
+    border-radius: 0;
+}
+.ui-widget-header,
+.ui-dialog-titlebar {
+    background-image: none;
+    background-color: black;
+    color: white;
+}
+
 /* player */
 
 .player {
