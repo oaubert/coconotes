@@ -13,14 +13,17 @@
 
   <p class="module_course">{{ module.course }}
 
-  <div class="capsule_container">
-    {% ifequal module.activity_set.length 1 %}
-    {% include "item_capsule.html" with item=activity.video %}
-    {% else %}
-    {% for activity in module.activity_set.all %}
-    {% include "item_capsule.html" with item=activity %}
-    {% endfor %}
-    {% endifequal %}
+    <div class="capsule_container">
+      {% for activity in module.activity_set.all %}
+
+      {% if activity.video_set.count == 1 %}
+      {% include "item_capsule.html" with item=activity.video_set.all.0 %}
+      {% else %}
+      {% include "item_capsule.html" with item=activity %}
+      {% endif %}
+
+      {% endfor %}
+
   </div>
 
 </div>
