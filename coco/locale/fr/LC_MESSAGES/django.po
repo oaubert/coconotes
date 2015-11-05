@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-03 17:25+0100\n"
-"PO-Revision-Date: 2015-11-03 17:25+0100\n"
+"POT-Creation-Date: 2015-11-05 16:02+0100\n"
+"PO-Revision-Date: 2015-11-05 16:04+0100\n"
 "Last-Translator: Olivier Aubert <olivier.aubert@univ-nantes.fr>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Private"
 msgstr "Privé"
 
-#: models.py:40 templates/group.html:7 templates/group.html.py:27
+#: models.py:40 templates/group_detail.html:7 templates/group_detail.html.py:27
 msgid "Group"
 msgstr "Groupe"
 
@@ -197,37 +197,45 @@ msgstr "nouvelles"
 msgid "Publication date"
 msgstr "Date de publication"
 
-#: templates/accounts/login.html:6 templates/accounts/login.html.py:10
-#: templates/accounts/login.html:43
+#: templates/account/login.html:6 templates/account/login.html.py:11
 msgid "Sign In"
 msgstr "Connexion"
 
-#: templates/accounts/login.html:15
-#, python-format
-msgid ""
-"Please sign in with one\n"
-"of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign up</a>\n"
-"for a %(site_name)s account and sign in below:"
-msgstr ""
-"Connectez-vous avec un de vos comptes externes. Or, <a href=\"%(signup_url)s\">inscrivez-vous</a>\n"
-"pour un compte %(site_name)s et connectez-vous ci-dessous :"
-
-#: templates/accounts/login.html:25
-msgid "or"
-msgstr "ou"
-
-#: templates/accounts/login.html:32
-#, python-format
-msgid ""
-"If you have not created an account yet, then please\n"
-"<a href=\"%(signup_url)s\">sign up</a> first."
-msgstr ""
-"Si vous n'avez pas encore créé de compte, alors\n"
-"<a href=\"%(signup_url)s\">inscrivez-vous</a> d'abord."
-
-#: templates/accounts/login.html:42
+#: templates/account/login.html:22
 msgid "Forgot Password?"
 msgstr "Mot de passe oublié ?"
+
+#: templates/account/login.html:24
+msgid "Connect"
+msgstr "Se connecter"
+
+#: templates/account/login.html:27 templates/account/signup.html:25
+msgid "or connect with"
+msgstr "ou se connecter avec"
+
+#: templates/account/login.html:45
+#, python-format
+msgid "New on  %(site_name)s? Please <a href=\"%(signup_url)s\">sign up</a> first."
+msgstr "Nouveau sur %(site_name)s? <a href=\"%(signup_url)s\">créez un compte</a> d'abord."
+
+#: templates/account/logout.html:5 templates/account/logout.html.py:9
+#: templates/account/logout.html:17
+msgid "Sign Out"
+msgstr "Déconnexion"
+
+#: templates/account/logout.html:12
+msgid "Are you sure you want to sign out?"
+msgstr "Êtes-vous certain de vouloir vous déconnecter ?"
+
+#: templates/account/signup.html:6 templates/account/signup.html.py:11
+#: templates/account/signup.html:22
+msgid "Sign Up"
+msgstr "Inscription"
+
+#: templates/account/signup.html:42
+#, python-format
+msgid "Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
+msgstr "Vous avez déjà un compte ? alors <a href=\"%(login_url)s\">connectez-vous</a>."
 
 #: templates/base.html:24
 msgid "Log in / Sign in"
@@ -246,7 +254,7 @@ msgid "All lectures"
 msgstr "Tous les cours"
 
 #: templates/coco/activity_detail.html:7 templates/coco/activity_detail.html:12
-#: templates/coco/video_info.html:7 templates/group.html:34
+#: templates/coco/video_info.html:7 templates/group_detail.html:34
 msgid "Activity"
 msgstr "Activité"
 
@@ -274,7 +282,7 @@ msgstr "Module"
 msgid "All modules"
 msgstr "Tous les modules"
 
-#: templates/coco/newsitem_detail.html:7 templates/group.html:7
+#: templates/coco/newsitem_detail.html:7 templates/group_detail.html:7
 #: templates/group_list.html:7 templates/profile.html:7
 msgid "COCo platform"
 msgstr "Plateforme COCo"
@@ -311,11 +319,11 @@ msgstr "Inconnue"
 msgid "All videos"
 msgstr "Toutes les vidéos"
 
-#: templates/group.html:12 templates/profile.html:25
+#: templates/group_detail.html:12 templates/profile.html:25
 msgid "My groups"
 msgstr "Mes groupes"
 
-#: templates/group.html:46
+#: templates/group_detail.html:47
 msgid "Members"
 msgstr "Membres"
 
@@ -391,6 +399,22 @@ msgstr "résultats"
 #: templates/search.html:26
 msgid "No result"
 msgstr "Pas de résultat"
+
+#, fuzzy
+#~| msgid ""
+#~| "Please sign in with one\n"
+#~| "of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign up</a>\n"
+#~| "for a %(site_name)s account and sign in below:"
+#~ msgid ""
+#~ "Please sign in with one\n"
+#~ "    of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign up</a>\n"
+#~ "    for a %(site_name)s account and sign in below:"
+#~ msgstr ""
+#~ "Connectez-vous avec un de vos comptes externes. Or, <a href=\"%(signup_url)s\">inscrivez-vous</a>\n"
+#~ "pour un compte %(site_name)s et connectez-vous ci-dessous :"
+
+#~ msgid "or"
+#~ msgstr "ou"
 
 #~ msgid "Name"
 #~ msgstr "Nom"
