@@ -604,6 +604,11 @@ h1.highlighted {
     padding-right: .5em;
 }
 
+.subtitle_link {
+    text-decoration: none;
+    color: inherit;
+}
+
 .capsule a, .minicapsule a {
     text-decoration: none;
 }

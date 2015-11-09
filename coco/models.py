@@ -85,6 +85,14 @@ class Element(models.Model):
 
     @property
     def subtitle(self):
+        """Subtitle for the element.
+        """
+        return ""
+
+    @property
+    def subtitle_link(self):
+        """Subtitle link for the element.
+        """
         return ""
 
     def thumbnail_url(self):
@@ -178,6 +186,10 @@ class Module(Element):
     def subtitle(self):
         return self.course.title
 
+    @property
+    def subtitle_link(self):
+        return self.course.get_absolute_url()
+
 class Activity(Element):
     module = models.ForeignKey(Module)
 
@@ -190,6 +202,10 @@ class Activity(Element):
     @property
     def subtitle(self):
         return self.module.title
+
+    @property
+    def subtitle_link(self):
+        return self.module.get_absolute_url()
 
 class Video(Resource):
     activity = models.ForeignKey(Activity,
@@ -215,6 +231,10 @@ class Video(Resource):
     @property
     def subtitle(self):
         return self.activity.title
+
+    @property
+    def subtitle_link(self):
+        return self.activity.get_absolute_url()
 
     @property
     def course(self):
