@@ -8,21 +8,23 @@
 
 {% block content %}
 
-<div class="course_description">
+<div class="module_description">
   <h1>{% blocktrans %}Module{% endblocktrans %} {{ module.title }}</h1>
 
   <p class="module_course">{{ module.course }}
 
-    <div class="capsule_container">
-      {% for activity in module.activity_set.all %}
+  <p class="module_description">{{ module.description }}</p>
 
-      {% if activity.video_set.count == 1 %}
-      {% include "item_capsule.html" with item=activity.video_set.all.0 %}
-      {% else %}
-      {% include "item_capsule.html" with item=activity %}
-      {% endif %}
+  <div class="capsule_container">
+    {% for activity in module.activity_set.all %}
 
-      {% endfor %}
+    {% if activity.video_set.count == 1 %}
+    {% include "item_capsule.html" with item=activity.video_set.all.0 %}
+    {% else %}
+    {% include "item_capsule.html" with item=activity %}
+    {% endif %}
+
+    {% endfor %}
 
   </div>
 
