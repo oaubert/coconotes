@@ -302,7 +302,7 @@ class Annotation(UserContent):
 
     @property
     def subtitle(self):
-        return _("Annotation")
+        return self.annotationtype.title
 
     @property
     def contextualized_link(self):
