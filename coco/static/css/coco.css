@@ -780,6 +780,7 @@ h1.highlighted {
     line-height: 25px;
     width: 80%;
 }
+
 .welcome .subtitle {
     font-weight: bold;
     color: #000;
@@ -822,20 +823,22 @@ h1.highlighted {
     top: 40px;
 }
 
-.minicapsule .adminactions {
+.minicapsule .adminactions,
+h1 .adminactions {
     display: none;
-    position: absolute;
-    top: 2px;
-    right: 2px;
 }
+
+h1:hover .adminactions,
 .minicapsule:hover .adminactions {
     display: inline-block;
 }
 .adminactions .editelement {
+    text-decoration: none;
+    color: black;
     display: inline-block;
     width: 16px;
     height: 16px;
-    background: url("img/notes_edit.png");
+    content: "&#x270f;";
 }
 
 @media only screen and (max-width: 780px) {

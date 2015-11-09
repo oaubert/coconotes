@@ -9,7 +9,9 @@
 {% block content %}
 
 <div class="module_description">
-  <h1>{% blocktrans %}Module{% endblocktrans %} {{ module.title }}</h1>
+  <h1>{% blocktrans %}Module{% endblocktrans %} {{ module.title }}
+    {% if user.is_staff %}<div class="adminactions"><a href="{{ module.edit_url }}" class="editelement">&#x270f;</a></div>{% endif %}
+  </h1>
 
   <p class="module_course">{{ module.course }}
 

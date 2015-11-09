@@ -9,7 +9,9 @@
 {% block content %}
 
 <div class="course_content">
-  <h1>{{ course.title }}</h1>
+  <h1>{{ course.title }}
+    {% if user.is_staff %}<div class="adminactions"><a href="{{ course.edit_url }}" class="editelement">&#x270f;</a></div>{% endif %}
+  </h1>
   <p class="course_description">{{ course.description }}</p>
 
   <p class="course_category">{{ course.category }}
