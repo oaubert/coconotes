@@ -511,6 +511,19 @@ h1.highlighted {
     color: #996633;
 }
 
+.video_info_popup {
+    padding: 0 !important;
+}
+
+.video_info_popup .ui-widget-header {
+    padding: 6px 0;
+    border-radius: 0;
+    background-image: none;
+    background-color: #000;
+    color: #FFF;
+    margin: 0;
+}
+
 .creator {
     text-transform: uppercase;
     padding-left: 5px;

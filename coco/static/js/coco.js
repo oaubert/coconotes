@@ -243,7 +243,14 @@ $(document).ready(function () {
         e.stopPropagation();
         e.preventDefault();
         IriSP.jQuery('<div/>', {'class': 'element-form-dialog', 'id': IriSP.generateUuid() })
-            .load("/video/" + metadata.video_id + "/info/").appendTo('body').dialog({ width: "70%" });
+            .load("/video/" + metadata.video_id + "/info/").appendTo('body').dialog({
+                width: "60%",
+                closeOnEscape: true,
+                dialogClass: "video_info_popup",
+                modal: true,
+                position: { my: "center", at: "center" },
+                title: "Video info"
+            });
     });
 
     /*
