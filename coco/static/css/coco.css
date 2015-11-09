@@ -517,30 +517,6 @@ h1.highlighted {
     font-size: 10px;
 }
 
-#annotation_form {
-    width: 40%;
-    float: right;
-}
-
-#annotation_text {
-    width: 60%;
-    height: 4em;
-    float: left;
-}
-
-#annotation_metadata {
-    padding-left: 1em;
-    width: 19%;
-    height: 4em;
-    display: inline-block;
-}
-
-#annotation_controls {
-    width: 19%;
-    height: 4em;
-    display: inline-block;
-}
-
 .annotation_control {
     display: block;
     text-align: center;
@@ -549,11 +525,6 @@ h1.highlighted {
 
 .timestamp {
     font-size: xx-small;
-    display: block;
-}
-
-#annotation_validate {
-    font-size: x-small;
     display: block;
 }
 
