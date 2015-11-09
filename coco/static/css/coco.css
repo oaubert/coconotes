@@ -394,6 +394,7 @@ h1.highlighted {
 }
 .videodetails {
     display: inline-block;
+    cursor: pointer;
     font-family: Roboto;
     font-weight: bold;
     font-size: 14px;
