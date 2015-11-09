@@ -600,6 +600,7 @@ h1.highlighted {
 
 .capsule img {
     max-height: 212px;
+    object-fit: cover;
     float: left;
     padding-right: .5em;
 }
@@ -645,6 +646,7 @@ h1.highlighted {
 
 .searchcapsule img {
     max-width: 160px;
+    object-fit: cover;
 }
 
 .profile_avatar {
@@ -700,6 +702,7 @@ h1.highlighted {
     margin-bottom: 1em;
     border: 1px solid #cfcfcf;
     border-bottom: none;
+    object-fit: cover;
 }
 
 .la_une .minicapsule:nth-of-type(1) {
@@ -753,6 +756,7 @@ h1.highlighted {
 }
 .microcapsule img {
     height: 100px;
+    object-fit: cover;
 }
 
 .microcapsule h4, .microcapsule h4 a {
@@ -798,6 +802,7 @@ h1.highlighted {
 
 .home_news img {
     width: 100%;
+    object-fit: cover;
 }
 
 .newsitem h5 {
