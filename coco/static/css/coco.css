@@ -233,7 +233,7 @@ h1.highlighted {
 .login_form {
     border: 1px solid #cfcfcf;
     background-color: #f4f4f4;
-    margin-top: 1em;
+    margin: 1em 0;
     padding: 3em 1em;
 }
 
