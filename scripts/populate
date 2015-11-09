@@ -17,7 +17,7 @@ do
 done
 
 for i in ~/www/comin-ocw/contents/infol1/20131*/info.json; do
-    ./manage.py cocoadmin info "Informatique L1" "Cours-conférence" "$i"
+    ./manage.py cocoadmin info "Informatique L1" "Cours-conférences" "$i"
 done
 
 for c in 20131212-gilles_dowek 20140227-denis_bouyssou 20140326-giuseppe_longo 20141002-guy_pujolle
