@@ -513,6 +513,7 @@ h1.highlighted {
 
 .video_info_popup {
     padding: 0 !important;
+    font-family: Roboto !important;
 }
 
 .video_info_popup .ui-widget-header {
@@ -522,6 +523,11 @@ h1.highlighted {
     background-color: #000;
     color: #FFF;
     margin: 0;
+}
+
+.video_info_popup .ui-widget-title,
+.video_info_popup h4 {
+    text-transform: uppercase;
 }
 
 .creator {
