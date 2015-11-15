@@ -12,6 +12,8 @@ from annoying.fields import AutoOneToOneField
 from taggit_autosuggest.managers import TaggableManager
 from taggit.models import TaggedItemBase
 
+from fields import SlugOrNullField
+
 class TaggedCourse(TaggedItemBase):
     content_object = models.ForeignKey('Course')
 class TaggedModule(TaggedItemBase):
@@ -76,8 +78,8 @@ class Element(models.Model):
     description = models.TextField(_("Description"),
                                    blank=True)
 
-    slug = models.SlugField(max_length=128,
-                            null=True, unique=True, blank=True)
+    slug = SlugOrNullField(max_length=128,
+                           null=True, unique=True, blank=True)
 
     thumbnail = ImageField(upload_to='thumbnails',
                            blank=True,
