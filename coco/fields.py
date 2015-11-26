@@ -23,7 +23,7 @@ class SlugOrNullField(SlugField):
         db.execute("UPDATE myapp_foomodel SET slug=NULL WHERE slug='' ")
     """
     def get_prep_value(self, value):
-        value = value.strip()
+        value = (value or "").strip()
         if not value:
             return None
         return value
