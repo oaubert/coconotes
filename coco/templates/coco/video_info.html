@@ -1,10 +1,9 @@
 {% load i18n %}
 {% load coco %}
 <div class="videoinfo">
-  <h4>{% blocktrans %}Video{% endblocktrans %} {{object.title}}</h4>
+  <h4>{{object.title}} ({{ object.duration|format_timecode }})</h4>
   <div>
     <p>{% blocktrans %}Description{% endblocktrans %}: {{object.description}}</p>
-    <p>{% blocktrans %}Duration{% endblocktrans %}: {{ object.duration|format_timecode }}</p>
     <p>{% blocktrans %}License{% endblocktrans %}: {% if object.license %}{{object.license}}{% else %}{% blocktrans %}Unknown{% endblocktrans %}{% endif %}</p>
     <p>{% blocktrans %}Activity{% endblocktrans %} <a href="{{object.activity.get_absolute_url}}">{{object.activity.title}}</a></p>
   </div>
