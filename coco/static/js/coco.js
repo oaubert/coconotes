@@ -252,19 +252,4 @@ $(document).ready(function () {
                 title: "Video info"
             });
     });
-
-    /*
-    // Splitter between the video player and the rest of the metadataplayer
-    splitter2 = $("#PlayerContainer").touchSplit({orientation:"vertical", topMin: 220});
-    _myPlayer.on("widgets-loaded", function () {
-        set_username(name);
-        window.setTimeout(function () {
-            on_resize();
-        }, 500);
-    });
-
-    // Handle browser window resize
-    $(window).on("resize", function () { on_resize(); });
-
-     */
 });
