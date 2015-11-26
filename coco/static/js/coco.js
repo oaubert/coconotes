@@ -149,7 +149,7 @@ $(document).ready(function () {
                 show_own_notes: false
             },
             { type: "Trace",
-              url: "https://comin-ocw.org/trace/",
+              url: "http://comin-ocw.org/trace/",
               requestmode: "GET",
               default_subject: "comin"
             },
