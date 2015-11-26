@@ -842,6 +842,22 @@ h1:hover .adminactions,
     content: "&#x270f;";
 }
 
+
+#coco_annotation_input_widget {
+    display: flex;
+}
+#coco_annotation_input_widget .unauthenticated_comment {
+    display: none;
+}
+
+#coco_annotation_input_widget.inactive_input form {
+    display: none;
+}
+#coco_annotation_input_widget.inactive_input .unauthenticated_comment {
+    display: block;
+    text-align: center;
+}
+
 @media only screen and (max-width: 780px) {
     /* phones */
     body {
