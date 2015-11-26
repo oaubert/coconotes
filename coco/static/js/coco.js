@@ -160,6 +160,23 @@ $(document).ready(function () {
     _myPlayer = new IriSP.Metadataplayer(_config);
     _myPlayer.on("trace-ready", function () {
         var tracer = tracemanager.get_trace("test");
+        // Setup CSRF globally
+        var csrftoken = Cookies.get('csrftoken');
+        if (csrftoken !== undefined) {
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+            IriSP.jQuery.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+        }
+
+        // Hook trace sensors
         tracer.trace("PlayerStart", { url: document.URL });
         IriSP.jQuery(".TraceMe").on("mousedown mouseenter mouseleave", function (_e) {
             tracer.trace('Mdp_' + _e.type,
