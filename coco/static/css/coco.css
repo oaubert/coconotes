@@ -358,13 +358,13 @@ h1.highlighted {
     width: calc(50% - 6px);
 }
 
-#metadata {
+.tabcomponent {
     background-color: #fff;
     display: block;
     width: 100%;
     min-width: 368px;
     margin-right: 6px;
-    height: calc(100% - 80px);
+    height: calc(100% - 84px);
 }
 
 .titleblock {
@@ -469,7 +469,7 @@ h1.highlighted {
 }
 
 .coco_tabcontents {
-    height: calc(100% - 72px);
+    height: calc(100% - 78px);
     overflow-y: hidden;
 }
 
@@ -845,6 +845,9 @@ h1:hover .adminactions,
 
 #coco_annotation_input_widget {
     display: flex;
+    border-top: 3px dotted #ccc;
+    padding-top: 2px;
+    height: 38px;
 }
 #coco_annotation_input_widget .unauthenticated_comment {
     display: none;
