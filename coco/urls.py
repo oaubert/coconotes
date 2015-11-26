@@ -71,5 +71,6 @@ urlpatterns = patterns('',
                        url(r'^annotation/(?P<pk>[\w\d_-]+)/delete/$', views.AnnotationDeleteView.as_view(), name='view-annotation-delete'),
 
                        # REST API
-                       url(r'^api/', include(router.urls))
+                       url(r'^api/v1/annotation_add$', views.annotation_add, name='api-annotation-add'),
+                       url(r'^api/v1/', include(router.urls))
 )

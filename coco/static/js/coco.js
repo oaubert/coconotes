@@ -102,7 +102,10 @@ $(document).ready(function () {
             {
                 type: "CocoCreateAnnotation",
                 container: "coco_annotation_input_widget",
-                annotation_type: "Contributions"
+                annotation_type: "Contributions",
+                api_endpoint_template: "/api/v1/annotation_add",
+                api_serializer: "ldt_annotate",
+                api_method: 'POST'
             },
             {
                 type: "EnrichedPlan",

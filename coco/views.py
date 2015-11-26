@@ -5,6 +5,7 @@ from collections import namedtuple, OrderedDict, Counter
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView, UpdateView, DeleteView, RedirectView
 from django.template.defaultfilters import pluralize
 
@@ -237,4 +238,32 @@ def cinelab(request, slug=None, pk=None, **kw):
     # Add defined annotation types + a selection of basic types
     data['annotation-types'].extend(a.cinelab(context=context) for a in AnnotationType.objects.all())
     return HttpResponse(json.dumps(data, cls=COCoEncoder, indent=1),
+                        content_type="application/json")
+
+@login_required
+def annotation_add(request, **kw):
+    # We get data serialized by ldt
+    # {"id":"f98d0acb-e7d8-f37a-6b67-6fb7a1282ebe","begin":0,"end":0,"content":{"data":{},"description":"Test","title":""},"tags":[],"media":"e7e856b1-dd32-44fa-8dda-56edab47729c","type_title":"Contributions","type":"ee3b536e-b8d7-428b-9df1-5283b72ef0ed","meta":{"created":"2015-11-25T16:00:02.141Z"}}
+    data = json.loads(request.body.decode('utf-8'))
+    # Validity checks...
+    video = get_object_or_404(Video, uuid=data['media'])
+    atype = get_object_or_404(AnnotationType, uuid=data['type'])
+    # FIXME: check that type_title is consistent with type ?
+
+    # Create the annotation
+    an = Annotation(uuid=data['id'],
+                    creator=request.user,
+                    contributor=request.user,
+                    modified=datetime.datetime.now(),
+                    annotationtype=atype,
+                    video=video,
+                    begin=long(data['begin']) / 1000.0,
+                    end=long(data['end']) / 1000.0,
+                    title=data['content']['title'],
+                    description=data['content']['description'])
+    an.save()
+    context = CocoContext(username=request.user.username,
+                          teacher_set=[ u.username for u in video.activity.module.teachers.all() ],
+                          current_group='') # FIXME: get from cookie/session info?
+    return HttpResponse(json.dumps(an.cinelab(context=context), cls=COCoEncoder, indent=1),
                         content_type="application/json")
