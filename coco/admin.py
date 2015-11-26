@@ -1,11 +1,11 @@
 from django.contrib import admin
+from django.utils.translation import ugettext_lazy as _
+
 from .models import Course, Video, Module, License, AnnotationType, Annotation, Comment, Resource, Newsitem, Activity
 
 admin.site.register(License)
 admin.site.register(Resource)
-admin.site.register(Comment)
 admin.site.register(Newsitem)
-admin.site.register(AnnotationType)
 
 class CreatorMixin(object):
     def save_model(self, request, obj, form, change):
@@ -13,6 +13,18 @@ class CreatorMixin(object):
             obj.creator = request.user
         obj.contributor = request.user
         obj.save()
+
+# Common fieldsets for all Elements
+ELEMENT_FIELDSETS = [
+    (None,               {'fields': [ ('slug', 'state'), 'tags' ] }),
+    (_("Metadata"),      {'fields': [ ('creator', 'created', 'contributor', 'modified') ], 'classes': ['collapse']}),
+    (_("Content"),       {'fields': [ ('title', 'thumbnail'), 'description' ]}),
+    (_("Tags"),         {'fields': [ 'tags' ] })
+]
+USERCONTENT_FIELDSETS = [
+    (_("User content"), {'fields': [ ('visibility', 'contenttype'),
+                                     'contentdata' ]}),
+]
 
 class ElementAdmin(CreatorMixin, admin.ModelAdmin):
     list_display = ('title', 'slug')
@@ -29,6 +41,11 @@ class VideoAdmin(CreatorMixin, admin.ModelAdmin):
     search_fields = ('title', 'slug')
 
     prepopulated_fields = {'slug': ('title', )}
+    fieldsets = [
+                (_("Video specific"), {'fields': [ ('url', 'duration'),
+                                                   ('activity', 'slides'),
+                                                   ('license', 'package_id') ] }),
+    ] + ELEMENT_FIELDSETS
 
 @admin.register(Course)
 class CourseAdmin(CreatorMixin, admin.ModelAdmin):
@@ -40,6 +57,10 @@ class CourseAdmin(CreatorMixin, admin.ModelAdmin):
 
     prepopulated_fields = {'slug': ('title', )}
 
+    fieldsets = [
+        (_("Course specific"), {'fields': [ 'category', 'syllabus' ] }),
+    ] + ELEMENT_FIELDSETS
+
 @admin.register(Module)
 class ModuleAdmin(CreatorMixin, admin.ModelAdmin):
     list_display = ('pk', 'title', 'slug', 'creator', 'created', 'thumbnail', 'course')
@@ -49,6 +70,10 @@ class ModuleAdmin(CreatorMixin, admin.ModelAdmin):
     search_fields = ('title', )
 
     prepopulated_fields = {'slug': ('title', )}
+    fieldsets = [
+        (None, {'fields': [ ('course', 'teachers') ] }),
+    ] + ELEMENT_FIELDSETS
+
 
 @admin.register(Activity)
 class ActivityAdmin(CreatorMixin, admin.ModelAdmin):
@@ -59,6 +84,9 @@ class ActivityAdmin(CreatorMixin, admin.ModelAdmin):
     search_fields = ('title', )
 
     prepopulated_fields = {'slug': ('title', )}
+    fieldsets = [
+        (None, {'fields': [ 'module' ] }),
+    ] + ELEMENT_FIELDSETS
 
 @admin.register(Annotation)
 class AnnotationAdmin(CreatorMixin, admin.ModelAdmin):
@@ -69,3 +97,31 @@ class AnnotationAdmin(CreatorMixin, admin.ModelAdmin):
     search_fields = ('title', )
 
     prepopulated_fields = {'slug': ('title', )}
+    fieldsets = [
+        (None, {'fields': [ ('begin', 'end', 'video'),
+                            ('annotationtype', 'group') ] }),
+    ] + USERCONTENT_FIELDSETS + ELEMENT_FIELDSETS
+
+@admin.register(AnnotationType)
+class AnnotationTypeAdmin(CreatorMixin, admin.ModelAdmin):
+    list_display = ('pk', 'title', 'creator', 'created', )
+    list_editable = ('title', )
+    list_display_links = ('pk', )
+    list_filter = ( 'creator', )
+    search_fields = ('title', )
+
+    prepopulated_fields = {'slug': ('title', )}
+    fieldsets = ELEMENT_FIELDSETS
+
+@admin.register(Comment)
+class CommentAdmin(CreatorMixin, admin.ModelAdmin):
+    list_display = ('pk', 'title', 'creator', 'created', )
+    list_editable = ('title', )
+    list_display_links = ('pk', )
+    list_filter = ( 'creator', )
+    search_fields = ('title', )
+
+    prepopulated_fields = {'slug': ('title', )}
+    fieldsets = [
+        (None, {'fields': [ 'group', ('parent_annotation', 'parent_video', 'parent_comment') ] }),
+    ] + USERCONTENT_FIELDSETS + ELEMENT_FIELDSETS
