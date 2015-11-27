@@ -323,8 +323,12 @@ class Annotation(UserContent):
         verbose_name_plural = _('annotations')
 
     @property
+    def element_type(self):
+        return _(self.annotationtype.title)
+
+    @property
     def subtitle(self):
-        return self.annotationtype.title
+        return ""
 
     @property
     def contextualized_link(self):
