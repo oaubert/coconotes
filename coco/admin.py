@@ -16,7 +16,7 @@ class CreatorMixin(object):
 
 # Common fieldsets for all Elements
 ELEMENT_FIELDSETS = [
-    (None,               {'fields': [ ('slug', 'state'), 'tags' ] }),
+    (None,               {'fields': [ ('slug', 'state') ] }),
     (_("Metadata"),      {'fields': [ ('creator', 'created', 'contributor', 'modified') ], 'classes': ['collapse']}),
     (_("Content"),       {'fields': [ ('title', 'thumbnail'), 'description' ]}),
     (_("Tags"),         {'fields': [ 'tags' ] })
@@ -111,7 +111,9 @@ class AnnotationTypeAdmin(CreatorMixin, admin.ModelAdmin):
     search_fields = ('title', )
 
     prepopulated_fields = {'slug': ('title', )}
-    fieldsets = ELEMENT_FIELDSETS
+    fieldsets = [ (None,               {'fields': [ ('slug', 'state') ] }),
+                  (_("Metadata"),      {'fields': [ ('creator', 'created', 'contributor', 'modified') ], 'classes': ['collapse']}),
+                  (_("Content"),       {'fields': [ ('title', 'thumbnail'), 'description' ]}) ]
 
 @admin.register(Comment)
 class CommentAdmin(CreatorMixin, admin.ModelAdmin):
