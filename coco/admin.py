@@ -90,11 +90,11 @@ class ActivityAdmin(CreatorMixin, admin.ModelAdmin):
 
 @admin.register(Annotation)
 class AnnotationAdmin(CreatorMixin, admin.ModelAdmin):
-    list_display = ('pk', 'title', 'creator', 'created', )
-    list_editable = ('title', )
+    list_display = ('pk', 'title', 'description', 'annotationtype', 'group', 'creator', 'created', )
+    list_editable = ('title', 'description', 'group', 'annotationtype')
     list_display_links = ('pk', )
-    list_filter = ( 'creator', )
-    search_fields = ('title', )
+    list_filter = ( 'annotationtype', 'group' )
+    search_fields = ('title', 'description', )
 
     prepopulated_fields = {'slug': ('title', )}
     fieldsets = [
