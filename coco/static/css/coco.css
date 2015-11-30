@@ -843,6 +843,11 @@ h1:hover .adminactions,
     text-align: center;
 }
 
+.annotation_edit_popup .help-block {
+    font-size: 9px;
+    color: #777;
+}
+
 @media only screen and (max-width: 780px) {
     /* phones */
     body {
