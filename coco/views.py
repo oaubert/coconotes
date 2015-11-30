@@ -15,6 +15,7 @@ from .models import Course, Video, Newsitem, Module, Activity, Annotation, Comme
 from .serializers import CourseSerializer, ModuleSerializer, ActivitySerializer, VideoSerializer, AnnotationSerializer, CommentSerializer, ResourceSerializer, NewsitemSerializer, AnnotationTypeSerializer
 from .utils import generic_search, COCoEncoder
 from .permissions import IsOwnerOrReadOnly
+from .forms import AnnotationEditForm
 
 class CourseViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
@@ -138,10 +139,9 @@ class AnnotationCreateView(CreateView):
 
 class AnnotationUpdateView(UpdateView):
     model = Annotation
-    fields = ('description',
-              'begin', 'end',
-              'group',
-              'visibility')
+
+    def get_form(self, form_class=None):
+        return AnnotationEditForm(user=self.request.user)
 
     def form_valid(self, form):
         form.instance.contributor = self.request.user
