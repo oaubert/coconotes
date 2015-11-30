@@ -622,24 +622,6 @@ h1.highlighted {
     max-width: 100%;
 }
 
-.searchcapsule {
-    margin-top: 1em;
-}
-.searchcapsule:hover {
-    background-color: #dcf0ff;
-}
-
-.searchcapsule_type {
-    background-color: #ccc;
-    padding: 3px;
-    color: #fff;
-}
-
-.searchcapsule img {
-    max-width: 160px;
-    object-fit: cover;
-}
-
 .profile_avatar {
     width: 20%;
     min-width: 48px;

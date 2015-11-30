@@ -5,6 +5,52 @@
 {% load url from future %}
 
 {% block title %}{% trans "COCo project" %} - {% trans "search for" %} {{ query_string }}{% endblock %}
+{% block extra_head %}
+  <style type="text/css">
+  .search_results h2 {
+      font-family: Roboto-Black;
+      font-size: 32px;
+      text-transform: uppercase;
+      color: #6cf;
+  }
+  .search_results h2:after {
+      display: block;
+      content: "";
+      border: 2px solid #6cf;
+      margin-left: 20px;
+  }
+  .searchcapsule {
+      margin-top: 1em;
+  }
+  .searchcapsule:hover {
+      background-color: #dcf0ff;
+  }
+
+  .searchcapsule_type {
+      display: inline-block;
+      min-width: 6em;
+      background-color: #6cf;
+      padding: 3px;
+      color: #fff;
+      text-align: center;
+      font-weight: normal;
+  }
+
+  .searchcapsule h5 a {
+      color: black;
+  }
+
+  .searchcapsule img {
+      max-width: 160px;
+      object-fit: cover;
+  }
+
+  .searchcapsule .description {
+      font-family: Merriweather;
+      font-size: 10px;
+  }
+  </style>
+{% endblock %}
 
 {% block content %}
 
@@ -16,8 +62,7 @@
   <article class="capsule searchcapsule">
     <a title="{{ item.title }}" href="{{ item.get_absolute_url }}"><img src="{{ item.thumbnail_url }}"></a>
     <div class="content">
-      <h5><span class="searchcapsule_type">{{ item.element_type }}</span> {{ item.subtitle }}</h5>
-      <h4><a title="{{ item.title }}" href="{{ item.get_absolute_url }}">{{ item.title }}</a></h4>
+      <h5><span class="searchcapsule_type">{{ item.element_type }}</span> <a title="{{ item.title }}" href="{{ item.get_absolute_url }}">{{ item.title }}</a></h5>
       <span class="description">{{ item.description|truncatechars_html:300 }}</span>
       <span class="detail">{{ item.element_description }}</span>
     </div>
