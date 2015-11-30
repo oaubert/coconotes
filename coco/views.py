@@ -138,8 +138,7 @@ class AnnotationCreateView(CreateView):
 
 class AnnotationUpdateView(UpdateView):
     model = Annotation
-    fields = ('title',
-              'description',
+    fields = ('description',
               'begin', 'end',
               'group',
               'visibility')
