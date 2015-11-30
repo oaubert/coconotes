@@ -189,7 +189,7 @@ def search(request, **kw):
     counts = [ (value, name) for (name, value) in counts.iteritems() ]
     map_order = dict( (key.__name__, count) for (count, key) in enumerate(MODEL_MAP) )
     counts.sort(key=lambda t: map_order.get(t[1], -1))
-    summary = u", ".join(u"%d %s%s" % (count, name, pluralize(count))
+    summary = u", ".join(u"%d %s%s" % (count, name.rstrip('s'), pluralize(count))
                          for (count, name) in counts)
     return render_to_response('search.html', {
         'summary': summary,
