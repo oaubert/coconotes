@@ -138,11 +138,10 @@ class AnnotationCreateView(CreateView):
 
 class AnnotationUpdateView(UpdateView):
     model = Annotation
-    fields = ('begin', 'end', 'group',
-              'title',
-              'description', 'slug', 'thumbnail',
-              'annotationtype', 'video',
-              'contenttype', 'contentdata',
+    fields = ('title',
+              'description',
+              'begin', 'end',
+              'group',
               'visibility')
 
     def form_valid(self, form):
