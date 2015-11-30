@@ -6,7 +6,7 @@ class AnnotationEditForm(forms.ModelForm):
     class Meta:
         model = Annotation
         fields = ('description',
-                  'begin', 'end',
+                  'begin',
                   'group',
                   'visibility')
 
