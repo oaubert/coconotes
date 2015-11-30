@@ -186,11 +186,11 @@ def search(request, **kw):
 
     counts = Counter(el.element_type for el in elements)
     # Reorder counter info to match MODEL_MAP key order
-    counts = [ (counts[name], name)
-               for name in (k.__name__ for k in MODEL_MAP.keys())
-               if counts[name] > 0 ]
-    summary = ", ".join("%d %s%s" % (count, name, pluralize(count))
-                        for (count, name) in counts)
+    counts = [ (value, name) for (name, value) in counts.iteritems() ]
+    map_order = dict( (key.__name__, count) for (count, key) in enumerate(MODEL_MAP) )
+    counts.sort(key=lambda t: map_order.get(t[1], -1))
+    summary = u", ".join(u"%d %s%s" % (count, name, pluralize(count))
+                         for (count, name) in counts)
     return render_to_response('search.html', {
         'summary': summary,
         'elements': elements,
