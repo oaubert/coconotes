@@ -2,7 +2,7 @@ import datetime
 import json
 from collections import namedtuple, OrderedDict, Counter
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -235,8 +235,7 @@ def cinelab(request, slug=None, pk=None, **kw):
     data['annotations'].extend(a.cinelab(context=context) for a in Annotation.objects.filter(video=v))
     # Add defined annotation types + a selection of basic types
     data['annotation-types'].extend(a.cinelab(context=context) for a in AnnotationType.objects.all())
-    return HttpResponse(json.dumps(data, cls=COCoEncoder, indent=1),
-                        content_type="application/json")
+    return JsonResponse(data, encoder=COCoEncoder)
 
 @login_required
 def annotation_add(request, **kw):
@@ -263,5 +262,4 @@ def annotation_add(request, **kw):
     context = CocoContext(username=request.user.username,
                           teacher_set=[ u.username for u in video.activity.module.teachers.all() ],
                           current_group='') # FIXME: get from cookie/session info?
-    return HttpResponse(json.dumps(an.cinelab(context=context), cls=COCoEncoder, indent=1),
-                        content_type="application/json")
+    return JsonResponse(an.cinelab(context=context), encoder=COCoEncoder)
