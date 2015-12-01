@@ -39,6 +39,7 @@
     <div class="playertitle">
       <span class="videotitle">{{ video.title }}</span>
       <div class="videodetails">i</div>
+      {% if user.is_staff %}<div class="adminactions"><a href="{{ video.edit_url }}" class="editelement">&#x270f;</a></div>{% endif %}
     </div>
   </div>
   <div class="videoplayer">

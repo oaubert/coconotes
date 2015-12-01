@@ -807,12 +807,14 @@ h1.highlighted {
 }
 
 .minicapsule .adminactions,
-h1 .adminactions {
+h1 .adminactions,
+.playertitle .adminactions {
     display: none;
 }
 
 h1:hover .adminactions,
-.minicapsule:hover .adminactions {
+.minicapsule:hover .adminactions,
+.playertitle:hover .adminactions {
     display: inline-block;
 }
 .adminactions .editelement {
@@ -823,7 +825,6 @@ h1:hover .adminactions,
     height: 16px;
     content: "&#x270f;";
 }
-
 
 #coco_annotation_input_widget {
     display: flex;
