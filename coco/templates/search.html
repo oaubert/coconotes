@@ -20,7 +20,9 @@
       margin-left: 20px;
   }
   .searchcapsule {
-      margin-top: 1em;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: row;
   }
   .searchcapsule:hover {
       background-color: #dcf0ff;
@@ -36,19 +38,36 @@
       font-weight: normal;
   }
 
+  .searchcapsule h5 {
+      font-family: Roboto;
+      font-size: 14px;
+      text-transform: uppercase;
+  }
   .searchcapsule h5 a {
       color: black;
+      text-decoration: none;
   }
 
   .searchcapsule img {
-      max-width: 160px;
+      height: 120px;
+      width: 120px;
       object-fit: cover;
+  }
+
+  .searchcapsule .content {
+      margin-left: 20px;
   }
 
   .searchcapsule .description {
       font-family: Merriweather;
       font-size: 10px;
   }
+  .result_list {
+      display: flex;
+      flex-direction: column;
+      max-width: 60em;
+  }
+
   </style>
 {% endblock %}
 
@@ -58,8 +77,9 @@
   {% if elements %}
   <h2>{{ elements|length }} {% trans "results" %} : {{ summary }}</h2>
   {% endif %}
+  <div class="result_list">
   {% for item in elements %}
-  <article class="capsule searchcapsule">
+  <article class="searchcapsule">
     <a title="{{ item.title }}" href="{{ item.get_absolute_url }}"><img src="{{ item.thumbnail_url }}"></a>
     <div class="content">
       <h5><span class="searchcapsule_type">{{ item.element_type }}</span> <a title="{{ item.title }}" href="{{ item.get_absolute_url }}">{{ item.title }}</a></h5>
@@ -70,6 +90,7 @@
   {% empty %}
   <h1>{% trans "No result" %}.</h1>
   {% endfor %}
+  </div>
 </section>
 
 {% endblock %}
