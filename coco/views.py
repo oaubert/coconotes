@@ -8,6 +8,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView, UpdateView, DeleteView, RedirectView
 from django.template.defaultfilters import pluralize
+from django.contrib.staticfiles.templatetags.staticfiles import static
 
 from rest_framework import permissions, viewsets
 
@@ -163,6 +164,7 @@ def home(request, **kw):
 def profile(request, **kw):
     return render_to_response('profile.html', {
         'username': request.user.username,
+        'default_avatar': static('img/default_user.svg'),
         'annotationscount': Annotation.objects.filter(creator=request.user).count(),
         'annotations': Annotation.objects.filter(creator=request.user).order_by("-created")[:10],
         'current_document': 'profile',

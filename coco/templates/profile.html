@@ -12,9 +12,7 @@
           <section class="column column8" id="profile_data">
 
             <article class="capsule">
-              {% if user.thumbnail_url %}
-              <img class="profile_avatar" src="user.thumbnail_url">
-              {% endif %}
+              <img class="profile_avatar" src="{{ user.thumbnail_url|default:default_avatar }}">
               <h4>{{ user.get_full_name|default:user.username }}</h4>
               <span class="profile_status">{{ user.status }}</span>
               <span class="profile_email">{{ user.email }}</span>
