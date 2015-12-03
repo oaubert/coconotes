@@ -124,7 +124,7 @@ $(document).ready(function () {
                 annotation_type: "Slides",
                 annotation_types: [ "Contributions" ],
                 show_controls: true,
-                show_slides: true,
+                show_slides: false,
                 show_teacher_notes: false,
                 show_other_notes: false,
                 show_own_notes: true
