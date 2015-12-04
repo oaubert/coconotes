@@ -9,7 +9,6 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView, UpdateView, DeleteView, RedirectView
 from django.template.defaultfilters import pluralize
 from django.contrib.staticfiles.templatetags.staticfiles import static
-
 from rest_framework import permissions, viewsets
 
 from .models import Course, Video, Newsitem, Module, Activity, Annotation, Comment, AnnotationType, Resource
@@ -17,6 +16,7 @@ from .serializers import CourseSerializer, ModuleSerializer, ActivitySerializer,
 from .utils import generic_search, COCoEncoder
 from .permissions import IsOwnerOrReadOnly
 from .forms import AnnotationEditForm
+
 
 class CourseViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
@@ -29,6 +29,7 @@ class CourseViewSet(viewsets.ModelViewSet):
         serializer.save(creator=self.request.user,
                         contributor=self.request.user)
 
+
 class ModuleViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
@@ -39,6 +40,7 @@ class ModuleViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user,
                         contributor=self.request.user)
+
 
 class ActivityViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
@@ -51,6 +53,7 @@ class ActivityViewSet(viewsets.ModelViewSet):
         serializer.save(creator=self.request.user,
                         contributor=self.request.user)
 
+
 class VideoViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
@@ -61,6 +64,7 @@ class VideoViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user,
                         contributor=self.request.user)
+
 
 class AnnotationViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
@@ -73,6 +77,7 @@ class AnnotationViewSet(viewsets.ModelViewSet):
         serializer.save(creator=self.request.user,
                         contributor=self.request.user)
 
+
 class AnnotationTypeViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
@@ -83,6 +88,7 @@ class AnnotationTypeViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user,
                         contributor=self.request.user)
+
 
 class CommentViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
@@ -95,6 +101,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         serializer.save(creator=self.request.user,
                         contributor=self.request.user)
 
+
 class ResourceViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
@@ -105,6 +112,7 @@ class ResourceViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user,
                         contributor=self.request.user)
+
 
 class NewsitemViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
@@ -117,11 +125,14 @@ class NewsitemViewSet(viewsets.ModelViewSet):
         serializer.save(creator=self.request.user,
                         contributor=self.request.user)
 
+
 class AnnotationDetailView(RedirectView):
     permanent = False
+
     def get_redirect_url(self, *args, **kwargs):
         annotation = get_object_or_404(Annotation, pk=kwargs['pk'])
         return annotation.contextualized_link
+
 
 class AnnotationCreateView(CreateView):
     model = Annotation
@@ -138,7 +149,16 @@ class AnnotationCreateView(CreateView):
         form.instance.modified = datetime.datetime.now()
         return super(AnnotationCreateView, self).form_valid(form)
 
+
 class AnnotationUpdateView(UpdateView):
+    """Annotation edit view.
+
+    Layout: TC  / Description
+            This note is not shared.
+            This note is shared with everyone.
+            This note is shared  with GroupeN...
+
+    """
     model = Annotation
 
     def get_form(self, form_class=None):
@@ -149,8 +169,10 @@ class AnnotationUpdateView(UpdateView):
         form.instance.modified = datetime.datetime.now()
         return super(AnnotationCreateView, self).form_valid(form)
 
+
 class AnnotationDeleteView(DeleteView):
     model = Annotation
+
 
 def home(request, **kw):
     return render_to_response('home.html', {
@@ -161,6 +183,7 @@ def home(request, **kw):
         'current_document': 'home',
     }, context_instance=RequestContext(request))
 
+
 def profile(request, **kw):
     return render_to_response('profile.html', {
         'username': request.user.username,
@@ -170,24 +193,27 @@ def profile(request, **kw):
         'current_document': 'profile',
     }, context_instance=RequestContext(request))
 
-#Element: ["title", "description" ],
+# Element: ["title", "description" ],
 MODEL_MAP = OrderedDict((
-    (Course, ["title", "description", "category", "syllabus" ]),
-    (Video, ["title", "description" ]),
-    (Module, [ "title", "description" ]),
-    (Activity, ["title", "description" ]),
-    (Annotation, ["title", "description", "contentdata" ]),
-    (Comment, ["title", "description", "contentdata" ]),
-    (Newsitem, ["title", "description", "category" ]),
+    (Course, ["title", "description", "category", "syllabus"]),
+    (Video, ["title", "description"]),
+    (Module, ["title", "description"]),
+    (Activity, ["title", "description"]),
+    (Annotation, ["title", "description", "contentdata"]),
+    (Comment, ["title", "description", "contentdata"]),
+    (Newsitem, ["title", "description", "category"]),
 ))
+
+
 def search(request, **kw):
     elements = []
-    for model,fields in MODEL_MAP.iteritems():
+
+    for model, fields in MODEL_MAP.iteritems():
         elements += generic_search(request, model, fields, 'q')
 
     counts = Counter(el.element_type for el in elements)
     # Reorder counter info to match MODEL_MAP key order
-    counts = [ (value, name) for (name, value) in counts.iteritems() ]
+    counts = [(value, name) for (name, value) in counts.iteritems()]
     map_order = dict( (key.__name__, count) for (count, key) in enumerate(MODEL_MAP) )
     counts.sort(key=lambda t: map_order.get(t[1], -1))
     summary = u", ".join(u"%d %s%s" % (count, name.rstrip('s'), pluralize(count))
@@ -196,11 +222,12 @@ def search(request, **kw):
         'summary': summary,
         'elements': elements,
         'username': request.user.username,
-        'query_string' : request.GET.get('q', ''),
+        'query_string': request.GET.get('q', ''),
         'current_document': 'profile',
     }, context_instance=RequestContext(request))
 
-CocoContext = namedtuple('Context', [ 'username', 'teacher_set', 'current_group' ])
+CocoContext = namedtuple('Context', ['username', 'teacher_set', 'current_group'])
+
 
 def cinelab(request, slug=None, pk=None, **kw):
     """Generate a cinelab package in json format for the given video.
@@ -231,13 +258,14 @@ def cinelab(request, slug=None, pk=None, **kw):
         "dc:description": ""
     }
     context = CocoContext(username=request.user.username,
-                          teacher_set=[ u.username for u in v.activity.module.teachers.all() ],
+                          teacher_set=[u.username for u in v.activity.module.teachers.all()],
                           current_group='') # FIXME: get from cookie/session info?
     data['medias'].append(v.cinelab(context=context))
     data['annotations'].extend(a.cinelab(context=context) for a in Annotation.objects.filter(video=v))
     # Add defined annotation types + a selection of basic types
     data['annotation-types'].extend(a.cinelab(context=context) for a in AnnotationType.objects.all())
     return JsonResponse(data, encoder=COCoEncoder)
+
 
 @login_required
 def annotation_add(request, **kw):
@@ -262,6 +290,6 @@ def annotation_add(request, **kw):
                     description=data['content']['description'])
     an.save()
     context = CocoContext(username=request.user.username,
-                          teacher_set=[ u.username for u in video.activity.module.teachers.all() ],
+                          teacher_set=[u.username for u in video.activity.module.teachers.all()],
                           current_group='') # FIXME: get from cookie/session info?
     return JsonResponse(an.cinelab(context=context), encoder=COCoEncoder)
