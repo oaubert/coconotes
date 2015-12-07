@@ -40,11 +40,6 @@ $(document).ready(function () {
         }
     });
 
-    var username = localStorage.getItem('mla-username') || "Anonyme";
-    $("#username").val(username)
-        .on("blur", function () {
-            set_username($("#username").val());
-        });
     function generateUuid() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
             var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
@@ -225,15 +220,6 @@ $(document).ready(function () {
             return [];
         }
     }
-
-    function set_username(u) {
-        var name = u;
-        localStorage.setItem('mla-username', u);
-        _myPlayer.config.username = u;
-        // Find CreateAnnotation widget and update creator_name
-        find_widgets_by_type("CreateAnnotation").forEach(function (w) { w.creator_name = u; });
-        find_widgets_by_type("Quiz").forEach(function (w) { w.user = u; w.userid = user_uuid; w.creator_name = u;});
-    };
 
     var get_tab_index = function (id) {
         var l = $("#tab > ul > li a").map(function (i, tab) { if (id == tab.getAttribute('href')) { return i; } });
