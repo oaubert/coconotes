@@ -11,23 +11,33 @@ from django.utils.translation import ugettext_lazy as _
 from annoying.fields import AutoOneToOneField
 from taggit_autosuggest.managers import TaggableManager
 from taggit.models import TaggedItemBase
+from sorl.thumbnail import ImageField
 
 from fields import SlugOrNullField
 
+
 class TaggedCourse(TaggedItemBase):
     content_object = models.ForeignKey('Course')
+
+
 class TaggedModule(TaggedItemBase):
     content_object = models.ForeignKey('Module')
+
+
 class TaggedActivity(TaggedItemBase):
     content_object = models.ForeignKey('Activity')
+
+
 class TaggedVideo(TaggedItemBase):
     content_object = models.ForeignKey('Video')
+
+
 class TaggedAnnotation(TaggedItemBase):
     content_object = models.ForeignKey('Annotation')
+
+
 class TaggedComment(TaggedItemBase):
     content_object = models.ForeignKey('Comment')
-
-from sorl.thumbnail import ImageField
 
 JSON_MIMETYPES = [
     'application/json',
@@ -38,12 +48,15 @@ JSON_MIMETYPES = [
 VISIBILITY_PRIVATE = 1
 VISIBILITY_GROUP = 2
 VISIBILITY_PUBLIC = 3
-VISIBILITY_CHOICES = ( (VISIBILITY_PRIVATE, _("Private")),
-                       (VISIBILITY_GROUP, _("Group")),
-                       (VISIBILITY_PUBLIC, _("Public")) )
+VISIBILITY_CHOICES = ((VISIBILITY_PRIVATE, _("Private")),
+                      (VISIBILITY_GROUP, _("Group")),
+                      (VISIBILITY_PUBLIC, _("Public")))
+
+
 class AutoDateTimeField(models.DateTimeField):
     def pre_save(self, model_instance, add):
         return datetime.datetime.now()
+
 
 class Element(models.Model):
     class Meta:
@@ -120,6 +133,7 @@ class Element(models.Model):
     def element_type(self):
         return _(self.__class__.__name__)
 
+
 class License(models.Model):
     slug = models.SlugField(max_length=16,
                             null=True, unique=True, blank=True)
@@ -129,15 +143,16 @@ class License(models.Model):
                              max_length=250)
 
     url = models.URLField(_("URL"),
-                             blank=True,
-                             max_length=250)
+                          blank=True,
+                          max_length=250)
 
     thumbnail = ImageField(upload_to='thumbnails')
 
+
 class Resource(Element):
     url = models.URLField(_("URL"),
-                             blank=True,
-                             max_length=250)
+                          blank=True,
+                          max_length=250)
 
     license = models.ForeignKey(License,
                                 blank=True,
@@ -145,6 +160,7 @@ class Resource(Element):
 
     # FIXME: to clarify
     # metadata = ???
+
 
 class Course(Element):
     category = models.CharField(_("Category"),
@@ -173,6 +189,7 @@ class Course(Element):
     def element_description(self):
         return _("Course of %d videos") % len(self.videos)
 
+
 class Module(Element):
     course = models.ForeignKey(Course)
 
@@ -192,6 +209,7 @@ class Module(Element):
     def subtitle_link(self):
         return self.course.get_absolute_url()
 
+
 class Activity(Element):
     module = models.ForeignKey(Module)
 
@@ -208,6 +226,7 @@ class Activity(Element):
     @property
     def subtitle_link(self):
         return self.module.get_absolute_url()
+
 
 class Video(Resource):
     activity = models.ForeignKey(Activity,
@@ -264,6 +283,7 @@ class Video(Resource):
             }
         }
 
+
 class UserContent(Element):
     contentdata = models.TextField(_("Content"),
                                    blank=True)
@@ -279,6 +299,16 @@ class UserContent(Element):
     @property
     def subtitle(self):
         return _("User content")
+
+    @property
+    def visibility_as_string(self):
+        if self.visibility == VISIBILITY_GROUP and self.group:
+            return 'shared-%s' % self.group.id
+        elif self.visibility == VISIBILITY_PUBLIC:
+            return 'public'
+        else:
+            return 'private'
+
 
 class AnnotationType(Element):
     """Annotation Type element
@@ -303,13 +333,14 @@ class AnnotationType(Element):
             "dc:description": self.description,
         }
 
+
 class Annotation(UserContent):
     begin = models.FloatField(_("Begin"),
                               help_text=_("Annotation begin time (in seconds)"),
                               default=0)
     end = models.FloatField(_("End"),
-                              help_text=_("Annotation end time (in seconds)"),
-                              default=0)
+                            help_text=_("Annotation end time (in seconds)"),
+                            default=0)
     video = models.ForeignKey(Video)
     annotationtype = models.ForeignKey(AnnotationType,
                                        null=True)
@@ -390,6 +421,7 @@ class Annotation(UserContent):
             "tags": list(self.tags.values('name'))
         }
 
+
 class Comment(UserContent):
     class Meta:
         verbose_name = _('comment')
@@ -409,6 +441,7 @@ class Comment(UserContent):
                               null=True)
     tags = TaggableManager(blank=True, through=TaggedComment)
 
+
 class Newsitem(Element):
     class Meta:
         verbose_name = _('news item')
@@ -427,8 +460,10 @@ class Newsitem(Element):
     def subtitle(self):
         return self.category
 
+
 class GroupMetadata(Element):
     group = AutoOneToOneField(Group)
+
 
 class UserMetadata(models.Model):
     user = AutoOneToOneField(User)
