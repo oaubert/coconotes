@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'taggit',
+    'taggit_autosuggest',
     'sorl.thumbnail',
     'rest_framework',
     'crispy_forms',
