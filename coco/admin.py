@@ -36,7 +36,7 @@ class ElementAdmin(CreatorMixin, admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title', )}
 
 @admin.register(Video)
-class VideoAdmin(CreatorMixin, admin.ModelAdmin):
+class VideoAdmin(ElementAdmin):
     list_display = ('pk', 'title', 'slug', 'creator', 'duration', 'created', 'thumbnail')
     list_editable = ('title', 'slug', 'creator', 'duration', 'thumbnail')
     list_display_links = ('pk', )
@@ -51,7 +51,7 @@ class VideoAdmin(CreatorMixin, admin.ModelAdmin):
     ] + ELEMENT_FIELDSETS
 
 @admin.register(Course)
-class CourseAdmin(CreatorMixin, admin.ModelAdmin):
+class CourseAdmin(ElementAdmin):
     list_display = ('pk', 'title', 'slug', 'creator', 'created', 'thumbnail', 'category')
     list_editable = ('title', 'slug', 'creator', 'created', 'thumbnail', 'category')
     list_display_links = ('pk', )
@@ -64,8 +64,9 @@ class CourseAdmin(CreatorMixin, admin.ModelAdmin):
         (_("Course specific"), {'fields': [ 'category', 'syllabus' ] }),
     ] + ELEMENT_FIELDSETS
 
+
 @admin.register(Module)
-class ModuleAdmin(CreatorMixin, admin.ModelAdmin):
+class ModuleAdmin(ElementAdmin):
     list_display = ('pk', 'title', 'slug', 'creator', 'created', 'thumbnail', 'course')
     list_editable = ('title', 'slug', 'creator', 'created', 'thumbnail', 'course')
     list_display_links = ('pk', )
@@ -79,7 +80,7 @@ class ModuleAdmin(CreatorMixin, admin.ModelAdmin):
 
 
 @admin.register(Activity)
-class ActivityAdmin(CreatorMixin, admin.ModelAdmin):
+class ActivityAdmin(ElementAdmin):
     list_display = ('pk', 'title', 'slug', 'creator', 'created', 'thumbnail', 'module')
     list_editable = ('title', 'slug', 'creator', 'created', 'thumbnail', 'module')
     list_display_links = ('pk', )
@@ -92,7 +93,7 @@ class ActivityAdmin(CreatorMixin, admin.ModelAdmin):
     ] + ELEMENT_FIELDSETS
 
 @admin.register(Annotation)
-class AnnotationAdmin(AjaxSelectAdmin, admin.ModelAdmin, CreatorMixin):
+class AnnotationAdmin(AjaxSelectAdmin, ElementAdmin):
     list_display = ('pk', 'begin', 'title', 'description', 'annotationtype', 'group', 'video_name', 'creator', 'created', )
     list_editable = ('begin', 'title', 'description', 'group', 'annotationtype')
     list_display_links = ('pk', )
@@ -110,7 +111,7 @@ class AnnotationAdmin(AjaxSelectAdmin, admin.ModelAdmin, CreatorMixin):
         return a.video.title
 
 @admin.register(AnnotationType)
-class AnnotationTypeAdmin(CreatorMixin, admin.ModelAdmin):
+class AnnotationTypeAdmin(ElementAdmin):
     list_display = ('pk', 'title', 'creator', 'created', )
     list_editable = ('title', )
     list_display_links = ('pk', )
@@ -122,8 +123,9 @@ class AnnotationTypeAdmin(CreatorMixin, admin.ModelAdmin):
                   (_("Metadata"),      {'fields': [ ('creator', 'created', 'contributor', 'modified') ], 'classes': ['collapse']}),
                   (_("Content"),       {'fields': [ ('title', 'thumbnail'), 'description' ]}) ]
 
+
 @admin.register(Comment)
-class CommentAdmin(CreatorMixin, admin.ModelAdmin):
+class CommentAdmin(ElementAdmin):
     list_display = ('pk', 'title', 'creator', 'created', )
     list_editable = ('title', )
     list_display_links = ('pk', )
