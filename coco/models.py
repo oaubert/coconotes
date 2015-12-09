@@ -157,6 +157,9 @@ class License(models.Model):
 
     thumbnail = ImageField(upload_to='thumbnails')
 
+    def __unicode__(self):
+        return self.title
+
 
 class Resource(Element):
     url = models.URLField(_("URL"),
