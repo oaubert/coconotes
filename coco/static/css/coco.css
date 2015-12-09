@@ -849,6 +849,18 @@ h1:hover .adminactions,
     color: #777;
 }
 
+.annotation_edit_form {
+    display: flex;
+}
+
+.annotation_edit_form_content {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+#id_begin {
+    align-self: flex-start;
+}
 @media only screen and (max-width: 780px) {
     /* phones */
     body {

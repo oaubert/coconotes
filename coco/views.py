@@ -4,7 +4,7 @@ from collections import namedtuple, OrderedDict, Counter
 
 from django.http import HttpResponse, JsonResponse
 from django.template import RequestContext
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, render
 from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView, UpdateView, DeleteView, RedirectView
 from django.template.defaultfilters import pluralize
@@ -161,13 +161,15 @@ class AnnotationUpdateView(UpdateView):
     """
     model = Annotation
 
-    def get_form(self, form_class=None):
-        return AnnotationEditForm(user=self.request.user)
+    def get_form_kwargs(self):
+        kwargs = super(AnnotationUpdateView, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
 
     def form_valid(self, form):
         form.instance.contributor = self.request.user
         form.instance.modified = datetime.datetime.now()
-        return super(AnnotationCreateView, self).form_valid(form)
+        return super(AnnotationUpdateView, self).form_valid(form)
 
 
 class AnnotationDeleteView(DeleteView):
@@ -273,6 +275,7 @@ def annotation_add(request, **kw):
     # {"id":"f98d0acb-e7d8-f37a-6b67-6fb7a1282ebe","begin":0,"end":0,"content":{"data":{},"description":"Test","title":""},"tags":[],"media":"e7e856b1-dd32-44fa-8dda-56edab47729c","type_title":"Contributions","type":"ee3b536e-b8d7-428b-9df1-5283b72ef0ed","meta":{"created":"2015-11-25T16:00:02.141Z"}}
     data = json.loads(request.body.decode('utf-8'))
     # Validity checks...
+    # FIXME: annotation creation does not seem to set video correctly
     video = get_object_or_404(Video, uuid=data['media'])
     atype = get_object_or_404(AnnotationType, uuid=data['type'])
     # FIXME: check that type_title is consistent with type ?
@@ -293,3 +296,31 @@ def annotation_add(request, **kw):
                           teacher_set=[u.username for u in video.activity.module.teachers.all()],
                           current_group='') # FIXME: get from cookie/session info?
     return JsonResponse(an.cinelab(context=context), encoder=COCoEncoder)
+
+@login_required
+def annotation_edit(request, pk=None, **kw):
+    an = get_object_or_404(Annotation, pk=pk)
+    if request.method == 'GET':
+        f = AnnotationEditForm(initial={
+            'begin': an.begin,
+            'description': an.description,
+            'sharing': an.visibility_as_string
+            }, user=request.user)
+        return render(request, 'coco/annotation_form.html', {'form': f})
+    elif request.method == 'POST':
+        data = json.loads(request.body.decode('utf-8'))
+        # Validity checks
+        if data['begin'] > an.video.duration:
+            data['begin'] = an.video.duration
+        if data['begin'] < 0:
+            data['begin'] = 0
+        an.description = data['description']
+        an.begin = data['begin']
+        if an.end < an.begin:
+            an.end = an.begin
+        an.save()
+        # FIXME: check how to populate django changelog
+        context = CocoContext(username=request.user.username,
+                              teacher_set=[u.username for u in an.video.activity.module.teachers.all()],
+                              current_group='')
+        return JsonResponse(an.cinelab(context=context), encoder=COCoEncoder)

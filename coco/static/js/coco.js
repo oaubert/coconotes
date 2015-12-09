@@ -204,16 +204,57 @@ $(document).ready(function () {
     });
 
     _myPlayer.on("Annotation.edit", function (annotation_id) {
+        var edit_url = "/annotation/" + annotation_id + "/edit/";
         IriSP.jQuery('<div/>', {'class': 'element-form-dialog', 'id': IriSP.generateUuid() })
-            .load("/annotation/" + annotation_id + "/edit/")
-            .appendTo('body')
-            .dialog({ width: "60%",
-                      closeOnEscape: true,
-                      dialogClass: "annotation_edit_popup",
-                      modal: true,
-                      position: { my: "top", at: "top" },
-                      title: "Edition"
+            .load(edit_url, function () {
+                IriSP.jQuery(this).appendTo('body')
+                    .dialog({
+                        width: "60%",
+                        closeOnEscape: true,
+                        dialogClass: "annotation_edit_popup",
+                        modal: true,
+                        position: { my: "top", at: "top" },
+                        title: "Edition",
+                        open: function() {
+                            // On open, hide the original submit button
+                            $(this).find("[type=submit]").hide();
+                            IriSP.jQuery('.ui-widget-overlay').bind('click', function () {
+                                IriSP.jQuery(this).dialog('close');
+                            });
+                        },
+                        buttons: [
+                            {
+                                text: "Valider",
+                                click: function () {
+                                    var dialog = this;
+                                    var formdata = IriSP.jQuery(dialog).find("form").serializeArray();
+                                    /* We know we do not have multiple attributes with the same name */
+                                    var data = IriSP._.object(IriSP._.pluck(formdata, 'name'), IriSP._.pluck(formdata, 'value'));
+                                    IriSP.jQuery.ajax({
+                                        url: edit_url,
+                                        timeout: 5000,
+                                        type: "POST",
+                                        contentType: 'application/json',
+                                        data: JSON.stringify(data),
+                                        dataType: 'json',
+                                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                            alert("An error has occurred making the request: " + errorThrown);
+                                        },
+                                        success: function(data) {
+                                            IriSP.jQuery(dialog).dialog("close");
+                                        }
+                                    });
+                                }
+                            },
+                            {
+                                text: "Close",
+                                click: function () {
+                                    $(this).dialog("close");
+                                }
+                            }
+                        ]
                     });
+            });
     });
 
     function find_widgets_by_type(typ) {
@@ -272,5 +313,4 @@ $(document).ready(function () {
                 });
             });
     });
-
 });

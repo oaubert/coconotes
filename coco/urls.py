@@ -68,7 +68,7 @@ urlpatterns = patterns('',
 
                        url(r'^annotation/add$', views.AnnotationCreateView.as_view(), name='view-annotation-create'),
                        url(r'^annotation/(?P<pk>[\w\d_-]+)/$', views.AnnotationDetailView.as_view(), name='view-annotation-detail'),
-                       url(r'^annotation/(?P<pk>[\w\d_-]+)/edit/$', views.AnnotationUpdateView.as_view(), name='view-annotation-update'),
+                       url(r'^annotation/(?P<pk>[\w\d_-]+)/edit/$', views.annotation_edit, name='view-annotation-update'),
                        url(r'^annotation/(?P<pk>[\w\d_-]+)/delete/$', views.AnnotationDeleteView.as_view(), name='view-annotation-delete'),
 
                        # REST API
