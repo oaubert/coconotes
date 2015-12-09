@@ -1,5 +1,9 @@
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
+from django import forms
+
+from ajax_select.admin import AjaxSelectAdmin
+from ajax_select.helpers import make_ajax_field, make_ajax_form
 
 from .models import Course, Video, Module, License, AnnotationType, Annotation, Comment, Resource, Newsitem, Activity
 
@@ -89,18 +93,22 @@ class ActivityAdmin(CreatorMixin, admin.ModelAdmin):
     ] + ELEMENT_FIELDSETS
 
 @admin.register(Annotation)
-class AnnotationAdmin(CreatorMixin, admin.ModelAdmin):
-    list_display = ('pk', 'begin', 'title', 'description', 'annotationtype', 'group', 'video', 'creator', 'created', )
+class AnnotationAdmin(AjaxSelectAdmin, admin.ModelAdmin, CreatorMixin):
+    list_display = ('pk', 'begin', 'title', 'description', 'annotationtype', 'group', 'video_name', 'creator', 'created', )
     list_editable = ('begin', 'title', 'description', 'group', 'annotationtype')
     list_display_links = ('pk', )
     list_filter = ( 'annotationtype', 'group', 'video' )
     search_fields = ('title', 'description', )
 
+    form = make_ajax_form(Annotation, { 'video': 'video' })
     prepopulated_fields = {'slug': ('title', )}
     fieldsets = [
         (None, {'fields': [ ('begin', 'end', 'video'),
                             ('annotationtype', 'group') ] }),
     ] + USERCONTENT_FIELDSETS + ELEMENT_FIELDSETS
+
+    def video_name(self, a):
+        return a.video.title
 
 @admin.register(AnnotationType)
 class AnnotationTypeAdmin(CreatorMixin, admin.ModelAdmin):

@@ -45,6 +45,7 @@ if options.get('redis_cache'):
 # Application definition
 INSTALLED_APPS = [
     'coco',
+    'ajax_select',
     'admin_tools',
     'admin_tools.theming',
     'admin_tools.menu',

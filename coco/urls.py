@@ -4,6 +4,7 @@ from django.views.generic import ListView, DetailView
 from django.contrib.auth.models import Group
 
 from rest_framework.routers import DefaultRouter
+from ajax_select import urls as ajax_select_urls
 
 import coco.views as views
 from .models import Course, Module, Activity, Video, Newsitem, Resource
@@ -72,5 +73,7 @@ urlpatterns = patterns('',
 
                        # REST API
                        url(r'^api/v1/annotation_add$', views.annotation_add, name='api-annotation-add'),
-                       url(r'^api/v1/', include(router.urls))
+                       url(r'^api/v1/', include(router.urls)),
+
+                       url(r'^ajax_select/', include(ajax_select_urls)),
 )
