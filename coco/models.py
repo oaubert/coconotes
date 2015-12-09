@@ -15,6 +15,15 @@ from sorl.thumbnail import ImageField
 
 from fields import SlugOrNullField
 
+# Monkeypatch support for serializing uuids to json
+JSONEncoder_olddefault = json.JSONEncoder.default
+
+
+def jsonencoder_newdefault(self, o):
+    if isinstance(o, uuid.UUID):
+        return str(o)
+    return JSONEncoder_olddefault(self, o)
+json.JSONEncoder.default = jsonencoder_newdefault
 
 class TaggedCourse(TaggedItemBase):
     content_object = models.ForeignKey('Course')
