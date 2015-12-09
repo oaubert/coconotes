@@ -36,7 +36,7 @@
 
             {% for annotation in annotations %}
             <article class="capsule">
-              <h4><a href="{{ annotation.contextualized_link }}">{{ annotation.title }}</a></h4>
+              <h4><a href="{{ annotation.contextualized_link }}">{{ annotation.title|default:annotation.description }}</a></h4>
               <div class="annotation_description">{{ annotation.description }}</div>
             </article>
             {% endfor %}
