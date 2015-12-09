@@ -1,9 +1,8 @@
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
-from django import forms
 
 from ajax_select.admin import AjaxSelectAdmin
-from ajax_select.helpers import make_ajax_field, make_ajax_form
+from ajax_select.helpers import make_ajax_form
 
 from .models import Course, Video, Module, License, AnnotationType, Annotation, Comment, Resource, Newsitem, Activity
 
