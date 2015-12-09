@@ -16,7 +16,8 @@
         video_id: "{{video.uuid}}",
         url: "/video/{{video.uuid}}/cinelab",
         format: 'ldt',
-        lang: "{% get_current_language as language %}"
+        lang: "{% get_current_language as language %}",
+        is_admin: {% if user.is_staff %}true{% else %}false{% endif %}
     };
 </script>
 <script type="text/javascript" src="{% static "metadataplayer/LdtPlayer-core.js" %}"></script>
