@@ -37,10 +37,15 @@ class ElementAdmin(CreatorMixin, admin.ModelAdmin):
 
     prepopulated_fields = {'slug': ('title',)}
 
+    def object_link(self, item):
+        return u'<a target="_blank" href="{url}">\u25ce</a>'.format(url=item.get_absolute_url())
+    object_link.short_description = 'View'
+    object_link.allow_tags = True
+
 
 @admin.register(Video)
 class VideoAdmin(ElementAdmin):
-    list_display = ('pk', 'title', 'slug', 'creator', 'duration', 'created', 'thumbnail')
+    list_display = ('pk', 'object_link', 'title', 'slug', 'creator', 'duration', 'created', 'thumbnail')
     list_editable = ('title', 'slug', 'creator', 'duration', 'thumbnail')
     list_display_links = ('pk',)
     list_filter = ('creator',)
@@ -57,7 +62,7 @@ class VideoAdmin(ElementAdmin):
 
 @admin.register(Course)
 class CourseAdmin(ElementAdmin):
-    list_display = ('pk', 'title', 'slug', 'creator', 'created', 'thumbnail', 'category')
+    list_display = ('pk', 'object_link', 'title', 'slug', 'creator', 'created', 'thumbnail', 'category')
     list_editable = ('title', 'slug', 'creator', 'created', 'thumbnail', 'category')
     list_display_links = ('pk',)
     list_filter = ('creator', 'category')
@@ -72,7 +77,7 @@ class CourseAdmin(ElementAdmin):
 
 @admin.register(Module)
 class ModuleAdmin(ElementAdmin):
-    list_display = ('pk', 'title', 'slug', 'creator', 'created', 'thumbnail', 'course')
+    list_display = ('pk', 'object_link', 'title', 'slug', 'creator', 'created', 'thumbnail', 'course')
     list_editable = ('title', 'slug', 'creator', 'created', 'thumbnail', 'course')
     list_display_links = ('pk',)
     list_filter = ('creator', 'course')
@@ -86,7 +91,7 @@ class ModuleAdmin(ElementAdmin):
 
 @admin.register(Activity)
 class ActivityAdmin(ElementAdmin):
-    list_display = ('pk', 'title', 'slug', 'creator', 'created', 'thumbnail', 'module')
+    list_display = ('pk', 'object_link', 'title', 'slug', 'creator', 'created', 'thumbnail', 'module')
     list_editable = ('title', 'slug', 'creator', 'created', 'thumbnail', 'module')
     list_display_links = ('pk',)
     list_filter = ('creator', 'module')
@@ -100,7 +105,7 @@ class ActivityAdmin(ElementAdmin):
 
 @admin.register(Annotation)
 class AnnotationAdmin(AjaxSelectAdmin, ElementAdmin):
-    list_display = ('pk', 'begin', 'title', 'description', 'annotationtype', 'group', 'video_name', 'creator', 'created',)
+    list_display = ('pk', 'object_link', 'begin', 'title', 'description', 'annotationtype', 'group', 'video_name', 'creator', 'created',)
     list_editable = ('begin', 'title', 'description', 'group', 'annotationtype')
     list_display_links = ('pk',)
     list_filter = ('annotationtype', 'group', 'video')
