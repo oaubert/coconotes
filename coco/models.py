@@ -251,10 +251,6 @@ class Video(Resource):
                                blank=True,
                                null=True,
                                related_name="source_video")
-    package_id = models.CharField(_("Package id"),
-                                  max_length=255,
-                                  help_text=_("Package identifier"),
-                                  blank=True)
     tags = TaggableManager(blank=True, through=TaggedVideo)
 
     class Meta:
