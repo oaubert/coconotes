@@ -11,31 +11,31 @@ from django.template.defaultfilters import pluralize
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from rest_framework import permissions, viewsets
 
-from .models import Course, Video, Newsitem, Module, Activity, Annotation, Comment, AnnotationType, Resource
-from .serializers import CourseSerializer, ModuleSerializer, ActivitySerializer, VideoSerializer, AnnotationSerializer, CommentSerializer, ResourceSerializer, NewsitemSerializer, AnnotationTypeSerializer
+from .models import Channel, Video, Newsitem, Chapter, Activity, Annotation, Comment, AnnotationType, Resource
+from .serializers import ChannelSerializer, ChapterSerializer, ActivitySerializer, VideoSerializer, AnnotationSerializer, CommentSerializer, ResourceSerializer, NewsitemSerializer, AnnotationTypeSerializer
 from .utils import generic_search, COCoEncoder
 from .permissions import IsOwnerOrReadOnly
 from .forms import AnnotationEditForm
 
 
-class CourseViewSet(viewsets.ModelViewSet):
+class ChannelViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
-    queryset = Course.objects.all()
+    queryset = Channel.objects.all()
     lookup_field = 'uuid'
-    serializer_class = CourseSerializer
+    serializer_class = ChannelSerializer
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user,
                         contributor=self.request.user)
 
 
-class ModuleViewSet(viewsets.ModelViewSet):
+class ChapterViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
-    queryset = Module.objects.all()
+    queryset = Chapter.objects.all()
     lookup_field = 'uuid'
-    serializer_class = ModuleSerializer
+    serializer_class = ChapterSerializer
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user,
@@ -179,7 +179,7 @@ class AnnotationDeleteView(DeleteView):
 def home(request, **kw):
     return render_to_response('home.html', {
         'news': Newsitem.objects.order_by('-published')[:3],
-        'une_items': Module.objects.order_by('-created')[:3],
+        'une_items': Chapter.objects.order_by('-created')[:3],
         'last_videos': Video.objects.order_by('-created')[:4],
         'username': request.user.username,
         'current_document': 'home',
@@ -197,9 +197,9 @@ def profile(request, **kw):
 
 # Element: ["title", "description" ],
 MODEL_MAP = OrderedDict((
-    (Course, ["title", "description", "category", "syllabus"]),
+    (Channel, ["title", "description", "category", "syllabus"]),
     (Video, ["title", "description"]),
-    (Module, ["title", "description"]),
+    (Chapter, ["title", "description"]),
     (Activity, ["title", "description"]),
     (Annotation, ["title", "description", "contentdata"]),
     (Comment, ["title", "description", "contentdata"]),
@@ -260,7 +260,7 @@ def cinelab(request, slug=None, pk=None, **kw):
         "dc:description": ""
     }
     context = CocoContext(username=request.user.username,
-                          teacher_set=[u.username for u in v.activity.module.teachers.all()],
+                          teacher_set=[u.username for u in v.activity.chapter.teachers.all()],
                           current_group='') # FIXME: get from cookie/session info?
     data['medias'].append(v.cinelab(context=context))
     data['annotations'].extend(a.cinelab(context=context) for a in Annotation.objects.filter(video=v))
@@ -293,7 +293,7 @@ def annotation_add(request, **kw):
                     description=data['content']['description'])
     an.save()
     context = CocoContext(username=request.user.username,
-                          teacher_set=[u.username for u in video.activity.module.teachers.all()],
+                          teacher_set=[u.username for u in video.activity.chapter.teachers.all()],
                           current_group='') # FIXME: get from cookie/session info?
     return JsonResponse(an.cinelab(context=context), encoder=COCoEncoder)
 
@@ -309,6 +309,8 @@ def annotation_edit(request, pk=None, **kw):
         return render(request, 'coco/annotation_form.html', {'form': f})
     elif request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
+        data['begin'] = float(data['begin'])
+        import pdb; pdb.set_trace()
         # Validity checks
         if data['begin'] > an.video.duration:
             data['begin'] = an.video.duration
@@ -321,6 +323,6 @@ def annotation_edit(request, pk=None, **kw):
         an.save()
         # FIXME: check how to populate django changelog
         context = CocoContext(username=request.user.username,
-                              teacher_set=[u.username for u in an.video.activity.module.teachers.all()],
+                              teacher_set=[u.username for u in an.video.activity.chapter.teachers.all()],
                               current_group='')
         return JsonResponse(an.cinelab(context=context), encoder=COCoEncoder)

@@ -13,7 +13,7 @@ from django.contrib.auth.models import User, Group
 from django.core.files import File
 from django.utils.timezone import make_naive, is_aware
 
-from coco.models import Activity, Course, Video, Module, Annotation, Newsitem, AnnotationType, License
+from coco.models import Activity, Channel, Video, Chapter, Annotation, Newsitem, AnnotationType, License
 
 logger = logging.getLogger(__name__)
 
@@ -54,8 +54,8 @@ class Command(BaseCommand):
     help = """Administration commands for COCo
 """
     @register
-    def _info(self, cours, module, info):
-        """Import video/module/course info from info.json files. Params: course_title module_title info.json
+    def _info(self, cours, chapter, info):
+        """Import video/chapter/channel info from info.json files. Params: channel_title chapter_title info.json
         """
         with open(info, 'r') as f:
             data = json.load(f)
@@ -64,15 +64,15 @@ class Command(BaseCommand):
         adminuser = get_user('admin')
         dirname = os.path.dirname(os.path.abspath(info))
         try:
-            c = Course.objects.get(title=cours)
-        except Course.DoesNotExist:
-            c = Course(creator=adminuser, contributor=adminuser, title=cours)
+            c = Channel.objects.get(title=cours)
+        except Channel.DoesNotExist:
+            c = Channel(creator=adminuser, contributor=adminuser, title=cours)
             c.save()
         try:
-            module = Module.objects.get(title=module, course=c)
-        except Module.DoesNotExist:
-            module = Module(creator=adminuser, contributor=adminuser, course=c, title=module)
-            module.save()
+            chapter = Chapter.objects.get(title=chapter, channel=c)
+        except Chapter.DoesNotExist:
+            chapter = Chapter(creator=adminuser, contributor=adminuser, channel=c, title=chapter)
+            chapter.save()
 
         activity_title = data.get("title", "Titre inconnu")
         if activity_title.startswith("Langage C -"):
@@ -81,7 +81,7 @@ class Command(BaseCommand):
                              data.get("author", "Auteur inconnu"))
         activity = Activity(creator=adminuser, contributor=adminuser,
                             title=activity_title,
-                            module=module, description=descr)
+                            chapter=chapter, description=descr)
         activity.save()
 
         url = data.get("url", "")
@@ -111,16 +111,16 @@ class Command(BaseCommand):
                 with open(pic, 'rb') as f:
                     vid.activity.thumbnail.save(os.path.basename(pic), File(f))
                 vid.activity.save()
-            if not vid.activity.module.thumbnail:
+            if not vid.activity.chapter.thumbnail:
                 # Use same thumbnail
                 with open(pic, 'rb') as f:
-                    vid.activity.module.thumbnail.save(os.path.basename(pic), File(f))
-                vid.activity.module.save()
-            if not vid.activity.module.course.thumbnail:
+                    vid.activity.chapter.thumbnail.save(os.path.basename(pic), File(f))
+                vid.activity.chapter.save()
+            if not vid.activity.chapter.channel.thumbnail:
                 # Use same thumbnail
                 with open(pic, 'rb') as f:
-                    vid.activity.module.course.thumbnail.save(os.path.basename(pic), File(f))
-                vid.activity.module.course.save()
+                    vid.activity.chapter.channel.thumbnail.save(os.path.basename(pic), File(f))
+                vid.activity.chapter.channel.save()
         vid.save()
 
         # Read data.json if available

@@ -242,6 +242,7 @@ $(document).ready(function () {
                                         },
                                         success: function(data) {
                                             IriSP.jQuery(dialog).dialog("close");
+                                            _myPlayer.trigger("AnnotationsList.refresh");
                                         }
                                     });
                                 }
@@ -250,6 +251,12 @@ $(document).ready(function () {
                                 text: "Close",
                                 click: function () {
                                     $(this).dialog("close");
+                                }
+                            },
+                            {
+                                text: "Delete",
+                                click: function () {
+                                    
                                 }
                             }
                         ]

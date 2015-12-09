@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from ajax_select.admin import AjaxSelectAdmin
 from ajax_select.helpers import make_ajax_form
 
-from .models import Course, Video, Module, License, AnnotationType, Annotation, Comment, Resource, Newsitem, Activity
+from .models import Channel, Video, Chapter, License, AnnotationType, Annotation, Comment, Resource, Newsitem, Activity
 
 admin.site.register(License)
 admin.site.register(Resource)
@@ -36,6 +36,7 @@ class ElementAdmin(CreatorMixin, admin.ModelAdmin):
     search_fields = ('title',)
 
     prepopulated_fields = {'slug': ('title',)}
+    list_select_related = True
 
     def object_link(self, item):
         return u'<a target="_blank" href="{url}">\u25ce</a>'.format(url=item.get_absolute_url())
@@ -60,8 +61,8 @@ class VideoAdmin(ElementAdmin):
     ] + ELEMENT_FIELDSETS
 
 
-@admin.register(Course)
-class CourseAdmin(ElementAdmin):
+@admin.register(Channel)
+class ChannelAdmin(ElementAdmin):
     list_display = ('pk', 'object_link', 'title', 'slug', 'creator', 'created', 'thumbnail', 'category')
     list_editable = ('title', 'slug', 'creator', 'created', 'thumbnail', 'category')
     list_display_links = ('pk',)
@@ -71,35 +72,35 @@ class CourseAdmin(ElementAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
     fieldsets = [
-        (_("Course specific"), {'fields': ['category', 'syllabus']}),
+        (_("Channel specific"), {'fields': ['category', 'syllabus']}),
     ] + ELEMENT_FIELDSETS
 
 
-@admin.register(Module)
-class ModuleAdmin(ElementAdmin):
-    list_display = ('pk', 'object_link', 'title', 'slug', 'creator', 'created', 'thumbnail', 'course')
-    list_editable = ('title', 'slug', 'creator', 'created', 'thumbnail', 'course')
+@admin.register(Chapter)
+class ChapterAdmin(ElementAdmin):
+    list_display = ('pk', 'object_link', 'title', 'slug', 'creator', 'created', 'thumbnail', 'channel')
+    list_editable = ('title', 'slug', 'creator', 'created', 'thumbnail', 'channel')
     list_display_links = ('pk',)
-    list_filter = ('creator', 'course')
+    list_filter = ('creator', 'channel')
     search_fields = ('title',)
 
     prepopulated_fields = {'slug': ('title',)}
     fieldsets = [
-        (None, {'fields': [('course', 'teachers')]}),
+        (None, {'fields': [('channel', 'teachers')]}),
     ] + ELEMENT_FIELDSETS
 
 
 @admin.register(Activity)
 class ActivityAdmin(ElementAdmin):
-    list_display = ('pk', 'object_link', 'title', 'slug', 'creator', 'created', 'thumbnail', 'module')
-    list_editable = ('title', 'slug', 'creator', 'created', 'thumbnail', 'module')
+    list_display = ('pk', 'object_link', 'title', 'slug', 'creator', 'created', 'thumbnail', 'chapter')
+    list_editable = ('title', 'slug', 'creator', 'created', 'thumbnail', 'chapter')
     list_display_links = ('pk',)
-    list_filter = ('creator', 'module')
+    list_filter = ('creator', 'chapter')
     search_fields = ('title',)
 
     prepopulated_fields = {'slug': ('title',)}
     fieldsets = [
-        (None, {'fields': ['module']}),
+        (None, {'fields': ['chapter']}),
     ] + ELEMENT_FIELDSETS
 
 

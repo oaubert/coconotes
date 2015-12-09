@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-09 16:44+0100\n"
-"PO-Revision-Date: 2015-11-09 16:45+0100\n"
+"POT-Creation-Date: 2015-12-09 17:52+0100\n"
+"PO-Revision-Date: 2015-12-09 17:56+0100\n"
 "Last-Translator: Olivier Aubert <olivier.aubert@univ-nantes.fr>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -16,180 +16,201 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: models.py:39
-msgid "Private"
-msgstr "Privé"
+#: admin.py:24 admin.py:136
+msgid "Metadata"
+msgstr "Métadonnées"
 
-#: models.py:40 templates/group_detail.html:7 templates/group_detail.html.py:27
-msgid "Group"
-msgstr "Groupe"
-
-#: models.py:41
-msgid "Public"
-msgstr "Public"
-
-#: models.py:56
-msgid "Creation date"
-msgstr "Date de création"
-
-#: models.py:57
-msgid "Element creation date"
-msgstr "Date de création de l'élément"
-
-#: models.py:64
-msgid "Modification date"
-msgstr "Date de  modification"
-
-#: models.py:65
-msgid "Element modification date"
-msgstr "Date de modification de l'élément"
-
-#: models.py:68
-msgid "State"
-msgstr "État"
-
-#: models.py:72 models.py:125 models.py:430
-msgid "Title"
-msgstr "Titre"
-
-#: models.py:76 models.py:434 templates/coco/video_info.html:6
-msgid "Description"
-msgstr "Description"
-
-#: models.py:129 models.py:136
-msgid "URL"
-msgstr "URL"
-
-#: models.py:148 models.py:411
-msgid "Category"
-msgstr "Catégorie"
-
-#: models.py:152
-msgid "Syllabus"
-msgstr "Syllabus"
-
-#: models.py:158
-msgid "course"
-msgstr "cours"
-
-#: models.py:159
-msgid "courses"
-msgstr "cours"
-
-#: models.py:172
-#, python-format
-msgid "Course of %d videos"
-msgstr "Cours de %d vidéos"
-
-#: models.py:182
-msgid "module"
-msgstr "module"
-
-#: models.py:183
-msgid "modules"
-msgstr "modules"
-
-#: models.py:199
-msgid "activity"
-msgstr "activité"
-
-#: models.py:200
-msgid "activities"
-msgstr "activités"
-
-#: models.py:214 templates/coco/video_info.html:7
-msgid "Duration"
-msgstr "Durée"
-
-#: models.py:215
-msgid "Video duration in seconds"
-msgstr "Durée de la vidéo en secondes"
-
-#: models.py:221
-msgid "Package id"
-msgstr "Id recueil"
-
-#: models.py:223
-msgid "Package identifier"
-msgstr "Identifiant du recueil"
-
-#: models.py:228
-msgid "video"
-msgstr "vidéo"
-
-#: models.py:229
-msgid "videos"
-msgstr "vidéos"
-
-#: models.py:266
+#: admin.py:25 admin.py:137 models.py:296
 msgid "Content"
 msgstr "Contenu"
 
-#: models.py:268
-msgid "Content-Type"
-msgstr "Type de contenu"
+#: admin.py:26
+msgid "Tags"
+msgstr "Tags"
 
-#: models.py:272
-msgid "Visibility"
-msgstr "Visibilité"
-
-#: models.py:274
-msgid "Content visibility"
-msgstr "Visibilité du contenu"
-
-#: models.py:279
+#: admin.py:29 models.py:309
 msgid "User content"
 msgstr "Contenu utilisateur"
 
-#: models.py:287
+#: admin.py:57
+msgid "Video specific"
+msgstr "Spécifique à la vidéo"
+
+#: admin.py:75
+msgid "Channel specific"
+msgstr "Spécifique à la chaîne"
+
+#: forms.py:18
+msgid "private"
+msgstr "privé"
+
+#: forms.py:19
+#, python-format
+msgid "shared with %s"
+msgstr "partagé avec %s"
+
+#: forms.py:20
+msgid "public"
+msgstr "public"
+
+#: models.py:60
+msgid "Private"
+msgstr "Privé"
+
+#: models.py:61 templates/group_detail.html:7 templates/group_detail.html.py:27
+msgid "Group"
+msgstr "Groupe"
+
+#: models.py:62
+msgid "Public"
+msgstr "Public"
+
+#: models.py:80
+msgid "Creation date"
+msgstr "Date de création"
+
+#: models.py:81
+msgid "Element creation date"
+msgstr "Date de création de l'élément"
+
+#: models.py:88
+msgid "Modification date"
+msgstr "Date de  modification"
+
+#: models.py:89
+msgid "Element modification date"
+msgstr "Date de modification de l'élément"
+
+#: models.py:92
+msgid "State"
+msgstr "État"
+
+#: models.py:96 models.py:150 models.py:479
+msgid "Title"
+msgstr "Titre"
+
+#: models.py:100 models.py:483 templates/coco/video_info.html:6
+msgid "Description"
+msgstr "Description"
+
+#: models.py:154 models.py:165
+msgid "URL"
+msgstr "URL"
+
+#: models.py:178 models.py:458
+msgid "Category"
+msgstr "Catégorie"
+
+#: models.py:182
+msgid "Syllabus"
+msgstr "Syllabus"
+
+#: models.py:188
+msgid "channel"
+msgstr "chaîne"
+
+#: models.py:189
+msgid "channels"
+msgstr "chaînes"
+
+#: models.py:202
+#, python-format
+msgid "Channel of %d videos"
+msgstr "Chaîne de %d vidéos"
+
+#: models.py:213
+msgid "chapter"
+msgstr "chapitre"
+
+#: models.py:214
+msgid "chapters"
+msgstr "chapitres"
+
+#: models.py:231
+msgid "activity"
+msgstr "activité"
+
+#: models.py:232
+msgid "activities"
+msgstr "activités"
+
+#: models.py:247
+msgid "Duration"
+msgstr "Durée"
+
+#: models.py:248
+msgid "Video duration in seconds"
+msgstr "Durée de la vidéo en secondes"
+
+#: models.py:257
+msgid "video"
+msgstr "vidéo"
+
+#: models.py:258
+msgid "videos"
+msgstr "vidéos"
+
+#: models.py:298
+msgid "Content-Type"
+msgstr "Type de contenu"
+
+#: models.py:302
+msgid "Visibility"
+msgstr "Visibilité"
+
+#: models.py:304
+msgid "Content visibility"
+msgstr "Visibilité du contenu"
+
+#: models.py:327
 msgid "annotation type"
 msgstr "type d'annotation"
 
-#: models.py:288
+#: models.py:328
 msgid "annotation types"
 msgstr "types d'annotation"
 
-#: models.py:305
+#: models.py:346
 msgid "Begin"
 msgstr "Début"
 
-#: models.py:306
+#: models.py:347
 msgid "Annotation begin time (in seconds)"
 msgstr "Temps de début de l'annotation (en secondes)"
 
-#: models.py:308
+#: models.py:349
 msgid "End"
 msgstr "Fin"
 
-#: models.py:309
+#: models.py:350
 msgid "Annotation end time (in seconds)"
 msgstr "Temps de fin de l'annotation (en secondes)"
 
-#: models.py:320
+#: models.py:361
 msgid "annotation"
 msgstr "annotation"
 
-#: models.py:321
+#: models.py:362
 msgid "annotations"
 msgstr "annotations"
 
-#: models.py:389
+#: models.py:435
 msgid "comment"
 msgstr "commentaire"
 
-#: models.py:390
+#: models.py:436
 msgid "comments"
 msgstr "commentaires"
 
-#: models.py:408
+#: models.py:455
 msgid "news item"
 msgstr "nouvelle"
 
-#: models.py:409
+#: models.py:456
 msgid "news items"
 msgstr "nouvelles"
 
-#: models.py:416 models.py:417
+#: models.py:463 models.py:464
 msgid "Publication date"
 msgstr "Date de publication"
 
@@ -250,11 +271,11 @@ msgid "Home"
 msgstr "Accueil"
 
 #: templates/base.html:40
-msgid "All lectures"
-msgstr "Tous les cours"
+msgid "All channels"
+msgstr "Toutes les chaînes"
 
 #: templates/coco/activity_detail.html:7 templates/coco/activity_detail.html:12
-#: templates/coco/video_info.html:9 templates/group_detail.html:34
+#: templates/coco/video_info.html:8 templates/group_detail.html:34
 msgid "Activity"
 msgstr "Activité"
 
@@ -262,56 +283,57 @@ msgstr "Activité"
 msgid "All activities"
 msgstr "Toutes les activités"
 
-#: templates/coco/course.html:7 templates/coco/course_detail.html:7
-msgid "Course"
-msgstr "Cours"
+#: templates/coco/channel.html:7 templates/coco/channel_detail.html:7
+msgid "Channel"
+msgstr "Chaîne"
 
-#: templates/coco/course_list.html:6
-msgid "Courses"
-msgstr "Cours"
+#: templates/coco/channel_list.html:6
+msgid "Channels"
+msgstr "Chaînes"
+
+#: templates/coco/chapter_detail.html:7 templates/coco/chapter_detail.html:12
+msgid "Chapter"
+msgstr "Chapitre"
+
+#: templates/coco/chapter_list.html:6
+msgid "All chapters"
+msgstr "Tous les chapitres"
 
 #: templates/coco/element_list.html:6
 msgid "All elements"
 msgstr "Tous les éléments"
-
-#: templates/coco/module_detail.html:7 templates/coco/module_detail.html:12
-msgid "Module"
-msgstr "Module"
-
-#: templates/coco/module_list.html:6
-msgid "All modules"
-msgstr "Tous les modules"
 
 #: templates/coco/newsitem_detail.html:7 templates/group_detail.html:7
 #: templates/group_list.html:7 templates/profile.html:7
 msgid "COCo platform"
 msgstr "Plateforme COCo"
 
-#: templates/coco/video_detail.html:58
+#: templates/coco/video_detail.html:61
 msgid "Plan"
 msgstr "Plan"
 
-#: templates/coco/video_detail.html:59
+#: templates/coco/video_detail.html:62
 msgid "Own notes"
 msgstr "Notes perso."
 
-#: templates/coco/video_detail.html:60
+#: templates/coco/video_detail.html:63
 msgid "Group notes"
 msgstr "Notes de groupe"
 
-#: templates/coco/video_detail.html:61
+#: templates/coco/video_detail.html:64
 msgid "Public notes"
 msgstr "Notes publiques"
 
-#: templates/coco/video_info.html:4
-msgid "Video"
-msgstr "Vidéo"
+#: templates/coco/video_detail.html:82
+#, python-format
+msgid "Please <a href=\"/accounts/login/?next=%(currenturl)s\">log in</a> to be able to comment on the video."
+msgstr "Veuillez vous <a href=\"/accounts/login/?next=%(currenturl)s\">connecter</a> pour pouvoir commenter la vidéo."
 
-#: templates/coco/video_info.html:8
+#: templates/coco/video_info.html:7
 msgid "License"
 msgstr "Licence"
 
-#: templates/coco/video_info.html:8
+#: templates/coco/video_info.html:7
 msgid "Unknown"
 msgstr "Inconnue"
 
@@ -319,7 +341,7 @@ msgstr "Inconnue"
 msgid "All videos"
 msgstr "Toutes les vidéos"
 
-#: templates/group_detail.html:12 templates/profile.html:25
+#: templates/group_detail.html:12 templates/profile.html:23
 msgid "My groups"
 msgstr "Mes groupes"
 
@@ -371,16 +393,16 @@ msgstr "Les dernières vidéos"
 msgid "My profile"
 msgstr "Mon profil"
 
-#: templates/profile.html:37
+#: templates/profile.html:35
 msgid "My notes"
 msgstr "Mes notes"
 
-#: templates/profile.html:52
+#: templates/profile.html:50
 msgid "Suggestions"
 msgstr "Suggestions"
 
 # Les dernières vidéos
-#: templates/profile.html:68
+#: templates/profile.html:66
 msgid "Last viewed"
 msgstr "Dernières vues"
 
@@ -392,13 +414,46 @@ msgstr "Projet COCo"
 msgid "search for"
 msgstr "recherche de"
 
-#: templates/search.html:13
+#: templates/search.html:78
 msgid "results"
 msgstr "résultats"
 
-#: templates/search.html:26
+#: templates/search.html:91
 msgid "No result"
 msgstr "Pas de résultat"
+
+#~ msgid "course"
+#~ msgstr "cours"
+
+#~ msgid "courses"
+#~ msgstr "cours"
+
+#~ msgid "module"
+#~ msgstr "module"
+
+#~ msgid "modules"
+#~ msgstr "modules"
+
+#~ msgid "Package id"
+#~ msgstr "Id recueil"
+
+#~ msgid "Package identifier"
+#~ msgstr "Identifiant du recueil"
+
+#~ msgid "Course"
+#~ msgstr "Cours"
+
+#~ msgid "Courses"
+#~ msgstr "Cours"
+
+#~ msgid "Module"
+#~ msgstr "Module"
+
+#~ msgid "All modules"
+#~ msgstr "Tous les modules"
+
+#~ msgid "Video"
+#~ msgstr "Vidéo"
 
 #~ msgid "Annotation"
 #~ msgstr "Annotation"

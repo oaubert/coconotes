@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load admin_urls %}
+{% load url from future %}
+
+{% block title %}{% blocktrans %}Chapter{% endblocktrans %} {{ chapter.title }}{% endblock %}
+
+{% block content %}
+
+<div class="chapter_description">
+  <h1>{% blocktrans %}Chapter{% endblocktrans %} {{ chapter.title }}
+    {% if user.is_staff %}<div class="adminactions"><a href="{{ chapter.edit_url }}" class="editelement">&#x270f;</a></div>{% endif %}
+  </h1>
+
+  <p class="chapter_channel">{{ chapter.channel }}
+
+  <p class="chapter_description">{{ chapter.description }}</p>
+
+  <div class="capsule_container">
+    {% for activity in chapter.activity_set.all %}
+
+    {% if activity.video_set.count == 1 %}
+    {% include "item_capsule.html" with item=activity.video_set.all.0 %}
+    {% else %}
+    {% include "item_capsule.html" with item=activity %}
+    {% endif %}
+
+    {% endfor %}
+
+  </div>
+
+</div>
+
+{% endblock %}

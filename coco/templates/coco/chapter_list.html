@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load url from future %}
+
+{% block title %}{% blocktrans %}All chapters{% endblocktrans %}{% endblock %}
+
+{% block content %}
+
+<div class="capsule_container">
+{% for chapter in chapter_list %}
+{% include "item_capsule.html" with item=chapter %}
+{% endfor %}
+</div>
+
+{% endblock %}

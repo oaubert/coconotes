@@ -7,15 +7,15 @@ from rest_framework.routers import DefaultRouter
 from ajax_select import urls as ajax_select_urls
 
 import coco.views as views
-from .models import Course, Module, Activity, Video, Newsitem, Resource
+from .models import Channel, Chapter, Activity, Video, Newsitem, Resource
 
 uuid_regexp = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
 router.register(r'resource', views.ResourceViewSet)
-router.register(r'course', views.CourseViewSet)
-router.register(r'module', views.ModuleViewSet)
+router.register(r'channel', views.ChannelViewSet)
+router.register(r'chapter', views.ChapterViewSet)
 router.register(r'activity', views.ActivityViewSet)
 router.register(r'video', views.VideoViewSet)
 router.register(r'annotation', views.AnnotationViewSet)
@@ -33,12 +33,12 @@ urlpatterns = patterns('',
 
                        url(r'^search/$', views.search, name='search'),
 
-                       url(r'^course/$', ListView.as_view(model=Course), name='view-course-list'),
-                       url(r'^course/(?P<pk>%s)/$' % uuid_regexp, DetailView.as_view(model=Course, context_object_name='course'), name='view-course-detail'),
-                       url(r'^course/(?P<slug>[\w\d_-]+)/$', DetailView.as_view(model=Course, context_object_name='course'), name='view-course-detail'),
-                       url(r'^module/$', ListView.as_view(model=Module), name='module-list'),
-                       url(r'^module/(?P<pk>%s)/$' % uuid_regexp, DetailView.as_view(model=Module, context_object_name='module'), name='view-module-detail'),
-                       url(r'^module/(?P<slug>[\w\d_-]+)/$', DetailView.as_view(model=Module, context_object_name='module'), name='view-module-detail'),
+                       url(r'^channel/$', ListView.as_view(model=Channel), name='view-channel-list'),
+                       url(r'^channel/(?P<pk>%s)/$' % uuid_regexp, DetailView.as_view(model=Channel, context_object_name='channel'), name='view-channel-detail'),
+                       url(r'^channel/(?P<slug>[\w\d_-]+)/$', DetailView.as_view(model=Channel, context_object_name='channel'), name='view-channel-detail'),
+                       url(r'^chapter/$', ListView.as_view(model=Chapter), name='chapter-list'),
+                       url(r'^chapter/(?P<pk>%s)/$' % uuid_regexp, DetailView.as_view(model=Chapter, context_object_name='chapter'), name='view-chapter-detail'),
+                       url(r'^chapter/(?P<slug>[\w\d_-]+)/$', DetailView.as_view(model=Chapter, context_object_name='chapter'), name='view-chapter-detail'),
                        url(r'^activity/$', ListView.as_view(model=Activity), name='activity-list'),
                        url(r'^activity/(?P<pk>%s)/$' % uuid_regexp, DetailView.as_view(model=Activity, context_object_name='activity'), name='view-activity-detail'),
                        url(r'^activity/(?P<slug>[\w\d_-]+)/$', DetailView.as_view(model=Activity, context_object_name='activity'), name='view-activity-detail'),

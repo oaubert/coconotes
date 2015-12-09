@@ -3,13 +3,13 @@
 {% load i18n %}
 {% load url from future %}
 
-{% block title %}{% blocktrans %}Courses{% endblocktrans %}{% endblock %}
+{% block title %}{% blocktrans %}Channels{% endblocktrans %}{% endblock %}
 
 {% block content %}
 
 <div class="capsule_container">
-{% for course in course_list %}
-{% include "item_capsule.html" with item=course %}
+{% for channel in channel_list %}
+{% include "item_capsule.html" with item=channel %}
 {% endfor %}
 </div>
 

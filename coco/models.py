@@ -25,12 +25,12 @@ def jsonencoder_newdefault(self, o):
     return JSONEncoder_olddefault(self, o)
 json.JSONEncoder.default = jsonencoder_newdefault
 
-class TaggedCourse(TaggedItemBase):
-    content_object = models.ForeignKey('Course')
+class TaggedChannel(TaggedItemBase):
+    content_object = models.ForeignKey('Channel')
 
 
-class TaggedModule(TaggedItemBase):
-    content_object = models.ForeignKey('Module')
+class TaggedChapter(TaggedItemBase):
+    content_object = models.ForeignKey('Chapter')
 
 
 class TaggedActivity(TaggedItemBase):
@@ -174,7 +174,7 @@ class Resource(Element):
     # metadata = ???
 
 
-class Course(Element):
+class Channel(Element):
     category = models.CharField(_("Category"),
                                 blank=True,
                                 max_length=20)
@@ -182,48 +182,48 @@ class Course(Element):
     syllabus = models.TextField(_("Syllabus"),
                                 blank=True)
 
-    tags = TaggableManager(blank=True, through=TaggedCourse)
+    tags = TaggableManager(blank=True, through=TaggedChannel)
 
     class Meta:
-        verbose_name = _('course')
-        verbose_name_plural = _('courses')
+        verbose_name = _('channel')
+        verbose_name_plural = _('channels')
 
     @property
     def videos(self):
-        """Videos associated with the course.
+        """Videos associated with the channel.
         """
-        return Video.objects.filter(activity__module__course=self)
+        return Video.objects.filter(activity__chapter__channel=self)
 
     @property
     def subtitle(self):
         return self.category
 
     def element_description(self):
-        return _("Course of %d videos") % len(self.videos)
+        return _("Channel of %d videos") % len(self.videos)
 
 
-class Module(Element):
-    course = models.ForeignKey(Course)
+class Chapter(Element):
+    channel = models.ForeignKey(Channel)
 
-    tags = TaggableManager(blank=True, through=TaggedModule)
+    tags = TaggableManager(blank=True, through=TaggedChapter)
 
     teachers = models.ManyToManyField(User, related_name="teacher_for")
 
     class Meta:
-        verbose_name = _('module')
-        verbose_name_plural = _('modules')
+        verbose_name = _('chapter')
+        verbose_name_plural = _('chapters')
 
     @property
     def subtitle(self):
-        return self.course.title
+        return self.channel.title
 
     @property
     def subtitle_link(self):
-        return self.course.get_absolute_url()
+        return self.channel.get_absolute_url()
 
 
 class Activity(Element):
-    module = models.ForeignKey(Module)
+    chapter = models.ForeignKey(Chapter)
 
     tags = TaggableManager(blank=True, through=TaggedActivity)
 
@@ -233,11 +233,11 @@ class Activity(Element):
 
     @property
     def subtitle(self):
-        return self.module.title
+        return self.chapter.title
 
     @property
     def subtitle_link(self):
-        return self.module.get_absolute_url()
+        return self.chapter.get_absolute_url()
 
 
 class Video(Resource):
@@ -266,8 +266,8 @@ class Video(Resource):
         return self.activity.get_absolute_url()
 
     @property
-    def course(self):
-        return self.activity.module.course
+    def channel(self):
+        return self.activity.chapter.channel
 
     def cinelab(self, context=None):
         """Return a cinelab serialization.

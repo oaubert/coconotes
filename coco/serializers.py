@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Course, Module, Activity, Video, Annotation, AnnotationType, Resource, Comment, Newsitem
+from .models import Channel, Chapter, Activity, Video, Annotation, AnnotationType, Resource, Comment, Newsitem
 from django.contrib.auth.models import User, Group
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
@@ -33,39 +33,39 @@ class ResourceSerializer(serializers.HyperlinkedModelSerializer):
                   'thumbnail', 'description',
                   'url', 'license')
 
-class CourseSerializer(serializers.HyperlinkedModelSerializer):
+class ChannelSerializer(serializers.HyperlinkedModelSerializer):
     creator = UserSerializer(many=False)
     contributor = UserSerializer(many=False)
     class Meta:
-        model = Course
+        model = Channel
         fields = ('uuid',
                   'creator', 'created', 'contributor', 'modified',
                   'state', 'title', 'description', 'slug',
                   'thumbnail', 'description')
 
-class ModuleSerializer(serializers.HyperlinkedModelSerializer):
+class ChapterSerializer(serializers.HyperlinkedModelSerializer):
     creator = UserSerializer(many=False)
     contributor = UserSerializer(many=False)
-    course = CourseSerializer(many=False)
+    channel = ChannelSerializer(many=False)
     class Meta:
-        model = Module
+        model = Chapter
         fields = ('uuid',
                   'creator', 'created', 'contributor', 'modified',
                   'state', 'title', 'description', 'slug',
                   'thumbnail', 'description',
-                  'course')
+                  'channel')
 
 class ActivitySerializer(serializers.HyperlinkedModelSerializer):
     creator = UserSerializer(many=False)
     contributor = UserSerializer(many=False)
-    module = ModuleSerializer(many=False)
+    chapter = ChapterSerializer(many=False)
     class Meta:
         model = Activity
         fields = ('uuid',
                   'creator', 'created', 'contributor', 'modified',
                   'state', 'title', 'description', 'slug',
                   'thumbnail', 'description',
-                  'module')
+                  'chapter')
 
 class VideoSerializer(serializers.HyperlinkedModelSerializer):
     creator = UserSerializer(many=False)
