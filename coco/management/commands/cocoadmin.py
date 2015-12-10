@@ -162,15 +162,16 @@ class Command(BaseCommand):
             vid.save()
             ats = {}
             for atjson in package['annotation-types']:
+                sl = slugify(atjson['dc:title'])
                 try:
-                    at = AnnotationType.objects.get(title=atjson['dc:title'])
+                    at = AnnotationType.objects.get(slug=sl)
                 except AnnotationType.DoesNotExist:
-                    # Create the AnnotationType matching dc:title
+                    # Create the AnnotationType matching dc:title/slug
                     at = AnnotationType(creator=adminuser,
                                         created=convert_date(dateutil.parser.parse(atjson['dc:created'])),
                                         title=atjson['dc:title'],
-                                        description=atjson['dc:description'],
-                                        slug=slugify(title))
+                                        slug=sl,
+                                        description=atjson['dc:description'])
                     at.save()
                 ats[atjson['id']] = at
             self.stdout.write("Copying %d annotations" % len(package['annotations']))
