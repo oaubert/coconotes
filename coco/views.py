@@ -15,7 +15,7 @@ from rest_framework import permissions, viewsets
 from .models import Channel, Video, Newsitem, Chapter, Activity, Annotation, Comment, AnnotationType, Resource
 from .serializers import ChannelSerializer, ChapterSerializer, ActivitySerializer, VideoSerializer
 from .serializers import AnnotationSerializer, CommentSerializer, ResourceSerializer, NewsitemSerializer, AnnotationTypeSerializer
-from .utils import generic_search, COCoEncoder
+from .utils import generic_search
 from .permissions import IsOwnerOrReadOnly
 from .forms import AnnotationEditForm
 
@@ -268,7 +268,7 @@ def cinelab(request, slug=None, pk=None, **kw):
     data['annotations'].extend(a.cinelab(context=context) for a in Annotation.objects.filter(video=v))
     # Add defined annotation types + a selection of basic types
     data['annotation-types'].extend(a.cinelab(context=context) for a in AnnotationType.objects.all())
-    return JsonResponse(data, encoder=COCoEncoder)
+    return JsonResponse(data)
 
 
 @login_required
@@ -297,7 +297,7 @@ def annotation_add(request, **kw):
     context = CocoContext(username=request.user.username,
                           teacher_set=[u.username for u in video.activity.chapter.teachers.all()],
                           current_group='')  # FIXME: get from cookie/session info?
-    return JsonResponse(an.cinelab(context=context), encoder=COCoEncoder)
+    return JsonResponse(an.cinelab(context=context))
 
 
 @login_required
@@ -327,4 +327,4 @@ def annotation_edit(request, pk=None, **kw):
         context = CocoContext(username=request.user.username,
                               teacher_set=[u.username for u in an.video.activity.chapter.teachers.all()],
                               current_group='')
-        return JsonResponse(an.cinelab(context=context), encoder=COCoEncoder)
+        return JsonResponse(an.cinelab(context=context))

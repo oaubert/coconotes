@@ -1,10 +1,7 @@
-from datetime import datetime
-import json
 import re
-from uuid import UUID
 
 from django.db.models import Q
-from django.contrib.auth.models import User, Group
+
 
 # Generic search code from https://github.com/squarepegsys/django-simple-search/
 # Interim code, to be removed after solr integration
@@ -49,20 +46,3 @@ def generic_search(request, model, fields, query_param="q"):
     entry_query = build_query(query_string, fields)
     found_entries = model.objects.filter(entry_query)
     return found_entries
-
-# Custom JSON encoder
-
-
-class COCoEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, User):
-            return obj.username
-        elif isinstance(obj, Group):
-            return obj.name
-        elif isinstance(obj, datetime):
-            return obj.isoformat()
-        elif isinstance(obj, UUID):
-            return unicode(obj)
-        else:
-            # Let the base class default method raise the TypeError
-            return json.JSONEncoder.default(self, obj)

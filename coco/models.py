@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import json
 import uuid
 
@@ -15,14 +15,22 @@ from sorl.thumbnail import ImageField
 
 from fields import SlugOrNullField
 
-# Monkeypatch support for serializing uuids to json
+# Monkeypatch support for serializing uuids to json. This allows it to
+# be enabled for external libs such as ajaxselect
 JSONEncoder_olddefault = json.JSONEncoder.default
 
 
-def jsonencoder_newdefault(self, o):
-    if isinstance(o, uuid.UUID):
-        return str(o)
-    return JSONEncoder_olddefault(self, o)
+def jsonencoder_newdefault(self, obj):
+    if isinstance(obj, User):
+        return obj.username
+    elif isinstance(obj, Group):
+        return obj.name
+    elif isinstance(obj, datetime):
+        return obj.isoformat()
+    elif isinstance(obj, uuid.UUID):
+        return unicode(obj)
+    else:
+        return JSONEncoder_olddefault(self, obj)
 json.JSONEncoder.default = jsonencoder_newdefault
 
 
@@ -65,7 +73,7 @@ VISIBILITY_CHOICES = ((VISIBILITY_PRIVATE, _("Private")),
 
 class AutoDateTimeField(models.DateTimeField):
     def pre_save(self, model_instance, add):
-        return datetime.datetime.now()
+        return datetime.now()
 
 
 class Element(models.Model):
@@ -81,7 +89,7 @@ class Element(models.Model):
     created = models.DateTimeField(_('Creation date'),
                                    help_text=_('Element creation date'),
                                    null=True, editable=True,
-                                   default=datetime.datetime.now)
+                                   default=datetime.now)
 
     contributor = models.ForeignKey(User, related_name='modified_%(class)s',
                                     blank=True, null=True)
