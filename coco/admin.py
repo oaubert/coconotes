@@ -49,10 +49,12 @@ class VideoAdmin(ElementAdmin):
     list_display = ('pk', 'object_link', 'promoted', 'title', 'slug', 'creator', 'duration', 'created', 'thumbnail')
     list_editable = ('promoted', 'title', 'slug', 'creator', 'duration', 'thumbnail')
     list_display_links = ('pk',)
-    list_filter = ('creator', 'promoted')
+    list_filter = (('creator', admin.RelatedOnlyFieldListFilter),
+                   'promoted')
     search_fields = ('title', 'slug')
 
-    form = make_ajax_form(Video, {'creator': 'user',
+    form = make_ajax_form(Video, {'activity': 'activity',
+                                  'creator': 'user',
                                   'contributor': 'user'})
     prepopulated_fields = {'slug': ('title',)}
     fieldsets = [
@@ -68,7 +70,9 @@ class ChannelAdmin(ElementAdmin):
     list_display = ('pk', 'object_link', 'promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'category')
     list_editable = ('promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'category')
     list_display_links = ('pk',)
-    list_filter = ('creator', 'category', 'promoted')
+    list_filter = (('creator', admin.RelatedOnlyFieldListFilter),
+                   'category',
+                   'promoted')
     search_fields = ('title',)
 
     form = make_ajax_form(Channel, {'creator': 'user',
@@ -85,7 +89,8 @@ class ChapterAdmin(ElementAdmin):
     list_display = ('pk', 'object_link', 'promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'channel')
     list_editable = ('promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'channel')
     list_display_links = ('pk',)
-    list_filter = ('creator', 'channel', 'promoted')
+    list_filter = (('creator', admin.RelatedOnlyFieldListFilter),
+                   'channel', 'promoted')
     search_fields = ('title',)
 
     form = make_ajax_form(Chapter, {'channel': 'channel',
@@ -102,7 +107,8 @@ class ActivityAdmin(ElementAdmin):
     list_display = ('pk', 'object_link', 'promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'chapter')
     list_editable = ('promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'chapter')
     list_display_links = ('pk',)
-    list_filter = ('creator', 'chapter', 'promoted')
+    list_filter = (('creator', admin.RelatedOnlyFieldListFilter),
+                   'chapter', 'promoted')
     search_fields = ('title',)
 
     form = make_ajax_form(Activity, {'chapter': 'chapter',
@@ -119,7 +125,11 @@ class AnnotationAdmin(ElementAdmin):
     list_display = ('pk', 'object_link', 'promoted', 'begin', 'title', 'description', 'annotationtype', 'group', 'video_name', 'creator', 'created',)
     list_editable = ('promoted', 'begin', 'title', 'description', 'group', 'annotationtype')
     list_display_links = ('pk',)
-    list_filter = ('annotationtype', 'group', 'video', 'promoted')
+    list_filter = (('annotationtype', admin.RelatedOnlyFieldListFilter),
+                   ('group', admin.RelatedOnlyFieldListFilter),
+                   ('video', admin.RelatedOnlyFieldListFilter),
+                   'promoted',
+                   ('creator', admin.RelatedOnlyFieldListFilter))
     search_fields = ('title', 'description',)
 
     form = make_ajax_form(Annotation, {'video': 'video',
@@ -140,7 +150,7 @@ class AnnotationTypeAdmin(ElementAdmin):
     list_display = ('pk', 'title', 'creator', 'created',)
     list_editable = ('title',)
     list_display_links = ('pk',)
-    list_filter = ('creator',)
+    list_filter = (('creator', admin.RelatedOnlyFieldListFilter),)
     search_fields = ('title',)
 
     form = make_ajax_form(AnnotationType, {'creator': 'user',
@@ -156,7 +166,8 @@ class CommentAdmin(ElementAdmin):
     list_display = ('pk', 'promoted', 'title', 'creator', 'created',)
     list_editable = ('promoted', 'title',)
     list_display_links = ('pk',)
-    list_filter = ('creator', 'promoted')
+    list_filter = (('creator', admin.RelatedOnlyFieldListFilter),
+                   'promoted')
     search_fields = ('title',)
 
     form = make_ajax_form(Comment, {'creator': 'user',
