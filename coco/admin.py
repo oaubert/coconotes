@@ -20,7 +20,7 @@ class CreatorMixin(object):
 
 # Common fieldsets for all Elements
 ELEMENT_FIELDSETS = [
-    (None,               {'fields': [('slug', 'state')]}),
+    (None,               {'fields': [('slug', 'state', 'promoted')]}),
     (_("Metadata"),      {'fields': [('creator', 'created', 'contributor', 'modified')], 'classes': ['collapse']}),
     (_("Content"),       {'fields': [('title', 'thumbnail'), 'description']}),
     (_("Tags"),         {'fields': ['tags']})
@@ -32,7 +32,7 @@ USERCONTENT_FIELDSETS = [
 
 
 class ElementAdmin(AjaxSelectAdmin, CreatorMixin, admin.ModelAdmin):
-    list_display = ('title', 'slug')
+    list_display = ('title', 'slug', 'promoted')
     search_fields = ('title',)
 
     prepopulated_fields = {'slug': ('title',)}
@@ -46,10 +46,10 @@ class ElementAdmin(AjaxSelectAdmin, CreatorMixin, admin.ModelAdmin):
 
 @admin.register(Video)
 class VideoAdmin(ElementAdmin):
-    list_display = ('pk', 'object_link', 'title', 'slug', 'creator', 'duration', 'created', 'thumbnail')
-    list_editable = ('title', 'slug', 'creator', 'duration', 'thumbnail')
+    list_display = ('pk', 'object_link', 'promoted', 'title', 'slug', 'creator', 'duration', 'created', 'thumbnail')
+    list_editable = ('promoted', 'title', 'slug', 'creator', 'duration', 'thumbnail')
     list_display_links = ('pk',)
-    list_filter = ('creator',)
+    list_filter = ('creator', 'promoted')
     search_fields = ('title', 'slug')
 
     form = make_ajax_form(Video, {'creator': 'user',
@@ -65,10 +65,10 @@ class VideoAdmin(ElementAdmin):
 
 @admin.register(Channel)
 class ChannelAdmin(ElementAdmin):
-    list_display = ('pk', 'object_link', 'title', 'slug', 'creator', 'created', 'thumbnail', 'category')
-    list_editable = ('title', 'slug', 'creator', 'created', 'thumbnail', 'category')
+    list_display = ('pk', 'object_link', 'promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'category')
+    list_editable = ('promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'category')
     list_display_links = ('pk',)
-    list_filter = ('creator', 'category')
+    list_filter = ('creator', 'category', 'promoted')
     search_fields = ('title',)
 
     form = make_ajax_form(Channel, {'creator': 'user',
@@ -82,10 +82,10 @@ class ChannelAdmin(ElementAdmin):
 
 @admin.register(Chapter)
 class ChapterAdmin(ElementAdmin):
-    list_display = ('pk', 'object_link', 'title', 'slug', 'creator', 'created', 'thumbnail', 'channel')
-    list_editable = ('title', 'slug', 'creator', 'created', 'thumbnail', 'channel')
+    list_display = ('pk', 'object_link', 'promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'channel')
+    list_editable = ('promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'channel')
     list_display_links = ('pk',)
-    list_filter = ('creator', 'channel')
+    list_filter = ('creator', 'channel', 'promoted')
     search_fields = ('title',)
 
     form = make_ajax_form(Chapter, {'channel': 'channel',
@@ -99,10 +99,10 @@ class ChapterAdmin(ElementAdmin):
 
 @admin.register(Activity)
 class ActivityAdmin(ElementAdmin):
-    list_display = ('pk', 'object_link', 'title', 'slug', 'creator', 'created', 'thumbnail', 'chapter')
-    list_editable = ('title', 'slug', 'creator', 'created', 'thumbnail', 'chapter')
+    list_display = ('pk', 'object_link', 'promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'chapter')
+    list_editable = ('promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'chapter')
     list_display_links = ('pk',)
-    list_filter = ('creator', 'chapter')
+    list_filter = ('creator', 'chapter', 'promoted')
     search_fields = ('title',)
 
     form = make_ajax_form(Activity, {'chapter': 'chapter',
@@ -116,10 +116,10 @@ class ActivityAdmin(ElementAdmin):
 
 @admin.register(Annotation)
 class AnnotationAdmin(ElementAdmin):
-    list_display = ('pk', 'object_link', 'begin', 'title', 'description', 'annotationtype', 'group', 'video_name', 'creator', 'created',)
-    list_editable = ('begin', 'title', 'description', 'group', 'annotationtype')
+    list_display = ('pk', 'object_link', 'promoted', 'begin', 'title', 'description', 'annotationtype', 'group', 'video_name', 'creator', 'created',)
+    list_editable = ('promoted', 'begin', 'title', 'description', 'group', 'annotationtype')
     list_display_links = ('pk',)
-    list_filter = ('annotationtype', 'group', 'video')
+    list_filter = ('annotationtype', 'group', 'video', 'promoted')
     search_fields = ('title', 'description',)
 
     form = make_ajax_form(Annotation, {'video': 'video',
@@ -153,10 +153,10 @@ class AnnotationTypeAdmin(ElementAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(ElementAdmin):
-    list_display = ('pk', 'title', 'creator', 'created',)
-    list_editable = ('title',)
+    list_display = ('pk', 'promoted', 'title', 'creator', 'created',)
+    list_editable = ('promoted', 'title',)
     list_display_links = ('pk',)
-    list_filter = ('creator',)
+    list_filter = ('creator', 'promoted')
     search_fields = ('title',)
 
     form = make_ajax_form(Comment, {'creator': 'user',
