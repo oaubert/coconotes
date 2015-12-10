@@ -54,8 +54,8 @@ class Command(BaseCommand):
     help = """Administration commands for COCo
 """
     @register
-    def _info(self, cours, chapter, info):
-        """Import video/chapter/channel info from info.json files. Params: channel_title chapter_title info.json
+    def _info(self, channel, info):
+        """Import video/channel info from info.json files. Params: channel_title info.json
         """
         with open(info, 'r') as f:
             data = json.load(f)
@@ -64,23 +64,25 @@ class Command(BaseCommand):
         adminuser = get_user('admin')
         dirname = os.path.dirname(os.path.abspath(info))
         try:
-            c = Channel.objects.get(title=cours)
+            c = Channel.objects.get(title=channel)
         except Channel.DoesNotExist:
-            c = Channel(creator=adminuser, contributor=adminuser, title=cours)
+            c = Channel(creator=adminuser, contributor=adminuser, title=channel)
             c.save()
+
+        title = data.get("title", "Titre inconnu")
+        if title.startswith("Langage C -"):
+            title = title.replace("Langage C -", "")
+
         try:
-            chapter = Chapter.objects.get(title=chapter, channel=c)
+            chapter = Chapter.objects.get(title=title, channel=c)
         except Chapter.DoesNotExist:
-            chapter = Chapter(creator=adminuser, contributor=adminuser, channel=c, title=chapter)
+            chapter = Chapter(creator=adminuser, contributor=adminuser, channel=c, title=title)
             chapter.save()
 
-        activity_title = data.get("title", "Titre inconnu")
-        if activity_title.startswith("Langage C -"):
-            activity_title = activity_title.replace("Langage C -", "")
         descr = "%s - %s" % (data.get("date", "Date inconnue"),
                              data.get("author", "Auteur inconnu"))
         activity = Activity(creator=adminuser, contributor=adminuser,
-                            title=activity_title,
+                            title=title,
                             chapter=chapter, description=descr)
         activity.save()
 
@@ -90,7 +92,7 @@ class Command(BaseCommand):
             url = "https://comin-ocw.org/contents/%s/camera.mp4" % dirname.split('/contents/')[-1]
         vid = Video(creator=adminuser, contributor=adminuser,
                     activity=activity,
-                    title=activity_title,
+                    title=title,
                     url=url)
         # Note: length is not initialized. We will get its duration
         # from the package just below.
