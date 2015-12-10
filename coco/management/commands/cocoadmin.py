@@ -128,8 +128,14 @@ class Command(BaseCommand):
         if packageurl.startswith('http') or os.path.exists(packageurl):
             self.stdout.write("Loading data from %s" % packageurl)
             f = urllib.urlopen(packageurl)
-            package = json.loads("".join(f.readlines()))
-            f.close()
+            try:
+                package = json.loads("".join(f.readlines()))
+            except ValueError:
+                package = {}
+                f.close()
+            if not package:
+                print "************* Empty package: %s" % packageurl
+                return
             # Update video duration
             vid.duration = package['medias'][0]['meta']['dc:duration'] / 1000.0
             slug = package['medias'][0]['id']
