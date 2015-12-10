@@ -31,7 +31,7 @@ USERCONTENT_FIELDSETS = [
 ]
 
 
-class ElementAdmin(CreatorMixin, admin.ModelAdmin):
+class ElementAdmin(AjaxSelectAdmin, CreatorMixin, admin.ModelAdmin):
     list_display = ('title', 'slug')
     search_fields = ('title',)
 
@@ -52,6 +52,8 @@ class VideoAdmin(ElementAdmin):
     list_filter = ('creator',)
     search_fields = ('title', 'slug')
 
+    form = make_ajax_form(Video, {'creator': 'user',
+                                  'contributor': 'user'})
     prepopulated_fields = {'slug': ('title',)}
     fieldsets = [
         (_("Video specific"),
@@ -69,6 +71,8 @@ class ChannelAdmin(ElementAdmin):
     list_filter = ('creator', 'category')
     search_fields = ('title',)
 
+    form = make_ajax_form(Channel, {'creator': 'user',
+                                    'contributor': 'user'})
     prepopulated_fields = {'slug': ('title',)}
 
     fieldsets = [
@@ -84,6 +88,9 @@ class ChapterAdmin(ElementAdmin):
     list_filter = ('creator', 'channel')
     search_fields = ('title',)
 
+    form = make_ajax_form(Chapter, {'channel': 'channel',
+                                    'creator': 'user',
+                                    'contributor': 'user'})
     prepopulated_fields = {'slug': ('title',)}
     fieldsets = [
         (None, {'fields': [('channel', 'teachers')]}),
@@ -98,6 +105,9 @@ class ActivityAdmin(ElementAdmin):
     list_filter = ('creator', 'chapter')
     search_fields = ('title',)
 
+    form = make_ajax_form(Activity, {'chapter': 'chapter',
+                                     'creator': 'user',
+                                     'contributor': 'user'})
     prepopulated_fields = {'slug': ('title',)}
     fieldsets = [
         (None, {'fields': ['chapter']}),
@@ -105,14 +115,16 @@ class ActivityAdmin(ElementAdmin):
 
 
 @admin.register(Annotation)
-class AnnotationAdmin(AjaxSelectAdmin, ElementAdmin):
+class AnnotationAdmin(ElementAdmin):
     list_display = ('pk', 'object_link', 'begin', 'title', 'description', 'annotationtype', 'group', 'video_name', 'creator', 'created',)
     list_editable = ('begin', 'title', 'description', 'group', 'annotationtype')
     list_display_links = ('pk',)
     list_filter = ('annotationtype', 'group', 'video')
     search_fields = ('title', 'description',)
 
-    form = make_ajax_form(Annotation, {'video': 'video'})
+    form = make_ajax_form(Annotation, {'video': 'video',
+                                       'creator': 'user',
+                                       'contributor': 'user'})
     prepopulated_fields = {'slug': ('title',)}
     fieldsets = [
         (None, {'fields': [('begin', 'end', 'video'),
@@ -131,6 +143,8 @@ class AnnotationTypeAdmin(ElementAdmin):
     list_filter = ('creator',)
     search_fields = ('title',)
 
+    form = make_ajax_form(AnnotationType, {'creator': 'user',
+                                           'contributor': 'user'})
     prepopulated_fields = {'slug': ('title',)}
     fieldsets = [(None,               {'fields': [('slug', 'state')]}),
                  (_("Metadata"),      {'fields': [('creator', 'created', 'contributor', 'modified')], 'classes': ['collapse']}),
@@ -145,6 +159,8 @@ class CommentAdmin(ElementAdmin):
     list_filter = ('creator',)
     search_fields = ('title',)
 
+    form = make_ajax_form(Comment, {'creator': 'user',
+                                    'contributor': 'user'})
     prepopulated_fields = {'slug': ('title',)}
     fieldsets = [
         (None, {'fields': ['group', ('parent_annotation', 'parent_video', 'parent_comment')]}),
