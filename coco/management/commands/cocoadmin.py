@@ -17,15 +17,19 @@ from coco.models import Activity, Channel, Video, Chapter, Annotation, Newsitem,
 
 logger = logging.getLogger(__name__)
 
+
 def convert_date(d):
     if is_aware(d):
         d = make_naive(d)
     return d
 
 REGISTERED = {}
+
+
 def register(f):
     REGISTERED[f.__name__.strip('_')] = f
     return f
+
 
 def get_group(annotationtype):
     """Return the group corresponding to a given annotation type
@@ -36,6 +40,7 @@ def get_group(annotationtype):
     else:
         group = None
     return group
+
 
 def get_user(username, context=None):
     if username == "":
@@ -49,10 +54,12 @@ def get_user(username, context=None):
             g.user_set.add(user)
     return user
 
+
 class Command(BaseCommand):
     args = '[command] [param]'
     help = """Administration commands for COCo
 """
+
     @register
     def _info(self, channel, info):
         """Import video/channel info from info.json files. Params: channel_title info.json
@@ -98,7 +105,9 @@ class Command(BaseCommand):
         # from the package just below.
 
         # Migrate license info
-        licenses = [ license for license in ('cc-by', 'cc-by-nc', 'cc-by-sa', 'cc-by-nc-sa') if data.get(license) ]
+        licenses = [license
+                    for license in ('cc-by', 'cc-by-nc', 'cc-by-sa', 'cc-by-nc-sa')
+                    if data.get(license)]
         if licenses:
             # Associate license
             vid.license = License.objects.get(slug=licenses[0])
@@ -193,7 +202,7 @@ class Command(BaseCommand):
                     an.contentdata = json.dumps(a['content']['data'])
                 elif 'level' in a['content']:
                     an.contenttype = 'application/json'
-                    an.contentdata = json.dumps({ 'level': a['content']['level'] })
+                    an.contentdata = json.dumps({'level': a['content']['level']})
                 if 'img' in a['content']:
                     pic = os.path.join(dirname, a['content']['img']['src'])
                     if os.path.exists(pic):
@@ -227,7 +236,7 @@ class Command(BaseCommand):
             return
         command = args[0]
         # We registered unbound methods, so put self as first parameter when calling
-        args = [ self ] + list(args[1:])
+        args = [self] + list(args[1:])
         m = REGISTERED.get(command)
         if m is not None:
             m(*args)
