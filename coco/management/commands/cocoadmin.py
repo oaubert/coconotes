@@ -12,6 +12,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import User, Group
 from django.core.files import File
 from django.utils.timezone import make_naive, is_aware
+from django.utils.text import slugify
 
 from coco.models import Activity, Channel, Video, Chapter, Annotation, Newsitem, AnnotationType, License
 
@@ -73,7 +74,7 @@ class Command(BaseCommand):
         try:
             c = Channel.objects.get(title=channel)
         except Channel.DoesNotExist:
-            c = Channel(creator=adminuser, contributor=adminuser, title=channel)
+            c = Channel(creator=adminuser, contributor=adminuser, title=channel, slug=slugify(channel))
             c.save()
 
         title = data.get("title", "Titre inconnu")
@@ -83,7 +84,7 @@ class Command(BaseCommand):
         try:
             chapter = Chapter.objects.get(title=title, channel=c)
         except Chapter.DoesNotExist:
-            chapter = Chapter(creator=adminuser, contributor=adminuser, channel=c, title=title)
+            chapter = Chapter(creator=adminuser, contributor=adminuser, channel=c, title=title, slug=slugify(title))
             chapter.save()
 
         descr = "%s - %s" % (data.get("date", "Date inconnue"),
@@ -155,6 +156,7 @@ class Command(BaseCommand):
                 slug = "m" + slug
             if Video.objects.filter(slug=slug).exists():
                 self.stdout.write("Duplicate video slug: " + slug)
+                slug = slugify(title)
             else:
                 vid.slug = slug
             vid.save()
@@ -167,7 +169,8 @@ class Command(BaseCommand):
                     at = AnnotationType(creator=adminuser,
                                         created=convert_date(dateutil.parser.parse(atjson['dc:created'])),
                                         title=atjson['dc:title'],
-                                        description=atjson['dc:description'])
+                                        description=atjson['dc:description'],
+                                        slug=slugify(title))
                     at.save()
                 ats[atjson['id']] = at
             self.stdout.write("Copying %d annotations" % len(package['annotations']))
