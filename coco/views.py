@@ -311,7 +311,6 @@ def annotation_edit(request, pk=None, **kw):
     elif request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
         data['begin'] = float(data['begin'])
-        import pdb; pdb.set_trace()
         # Validity checks
         if data['begin'] > an.video.duration:
             data['begin'] = an.video.duration
