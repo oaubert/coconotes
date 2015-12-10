@@ -13,7 +13,8 @@ from django.contrib.staticfiles.templatetags.staticfiles import static
 from rest_framework import permissions, viewsets
 
 from .models import Channel, Video, Newsitem, Chapter, Activity, Annotation, Comment, AnnotationType, Resource
-from .serializers import ChannelSerializer, ChapterSerializer, ActivitySerializer, VideoSerializer, AnnotationSerializer, CommentSerializer, ResourceSerializer, NewsitemSerializer, AnnotationTypeSerializer
+from .serializers import ChannelSerializer, ChapterSerializer, ActivitySerializer, VideoSerializer
+from .serializers import AnnotationSerializer, CommentSerializer, ResourceSerializer, NewsitemSerializer, AnnotationTypeSerializer
 from .utils import generic_search, COCoEncoder
 from .permissions import IsOwnerOrReadOnly
 from .forms import AnnotationEditForm
@@ -217,7 +218,7 @@ def search(request, **kw):
     counts = Counter(el.element_type for el in elements)
     # Reorder counter info to match MODEL_MAP key order
     counts = [(value, name) for (name, value) in counts.iteritems()]
-    map_order = dict( (key.__name__, count) for (count, key) in enumerate(MODEL_MAP) )
+    map_order = dict((key.__name__, count) for (count, key) in enumerate(MODEL_MAP))
     counts.sort(key=lambda t: map_order.get(t[1], -1))
     summary = u", ".join(u"%d %s%s" % (count, name.rstrip('s'), pluralize(count))
                          for (count, name) in counts)
@@ -262,7 +263,7 @@ def cinelab(request, slug=None, pk=None, **kw):
     }
     context = CocoContext(username=request.user.username,
                           teacher_set=[u.username for u in v.activity.chapter.teachers.all()],
-                          current_group='') # FIXME: get from cookie/session info?
+                          current_group='')  # FIXME: get from cookie/session info?
     data['medias'].append(v.cinelab(context=context))
     data['annotations'].extend(a.cinelab(context=context) for a in Annotation.objects.filter(video=v))
     # Add defined annotation types + a selection of basic types
@@ -295,8 +296,9 @@ def annotation_add(request, **kw):
     an.save()
     context = CocoContext(username=request.user.username,
                           teacher_set=[u.username for u in video.activity.chapter.teachers.all()],
-                          current_group='') # FIXME: get from cookie/session info?
+                          current_group='')  # FIXME: get from cookie/session info?
     return JsonResponse(an.cinelab(context=context), encoder=COCoEncoder)
+
 
 @login_required
 def annotation_edit(request, pk=None, **kw):

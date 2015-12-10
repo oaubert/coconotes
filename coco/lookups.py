@@ -1,7 +1,6 @@
-from uuid import UUID
-
 from ajax_select import register, LookupChannel
 from .models import Video
+
 
 @register('video')
 class VideoLookup(LookupChannel):

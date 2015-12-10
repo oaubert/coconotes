@@ -1,8 +1,6 @@
 from django import forms
 from django.utils.translation import ugettext as _
 
-from .models import Annotation
-
 
 class AnnotationEditForm(forms.Form):
     begin = forms.FloatField()

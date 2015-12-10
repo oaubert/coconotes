@@ -2,6 +2,8 @@ from django.db.models import SlugField
 
 # From http://stackoverflow.com/questions/21728500/optional-but-unique-slugfield
 # Inspired by: https://github.com/django-extensions/django-extensions/blob/master/django_extensions/db/fields/__init__.py
+
+
 class SlugOrNullField(SlugField):
     """Don't insert empty slugs. If the slug is empty, insert NULL.
 

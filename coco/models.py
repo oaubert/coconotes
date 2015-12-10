@@ -25,6 +25,7 @@ def jsonencoder_newdefault(self, o):
     return JSONEncoder_olddefault(self, o)
 json.JSONEncoder.default = jsonencoder_newdefault
 
+
 class TaggedChannel(TaggedItemBase):
     content_object = models.ForeignKey('Channel')
 
@@ -311,7 +312,7 @@ class UserContent(Element):
                                    default="text/plain",
                                    blank=True)
     visibility = models.SmallIntegerField(_("Visibility"),
-                                          choices = VISIBILITY_CHOICES,
+                                          choices=VISIBILITY_CHOICES,
                                           help_text=_("Content visibility"),
                                           default=VISIBILITY_PRIVATE)
 
