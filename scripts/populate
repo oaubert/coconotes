@@ -31,3 +31,12 @@ do
     ./manage.py cocoadmin info "Introduction au langage C" "$i";
 done
 
+for i in ~/www/comin-ocw/contents/screencast/*/info.json
+do
+    ./manage.py cocoadmin info "Projet COCo" "$i"
+done
+
+for i in ~/www/comin-ocw/contents/videojournal/open*/info.json
+do
+    ./manage.py cocoadmin info "Video Journal of Open Education Abstracts Volume 1" "$i"
+done
