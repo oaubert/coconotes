@@ -182,6 +182,10 @@ class Command(BaseCommand):
                 creator = a['meta']['dc:creator']
                 contributor = a['meta']['dc:contributor']
                 title = a['content']['title']
+                description = a['content']['description']
+                if at.title not in ('Quiz', 'QuizPerso', 'Slides', 'Partie'):
+                    description = description or title
+                    title = ""
                 m = re.match("^\[(\w+,)?(\w+)](.*)", title)
                 if m:
                     creator = contributor = m.group(2)
@@ -198,7 +202,7 @@ class Command(BaseCommand):
                                 end=long(a['end']) / 1000.0,
                                 title=title,
                                 group=get_group(a['meta']['id-ref']),
-                                description=a['content']['description'])
+                                description=description)
                 # FIXME: handle tags
                 if 'data' in a['content']:
                     an.contenttype = a['content'].get('mimetype', 'text/plain')
