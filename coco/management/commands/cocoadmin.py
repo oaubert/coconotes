@@ -207,10 +207,12 @@ class Command(BaseCommand):
                     an.contenttype = 'application/json'
                     an.contentdata = json.dumps({'level': a['content']['level']})
                 if 'img' in a['content']:
-                    pic = os.path.join(dirname, a['content']['img']['src'])
-                    if os.path.exists(pic):
-                        with open(pic, 'rb') as f:
-                            an.thumbnail.save(os.path.basename(pic), File(f))
+                    img = a['content']['img']['src']
+                    if ('note.png' not in img and 'contribution.svg' not in img):
+                        pic = os.path.join(dirname, a['content']['img']['src'])
+                        if os.path.exists(pic):
+                            with open(pic, 'rb') as f:
+                                an.thumbnail.save(os.path.basename(pic), File(f))
                 an.save()
                 for t in tags:
                     an.tags.add(t)
