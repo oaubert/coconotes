@@ -32,7 +32,7 @@ def get_group(annotationtype):
     """
     g = re.search("at_converted(\d+)", annotationtype)
     if g:
-        group, created = User.objects.get_or_create(name='Groupe ' + g.group(1))
+        group, created = Group.objects.get_or_create(name='Groupe ' + g.group(1))
     else:
         group = None
     return group

@@ -24,7 +24,7 @@ then
     (echo "from django.contrib.auth.models import User, Group"
      jq -r ".superusers | map(\"User.objects.create_superuser('\(.username)', '\(.mail)', '\(.password)')\") | join(\"\n\")" "$CONFIG"
      jq -r ".users | map(\"User.objects.create_user('\(.username)', '\(.mail)', '\(.password)')\") | join(\"\n\")" "$CONFIG"
-     jq -r ".groups | map(\"g=Group.objects.create(name='\(.name)')\n\" + (.members | map(\"g.user_set.add(User.objects.get('\(.)'))\") | join(\"\n\"))) | join(\"\n\")" "$CONFIG"
+     jq -r ".groups | map(\"print 'Creating %s' % \(.name)\n(g, cr) = Group.objects.get_or_create(name='\(.name)')\n\" + (.members | map(\"g.user_set.add(User.objects.get_or_create(username='\(.)')[0])\") | join(\"\n\"))) | join(\"\n\")" "$CONFIG"
     ) | python manage.py shell --plain
     ./scripts/populate
 else
