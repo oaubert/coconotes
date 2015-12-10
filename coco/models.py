@@ -107,6 +107,10 @@ class Element(models.Model):
                            blank=True,
                            null=True)
 
+    promoted = models.IntegerField(_("Promoted"),
+                                   help_text=_('Promoted level - 0 by default'),
+                                   default=0)
+
     @property
     def subtitle(self):
         """Subtitle for the element.
