@@ -146,6 +146,10 @@ class Element(models.Model):
     def element_type(self):
         return _(self.__class__.__name__)
 
+    @property
+    def title_or_description(self):
+        return self.title or self.description.splitlines()[0]
+
 
 class License(models.Model):
     slug = models.SlugField(max_length=16,
@@ -272,6 +276,9 @@ class Video(Resource):
     @property
     def channel(self):
         return self.activity.chapter.channel
+
+    def latest_annotations(self, count=10):
+        return self.annotation_set.order_by('-modified')[:count]
 
     def cinelab(self, context=None):
         """Return a cinelab serialization.

@@ -2,6 +2,7 @@ import datetime
 import json
 from collections import namedtuple, OrderedDict, Counter
 
+from django.db.models import Count
 from django.http import HttpResponse, JsonResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, render
@@ -190,8 +191,8 @@ def profile(request, **kw):
     return render_to_response('profile.html', {
         'username': request.user.username,
         'default_avatar': static('img/default_user.svg'),
+        'videos': Video.objects.filter(annotation__creator=request.user).annotate(count=Count('annotation')).order_by("-count"),
         'annotationscount': Annotation.objects.filter(creator=request.user).count(),
-        'annotations': Annotation.objects.filter(creator=request.user).order_by("-created")[:10],
         'current_document': 'profile',
     }, context_instance=RequestContext(request))
 
