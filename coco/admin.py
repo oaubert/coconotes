@@ -57,7 +57,7 @@ class VideoAdmin(ElementAdmin):
         (_("Video specific"),
          {'fields': [('url', 'duration'),
                      ('activity', 'slides'),
-                     ('license', 'package_id')]}),
+                     ('license')]}),
     ] + ELEMENT_FIELDSETS
 
 
