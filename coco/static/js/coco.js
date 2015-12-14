@@ -216,10 +216,11 @@ $(document).ready(function () {
                         position: { my: "top", at: "top" },
                         title: "Edition",
                         open: function() {
+                            var dialog = this;
                             // On open, hide the original submit button
                             $(this).find("[type=submit]").hide();
-                            IriSP.jQuery('.ui-widget-overlay').bind('click', function () {
-                                IriSP.jQuery(this).dialog('close');
+                            $('.ui-widget-overlay').bind('click', function () {
+                                $(dialog).dialog('close');
                             });
                         },
                         buttons: [
