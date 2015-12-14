@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load i18n %}
+{% load coco %}
 {% load admin_urls %}
 {% load url from future %}
 
@@ -40,12 +41,11 @@
               <img class="thumbnail_mini" src="{{ video.thumbnail_url }}">
               {% endif %}
               <h4><a href="{{ video.get_absolute_url }}">{{ video.title }}</a> ({{ video.count}})</h4>
-              <div class="video_annotations">
+              <div class="profile_annotation_list">
                 <ul>
                   {% for a in video.latest_annotations %}
-                  <li><a href="{{ a.contextualized_link }}">{{ a.title_or_description }}</a></li>
+                  <li><a href="{{ a.contextualized_link }}"><span class="profile_annotation_timecode">{{ a.begin|format_timecode:"short" }}</span> - <span class="profile_annotation_title">{{ a.title_or_description }}</span></a></li>
                   {% endfor %}
-                  {{ annotation.description }}
                 </ul>
               </div>
             </article>
