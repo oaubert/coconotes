@@ -228,10 +228,10 @@ $(document).ready(function () {
                                 text: "Valider",
                                 click: function () {
                                     var dialog = this;
-                                    var formdata = IriSP.jQuery(dialog).find("form").serializeArray();
+                                    var formdata = $(dialog).find("form").serializeArray();
                                     /* We know we do not have multiple attributes with the same name */
                                     var data = IriSP._.object(IriSP._.pluck(formdata, 'name'), IriSP._.pluck(formdata, 'value'));
-                                    IriSP.jQuery.ajax({
+                                    $.ajax({
                                         url: edit_url,
                                         timeout: 5000,
                                         type: "POST",
@@ -242,7 +242,11 @@ $(document).ready(function () {
                                             alert("An error has occurred making the request: " + errorThrown);
                                         },
                                         success: function(data) {
-                                            IriSP.jQuery(dialog).dialog("close");
+                                            $(dialog).dialog("close");
+                                            // Get the modified annotation
+                                            var a = _myPlayer.sourceManager.getElement(annotation_id);
+                                            // Update its content according to the returned data
+                                            a.source.deSerialize({ 'annotations': [ data ]});
                                             _myPlayer.trigger("AnnotationsList.refresh");
                                         }
                                     });
@@ -257,7 +261,8 @@ $(document).ready(function () {
                             {
                                 text: "Delete",
                                 click: function () {
-                                    
+                                    // Delete annotation
+                                    // FIXME
                                 }
                             }
                         ]
