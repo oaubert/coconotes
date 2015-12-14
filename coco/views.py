@@ -278,7 +278,6 @@ def annotation_add(request, **kw):
     # {"id":"f98d0acb-e7d8-f37a-6b67-6fb7a1282ebe","begin":0,"end":0,"content":{"data":{},"description":"Test","title":""},"tags":[],"media":"e7e856b1-dd32-44fa-8dda-56edab47729c","type_title":"Contributions","type":"ee3b536e-b8d7-428b-9df1-5283b72ef0ed","meta":{"created":"2015-11-25T16:00:02.141Z"}}
     data = json.loads(request.body.decode('utf-8'))
     # Validity checks...
-    # FIXME: annotation creation does not seem to set video correctly
     video = get_object_or_404(Video, uuid=data['media'])
     atype = get_object_or_404(AnnotationType, uuid=data['type'])
     # FIXME: check that type_title is consistent with type ?
@@ -305,6 +304,9 @@ def annotation_add(request, **kw):
 @require_http_methods(["GET", "POST", "DELETE"])
 def annotation_edit(request, pk=None, **kw):
     an = get_object_or_404(Annotation, pk=pk)
+    u = request.user
+    if an.creator != u and an.contributor != u:
+        return HttpResponse(status=403)
     if request.method == 'GET':
         f = AnnotationEditForm(initial={
             'begin': an.begin,
