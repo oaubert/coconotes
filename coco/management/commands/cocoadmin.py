@@ -15,6 +15,7 @@ from django.utils.timezone import make_naive, is_aware
 from django.utils.text import slugify
 
 from coco.models import Activity, Channel, Video, Chapter, Annotation, Newsitem, AnnotationType, License
+from coco.models import VISIBILITY_PUBLIC, VISIBILITY_GROUP, VISIBILITY_PRIVATE
 
 logger = logging.getLogger(__name__)
 
@@ -184,9 +185,14 @@ class Command(BaseCommand):
                 contributor = a['meta']['dc:contributor']
                 title = a['content']['title']
                 description = a['content']['description']
+                group = get_group(a['meta']['id-ref'])
+                if group is not None:
+                    visibility = VISIBILITY_GROUP
                 if at.title not in ('Quiz', 'QuizPerso', 'Slides', 'Partie'):
                     description = description or title
                     title = ""
+                if at.title in ('Quiz', 'Slides', 'Partie'):
+                    visibility = VISIBILITY_PUBLIC
                 m = re.match("^\[(\w+,)?(\w+)](.*)", title)
                 if m:
                     creator = contributor = m.group(2)
@@ -202,7 +208,8 @@ class Command(BaseCommand):
                                 begin=long(a['begin']) / 1000.0,
                                 end=long(a['end']) / 1000.0,
                                 title=title,
-                                group=get_group(a['meta']['id-ref']),
+                                visibility=visibility,
+                                group=group,
                                 description=description)
                 # FIXME: handle tags
                 if 'data' in a['content']:
