@@ -180,7 +180,7 @@ $(document).ready(function () {
 
         // Hook trace sensors
         tracer.trace("PlayerStart", { url: document.URL });
-        IriSP.jQuery(".TraceMe").on("mousedown mouseenter mouseleave", function (_e) {
+        $(".TraceMe").on("mousedown mouseenter mouseleave", function (_e) {
             tracer.trace('Mdp_' + _e.type,
                          {
                              "widget": "coco",
