@@ -181,8 +181,8 @@ class AnnotationDeleteView(DeleteView):
 def home(request, **kw):
     return render_to_response('home.html', {
         'news': Newsitem.objects.order_by('-published')[:3],
-        'une_items': Chapter.objects.order_by('-created')[:3],
-        'last_videos': Video.objects.order_by('-created')[:4],
+        'une_items': Chapter.objects.order_by('-promoted', '-modified')[:3],
+        'last_videos': Video.objects.order_by('-modified')[:4],
         'username': request.user.username,
         'current_document': 'home',
     }, context_instance=RequestContext(request))

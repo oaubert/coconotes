@@ -1,4 +1,5 @@
 {% extends  "formbase.html" %}
+{% load i18n %}
 {% load crispy_forms_tags %}
 
 {% block form %}
@@ -10,10 +11,10 @@
   </div>
   </form>
   <div class="annotation_edit_form_sharing">
-    This annotation is {{ form.sharing }}
+    {% blocktrans %}This annotation is{% endblocktrans %} {{ form.sharing }}
   </div>
   <div class="annotation_edit_form_validate">
-    <input type="submit" value="Valider" />
+    <input type="submit" value="{% blocktrans %}Validate{% endblocktrans %}" />
   </div>
 {% if form.errors %}
     <ol>
