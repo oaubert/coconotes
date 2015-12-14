@@ -8,8 +8,7 @@
       {% else %}
       {{ item.subtitle }}
       {% endif %}</h5>
-    <h4 class="multiline_ellipsis"><a title="{{ item.title }}" href="{{ item.get_absolute_url }}">{{ item.title }}</a>
-      {% if user.is_staff %}<div class="adminactions"><a href="{{ item.edit_url }}" class="editelement">&#x270f;</a></div>{% endif %}
+    <h4 class="multiline_ellipsis">{% if user.is_staff %}<div class="adminactions"><a href="{{ item.edit_url }}" class="editelement">&#x270f;</a></div>{% endif %}<a title="{{ item.title }}" href="{{ item.get_absolute_url }}">{{ item.title }}</a>
     </h4>
     <span class="description">{{ item.description|truncatechars_html:40 }}</span>
     <span class="detail">{{ item.element_description }}</span>
