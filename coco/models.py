@@ -81,6 +81,7 @@ class AutoDateTimeField(models.DateTimeField):
 class Element(models.Model):
     class Meta:
         abstract = True
+        ordering = ("-promoted", "-modified", "title")
 
     uuid = models.UUIDField(primary_key=True,
                             default=uuid.uuid4,
@@ -202,7 +203,7 @@ class Channel(Element):
 
     tags = TaggableManager(blank=True, through=TaggedChannel)
 
-    class Meta:
+    class Meta(Element.Meta):
         verbose_name = _('channel')
         verbose_name_plural = _('channels')
 
@@ -227,7 +228,7 @@ class Chapter(Element):
 
     teachers = models.ManyToManyField(User, related_name="teacher_for")
 
-    class Meta:
+    class Meta(Element.Meta):
         verbose_name = _('chapter')
         verbose_name_plural = _('chapters')
 
@@ -245,7 +246,7 @@ class Activity(Element):
 
     tags = TaggableManager(blank=True, through=TaggedActivity)
 
-    class Meta:
+    class Meta(Element.Meta):
         verbose_name = _('activity')
         verbose_name_plural = _('activities')
 
@@ -271,7 +272,7 @@ class Video(Resource):
                                related_name="source_video")
     tags = TaggableManager(blank=True, through=TaggedVideo)
 
-    class Meta:
+    class Meta(Element.Meta):
         verbose_name = _('video')
         verbose_name_plural = _('videos')
 
@@ -350,7 +351,7 @@ class AnnotationType(Element):
 
     It does not need more info than the one provided in Element.
     """
-    class Meta:
+    class Meta(Element.Meta):
         verbose_name = _('annotation type')
         verbose_name_plural = _('annotation types')
 
@@ -384,7 +385,7 @@ class Annotation(UserContent):
                               null=True)
     tags = TaggableManager(blank=True, through=TaggedAnnotation)
 
-    class Meta:
+    class Meta(Element.Meta):
         verbose_name = _('annotation')
         verbose_name_plural = _('annotations')
 
@@ -458,7 +459,7 @@ class Annotation(UserContent):
 
 
 class Comment(UserContent):
-    class Meta:
+    class Meta(Element.Meta):
         verbose_name = _('comment')
         verbose_name_plural = _('comments')
 
@@ -478,7 +479,7 @@ class Comment(UserContent):
 
 
 class Newsitem(Element):
-    class Meta:
+    class Meta(Element.Meta):
         verbose_name = _('news item')
         verbose_name_plural = _('news items')
 
@@ -497,6 +498,10 @@ class Newsitem(Element):
 
 
 class GroupMetadata(Element):
+    class Meta(Element.Meta):
+        verbose_name = _('group')
+        verbose_name_plural = _('groups')
+
     group = AutoOneToOneField(Group)
 
 
