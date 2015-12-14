@@ -7,6 +7,7 @@ from django.http import HttpResponse, JsonResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, render
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_http_methods
 from django.views.generic import CreateView, UpdateView, DeleteView, RedirectView
 from django.template.defaultfilters import pluralize
 from django.contrib.staticfiles.templatetags.staticfiles import static
@@ -301,6 +302,7 @@ def annotation_add(request, **kw):
 
 
 @login_required
+@require_http_methods(["GET", "POST", "DELETE"])
 def annotation_edit(request, pk=None, **kw):
     an = get_object_or_404(Annotation, pk=pk)
     if request.method == 'GET':
@@ -323,8 +325,11 @@ def annotation_edit(request, pk=None, **kw):
         if an.end < an.begin:
             an.end = an.begin
         an.save()
-        # FIXME: check how to populate django changelog
+        # FIXME: check how to populate django changelist
         context = CocoContext(username=request.user.username,
                               teacher_set=[u.username for u in an.video.activity.chapter.teachers.all()],
                               current_group='')
         return JsonResponse(an.cinelab(context=context))
+    elif request.method == 'DELETE':
+        an.delete()
+        return JsonResponse({'id': pk})

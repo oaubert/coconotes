@@ -261,8 +261,23 @@ $(document).ready(function () {
                             {
                                 text: "Delete",
                                 click: function () {
+                                    var dialog = this;
                                     // Delete annotation
-                                    // FIXME
+                                    IriSP.jQuery.ajax({
+                                        url: edit_url,
+                                        timeout: 5000,
+                                        type: "DELETE",
+                                        dataType: 'json',
+                                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                            alert("An error has occurred making the request: " + errorThrown);
+                                        },
+                                        success: function(data) {
+                                            IriSP.jQuery(dialog).dialog("close");
+                                            var a = _myPlayer.sourceManager.getElement(annotation_id);
+                                            a.source.getAnnotations().removeElement(a);
+                                            _myPlayer.trigger("AnnotationsList.refresh");
+                                        }
+                                    });
                                 }
                             }
                         ]
