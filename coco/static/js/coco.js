@@ -251,7 +251,7 @@ $(document).ready(function () {
                             {
                                 text: "Close",
                                 click: function () {
-                                    $(this).dialog("close");
+                                    IriSP.jQuery(this).dialog("close");
                                 }
                             },
                             {
