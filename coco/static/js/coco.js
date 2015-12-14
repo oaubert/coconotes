@@ -65,7 +65,7 @@ $(document).ready(function () {
         widgets: [
             {
                 type: "SlideVideoPlayer",
-                mode: "pip",
+                mode: metadata.has_slides == false ? "videoonly" : "pip",
                 video: metadata.video_url,
                 container: "VideoContainer",
                 width: '100%',

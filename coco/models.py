@@ -15,6 +15,8 @@ from sorl.thumbnail import ImageField
 
 from fields import SlugOrNullField
 
+TYPE_SLIDES = 'Slides'
+
 # Monkeypatch support for serializing uuids to json. This allows it to
 # be enabled for external libs such as ajaxselect
 JSONEncoder_olddefault = json.JSONEncoder.default
@@ -146,7 +148,6 @@ class Element(models.Model):
     def __unicode__(self):
         return u"%s (%s)" % (self.title,
                              self.__class__.__name__)
-
     @property
     def edit_url(self):
         return reverse("admin:%s_%s_change" % (self._meta.app_label, self._meta.model_name), args=(self.pk,))
@@ -281,6 +282,12 @@ class Video(Resource):
     @property
     def subtitle_link(self):
         return self.activity.get_absolute_url()
+
+    @property
+    def has_slides(self):
+        """Return True if the video has Slides annotations.
+        """
+        return self.annotation_set.filter(annotationtype__title=TYPE_SLIDES).count() > 0
 
     @property
     def channel(self):
