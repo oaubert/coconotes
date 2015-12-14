@@ -37,7 +37,7 @@ def create_licenses(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('coco', '0002_module_teachers'),
+        ('coco', '0001_initial'),
     ]
 
     operations = [
