@@ -6,10 +6,9 @@
 <form action="annotation/{{ object.uuid }}/edit" class="annotation_edit_form" method="post">
   {% csrf_token %}
   <div class="annotation_edit_form_content">
-    {{ form.begin }}
+    <div class="annotation_edit_form_begin">{% blocktrans %}Video timecode{% endblocktrans %} {{ form.begin }}</div>
     {{ form.description }}
   </div>
-  </form>
   <div class="annotation_edit_form_sharing">
     {% blocktrans %}This annotation is{% endblocktrans %} {{ form.sharing }}
   </div>

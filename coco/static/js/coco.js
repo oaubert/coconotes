@@ -225,7 +225,7 @@ $(document).ready(function () {
                         },
                         buttons: [
                             {
-                                text: "Valider",
+                                text: "Validate",
                                 click: function () {
                                     var dialog = this;
                                     var formdata = IriSP.jQuery(dialog).find("form").serializeArray();

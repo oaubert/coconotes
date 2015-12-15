@@ -852,18 +852,39 @@ h1:hover .adminactions,
     font-size: 9px;
     color: #777;
 }
-
+.annotation_edit_popup .ui-dialog-buttonset {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+.annotation_edit_popup .ui-dialog-buttonset button {
+    background-image: none;
+    background-color: #66ccff;
+    color: white;
+    text-transform: uppercase;
+}
 .annotation_edit_form {
     display: flex;
+    flex-direction: column;
+}
+
+.annotation_edit_form_begin {
+    margin-bottom: 1em;
 }
 
 .annotation_edit_form_content {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-grow: 1;
+    margin-bottom: 1em;
 }
+
 #id_begin {
     align-self: flex-start;
+}
+#id_sharing {
+    background: white;
+    border: 1px solid #ddd;
 }
 @media only screen and (max-width: 780px) {
     /* phones */
