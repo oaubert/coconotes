@@ -13,13 +13,14 @@ from django.template.defaultfilters import pluralize
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from rest_framework import permissions, viewsets
 
+
 from .models import Channel, Video, Newsitem, Chapter, Activity, Annotation, Comment, AnnotationType, Resource
 from .serializers import ChannelSerializer, ChapterSerializer, ActivitySerializer, VideoSerializer
 from .serializers import AnnotationSerializer, CommentSerializer, ResourceSerializer, NewsitemSerializer, AnnotationTypeSerializer
 from .utils import generic_search
 from .permissions import IsOwnerOrReadOnly
 from .forms import AnnotationEditForm
-
+from .templatetags.coco import parse_timecode
 
 class ChannelViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
@@ -325,7 +326,7 @@ def annotation_edit(request, pk=None, **kw):
         return render(request, 'coco/annotation_form.html', {'form': f})
     elif request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
-        data['begin'] = float(data['begin'])
+        data['begin'] = parse_timecode(data['begin'])
         # Validity checks
         if data['begin'] > an.video.duration:
             data['begin'] = an.video.duration
