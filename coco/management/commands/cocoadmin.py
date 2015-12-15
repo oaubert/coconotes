@@ -186,6 +186,7 @@ class Command(BaseCommand):
                 title = a['content']['title']
                 description = a['content']['description']
                 group = get_group(a['meta']['id-ref'])
+                visibility = VISIBILITY_PRIVATE
                 if group is not None:
                     visibility = VISIBILITY_GROUP
                 if at.title not in ('Quiz', 'QuizPerso', 'Slides', 'Partie'):
@@ -193,12 +194,14 @@ class Command(BaseCommand):
                     title = ""
                 if at.title in ('Quiz', 'Slides', 'Partie'):
                     visibility = VISIBILITY_PUBLIC
-                m = re.match("^\[(\w+,)?(\w+)](.*)", title)
+                    creator = 'admin'
+                    contributor = 'admin'
+                m = re.match("^\[(\w+,)?(\w+)](.*)", description)
                 if m:
                     creator = contributor = m.group(2)
                     if m.group(1) is not None:
                         tags.append(m.group(1).strip(',').strip())
-                    title = m.group(3).strip()
+                    description = m.group(3).strip()
                 an = Annotation(creator=get_user(creator, context=a['meta']['id-ref']),
                                 contributor=get_user(contributor, context=a['meta']['id-ref']),
                                 created=convert_date(dateutil.parser.parse(a['meta']['dc:created'])),
