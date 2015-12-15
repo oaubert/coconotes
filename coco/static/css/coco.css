@@ -852,6 +852,9 @@ h1:hover .adminactions,
     font-size: 9px;
     color: #777;
 }
+.annotation_edit_popup .ui-dialog-titlebar-close {
+  display: none;
+}
 .annotation_edit_popup .ui-dialog-buttonset {
     display: flex;
     width: 100%;
