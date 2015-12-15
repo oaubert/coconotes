@@ -218,9 +218,9 @@ $(document).ready(function () {
                         open: function() {
                             var dialog = this;
                             // On open, hide the original submit button
-                            $(this).find("[type=submit]").hide();
-                            $('.ui-widget-overlay').bind('click', function () {
-                                $(dialog).dialog('close');
+                            IriSP.jQuery(this).find("[type=submit]").hide();
+                            IriSP.jQuery('.ui-widget-overlay').bind('click', function () {
+                                IriSP.jQuery(dialog).dialog('close');
                             });
                         },
                         buttons: [
