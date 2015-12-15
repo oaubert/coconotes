@@ -1,9 +1,10 @@
 from django import forms
 from django.utils.translation import ugettext as _
 
+from .widgets import TimecodeWidget
 
 class AnnotationEditForm(forms.Form):
-    begin = forms.FloatField()
+    begin = forms.FloatField(widget=TimecodeWidget)
     description = forms.CharField(widget=forms.Textarea)
     sharing = forms.ChoiceField()
 
