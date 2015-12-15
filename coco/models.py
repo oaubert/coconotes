@@ -286,9 +286,9 @@ class Video(Resource):
 
     @property
     def has_slides(self):
-        """Return True if the video has Slides annotations.
+        """Return True if the video has public Slides annotations.
         """
-        return self.annotation_set.filter(annotationtype__title=TYPE_SLIDES).count() > 0
+        return self.annotation_set.filter(visibility=VISIBILITY_PUBLIC, annotationtype__title=TYPE_SLIDES).count() > 0
 
     @property
     def channel(self):
