@@ -294,8 +294,8 @@ class Video(Resource):
     def channel(self):
         return self.activity.chapter.channel
 
-    def latest_annotations(self, count=10):
-        return self.annotation_set.order_by('-modified')[:count]
+    def latest_annotations(self, username, count=10):
+        return self.annotation_set.filter(models.Q(creator__username=username) | models.Q(contributor__username=username)).order_by('-modified')[:count]
 
     def cinelab(self, context=None):
         """Return a cinelab serialization.

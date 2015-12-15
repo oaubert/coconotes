@@ -37,10 +37,10 @@
 
             {% for video in videos %}
             <article class="capsule">
-              {% if video.thumbnail.url %}
-              <img class="thumbnail_mini" src="{{ video.thumbnail_url }}">
+              {% if video.object.thumbnail.url %}
+              <img class="thumbnail_mini" src="{{ video.object.thumbnail_url }}">
               {% endif %}
-              <h4><a href="{{ video.get_absolute_url }}">{{ video.title }}</a> ({{ video.count}})</h4>
+              <h4><a href="{{ video.object.get_absolute_url }}">{{ video.object.title }}</a> ({{ video.object.count}})</h4>
               <div class="profile_annotation_list">
                 <ul>
                   {% for a in video.latest_annotations %}
