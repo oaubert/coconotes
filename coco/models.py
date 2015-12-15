@@ -332,6 +332,15 @@ class UserContent(Element):
                                           help_text=_("Content visibility"),
                                           default=VISIBILITY_PRIVATE)
 
+    def can_access(self, user):
+        """Can the given user access this resource?
+        """
+        return (self.creator == user
+                or self.contributor == user
+                or user.is_staff
+                or self.visibility == VISIBILITY_PUBLIC
+                or (self.visibility == VISIBILITY_GROUP and user.groups.filter(name=self.group.name)))
+
     @property
     def subtitle(self):
         return _("User content")
