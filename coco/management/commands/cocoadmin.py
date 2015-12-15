@@ -15,7 +15,7 @@ from django.utils.timezone import make_naive, is_aware
 from django.utils.text import slugify
 
 from coco.models import Activity, Channel, Video, Chapter, Annotation, Newsitem, AnnotationType, License
-from coco.models import VISIBILITY_PUBLIC, VISIBILITY_GROUP, VISIBILITY_PRIVATE
+from coco.models import VISIBILITY_PUBLIC, VISIBILITY_GROUP, VISIBILITY_PRIVATE, TYPE_SLIDES
 
 logger = logging.getLogger(__name__)
 
@@ -248,6 +248,16 @@ class Command(BaseCommand):
         for username in names:
             u = get_user(username)
             g.user_set.add(u)
+
+    @register
+    def check(self):
+        """Check information consistency
+        """
+        # Check that all slides annotation are public
+        private_slides = Annotation.objects.filter(annotationtype__title=TYPE_SLIDES).exclude(visibility=VISIBILITY_PUBLIC).values('video').distinct().values_list('video', flat=True)
+        if private_slides:
+            self.stdout.write("There are non-public slides on the following videos:\n" +
+                              "\n".join(unicode(v) for v in Video.objects.in_bulk(private_slides).values()))
 
     def handle(self, *args, **options):
         self.help = self.help + "\n\n" + "\n\n".join("\t%s: %s" % (k, v.__doc__) for (k, v) in REGISTERED.items())
