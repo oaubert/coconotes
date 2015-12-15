@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-14 15:30+0100\n"
-"PO-Revision-Date: 2015-12-14 15:30+0100\n"
+"POT-Creation-Date: 2015-12-15 14:10+0100\n"
+"PO-Revision-Date: 2015-12-15 13:56+0100\n"
 "Last-Translator: Olivier Aubert <olivier.aubert@univ-nantes.fr>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgstr "Contenu"
 msgid "Tags"
 msgstr "Tags"
 
-#: admin.py:29 models.py:337
+#: admin.py:29 models.py:346
 msgid "User content"
 msgstr "Contenu utilisateur"
 
@@ -42,16 +42,16 @@ msgstr "Spécifique à la chaîne"
 
 #: forms.py:16
 msgid "private"
-msgstr "privé"
+msgstr "privée"
 
 #: forms.py:17
 #, python-format
 msgid "shared with %s"
-msgstr "partagé avec %s"
+msgstr "partagée avec %s"
 
 #: forms.py:18
 msgid "public"
-msgstr "public"
+msgstr "publique"
 
 #: models.py:71
 msgid "Private"
@@ -85,11 +85,11 @@ msgstr "Date de modification de l'élément"
 msgid "State"
 msgstr "État"
 
-#: models.py:108 models.py:169 models.py:511
+#: models.py:108 models.py:169 models.py:520
 msgid "Title"
 msgstr "Titre"
 
-#: models.py:112 models.py:515 templates/coco/video_info.html:6
+#: models.py:112 models.py:524 templates/coco/video_info.html:6
 msgid "Description"
 msgstr "Description"
 
@@ -105,7 +105,7 @@ msgstr "Niveau de promotion - 0 par défaut"
 msgid "URL"
 msgstr "URL"
 
-#: models.py:197 models.py:486
+#: models.py:197 models.py:495
 msgid "Category"
 msgstr "Catégorie"
 
@@ -170,63 +170,63 @@ msgstr "Visibilité"
 msgid "Content visibility"
 msgstr "Visibilité du contenu"
 
-#: models.py:355
+#: models.py:364
 msgid "annotation type"
 msgstr "type d'annotation"
 
-#: models.py:356
+#: models.py:365
 msgid "annotation types"
 msgstr "types d'annotation"
 
-#: models.py:374
+#: models.py:383
 msgid "Begin"
 msgstr "Début"
 
-#: models.py:375
+#: models.py:384
 msgid "Annotation begin time (in seconds)"
 msgstr "Temps de début de l'annotation (en secondes)"
 
-#: models.py:377
+#: models.py:386
 msgid "End"
 msgstr "Fin"
 
-#: models.py:378
+#: models.py:387
 msgid "Annotation end time (in seconds)"
 msgstr "Temps de fin de l'annotation (en secondes)"
 
-#: models.py:389
+#: models.py:398
 msgid "annotation"
 msgstr "annotation"
 
-#: models.py:390
+#: models.py:399
 msgid "annotations"
 msgstr "annotations"
 
-#: models.py:463
+#: models.py:472
 msgid "comment"
 msgstr "commentaire"
 
-#: models.py:464
+#: models.py:473
 msgid "comments"
 msgstr "commentaires"
 
-#: models.py:483
+#: models.py:492
 msgid "news item"
 msgstr "nouvelle"
 
-#: models.py:484
+#: models.py:493
 msgid "news items"
 msgstr "nouvelles"
 
-#: models.py:491 models.py:492
+#: models.py:500 models.py:501
 msgid "Publication date"
 msgstr "Date de publication"
 
-#: models.py:502
+#: models.py:511
 msgid "group"
 msgstr "groupe"
 
-#: models.py:503
+#: models.py:512
 msgid "groups"
 msgstr "groupes"
 
@@ -328,7 +328,7 @@ msgid "All elements"
 msgstr "Tous les éléments"
 
 #: templates/coco/newsitem_detail.html:7 templates/group_detail.html:7
-#: templates/group_list.html:7 templates/profile.html:7
+#: templates/group_list.html:7 templates/profile.html:8
 msgid "COCo platform"
 msgstr "Plateforme COCo"
 
@@ -365,7 +365,7 @@ msgstr "Inconnue"
 msgid "All videos"
 msgstr "Toutes les vidéos"
 
-#: templates/group_detail.html:12 templates/profile.html:23
+#: templates/group_detail.html:12 templates/profile.html:24
 msgid "My groups"
 msgstr "Mes groupes"
 
@@ -413,11 +413,11 @@ msgstr "À la une"
 msgid "Latest videos"
 msgstr "Les dernières vidéos"
 
-#: templates/profile.html:10
+#: templates/profile.html:11
 msgid "My profile"
 msgstr "Mon profil"
 
-#: templates/profile.html:35
+#: templates/profile.html:36
 msgid "My notes"
 msgstr "Mes notes"
 
