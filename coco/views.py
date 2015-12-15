@@ -321,7 +321,7 @@ def annotation_edit(request, pk=None, **kw):
             'begin': an.begin,
             'description': an.description,
             'sharing': an.visibility_as_string
-            }, user=request.user)
+            }, user=request.user, annotation=an)
         return render(request, 'coco/annotation_form.html', {'form': f})
     elif request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))

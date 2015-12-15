@@ -19,8 +19,11 @@ class AnnotationEditForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
+        self.annotation = kwargs.pop('annotation')
         super(AnnotationEditForm, self).__init__(*args, **kwargs)
         self.fields['begin'].min_value = 0
+        if self.annotation is not None:
+            self.fields['begin'].max_value = self.annotation.video.duration
         # self.fields['begin'].max_value = [video].duration
         # Restrict group field choices to user groups
         self.fields['sharing'].choices = self.sharing_choices(self.user)
