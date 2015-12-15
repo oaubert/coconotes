@@ -273,7 +273,9 @@ def cinelab(request, slug=None, pk=None, **kw):
                           teacher_set=[u.username for u in v.activity.chapter.teachers.all()],
                           current_group='')  # FIXME: get from cookie/session info?
     data['medias'].append(v.cinelab(context=context))
-    data['annotations'].extend(a.cinelab(context=context) for a in Annotation.objects.filter(video=v))
+    data['annotations'].extend(a.cinelab(context=context)
+                               for a in Annotation.objects.filter(video=v)
+                               if a.can_access(request.user))
     # Add defined annotation types + a selection of basic types
     data['annotation-types'].extend(a.cinelab(context=context) for a in AnnotationType.objects.all())
     return JsonResponse(data)
