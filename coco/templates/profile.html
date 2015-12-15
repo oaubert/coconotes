@@ -25,7 +25,7 @@
 
             {% for group in user.groups.all %}
             <article class="capsule">
-              {% if group.thumbnail.url %}
+              {% if group.thumbnail %}
               <img class="thumbnail_mini" src="{{ group.thumbnail_url }}">
               {% endif %}
               <h4><a href="/group/{{ group.pk }}/">{{ group.name }}</a></h4>
@@ -37,7 +37,7 @@
 
             {% for video in videos %}
             <article class="capsule">
-              {% if video.object.thumbnail.url %}
+              {% if video.object.thumbnail %}
               <img class="thumbnail_mini" src="{{ video.object.thumbnail_url }}">
               {% endif %}
               <h4><a href="{{ video.object.get_absolute_url }}">{{ video.object.title }}</a> ({{ video.object.count}})</h4>
