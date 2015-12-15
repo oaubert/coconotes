@@ -308,7 +308,7 @@ class Video(Resource):
             "url": self.url,
             "meta": {
                 "coco:slug": self.slug or "",
-                "coco:can_edit": self.creator.username == context.username,
+                "coco:can_edit": (self.creator.username == context.username or self.contributor.username == context.username),
                 "dc:contributor": self.contributor,
                 "dc:creator": self.creator,
                 "dc:created": self.created,
