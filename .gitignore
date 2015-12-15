@@ -3,3 +3,5 @@
 db.sqlite3*
 project/local_settings.py
 .rsync-filter
+*.mo
+scripts/initconfig.json
