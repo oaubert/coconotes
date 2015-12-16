@@ -442,8 +442,9 @@ class Annotation(UserContent):
             "end": long(self.end * 1000),
             "meta": {
                 "coco:slug": self.slug or "",
-                "coco:group": self.group.id if self.group else "",
+                "coco:group": self.group.id if self.group else 0,
                 "coco:category": self.coco_category(context),
+                "coco:featured": self.promoted,
                 "coco:can_edit": self.creator.username == context.username,
                 "id-ref": self.annotationtype.uuid,
                 "dc:contributor": self.contributor,
