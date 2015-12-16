@@ -8,7 +8,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, render
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
-from django.views.generic import CreateView, UpdateView, DeleteView, RedirectView
+from django.views.generic import CreateView, UpdateView, DeleteView, RedirectView, DetailView
 from django.template.defaultfilters import pluralize
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from rest_framework import permissions, viewsets
@@ -180,6 +180,15 @@ class AnnotationDeleteView(DeleteView):
     model = Annotation
 
 
+class VideoDetailView(DetailView):
+    model = Video
+    context_object_name='video'
+
+    def get_context_data(self, **kwargs):
+        context = super(VideoDetailView, self).get_context_data(**kwargs)
+        context['groups'] = self.request.user.groups.all()
+        return context
+
 def home(request, **kw):
     return render_to_response('home.html', {
         'news': Newsitem.objects.order_by('-published')[:3],
@@ -240,7 +249,6 @@ def search(request, **kw):
     }, context_instance=RequestContext(request))
 
 CocoContext = namedtuple('Context', ['username', 'teacher_set', 'current_group'])
-
 
 def cinelab(request, slug=None, pk=None, **kw):
     """Generate a cinelab package in json format for the given video.

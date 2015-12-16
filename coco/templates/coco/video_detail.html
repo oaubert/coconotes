@@ -61,7 +61,9 @@
     <ul class="tabnames">
       <li class="tab-plan">{% trans "Plan" %}</li>
       <li class="tab-mynotes selected">{% trans "Own notes" %}</li>
-      <li class="tab-group">{% trans "Group notes" %}</li>
+      {% for g in groups %}
+      <li class="tab-group-{{g.id}}" data-group-id="{{g.id}}" data-group-name="{{g.name}}">{% trans "Group" %} {{ g.name }}</li>
+      {% endfor %}
       <li class="tab-public">{% trans "Public notes" %}</li>
     </ul>
     <div class="coco_tabcontents">
@@ -70,10 +72,12 @@
       </div>
       <div class="tabcontent selected tab-mynotes">
         <div id="OwnAnnotationsContainer" class="EnrichedPlanContainer"></div>
-      </div> <!-- #tabcontent -->
-      <div class="tabcontent tab-group">
-        <div id="GroupAnnotationsContainer" class="EnrichedPlanContainer"></div>
       </div>
+      {% for g in groups %}
+      <div class="tabcontent tab-group-{{g.id}}">
+        <div id="Group{{g.id}}AnnotationsContainer" class="EnrichedPlanContainer"></div>
+      </div>
+      {% endfor %}
       <div class="tabcontent tab-public">
         <div id="PublicAnnotationsContainer" class="EnrichedPlanContainer"></div>
       </div>

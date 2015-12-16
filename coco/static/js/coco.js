@@ -125,19 +125,24 @@ $(document).ready(function () {
                 show_other_notes: false,
                 show_own_notes: true,
                 is_admin: metadata.is_admin
-            },
-            {
+            }
+        ].concat($("[class^=tab-group]").map(function () {
+            /* Generate 1 component by defined group */
+            var gid = this.dataset.groupId;
+            return {
                 type: "EnrichedPlan",
-                container: "GroupAnnotationsContainer",
+                container: "Group" + gid + "AnnotationsContainer",
                 annotation_type: "Slides",
+                group: gid,
                 annotation_types: [ "Contributions" ],
                 show_controls: true,
                 show_slides: false,
-                show_teacher_notes: true,
+                show_teacher_notes: false,
                 show_other_notes: true,
-                show_own_notes: false,
+                show_own_notes: true,
                 is_admin: metadata.is_admin
-            },
+            };
+        }).toArray(), [
             {
                 type: "EnrichedPlan",
                 container: "PublicAnnotationsContainer",
@@ -157,7 +162,7 @@ $(document).ready(function () {
             },
             { type: "Mediafragment"},
             { type: "Shortcuts"}
-        ]
+        ])
     }; //
     _myPlayer = new IriSP.Metadataplayer(_config);
     _myPlayer.on("trace-ready", function () {
