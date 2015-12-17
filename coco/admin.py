@@ -5,11 +5,12 @@ from ajax_select.admin import AjaxSelectAdmin
 from ajax_select.helpers import make_ajax_form
 
 from .models import Channel, Video, Chapter, License, AnnotationType, Annotation, Comment, Resource, Newsitem, Activity
+from .models import UserMetadata, GroupMetadata
 
 admin.site.register(License)
 admin.site.register(Resource)
 admin.site.register(Newsitem)
-
+admin.site.register(UserMetadata)
 
 class CreatorMixin(object):
     def save_model(self, request, obj, form, change):
@@ -176,3 +177,19 @@ class CommentAdmin(ElementAdmin):
     fieldsets = [
         (None, {'fields': ['group', ('parent_annotation', 'parent_video', 'parent_comment')]}),
     ] + USERCONTENT_FIELDSETS + ELEMENT_FIELDSETS
+
+@admin.register(GroupMetadata)
+class GroupMetadataAdmin(ElementAdmin):
+    list_display = ('pk', 'group', 'description', 'creator', 'created',)
+    list_editable = ()
+    list_display_links = ('pk',)
+    list_filter = (('creator', admin.RelatedOnlyFieldListFilter),)
+    search_fields = ('name',)
+    prepopulated_fields = {}
+    form = make_ajax_form(GroupMetadata, {'creator': 'user',
+                                          'contributor': 'user'})
+    fieldsets = [
+        (None, {'fields': ['group' ]}),
+        (_("Metadata"),      {'fields': [('creator', 'created', 'contributor', 'modified')], 'classes': ['collapse']}),
+        (_("Content"),       {'fields': [('title', 'thumbnail'), 'description']}),
+    ]
