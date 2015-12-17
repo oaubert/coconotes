@@ -87,7 +87,7 @@ class Element(models.Model):
                             default=uuid.uuid4,
                             editable=False)
 
-    creator = models.ForeignKey(User, related_name='created_%(class)s')
+    creator = models.ForeignKey(User, related_name='created_%(class)s', null=True)
 
     created = models.DateTimeField(_('Creation date'),
                                    help_text=_('Element creation date'),

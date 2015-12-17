@@ -54,7 +54,7 @@ class Migration(migrations.Migration):
                 ('thumbnail', sorl.thumbnail.fields.ImageField(null=True, upload_to=b'thumbnails', blank=True)),
                 ('promoted', models.IntegerField(default=0, help_text='Promoted level - 0 by default', verbose_name='Promoted')),
                 ('contributor', models.ForeignKey(related_name='modified_annotationtype', blank=True, to=settings.AUTH_USER_MODEL, null=True)),
-                ('creator', models.ForeignKey(related_name='created_annotationtype', to=settings.AUTH_USER_MODEL)),
+                ('creator', models.ForeignKey(related_name='created_annotationtype', to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
                 'ordering': ('-promoted', '-modified', 'title'),
@@ -78,7 +78,7 @@ class Migration(migrations.Migration):
                 ('category', models.CharField(max_length=20, verbose_name='Category', blank=True)),
                 ('syllabus', models.TextField(verbose_name='Syllabus', blank=True)),
                 ('contributor', models.ForeignKey(related_name='modified_channel', blank=True, to=settings.AUTH_USER_MODEL, null=True)),
-                ('creator', models.ForeignKey(related_name='created_channel', to=settings.AUTH_USER_MODEL)),
+                ('creator', models.ForeignKey(related_name='created_channel', to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
                 'ordering': ('-promoted', '-modified', 'title'),
@@ -101,7 +101,7 @@ class Migration(migrations.Migration):
                 ('promoted', models.IntegerField(default=0, help_text='Promoted level - 0 by default', verbose_name='Promoted')),
                 ('channel', models.ForeignKey(to='coco.Channel')),
                 ('contributor', models.ForeignKey(related_name='modified_chapter', blank=True, to=settings.AUTH_USER_MODEL, null=True)),
-                ('creator', models.ForeignKey(related_name='created_chapter', to=settings.AUTH_USER_MODEL)),
+                ('creator', models.ForeignKey(related_name='created_chapter', to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
                 'ordering': ('-promoted', '-modified', 'title'),
@@ -123,14 +123,14 @@ class Migration(migrations.Migration):
                 ('thumbnail', sorl.thumbnail.fields.ImageField(null=True, upload_to=b'thumbnails', blank=True)),
                 ('promoted', models.IntegerField(default=0, help_text='Promoted level - 0 by default', verbose_name='Promoted')),
                 ('contributor', models.ForeignKey(related_name='modified_groupmetadata', blank=True, to=settings.AUTH_USER_MODEL, null=True)),
-                ('creator', models.ForeignKey(related_name='created_groupmetadata', to=settings.AUTH_USER_MODEL)),
-                ('group', annoying.fields.AutoOneToOneField(to='auth.Group')),
+                ('creator', models.ForeignKey(related_name='created_groupmetadata', to=settings.AUTH_USER_MODEL, null=True)),
+                ('group', annoying.fields.AutoOneToOneField(related_name='metadata', to='auth.Group')),
             ],
             options={
                 'ordering': ('-promoted', '-modified', 'title'),
                 'abstract': False,
-                'verbose_name': 'group',
-                'verbose_name_plural': 'groups',
+                'verbose_name': 'group metadata',
+                'verbose_name_plural': 'group metadata',
             },
         ),
         migrations.CreateModel(
@@ -158,7 +158,7 @@ class Migration(migrations.Migration):
                 ('category', models.CharField(default=b'', max_length=64, verbose_name='Category', blank=True)),
                 ('published', models.DateTimeField(help_text='Publication date', null=True, verbose_name='Publication date')),
                 ('contributor', models.ForeignKey(related_name='modified_newsitem', blank=True, to=settings.AUTH_USER_MODEL, null=True)),
-                ('creator', models.ForeignKey(related_name='created_newsitem', to=settings.AUTH_USER_MODEL)),
+                ('creator', models.ForeignKey(related_name='created_newsitem', to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
                 'ordering': ('-promoted', '-modified', 'title'),
@@ -274,11 +274,14 @@ class Migration(migrations.Migration):
             name='UserMetadata',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('title', models.CharField(max_length=250, verbose_name='Title', blank=True)),
                 ('description', models.TextField(verbose_name='Description', blank=True)),
                 ('thumbnail', sorl.thumbnail.fields.ImageField(null=True, upload_to=b'thumbnails', blank=True)),
-                ('user', annoying.fields.AutoOneToOneField(to=settings.AUTH_USER_MODEL)),
+                ('user', annoying.fields.AutoOneToOneField(related_name='metadata', to=settings.AUTH_USER_MODEL)),
             ],
+            options={
+                'verbose_name': 'user metadata',
+                'verbose_name_plural': 'user metadata',
+            },
         ),
         migrations.CreateModel(
             name='Annotation',
@@ -335,7 +338,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='usercontent',
             name='creator',
-            field=models.ForeignKey(related_name='created_usercontent', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(related_name='created_usercontent', to=settings.AUTH_USER_MODEL, null=True),
         ),
         migrations.AddField(
             model_name='resource',
@@ -345,7 +348,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='resource',
             name='creator',
-            field=models.ForeignKey(related_name='created_resource', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(related_name='created_resource', to=settings.AUTH_USER_MODEL, null=True),
         ),
         migrations.AddField(
             model_name='resource',
@@ -380,7 +383,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='activity',
             name='creator',
-            field=models.ForeignKey(related_name='created_activity', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(related_name='created_activity', to=settings.AUTH_USER_MODEL, null=True),
         ),
         migrations.AddField(
             model_name='activity',
