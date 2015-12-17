@@ -515,19 +515,18 @@ class Newsitem(Element):
 class GroupMetadata(Element):
     DEFAULT_AVATAR = static("img/default_group.svg")
     class Meta(Element.Meta):
-        verbose_name = _('group')
-        verbose_name_plural = _('groups')
+        verbose_name = _('group metadata')
+        verbose_name_plural = _('group metadata')
 
-    group = AutoOneToOneField(Group)
-
+    group = AutoOneToOneField(Group, related_name='metadata')
 
 class UserMetadata(models.Model):
     DEFAULT_AVATAR = static("img/default_user.svg")
-    user = AutoOneToOneField(User)
+    class Meta:
+        verbose_name = _('user metadata')
+        verbose_name_plural = _('user metadata')
 
-    title = models.CharField(_("Title"),
-                             blank=True,
-                             max_length=250)
+    user = AutoOneToOneField(User, related_name='metadata')
 
     description = models.TextField(_("Description"),
                                    blank=True)
