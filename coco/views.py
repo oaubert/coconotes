@@ -3,12 +3,13 @@ import json
 from collections import namedtuple, OrderedDict, Counter
 
 from django.db.models import Count
+from django.contrib.auth.models import Group
 from django.http import HttpResponse, JsonResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, render
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
-from django.views.generic import CreateView, UpdateView, DeleteView, RedirectView, DetailView
+from django.views.generic import CreateView, UpdateView, DeleteView, RedirectView, DetailView, ListView
 from django.template.defaultfilters import pluralize
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from rest_framework import permissions, viewsets
@@ -179,6 +180,19 @@ class AnnotationUpdateView(UpdateView):
 class AnnotationDeleteView(DeleteView):
     model = Annotation
 
+class GroupListView(ListView):
+    model = Group
+    template_name = 'group_list.html'
+
+    def get_queryset(self):
+        return self.request.user.groups.all()
+
+class GroupDetailView(DetailView):
+    model = Group
+    template_name = 'group_detail.html'
+
+    def get_queryset(self):
+        return self.request.user.groups.all()
 
 class VideoDetailView(DetailView):
     model = Video

@@ -1,7 +1,6 @@
 from django.conf.urls import patterns, url, include
 from django.conf import settings
 from django.views.generic import ListView, DetailView
-from django.contrib.auth.models import Group
 
 from rest_framework.routers import DefaultRouter
 from ajax_select import urls as ajax_select_urls
@@ -79,8 +78,8 @@ urlpatterns = patterns('',
                            DetailView.as_view(model=Newsitem, context_object_name='item'),
                            name='view-newsitem-detail'),
 
-                       url(r'^group/$', ListView.as_view(model=Group, template_name='group_list.html'), name='group-list'),
-                       url(r'^group/(?P<pk>\d+)/$', DetailView.as_view(model=Group, template_name='group_detail.html'), name='group-detail'),
+                       url(r'^group/$', views.GroupListView.as_view(), name='group-list'),
+                       url(r'^group/(?P<pk>\d+)/$', views.GroupDetailView.as_view(), name='view-group-detail'),
 
                        url(r'^annotation/add$', views.AnnotationCreateView.as_view(), name='view-annotation-create'),
                        url(r'^annotation/(?P<pk>[\w\d_-]+)/$', views.AnnotationDetailView.as_view(), name='view-annotation-detail'),
