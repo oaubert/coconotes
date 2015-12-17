@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.admin import GroupAdmin, UserAdmin
 
 from ajax_select.admin import AjaxSelectAdmin
 from ajax_select.helpers import make_ajax_form
@@ -178,18 +179,20 @@ class CommentAdmin(ElementAdmin):
         (None, {'fields': ['group', ('parent_annotation', 'parent_video', 'parent_comment')]}),
     ] + USERCONTENT_FIELDSETS + ELEMENT_FIELDSETS
 
-@admin.register(GroupMetadata)
-class GroupMetadataAdmin(ElementAdmin):
-    list_display = ('pk', 'group', 'description', 'creator', 'created',)
-    list_editable = ()
-    list_display_links = ('pk',)
-    list_filter = (('creator', admin.RelatedOnlyFieldListFilter),)
-    search_fields = ('name',)
-    prepopulated_fields = {}
+class GroupMetadataInline(admin.StackedInline):
+    model = GroupMetadata
+    extra = 1
     form = make_ajax_form(GroupMetadata, {'creator': 'user',
-                                          'contributor': 'user'})
+                                         'contributor': 'user'})
     fieldsets = [
-        (None, {'fields': ['group' ]}),
         (_("Metadata"),      {'fields': [('creator', 'created', 'contributor', 'modified')], 'classes': ['collapse']}),
         (_("Content"),       {'fields': [('title', 'thumbnail'), 'description']}),
     ]
+GroupAdmin.inlines = list(GroupAdmin.inlines) + [GroupMetadataInline]
+GroupAdmin.search_fields = ('name', 'metadata__description')
+
+class UserMetadataInline(admin.StackedInline):
+    model = UserMetadata
+    fieldsets = [(None,       {'fields': [ 'thumbnail', 'description']})]
+UserAdmin.inlines = [UserMetadataInline] + list(UserAdmin.inlines)
+UserAdmin.search_fields = ('username', 'metadata__description')
