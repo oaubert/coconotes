@@ -518,7 +518,7 @@ class GroupMetadata(Element):
         verbose_name = _('group metadata')
         verbose_name_plural = _('group metadata')
 
-    group = AutoOneToOneField(Group, related_name='metadata')
+    group = AutoOneToOneField(Group, related_name='metadata', unique=True)
 
 class UserMetadata(models.Model):
     DEFAULT_AVATAR = static("img/default_user.svg")
@@ -526,7 +526,7 @@ class UserMetadata(models.Model):
         verbose_name = _('user metadata')
         verbose_name_plural = _('user metadata')
 
-    user = AutoOneToOneField(User, related_name='metadata')
+    user = AutoOneToOneField(User, related_name='metadata', unique=True)
 
     description = models.TextField(_("Description"),
                                    blank=True)
