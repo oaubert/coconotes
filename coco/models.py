@@ -79,6 +79,7 @@ class AutoDateTimeField(models.DateTimeField):
 
 
 class Element(models.Model):
+    DEFAULT_AVATAR = static("img/default.png")
     class Meta:
         abstract = True
         ordering = ("-promoted", "-modified", "title")
@@ -141,7 +142,7 @@ class Element(models.Model):
         if self.thumbnail:
             return self.thumbnail.url
         else:
-            return static("img/default.png")
+            return self.DEFAULT_AVATAR
 
     def get_absolute_url(self):
         return reverse('view-%s-detail' % self.__class__.__name__.lower(), args=[str(self.slug or self.pk)])
@@ -194,6 +195,7 @@ class Resource(Element):
 
 
 class Channel(Element):
+    DEFAULT_AVATAR = static("img/default_channel.svg")
     category = models.CharField(_("Category"),
                                 blank=True,
                                 max_length=20)
@@ -222,6 +224,7 @@ class Channel(Element):
 
 
 class Chapter(Element):
+    DEFAULT_AVATAR = static("img/default_chapter.svg")
     channel = models.ForeignKey(Channel)
 
     tags = TaggableManager(blank=True, through=TaggedChapter)
@@ -242,6 +245,7 @@ class Chapter(Element):
 
 
 class Activity(Element):
+    DEFAULT_AVATAR = static("img/default_video.svg")
     chapter = models.ForeignKey(Chapter)
 
     tags = TaggableManager(blank=True, through=TaggedActivity)
@@ -260,6 +264,7 @@ class Activity(Element):
 
 
 class Video(Resource):
+    DEFAULT_AVATAR = static("img/default_video.svg")
     activity = models.ForeignKey(Activity,
                                  blank=True,
                                  null=True)
@@ -508,6 +513,7 @@ class Newsitem(Element):
 
 
 class GroupMetadata(Element):
+    DEFAULT_AVATAR = static("img/default_group.svg")
     class Meta(Element.Meta):
         verbose_name = _('group')
         verbose_name_plural = _('groups')
@@ -516,6 +522,7 @@ class GroupMetadata(Element):
 
 
 class UserMetadata(models.Model):
+    DEFAULT_AVATAR = static("img/default_user.svg")
     user = AutoOneToOneField(User)
 
     title = models.CharField(_("Title"),
@@ -528,3 +535,16 @@ class UserMetadata(models.Model):
     thumbnail = ImageField(upload_to='thumbnails',
                            blank=True,
                            null=True)
+
+    @property
+    def title(self):
+        return self.user.username
+
+    @property
+    def thumbnail_url(self):
+        """Return the thumbnail URL.
+        """
+        if self.thumbnail:
+            return self.thumbnail.url
+        else:
+            return self.DEFAULT_AVATAR
