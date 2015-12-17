@@ -13,23 +13,21 @@
           <section class="column column8" id="profile_data">
 
             <article class="capsule">
-              <img class="profile_avatar" src="{{ user.thumbnail_url|default:default_avatar }}">
+              <img class="profile_avatar" src="{{ user.metadata.thumbnail_url }}">
               <h4>{{ user.get_full_name|default:user.username }}</h4>
-              <span class="profile_status">{{ user.status }}</span>
+              <span class="profile_status">{{ user.metadata.title }}</span>
               <span class="profile_email">{{ user.email }}</span>
 
-              <div class="profile_description">{{ user.description }}</div>
+              <div class="profile_description">{{ user.metadata.description }}</div>
             </article>
 
             <h1>{% trans "My groups" %}</h1>
 
             {% for group in user.groups.all %}
             <article class="capsule">
-              {% if group.thumbnail %}
-              <img class="thumbnail_mini" src="{{ group.thumbnail_url }}">
-              {% endif %}
+              <img class="thumbnail_mini" src="{{ group.metadata.thumbnail_url }}">
               <h4><a href="/group/{{ group.pk }}/">{{ group.name }}</a></h4>
-              <div class="group_description">{{ group.description }}</div>
+              <div class="group_description">{{ group.metadata.description }}</div>
             </article>
             {% endfor %}
 
@@ -37,9 +35,7 @@
 
             {% for video in videos %}
             <article class="capsule">
-              {% if video.object.thumbnail %}
               <img class="thumbnail_mini" src="{{ video.object.thumbnail_url }}">
-              {% endif %}
               <h4><a href="{{ video.object.get_absolute_url }}">{{ video.object.title }}</a> ({{ video.object.count}})</h4>
               <div class="profile_annotation_list">
                 <ul>

@@ -11,10 +11,8 @@
 
           {% for group in group_list %}
           <article class="capsule">
-            {% if group.thumbnail_url %}
-            <img class="thumbnail_mini" src="{{ group.thumbnail_url }}">
-            {% endif %}
-            <h4><a href="{{ group.get_absolute_url }}">{{ group.name }}</a> ({{ group.user_set.count }})</h4>
+            <img class="thumbnail_mini" src="{{ group.metadata.thumbnail_url }}">
+            <h4><a href="{{ group.id }}">{{ group.name }}</a> ({{ group.user_set.count }})</h4>
           </article>
           {% endfor %}
 
