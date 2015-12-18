@@ -11,7 +11,6 @@ from .models import UserMetadata, GroupMetadata
 admin.site.register(License)
 admin.site.register(Resource)
 admin.site.register(Newsitem)
-admin.site.register(UserMetadata)
 
 class CreatorMixin(object):
     def save_model(self, request, obj, form, change):
