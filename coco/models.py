@@ -83,6 +83,7 @@ class Element(models.Model):
     class Meta:
         abstract = True
         ordering = ("-promoted", "-modified", "title")
+        get_latest_by = "modify"
 
     uuid = models.UUIDField(primary_key=True,
                             default=uuid.uuid4,
