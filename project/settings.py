@@ -46,10 +46,6 @@ if options.get('redis_cache'):
 INSTALLED_APPS = [
     'coco',
     'ajax_select',
-    'admin_tools',
-    'admin_tools.theming',
-    'admin_tools.menu',
-    'admin_tools.dashboard',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
