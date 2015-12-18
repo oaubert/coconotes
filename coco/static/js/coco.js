@@ -49,6 +49,23 @@ $(document).ready(function () {
     var user_uuid = localStorage.getItem('mla-uuid') || generateUuid();
     localStorage.setItem('mla-uuid', user_uuid);
 
+    function action_url(action, elementid) {
+        switch (action) {
+        case 'admin':
+            return '/admin/coco/annotation/' + elementid;
+            break;
+        case 'edit':
+            return "/annotation/" + elementid + "/edit/";
+            break;
+        case 'level':
+            return "/annotation/" + elementid + "/level/";
+            break;
+        case 'add_annotation':
+            return "/api/v1/annotation_add";
+            break;
+        }
+        return "/annotation/" + elementid + "#broken_action_url";
+    }
     /* Customized metadataplayer configuration */
     IriSP.libFiles.defaultDir = "../../static/libs/";
     IriSP.widgetsDir = "../../static/metadataplayer";
@@ -98,7 +115,7 @@ $(document).ready(function () {
                 type: "CocoCreateAnnotation",
                 container: "coco_annotation_input_widget",
                 annotation_type: "Contributions",
-                api_endpoint_template: "/api/v1/annotation_add",
+                api_endpoint_template: action_url("add_annotation"),
                 api_serializer: "ldt_annotate",
                 api_method: 'POST'
             },
@@ -112,7 +129,8 @@ $(document).ready(function () {
                 show_teacher_notes: false,
                 show_other_notes: false,
                 show_own_notes: true,
-                is_admin: metadata.is_admin
+                is_admin: metadata.is_admin,
+                action_url: action_url
             },
             {
                 type: "EnrichedPlan",
@@ -124,7 +142,8 @@ $(document).ready(function () {
                 show_teacher_notes: false,
                 show_other_notes: false,
                 show_own_notes: true,
-                is_admin: metadata.is_admin
+                is_admin: metadata.is_admin,
+                action_url: action_url
             }
         ].concat($("[class^=tab-group]").map(function () {
             /* Generate 1 component by defined group */
@@ -140,7 +159,8 @@ $(document).ready(function () {
                 show_teacher_notes: false,
                 show_other_notes: true,
                 show_own_notes: true,
-                is_admin: metadata.is_admin
+                is_admin: metadata.is_admin,
+                action_url: action_url
             };
         }).toArray(), [
             {
@@ -153,7 +173,8 @@ $(document).ready(function () {
                 show_teacher_notes: false,
                 show_other_notes: true,
                 show_own_notes: false,
-                is_admin: metadata.is_admin
+                is_admin: metadata.is_admin,
+                action_url: action_url
             },
             { type: "Trace",
               url: "http://comin-ocw.org/trace/",
@@ -209,7 +230,7 @@ $(document).ready(function () {
     });
 
     _myPlayer.on("Annotation.edit", function (annotation_id) {
-        var edit_url = "/annotation/" + annotation_id + "/edit/";
+        var edit_url = action_url('edit', annotation_id);
         IriSP.jQuery('<div/>', {'class': 'element-form-dialog', 'id': IriSP.generateUuid() })
             .load(edit_url, function () {
                 IriSP.jQuery(this).appendTo('body')
