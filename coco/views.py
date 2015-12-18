@@ -367,3 +367,28 @@ def annotation_edit(request, pk=None, **kw):
     elif request.method == 'DELETE':
         an.delete()
         return JsonResponse({'id': pk})
+
+
+@permission_required("slide_update")
+@require_http_methods(["GET", "POST", "DELETE"])
+def slide_level(request, pk=None, **kw):
+    an = get_object_or_404(Annotation, pk=pk)
+    if not an.is_slide:
+        return HttpResponse("Invalid slide annotation", status=405)
+    if request.method == 'GET':
+        data = an.parsed_content()
+        return JsonResponse({'level': data.get('level', 0)})
+    elif request.method == 'POST':
+        try:
+            level = json.loads(request.body.decode('utf-8'))['level']
+        except:
+            return HttpResponse("Malformed data", status=400)
+        data = an.parsed_content()
+        data['level'] = level
+        an.parsed_content(data)
+        an.save()
+        # FIXME: check how to populate django logentries
+        context = CocoContext(username=request.user.username,
+                              teacher_set=[u.username for u in an.video.activity.chapter.teachers.all()],
+                              current_group='')
+        return JsonResponse(an.cinelab(context=context))
