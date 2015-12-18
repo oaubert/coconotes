@@ -12,3 +12,5 @@ django-extensions
 Pillow
 django-annoying
 django-ajax-selects
+six
+sqlparse
