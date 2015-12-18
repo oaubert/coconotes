@@ -13,7 +13,7 @@
     {% if user.is_staff %}<div class="adminactions"><a href="{{ chapter.edit_url }}" class="editelement">&#x270f;</a></div>{% endif %}
   </h1>
 
-  <p class="chapter_channel">{{ chapter.channel }}
+  <p class="chapter_channel"><a href="{{ chapter.channel.get_absolute_url }}">{{ chapter.channel.title }}</a></p>
 
   <p class="chapter_description">{{ chapter.description }}</p>
 
