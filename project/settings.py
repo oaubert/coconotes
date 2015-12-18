@@ -16,7 +16,6 @@ SECRET_KEY = options.get('secret_key', 'no_secret_at_all_key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = options.get('development', False)
-TEMPLATE_DEBUG = options.get('development', False)
 
 ALLOWED_HOSTS = []
 
@@ -88,10 +87,29 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.request',
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            # insert your TEMPLATE_DIRS here
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.core.context_processors.request',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ],
+            'debug': options.get('development', False)
+        },
+    },
+]
+
 SITE_ID = 1
 
 RAVEN_CONFIG = {
