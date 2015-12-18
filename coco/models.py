@@ -368,6 +368,11 @@ class AnnotationType(Element):
     class Meta(Element.Meta):
         verbose_name = _('annotation type')
         verbose_name_plural = _('annotation types')
+        permissions = (
+            ("slide_update", _("Can update slide content")),
+            ("slide_delete", _("Can delete slide content")),
+            ("slide_add", _("Can add slide content")),
+        )
 
     def cinelab(self, context=None):
         """Return a cinelab serialization.
@@ -410,6 +415,10 @@ class Annotation(UserContent):
     @property
     def subtitle(self):
         return ""
+
+    @property
+    def is_slide(self):
+        return self.annotationtype.title == TYPE_SLIDES
 
     @property
     def contextualized_link(self):
