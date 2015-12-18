@@ -337,6 +337,22 @@ class UserContent(Element):
                                           help_text=_("Content visibility"),
                                           default=VISIBILITY_PRIVATE)
 
+    def parsed_content(self, value=None):
+        """Get or set value of contentdata.
+
+        In case of json contenttype, encode data appropriately
+        """
+        if value is None:
+            if self.contenttype in JSON_MIMETYPES:
+                return json.loads(self.contentdata or '{}')
+            else:
+                return self.contentdata
+        else:
+            # Setting value
+            if self.contenttype in JSON_MIMETYPES:
+                value = json.dumps(value)
+            self.contentdata = value
+
     def can_access(self, user):
         """Can the given user access this resource?
         """
