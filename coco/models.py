@@ -546,6 +546,9 @@ class GroupMetadata(Element):
 
     group = AutoOneToOneField(Group, related_name='metadata', unique=True)
 
+    def __unicode__(self):
+        return "Metadata for %s" % self.group.name
+
 class UserMetadata(models.Model):
     DEFAULT_AVATAR = static("img/default_user.svg")
     class Meta:
@@ -560,6 +563,9 @@ class UserMetadata(models.Model):
     thumbnail = ImageField(upload_to='thumbnails',
                            blank=True,
                            null=True)
+
+    def __unicode__(self):
+        return "Metadata for %s" % self.title
 
     @property
     def title(self):
