@@ -7,7 +7,7 @@ from django.contrib.auth.models import Group
 from django.http import HttpResponse, JsonResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, render
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.views.decorators.http import require_http_methods
 from django.views.generic import CreateView, UpdateView, DeleteView, RedirectView, DetailView, ListView
 from django.template.defaultfilters import pluralize
@@ -342,6 +342,7 @@ def annotation_edit(request, pk=None, **kw):
     if request.method == 'GET':
         f = AnnotationEditForm(initial={
             'begin': an.begin,
+            'title': an.title,
             'description': an.description,
             'sharing': an.visibility_as_string
             }, user=request.user, annotation=an)
@@ -355,6 +356,7 @@ def annotation_edit(request, pk=None, **kw):
         if data['begin'] < 0:
             data['begin'] = 0
         an.description = data['description']
+        an.title = data['title'] or ""
         an.begin = data['begin']
         if an.end < an.begin:
             an.end = an.begin

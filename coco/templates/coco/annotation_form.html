@@ -7,6 +7,7 @@
   {% csrf_token %}
   <div class="annotation_edit_form_content">
     <div class="annotation_edit_form_begin">{% blocktrans %}Video timecode{% endblocktrans %} {{ form.begin }}</div>
+    {{ form.title }}
     {{ form.description }}
   </div>
   <div class="annotation_edit_form_sharing">

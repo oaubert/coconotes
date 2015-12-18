@@ -5,6 +5,7 @@ from .widgets import TimecodeWidget
 
 class AnnotationEditForm(forms.Form):
     begin = forms.FloatField(widget=TimecodeWidget)
+    title = forms.CharField()
     description = forms.CharField(widget=forms.Textarea)
     sharing = forms.ChoiceField()
 
@@ -28,3 +29,5 @@ class AnnotationEditForm(forms.Form):
         # self.fields['begin'].max_value = [video].duration
         # Restrict group field choices to user groups
         self.fields['sharing'].choices = self.sharing_choices(self.user)
+        if self.annotation and not self.annotation.title:
+            self.fields['title'].widget.attrs['class'] = 'hide_element'

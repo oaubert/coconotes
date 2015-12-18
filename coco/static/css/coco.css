@@ -167,6 +167,10 @@ header {
     border-color: #66ccff !important;
 }
 
+.hide_element {
+    display: none;
+}
+
 .topmenu {
     position: absolute;
     left: 0;
