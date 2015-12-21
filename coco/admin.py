@@ -43,7 +43,10 @@ class ElementAdmin(AjaxSelectAdmin, CreatorMixin, admin.ModelAdmin):
     list_select_related = True
 
     def object_link(self, item):
-        return u'<a target="_blank" href="{url}">\u25ce</a>'.format(url=item.get_absolute_url())
+        try:
+            return u'<a target="_blank" href="{absurl}">\u25ce</a> <a target="_blank" href="{url}">\u21eb</a>'.format(absurl=item.get_absolute_url(), url=item.url)
+        except AttributeError:
+            return u'<a target="_blank" href="{absurl}">\u25ce</a>'.format(absurl=item.get_absolute_url())
     object_link.short_description = 'View'
     object_link.allow_tags = True
 
