@@ -200,7 +200,7 @@ class Command(BaseCommand):
                 if m:
                     creator = contributor = m.group(2)
                     if m.group(1) is not None:
-                        tags.append(m.group(1).strip(',').strip())
+                        tags.append(m.group(1).strip(',').strip().lower())
                     description = m.group(3).strip()
                 an = Annotation(creator=get_user(creator, context=a['meta']['id-ref']),
                                 contributor=get_user(contributor, context=a['meta']['id-ref']),
@@ -230,7 +230,7 @@ class Command(BaseCommand):
                                 an.thumbnail.save(os.path.basename(pic), File(f))
                 an.save()
                 for t in tags:
-                    an.tags.add(t)
+                    an.tags.add(t.lower())
 
     @register
     def _postnews(self, title, subtitle, data):
