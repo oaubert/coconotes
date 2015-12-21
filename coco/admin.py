@@ -198,6 +198,7 @@ GroupAdmin.search_fields = ('name', 'metadata__description')
 
 class UserMetadataInline(admin.StackedInline):
     model = UserMetadata
-    fieldsets = [(None,       {'fields': [ 'thumbnail', 'description']})]
+    fieldsets = [(None,       {'fields': [ ('thumbnail', 'description') ]})]
 UserAdmin.inlines = [UserMetadataInline] + list(UserAdmin.inlines)
 UserAdmin.search_fields = ('username', 'metadata__description')
+
