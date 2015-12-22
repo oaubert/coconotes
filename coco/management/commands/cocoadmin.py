@@ -8,6 +8,7 @@ import urllib
 import logging
 import dateutil.parser
 
+from django.db.models import Q
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import User, Group
 from django.core.files import File
@@ -250,6 +251,20 @@ class Command(BaseCommand):
         for username in names:
             u = get_user(username)
             g.user_set.add(u)
+
+    @register
+    def loremipsum(self):
+        """Fill data with loremipsum gibberish
+        """
+        from loremipsum import Generator
+        gen = Generator(dictionary=[ unicode(u.strip(), 'utf8') for u in open('/usr/share/dict/french').readlines() ])
+        for g in Group.objects.filter(Q(metadata__description="") | Q(metadata__description__isnull=True)):
+            g.metadata.description = gen.generate_sentence()[2]
+            g.metadata.save()
+        for o in Channel.objects.filter(Q(description="") | Q(description__isnull=True)):
+        #for o in Video.objects.all():
+            o.description = gen.generate_paragraph()[2]
+            o.save()
 
     @register
     def check(self):
