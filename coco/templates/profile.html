@@ -21,17 +21,7 @@
               <div class="profile_description">{{ user.metadata.description }}</div>
             </article>
 
-            <h1>{% trans "My groups" %}</h1>
-
-            {% for group in user.groups.all %}
-            <article class="capsule">
-              <img class="thumbnail_mini" src="{{ group.metadata.thumbnail_url }}">
-              <h4><a href="/group/{{ group.pk }}/">{{ group.name }}</a></h4>
-              <div class="group_description">{{ group.metadata.description }}</div>
-            </article>
-            {% endfor %}
-
-            <h1>{% trans "My latest notes" %} ({{ annotationscount }})</h1>
+            <h2>{% trans "My latest notes" %} ({{ annotationscount }})</h2>
 
             {% for video in videos %}
             <article class="capsule">
@@ -53,23 +43,19 @@
 
             <section class="profile_info">
 
-              <h1>{% trans "Suggestions" %}</h1>
+            <h2>{% trans "My groups" %}</h2>
 
-              <article class="capsule">
-                <h4><a href="player.html">Cours: 2.4 Les types des pronoms</a></h4>
-                <span class="capsule_description">Marie: anyone has an exercice to practice this?<br/>Pierre: I do! www.exercices.com</span>
-              </article>
-
-              <article class="capsule">
-                <h4><a href="player.html">Séminaire: research in biogenetics</a></h4>
-                <span class="capsule_description">Marie: this resource shows it<br/> Pierre: news! I just tested it...</span>
-              </article>
-
-            </section>
+            {% for group in user.groups.all %}
+            <article class="capsule">
+              <img class="thumbnail_mini" src="{{ group.metadata.thumbnail_url }}">
+              <h4><a href="/group/{{ group.pk }}/">{{ group.name }}</a></h4>
+              <div class="group_description">{{ group.metadata.description }}</div>
+            </article>
+            {% endfor %}
 
             <section class="profile_info">
 
-              <h1>{% trans "Last viewed" %}</h1>
+              <h2>{% trans "Last viewed" %}</h2>
 
               <article class="capsule">
                 <h4><a href="player.html">Cours: 2.4 Les types des pronoms</a></h4>
