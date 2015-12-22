@@ -125,10 +125,10 @@ $(document).ready(function () {
                 annotation_type: "Slides",
                 annotation_types: [ "Contributions" ],
                 show_controls: true,
-                show_slides: false,
-                show_teacher_notes: false,
+                show_slides: true,
+                show_teacher_notes: true,
                 show_other_notes: false,
-                show_own_notes: true,
+                show_own_notes: false,
                 is_admin: metadata.is_admin,
                 action_url: action_url
             },
@@ -143,7 +143,8 @@ $(document).ready(function () {
                 show_other_notes: false,
                 show_own_notes: true,
                 is_admin: metadata.is_admin,
-                action_url: action_url
+                action_url: action_url,
+                flat_mode: true
             }
         ].concat($("[class^=tab-group]").map(function () {
             /* Generate 1 component by defined group */
@@ -159,6 +160,7 @@ $(document).ready(function () {
                 show_teacher_notes: false,
                 show_other_notes: true,
                 show_own_notes: true,
+                flat_mode: true,
                 is_admin: metadata.is_admin,
                 action_url: action_url
             };
@@ -173,6 +175,7 @@ $(document).ready(function () {
                 show_teacher_notes: false,
                 show_other_notes: true,
                 show_own_notes: false,
+                flat_mode: true,
                 is_admin: metadata.is_admin,
                 action_url: action_url
             },
