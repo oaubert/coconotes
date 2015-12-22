@@ -59,6 +59,7 @@ INSTALLED_APPS = [
 
     # The Django sites framework is required by allauth
     'django.contrib.sites',
+    'django.contrib.humanize',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

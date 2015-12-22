@@ -3,7 +3,7 @@
 {% load i18n %}
 {% load coco %}
 {% load admin_urls %}
-
+{% load humanize %}
 
 {% block title %}{% blocktrans %}COCo platform{% endblocktrans %} - {{ user.username }}{% endblock %}
 
@@ -31,7 +31,7 @@
             </article>
             {% endfor %}
 
-            <h1>{% trans "My notes" %} ({{ annotationscount }})</h1>
+            <h1>{% trans "My latest notes" %} ({{ annotationscount }})</h1>
 
             {% for video in videos %}
             <article class="capsule">
@@ -40,7 +40,7 @@
               <div class="profile_annotation_list">
                 <ul>
                   {% for a in video.latest_annotations %}
-                  <li><a href="{{ a.contextualized_link }}"><span class="profile_annotation_timecode">{{ a.begin|format_timecode:"short" }}</span> - <span class="profile_annotation_title">{{ a.title_or_description }}</span></a></li>
+                  <li><a href="{{ a.contextualized_link }}"><span class="profile_annotation_timecode">{{ a.begin|format_timecode:"short" }}</span> - <span class="profile_annotation_title">{{ a.title_or_description }}</span></a> {% blocktrans %}modified{% endblocktrans %} {{ a.modified|naturaltime }}</li>
                   {% endfor %}
                 </ul>
               </div>
