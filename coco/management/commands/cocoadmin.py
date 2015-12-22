@@ -189,6 +189,8 @@ class Command(BaseCommand):
                 visibility = VISIBILITY_PRIVATE
                 if group is not None:
                     visibility = VISIBILITY_GROUP
+                    # Use "Contributions" type since we now have the group information
+                    at = ats['at_contributions']
                 if at.title not in ('Quiz', 'QuizPerso', 'Slides', 'Partie'):
                     description = description or title
                     title = ""
@@ -196,7 +198,7 @@ class Command(BaseCommand):
                     visibility = VISIBILITY_PUBLIC
                     creator = 'admin'
                     contributor = 'admin'
-                m = re.match("^\[(\w+,)?(\w+)](.*)", description)
+                m = re.match("^\[([\w-]+,)?(\w+)](.*)", description)
                 if m:
                     creator = contributor = m.group(2)
                     if m.group(1) is not None:
