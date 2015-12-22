@@ -808,6 +808,11 @@ h1.highlighted {
 .newsitem {
     margin-bottom: 20px;
 }
+.news_published {
+    font-size: 10px;
+    font-weight: normal;
+}
+
 .latest_videos {
     display: block;
     position: relative;

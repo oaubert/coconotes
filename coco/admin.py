@@ -10,7 +10,6 @@ from .models import UserMetadata, GroupMetadata
 
 admin.site.register(License)
 admin.site.register(Resource)
-admin.site.register(Newsitem)
 
 class CreatorMixin(object):
     def save_model(self, request, obj, form, change):
@@ -202,3 +201,15 @@ class UserMetadataInline(admin.StackedInline):
 UserAdmin.inlines = [UserMetadataInline] + list(UserAdmin.inlines)
 UserAdmin.search_fields = ('username', 'metadata__description')
 
+@admin.register(Newsitem)
+class NewsitemAdmin(ElementAdmin):
+    list_display = ('pk', 'title', 'description', 'published', 'creator', 'created',)
+    list_editable = ('title', 'description', 'published')
+    list_display_links = ('pk',)
+    list_filter = (('creator', admin.RelatedOnlyFieldListFilter),)
+    search_fields = ('title', 'description')
+
+    form = make_ajax_form(Newsitem, {'creator': 'user',
+                                     'contributor': 'user'})
+    fieldsets = [(None,               {'fields': [('published'), ('title', 'thumbnail'), 'description', 'slug']}),
+                 (_("Metadata"),      {'fields': [('creator', 'created', 'contributor', 'modified')], 'classes': ['collapse']})]
