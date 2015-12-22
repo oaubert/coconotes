@@ -19,6 +19,19 @@
               <span class="profile_email">{{ user.email }}</span>
 
               <div class="profile_description">{{ user.metadata.description }}</div>
+              {% if user.teacher_for.count %}
+              <div class="teacher_info">
+                {% blocktrans %}You are a teacher for the following chapters :{% endblocktrans %}
+                <ul>
+                  {% for c in user.teacher_for.all %}
+                  <li><a href="{{ c.get_absolute_url }}">{{ c.title }}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% endif %}
+              {% if user.is_staff %}
+              {% blocktrans %}You are an administrator, you can access the <a href="/admin">administration interface</a>.{% endblocktrans %}
+              {% endif %}
             </article>
 
             <h2>{% trans "My latest notes" %} ({{ annotationscount }})</h2>
