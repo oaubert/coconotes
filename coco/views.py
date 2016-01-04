@@ -363,7 +363,7 @@ def annotation_edit(request, pk=None, **kw):
         an.save()
         # FIXME: check how to populate django changelist
         context = CocoContext(username=request.user.username,
-                              teacher_set=[u.username for u in an.video.activity.chapter.teachers.all()],
+                              teacher_set=[t.username for t in an.video.activity.chapter.teachers.all()],
                               current_group='')
         return JsonResponse(an.cinelab(context=context))
     elif request.method == 'DELETE':
