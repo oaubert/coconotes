@@ -378,14 +378,18 @@ def slide_level(request, pk=None, **kw):
     if not an.is_slide:
         return HttpResponse("Invalid slide annotation", status=405)
     if request.method == 'GET':
-        data = an.parsed_content()
-        return JsonResponse({'level': data.get('level', 0)})
+        data = an.parsed_content() or {}
+        return JsonResponse({'level': data.get('level', 1)})
     elif request.method == 'POST':
         try:
             level = json.loads(request.body.decode('utf-8'))['level']
         except:
             return HttpResponse("Malformed data", status=400)
-        data = an.parsed_content()
+        if not an.contentdata:
+            data = {}
+            an.contenttype = "application/json"
+        else:
+            data = an.parsed_content()
         data['level'] = level
         an.parsed_content(data)
         an.save()
