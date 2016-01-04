@@ -167,6 +167,11 @@ class Element(models.Model):
     def element_information(self):
         return self.element_type
 
+    def can_access(self, user):
+        """Can the given user access this resource?
+        """
+        return True
+
 class License(models.Model):
     slug = models.SlugField(max_length=16,
                             null=True, unique=True, blank=True)
