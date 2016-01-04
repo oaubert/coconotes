@@ -84,7 +84,7 @@
     <div class="content">
       <h5><span class="searchcapsule_type">{{ item.element_type }}</span> <a title="{{ item.title }}" href="{{ item.get_absolute_url }}">{{ item.title }}</a></h5>
       <span class="description">{{ item.description|truncatechars_html:300 }}</span>
-      <span class="detail">{{ item.element_description }}</span>
+      <span class="detail">{{ item.element_information }}</span>
     </div>
   </article>
   {% empty %}

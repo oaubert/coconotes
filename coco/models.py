@@ -6,6 +6,7 @@ from django.db import models
 from django.contrib.auth.models import User, Group
 from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
+from django.template.defaultfilters import pluralize
 from django.utils.translation import ugettext_lazy as _
 
 from annoying.fields import AutoOneToOneField
@@ -163,6 +164,8 @@ class Element(models.Model):
     def title_or_description(self):
         return self.title or self.description.splitlines()[0]
 
+    def element_information(self):
+        return self.element_type
 
 class License(models.Model):
     slug = models.SlugField(max_length=16,
@@ -218,11 +221,11 @@ class Channel(Element):
 
     @property
     def subtitle(self):
-        return self.category
+       return self.category
 
-    def element_description(self):
-        return _("Channel of %d videos") % len(self.videos)
-
+    def element_information(self):
+        n = len(self.videos)
+        return _("Channel of %d video%s") % (n, pluralize(n))
 
 class Chapter(Element):
     DEFAULT_AVATAR = static("img/default_chapter.svg")
@@ -244,6 +247,15 @@ class Chapter(Element):
     def subtitle_link(self):
         return self.channel.get_absolute_url()
 
+    @property
+    def videos(self):
+        """Videos associated with the chapter.
+        """
+        return Video.objects.filter(activity__chapter=self)
+
+    def element_information(self):
+        n = len(self.videos)
+        return _("Chapter of %d video%s") % (n, pluralize(n))
 
 class Activity(Element):
     DEFAULT_AVATAR = static("img/default_video.svg")
