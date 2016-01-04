@@ -245,7 +245,9 @@ def search(request, **kw):
     elements = []
 
     for model, fields in MODEL_MAP.iteritems():
-        elements += generic_search(request, model, fields, 'q')
+        elements += [ el
+                      for el in generic_search(request, model, fields, 'q')
+                      if el.can_access(request.user) ]
 
     counts = Counter(el.element_type for el in elements)
     # Reorder counter info to match MODEL_MAP key order
