@@ -745,7 +745,8 @@ h1.highlighted {
     font-size: 14px;
 }
 
-.minicapsule .detail {
+.minicapsule .detail,
+.searchcapsule .detail {
     display: block;
     font-family: Roboto;
     text-transform: uppercase;
