@@ -234,10 +234,8 @@ MODEL_MAP = OrderedDict((
     (Channel, ["title", "description", "category", "syllabus"]),
     (Video, ["title", "description"]),
     (Chapter, ["title", "description"]),
-    (Activity, ["title", "description"]),
     (Annotation, ["title", "description", "contentdata"]),
     (Comment, ["title", "description", "contentdata"]),
-    (Newsitem, ["title", "description", "category"]),
 ))
 
 
