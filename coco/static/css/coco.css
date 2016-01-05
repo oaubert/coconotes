@@ -620,6 +620,12 @@ h1.highlighted {
     text-transform: uppercase;
 }
 
+.minicapsule h4 {
+    color: #000;
+    max-width: 100%;
+    width: 100%;
+}
+
 .capsule h5, .capsule h5 a, .minicapsule h5 {
     font-family: Roboto;
     font-variant: small-caps;
@@ -691,13 +697,6 @@ h1.highlighted {
 }
 .la_une .minicapsule:nth-of-type(1) img {
     max-height: 212px;
-}
-
-.minicapsule h4 {
-    font-size: 100%;
-    color: #000;
-    max-width: 100%;
-    width: 100%;
 }
 
 .multiline_ellipsis {
