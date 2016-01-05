@@ -224,6 +224,11 @@ class Command(BaseCommand):
                 elif 'level' in a['content']:
                     an.contenttype = 'application/json'
                     an.contentdata = json.dumps({'level': a['content']['level']})
+                elif at.title == 'Slides':
+                    # Enforce level 1
+                    an.contenttype = 'application/json'
+                    an.contentdata = json.dumps({'level': 1})
+
                 if 'img' in a['content']:
                     img = a['content']['img']['src']
                     if ('note.png' not in img and 'contribution.svg' not in img):
