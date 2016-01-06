@@ -550,6 +550,9 @@ class Newsitem(Element):
                                      help_text=_('Publication date'),
                                      null=True, editable=True)
 
+    def get_absolute_url(self):
+        return "%s#%s" % (reverse('view-newsitem-list'), self.pk)
+
     @property
     def subtitle(self):
         return self.category

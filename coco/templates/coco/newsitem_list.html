@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load admin_urls %}
+{% load humanize %}
+
+{% block title %}{% blocktrans %}COCo platform{% endblocktrans %} - {% blocktrans %}News{% endblocktrans %}{% endblock %}
+
+{% block content %}
+
+<div class="newsitem_list">
+{% for item in object_list %}
+<article class="newsitem" id="{{item.uuid}}">
+  <h5>{{ item.subtitle }}</h5>
+  <h4>{{ item.title }} <span class="news_published">{{ item.published|naturaltime }}</span></h4>
+  {% if item.thumbnail %}
+  <img src="{{ item.thumbnail.url }}">
+  {% endif %}
+  <span class="description">{{ item.description }}</span>
+</article>
+{% empty %}
+{% blocktrans %}No news is good news.{% endblocktrans %}
+{% endfor %}
+</div>
+
+{% endblock %}

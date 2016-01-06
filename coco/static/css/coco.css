@@ -804,10 +804,21 @@ h1.highlighted {
     font-size: 11px;
     line-height: 18px;
 }
+.newsitem:hover,
+.newsitem:target {
+    background-color: #cfcfcf;
+}
 
 .newsitem {
     margin-bottom: 20px;
 }
+.newsitem_list {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    max-width: 60em;
+}
+
 .news_published {
     font-size: 10px;
     font-weight: normal;
