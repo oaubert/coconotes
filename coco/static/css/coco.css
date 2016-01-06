@@ -66,6 +66,7 @@ header {
 }
 #main {
     margin: 0;
+    margin-top: 6px;
     height: 100%;
     background-color: #fff;
 }
@@ -207,6 +208,7 @@ h1.pagetitle, .column h1, #main h1 {
     font-size: 32px;
     width: 100%;
     text-transform: uppercase;
+    padding-bottom: 10px;
 }
 h1.highlighted {
     border-bottom: 6px solid #6cf;
@@ -218,6 +220,7 @@ h1.highlighted {
     font-size: 21px;
     text-transform: uppercase;
     margin-top: 40px;
+    padding-bottom: 10px;
 }
 
 #home_content {
@@ -799,6 +802,7 @@ h1.highlighted {
     color: #6cf;
     text-transform: uppercase;
     text-decoration: underline;
+    margin-left: .5em;
 }
 .newsitem .description {
     font-size: 11px;
