@@ -801,7 +801,7 @@ h1.highlighted {
     font-size: 11px;
     color: #6cf;
     text-transform: uppercase;
-    text-decoration: underline;
+    text-decoration: none;
     margin-left: .5em;
 }
 .newsitem .description {
