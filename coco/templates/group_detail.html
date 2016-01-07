@@ -2,55 +2,64 @@
 
 {% load i18n %}
 {% load admin_urls %}
-
+{% load humanize %}
 
 {% block title %}{% blocktrans %}COCo platform{% endblocktrans %} - {% blocktrans %}Group{% endblocktrans %} {{ group.name }}{% endblock %}
 
 {% block content %}
-          <section class="column column3">
+<h1>{% trans "My groups" %}</h1>
 
-            <h1>{% trans "My groups" %}</h1>
+<section class="column column3">
 
-            {% for group in user.groups.all %}
-            <article class="capsule">
-              <img class="thumbnail_mini" src="{{ group.metadata.thumbnail_url }}">
-              <h4><a href="../{{ group.id }}">{{ group.name }}</a></h4>
-              <div class="group_description">{{ group.metadata.description }}</div>
-            </article>
-            {% endfor %}
+  {% for group in user.groups.all %}
+  <article class="infoblock">
+    <img class="thumbnail_mini" src="{{ group.metadata.thumbnail_url }}">
+    <h4><a href="../{{ group.id }}">{{ group.name }}</a></h4>
+    <div class="group_description">{{ group.metadata.description }}</div>
+  </article>
+  {% endfor %}
 
-          </section>
+</section>
 
-          <section class="column column6">
-            <h1>{% trans "Group" %} {{ group.name }}</h1>
+<section class="column column3">
+  <h1>{% trans "Group" %} {{ group.name }}</h1>
 
-            <article class="capsule">
-              <img class="thumbnail_mini" src="{{ group.metadata.thumbnail_url }}">
-              <p>{{ group.metadata.description }} created by {{ group.metadata.creator.username }}</p>
-            </article>
+  <article class="infoblock">
+    <img class="thumbnail_mini" src="{{ group.metadata.thumbnail_url }}">
+    <p>created by {{group.metadata.creator.username|default:"admin"}}</p>
+    <p>{{ group.metadata.description|default:"No description" }}</p>
+  </article>
 
-            <h1>{% trans "Activity" %}</h1>
+  <h1>{% trans "Members" %}</h1>
 
-            {% for c in group.comment_set.all %}
-            <article class="capsule">
-              <h4>{{ c.title|default:c.description }}</h4>
-              <div class="description">{{ c.description }}</div>
-            </article>
-            {% endfor %}
+  {% for u in group.user_set.all %}
+  <article class="infoblock">
+    <img class="thumbnail_mini" src="{{ u.metadata.thumbnail_url }}">
+    <h4>{{ u.get_full_name|default:u.username }}</h4>
+    <div class="description"></div>
+  </article>
+  {% endfor %}
+</section>
 
+<section class="column column6 group_activity_column">
+  <h1>{% trans "Activity" %}</h1>
 
-          </section>
+    <ul class="profile_recent_activity">
+      {% for a in group.metadata.annotations %}
+      <li>{% if a.is_updated %}
+        {% blocktrans with user=a.contributor %}{{user}} modified the annotation{% endblocktrans %}
+        {% else %}
+        {% blocktrans with user=a.creator%}{{user}} created the annotation{% endblocktrans %}
+        {% endif %}
+        <a class="annotation-link" href="{{a.contextualized_link}}">{{a}}</a>
+        {% blocktrans %}on{% endblocktrans %}
+        <a href="{{a.video.get_absolute_url}}">{{a.video.title_or_description}}</a> {{a.modified|naturaltime}}</li>
+      {% empty %}
+      {% blocktrans %}The group does not have much activity yet.{% endblocktrans %}
+      {% endfor %}
+    </ul>
 
-          <section class="column column3">
-            <h1>{% trans "Members" %}</h1>
+</section>
 
-            {% for u in group.user_set.all %}
-            <article class="capsule">
-              <img class="thumbnail_mini" src="{{ u.metadata.thumbnail_url }}">
-              <h4>{{ u.get_full_name|default:u.username }}</h4>
-              <div class="description"></div>
-            </article>
-            {% endfor %}
-          </section>
 
 {% endblock %}

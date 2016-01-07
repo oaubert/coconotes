@@ -5,6 +5,7 @@ import json
 import uuid
 
 from django.db import models
+from django.db.models import Q
 from django.contrib.auth.models import User, Group
 from django.core.urlresolvers import reverse
 from django.contrib.staticfiles.templatetags.staticfiles import static
@@ -325,7 +326,7 @@ class Video(Resource):
         return self.activity.chapter.channel
 
     def latest_annotations(self, username, count=50):
-        return self.annotation_set.filter(models.Q(creator__username=username) | models.Q(contributor__username=username)).order_by('-modified')[:count]
+        return self.annotation_set.filter(Q(creator__username=username) | Q(contributor__username=username)).order_by('-modified')[:count]
 
     def cinelab(self, context=None):
         """Return a cinelab serialization.
@@ -573,6 +574,10 @@ class GroupMetadata(Element):
 
     group = AutoOneToOneField(Group, related_name='metadata', unique=True)
 
+    @property
+    def annotations(self):
+        return Annotation.objects.filter(group=self.group).filter(Q(visibility=VISIBILITY_PUBLIC) | Q(visibility=VISIBILITY_GROUP)).order_by("-modified")
+
     def __unicode__(self):
         return "Metadata for %s" % self.group.name
 
@@ -609,7 +614,7 @@ class UserMetadata(models.Model):
 
     @property
     def annotations(self):
-        return Annotation.objects.filter(models.Q(creator=self.user) | models.Q(contributor=self.user))
+        return Annotation.objects.filter(Q(creator=self.user) | Q(contributor=self.user))
 
     def latest_annotations(self, count=50):
         """Return the latest n annotations.

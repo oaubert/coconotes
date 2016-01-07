@@ -639,14 +639,19 @@ h1.highlighted {
     max-width: 100%;
 }
 
+.infoblock {
+    display: flex;
+    flex-direction: column;
+}
+
+.infoblock h2 {
+    margin-top: 4px;
+}
+
 .profile_left .infoblock:first-child,
 .profile_right .infoblock:first-child {
     background-color: #ddd;
     height: 300px;
-}
-
-.profile_right .infoblock:first-child {
-    margin-top: -40px;
 }
 
 .profile_avatar {
@@ -657,7 +662,7 @@ h1.highlighted {
     padding-right: .5em;
 }
 
-.capsule .thumbnail_mini {
+.infoblock .thumbnail_mini {
     width: 20%;
     min-width: 48px;
     max-width: 128px;
@@ -668,6 +673,11 @@ h1.highlighted {
 .group_profile {
     padding-top: 1em;
     text-align: center;
+}
+
+.group_activity_column {
+    max-height: calc(100% - 84px);
+    overflow-y: auto;
 }
 
 .group_profile img {
