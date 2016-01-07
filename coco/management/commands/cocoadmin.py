@@ -287,8 +287,10 @@ class Command(BaseCommand):
         # Check that all slides content is application/json type
         noncompliant_slides = Annotation.objects.filter(annotationtype__title=TYPE_SLIDES).exclude(contenttype='application/json')
         if noncompliant_slides.count():
-            self.stdout.write("There are slides with non JSON content type")
+            self.stdout.write("There are slides with non JSON content type:\n" +
+                              "\n".join("[%s] %s" % (a.contenttype, a.contentdata) for a in noncompliant_slides))
             if fixup:
+                # Fixup only slides with empty contentdata
                 noncompliant_slides.filter(contentdata="").update(contenttype="application/json",
                                                                   contentdata="{}")
 
