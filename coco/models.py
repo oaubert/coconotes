@@ -638,6 +638,6 @@ class UserMetadata(models.Model):
                                                                      lambda a: a.video)
                 ]
             }
-            for channel, annotations in itertools.groupby(self.annotations.order_by('video__activity__chapter__channel', 'video'),
+            for channel, annotations in itertools.groupby(self.annotations.select_related().order_by('video__activity__chapter__channel', 'video'),
                                                           lambda a: a.video.activity.chapter.channel)
         ]
