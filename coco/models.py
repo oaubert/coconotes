@@ -16,6 +16,8 @@ from sorl.thumbnail import ImageField
 
 from fields import SlugOrNullField
 
+from .templatetags.coco import format_timecode
+
 TYPE_SLIDES = 'Slides'
 
 # Monkeypatch support for serializing uuids to json. This allows it to
@@ -150,7 +152,7 @@ class Element(models.Model):
         return reverse('view-%s-detail' % self.__class__.__name__.lower(), args=[str(self.slug or self.pk)])
 
     def __unicode__(self):
-        return u"%s (%s)" % (self.title,
+        return u"%s (%s)" % (self.title_or_description,
                              self.__class__.__name__)
     @property
     def edit_url(self):
@@ -226,11 +228,11 @@ class Channel(Element):
 
     @property
     def subtitle(self):
-       return self.category
+        return _("Channel")
 
     def element_information(self):
         n = len(self.videos)
-        return _("Channel of %d video%s") % (n, pluralize(n))
+        return _("Channel - %d video%s") % (n, pluralize(n))
 
 class Chapter(Element):
     DEFAULT_AVATAR = static("img/default_chapter.svg")
@@ -246,11 +248,7 @@ class Chapter(Element):
 
     @property
     def subtitle(self):
-        return self.channel.title
-
-    @property
-    def subtitle_link(self):
-        return self.channel.get_absolute_url()
+        return _("Chapter")
 
     @property
     def videos(self):
@@ -260,7 +258,7 @@ class Chapter(Element):
 
     def element_information(self):
         n = len(self.videos)
-        return _("Chapter of %d video%s") % (n, pluralize(n))
+        return _("Chapter - %d video%s") % (n, pluralize(n))
 
 class Activity(Element):
     DEFAULT_AVATAR = static("img/default_video.svg")
@@ -301,11 +299,14 @@ class Video(Resource):
 
     @property
     def subtitle(self):
-        return self.activity.title
+        return _("Video")
 
     @property
     def subtitle_link(self):
         return self.activity.get_absolute_url()
+
+    def element_information(self):
+        return format_timecode(self.duration)
 
     @property
     def has_slides(self):
