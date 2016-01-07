@@ -182,8 +182,8 @@ class Command(BaseCommand):
                 self.stdout.write(".", ending="")
                 self.stdout.flush()
                 tags = []
-                creator = a['meta']['dc:creator']
-                contributor = a['meta']['dc:contributor']
+                creator = get_user(a['meta']['dc:creator'])
+                contributor = get_user(a['meta']['dc:contributor'])
                 title = a['content']['title']
                 description = a['content']['description']
                 group = get_group(a['meta']['id-ref'])
@@ -192,21 +192,22 @@ class Command(BaseCommand):
                     visibility = VISIBILITY_GROUP
                     # Use "Contributions" type since we now have the group information
                     at = ats['at_contributions']
-                if at.title not in ('Quiz', 'QuizPerso', 'Slides', 'Partie'):
+                if at.title not in ('Quiz', 'QuizPerso', TYPE_SLIDES, 'Partie'):
                     description = description or title
                     title = ""
-                if at.title in ('Quiz', 'Slides', 'Partie'):
+                if at.title in ('Quiz', TYPE_SLIDES, 'Partie'):
                     visibility = VISIBILITY_PUBLIC
-                    creator = 'admin'
-                    contributor = 'admin'
+                    creator = contributor = get_user('admin')
                 m = re.match("^\[([\w-]+,)?(\w+)](.*)", description)
                 if m:
-                    creator = contributor = m.group(2)
+                    creator = contributor = get_user(m.group(2), context=a['meta']['id-ref'])
                     if m.group(1) is not None:
                         tags.append(m.group(1).strip(',').strip().lower())
                     description = m.group(3).strip()
-                an = Annotation(creator=get_user(creator, context=a['meta']['id-ref']),
-                                contributor=get_user(contributor, context=a['meta']['id-ref']),
+                if group and not creator in group.user_set.all():
+                    group.user_set.add(creator)
+                an = Annotation(creator=creator,
+                                contributor=contributor,
                                 created=convert_date(dateutil.parser.parse(a['meta']['dc:created'])),
                                 modified=convert_date(dateutil.parser.parse(a['meta']['dc:modified'])),
                                 annotationtype=at,
@@ -224,7 +225,7 @@ class Command(BaseCommand):
                 elif 'level' in a['content']:
                     an.contenttype = 'application/json'
                     an.contentdata = json.dumps({'level': a['content']['level']})
-                elif at.title == 'Slides':
+                elif at.title == TYPE_SLIDES:
                     # Enforce level 1
                     an.contenttype = 'application/json'
                     an.contentdata = json.dumps({'level': 1})
