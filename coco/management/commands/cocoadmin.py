@@ -273,14 +273,34 @@ class Command(BaseCommand):
             o.save()
 
     @register
-    def check(self):
+    def check(self, fixup=False):
         """Check information consistency
         """
         # Check that all slides annotation are public
-        private_slides = Annotation.objects.filter(annotationtype__title=TYPE_SLIDES).exclude(visibility=VISIBILITY_PUBLIC).values('video').distinct().values_list('video', flat=True)
-        if private_slides:
+        private_slides = Annotation.objects.filter(annotationtype__title=TYPE_SLIDES).exclude(visibility=VISIBILITY_PUBLIC).values('video').distinct()
+        if private_slides.count():
             self.stdout.write("There are non-public slides on the following videos:\n" +
-                              "\n".join(unicode(v) for v in Video.objects.in_bulk(private_slides).values()))
+                              "\n".join(unicode(v) for v in Video.objects.in_bulk(private_slides.values_list('video', flat=True)).values()))
+            if fixup:
+                private_slides.update(visibility=VISIBILITY_PUBLIC)
+
+        # Check that all slides content is application/json type
+        noncompliant_slides = Annotation.objects.filter(annotationtype__title=TYPE_SLIDES).exclude(contenttype='application/json')
+        if noncompliant_slides.count():
+            self.stdout.write("There are slides with non JSON content type")
+            if fixup:
+                noncompliant_slides.filter(contentdata="").update(contenttype="application/json",
+                                                                  contentdata="{}")
+
+        anon = get_user('anonyme')
+        # Check that users that created group annotations are present in groups
+        for g in Group.objects.all():
+            users = set( a.creator for a in g.annotation_set.all() ) - {anon}
+            for u in users:
+                if not u in g.user_set.all():
+                    self.stdout.write("User %s not in group %s but created group annotations" % (u.username, g.name))
+                if fixup:
+                    g.user_set.add(u)
 
     def handle(self, *args, **options):
         self.help = self.help + "\n\n" + "\n\n".join("\t%s: %s" % (k, v.__doc__) for (k, v) in REGISTERED.items())
