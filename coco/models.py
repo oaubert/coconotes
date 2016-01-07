@@ -239,7 +239,10 @@ class Channel(Element):
 
     def element_information(self):
         n = len(self.videos)
-        return _("Channel - %d video%s") % (n, pluralize(n))
+        return _("Channel - %(count)d %(name)s") % {
+            'count': n,
+            'name': pluralize(n, _("video,videos"))
+        }
 
 class Chapter(Element):
     DEFAULT_AVATAR = static("img/default_chapter.svg")
@@ -265,7 +268,10 @@ class Chapter(Element):
 
     def element_information(self):
         n = len(self.videos)
-        return _("Chapter - %d video%s") % (n, pluralize(n))
+        return _("Chapter - %(count)d %(name)s") % {
+            'count': n,
+            'name': pluralize(n, _("video,videos"))
+        }
 
 class Activity(Element):
     DEFAULT_AVATAR = static("img/default_video.svg")
