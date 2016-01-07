@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.models import Group
 from django.contrib.auth.admin import GroupAdmin, UserAdmin
 
 from ajax_select.admin import AjaxSelectAdmin
@@ -183,6 +184,10 @@ class CommentAdmin(ElementAdmin):
         (None, {'fields': ['group', ('parent_annotation', 'parent_video', 'parent_comment')]}),
     ] + USERCONTENT_FIELDSETS + ELEMENT_FIELDSETS
 
+class UserInline(admin.TabularInline):
+    model = Group.user_set.related.through
+    extra = 0
+
 class GroupMetadataInline(admin.StackedInline):
     model = GroupMetadata
     extra = 1
@@ -192,7 +197,7 @@ class GroupMetadataInline(admin.StackedInline):
         (_("Metadata"),      {'fields': [('creator', 'created', 'contributor', 'modified')], 'classes': ['collapse']}),
         (_("Content"),       {'fields': [('title', 'thumbnail'), 'description']}),
     ]
-GroupAdmin.inlines = list(GroupAdmin.inlines) + [GroupMetadataInline]
+GroupAdmin.inlines = [GroupMetadataInline, UserInline] + list(GroupAdmin.inlines)
 GroupAdmin.search_fields = ('name', 'metadata__description')
 
 class UserMetadataInline(admin.StackedInline):
