@@ -639,6 +639,16 @@ h1.highlighted {
     max-width: 100%;
 }
 
+.profile_left .infoblock:first-child,
+.profile_right .infoblock:first-child {
+    background-color: #ddd;
+    height: 300px;
+}
+
+.profile_right .infoblock:first-child {
+    margin-top: -40px;
+}
+
 .profile_avatar {
     width: 20%;
     min-width: 48px;
