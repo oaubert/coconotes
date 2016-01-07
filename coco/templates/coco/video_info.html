@@ -5,6 +5,6 @@
   <div>
     <p>{{object.description}}</p>
     <p>{% blocktrans %}License{% endblocktrans %}: {% if object.license %}{{object.license}}{% else %}{% blocktrans %}Unknown{% endblocktrans %}{% endif %}</p>
-    <p>{% blocktrans %}Activity{% endblocktrans %} <a href="{{object.activity.get_absolute_url}}">{{object.activity.title}}</a></p>
+    <p>{% blocktrans %}Channel{% endblocktrans %} <a href="{{object.channel.get_absolute_url}}">{{object.channel.title_or_description}}</a></p>
   </div>
 </div>
