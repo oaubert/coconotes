@@ -214,17 +214,9 @@ def home(request, **kw):
 
 
 def profile(request, **kw):
-    videos = [
-        {
-            'object': v,
-            'latest_annotations': v.latest_annotations(request.user)
-        }
-        for v in Video.objects.filter(annotation__creator=request.user).annotate(count=Count('annotation')).order_by("-count")
-    ]
     return render_to_response('profile.html', {
         'username': request.user.username,
         'default_avatar': static('img/default_user.svg'),
-        'videos': videos,
         'annotationscount': Annotation.objects.filter(creator=request.user).count(),
         'current_document': 'profile',
     }, context_instance=RequestContext(request))

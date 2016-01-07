@@ -8,81 +8,83 @@
 {% block title %}{% blocktrans %}COCo platform{% endblocktrans %} - {{ user.username }}{% endblock %}
 
 {% block content %}
-          <h1 class="pagetitle">{% trans "My profile" %}</h1>
+<h1 class="pagetitle">{% trans "My profile" %}</h1>
 
-          <section class="column column8" id="profile_data">
+<section class="column column8" id="profile_data">
 
-            <article class="capsule">
-              <img class="profile_avatar" src="{{ user.metadata.thumbnail_url }}">
-              <h4>{{ user.get_full_name|default:user.username }}</h4>
-              <span class="profile_status">{{ user.metadata.title }}</span>
-              <span class="profile_email">{{ user.email }}</span>
+  <article class="capsule">
+    <img class="profile_avatar" src="{{ user.metadata.thumbnail_url }}">
+    <h4>{{ user.get_full_name|default:user.username }}</h4>
+    <span class="profile_email">{{ user.email }}</span>
 
-              <div class="profile_description">{{ user.metadata.description }}</div>
-              {% if user.teacher_for.count %}
-              <div class="teacher_info">
-                {% blocktrans %}You are a teacher for the following chapters :{% endblocktrans %}
-                <ul>
-                  {% for c in user.teacher_for.all %}
-                  <li><a href="{{ c.get_absolute_url }}">{{ c.title }}</a></li>
-                  {% endfor %}
-                </ul>
-              </div>
-              {% endif %}
-              {% if user.is_staff %}
-              {% blocktrans %}You are an administrator, you can access the <a href="/admin">administration interface</a>.{% endblocktrans %}
-              {% endif %}
-            </article>
+    <div class="profile_description">{{ user.metadata.description }}</div>
+    {% if user.teacher_for.count %}
+    <div class="teacher_info">
+      {% blocktrans %}You are a teacher for the following chapters :{% endblocktrans %}
+      <ul>
+        {% for c in user.teacher_for.all %}
+        <li><a href="{{ c.get_absolute_url }}">{{ c.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+    {% if user.is_staff %}
+    {% blocktrans %}You are an administrator, you can access the <a href="/admin">administration interface</a>.{% endblocktrans %}
+    {% endif %}
+  </article>
 
-            <h2>{% trans "My latest notes" %} ({{ annotationscount }})</h2>
+  <article class="capsule">
+    <h2>{% trans "My recent activity" %}</h2>
 
-            {% for video in videos %}
-            <article class="capsule">
-              <img class="thumbnail_mini" src="{{ video.object.thumbnail_url }}">
-              <h4><a href="{{ video.object.get_absolute_url }}">{{ video.object.title }}</a> ({{ video.object.count}})</h4>
-              <div class="profile_annotation_list">
-                <ul>
-                  {% for a in video.latest_annotations %}
-                  <li><a href="{{ a.contextualized_link }}"><span class="profile_annotation_timecode">{{ a.begin|format_timecode:"short" }}</span> - <span class="profile_annotation_title">{{ a.title_or_description }}</span></a> {% blocktrans %}modified{% endblocktrans %} {{ a.modified|naturaltime }}</li>
-                  {% endfor %}
-                </ul>
-              </div>
-            </article>
-            {% endfor %}
+    <ul class="profile_recent_activity">
+      {% for a in user.metadata.latest_annotations %}
+      <li>{% if a.is_updated %}
+        {% blocktrans %}You modified the annotation{% endblocktrans %}
+        {% else %}
+        {% blocktrans %}You created the annotation{% endblocktrans %}
+        {% endif %}
+        <a class="annotation-link" href="{{a.contextualized_link}}">{{a}}</a>
+        {% blocktrans %}on{% endblocktrans %}
+        <a href="{{a.video.get_absolute_url}}">{{a.video.title_or_description}}</a> {{a.modified|naturaltime}}</li>
+      {% empty %}
+      {% blocktrans %}You do not have much activity yet.{% endblocktrans %}
+      {% endfor %}
+    </ul>
 
-          </section>
+  </article>
 
-          <section class="column column4" id="profile_info">
+</section>
 
-            <section class="profile_info">
+<section class="column column4">
 
-            <h2>{% trans "My groups" %}</h2>
-
-            {% for group in user.groups.all %}
-            <article class="capsule">
-              <img class="thumbnail_mini" src="{{ group.metadata.thumbnail_url }}">
-              <h4><a href="/group/{{ group.pk }}/">{{ group.name }}</a></h4>
-              <div class="group_description">{{ group.metadata.description }}</div>
-            </article>
-            {% endfor %}
-
-            <section class="profile_info">
-
-              <h2>{% trans "Last viewed" %}</h2>
-
-              <article class="capsule">
-                <h4><a href="player.html">Cours: 2.4 Les types des pronoms</a></h4>
-                <span class="capsule_description">Marie: anyone has an exercice to practice this?<br/>Pierre: I do! www.exercices.com</span>
-              </article>
-
-              <article class="capsule">
-                <h4><a href="player.html">Séminaire: research in biogenetics</a></h4>
-                <span class="capsule_description">Marie: this resource shows it<br/> Pierre: news! I just tested it...</span>
-              </article>
-
-            </section>
-
-          </section>
+  <article class="capsule">
+    <h2>{% trans "My groups" %}</h2>
+    {% if user.groups.count == 1 %}
+    {% blocktrans with group=user.groups.all.0 %}You are member of the unique group {{group}}.{% endblocktrans %}
+    {% else %}
+    {% blocktrans count count=user.groups.count %}You are not member of any group{% plural %}You are member of {{count}} groups.{% endblocktrans %}
+    {% endif %}
+    {% if user.groups.count %}
+    <a href="/group/">See all my groups</a>
+    {% endif %}
+  </article>
 
 
+  <article class="capsule">
+    <h2>{% trans "Overview" %} ({{annotationscount}} {{annotationscount|pluralize:"annotation,annotations"}})</h2>
+    {% for ci in user.metadata.summarized_information %}
+    <article class="capsule">
+      <h4>{% trans "Channel" %} <a href="{{ ci.channel.get_absolute_url }}">{{ ci.channel.title_or_description }}</a></h4>
+      <ul>
+        {% for vi in ci.videos %}
+        <li><a href="{{ vi.video.contextualized_link }}">{{ vi.video.title_or_description }}</a><br>
+          {{vi.total_annotations}} {{vi.total_annotations|pluralize:"annotation,annotations"}} ({{vi.private_annotations}} {{vi.private_annotations|pluralize:"private,private"}}, {{vi.group_annotations}} {{vi.group_annotations|pluralize:"group,group"}}, {{vi.public_annotations}} {{vi.public_annotations|pluralize:"public,public"}})
+        </li>
+        {% endfor %}
+      </ul>
+    </article>
+    {% endfor %}
+  </article>
+
+</section>
 {% endblock %}

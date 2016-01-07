@@ -1,4 +1,6 @@
+from collections import Counter
 from datetime import datetime
+import itertools
 import json
 import uuid
 
@@ -168,6 +170,10 @@ class Element(models.Model):
 
     def element_information(self):
         return self.element_type
+
+    @property
+    def is_updated(self):
+        return abs((self.modified - self.created).total_seconds()) > 2
 
     def can_access(self, user):
         """Can the given user access this resource?
@@ -600,3 +606,38 @@ class UserMetadata(models.Model):
             return self.thumbnail.url
         else:
             return self.DEFAULT_AVATAR
+
+    @property
+    def annotations(self):
+        return Annotation.objects.filter(models.Q(creator=self.user) | models.Q(contributor=self.user))
+
+    def latest_annotations(self, count=50):
+        """Return the latest n annotations.
+        """
+        return self.annotations.order_by('-modified')[:count]
+
+    def summarized_information(self):
+        """Return summarized information about annotations (grouped by Channel/Video)
+        """
+        def summarize_video(video, videoannotations):
+            annotations = list(videoannotations)
+            counter = Counter(a.visibility for a in annotations)
+            return {
+                'video': video,
+                'total_annotations': len(annotations),
+                'private_annotations': counter[VISIBILITY_PRIVATE],
+                'public_annotations': counter[VISIBILITY_PUBLIC],
+                'group_annotations': counter[VISIBILITY_GROUP]
+            }
+        return [
+            {
+                'channel': channel,
+                'videos': [
+                    summarize_video(video, videoannotations)
+                    for video, videoannotations in itertools.groupby(annotations,
+                                                                     lambda a: a.video)
+                ]
+            }
+            for channel, annotations in itertools.groupby(self.annotations.order_by('video__activity__chapter__channel', 'video'),
+                                                          lambda a: a.video.activity.chapter.channel)
+        ]
