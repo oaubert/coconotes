@@ -22,7 +22,7 @@
 </section>
 
 <section class="column column3">
-  <h1>{% trans "Group" %} {{ group.name }}</h1>
+  <h2>{% trans "Group" %} {{ group.name }}</h2>
 
   <article class="infoblock">
     <img class="thumbnail_mini" src="{{ group.metadata.thumbnail_url }}">
@@ -30,7 +30,7 @@
     <p>{{ group.metadata.description|default:"No description" }}</p>
   </article>
 
-  <h1>{% trans "Members" %}</h1>
+  <h2>{% trans "Members" %}</h2>
 
   {% for u in group.user_set.all %}
   <article class="infoblock">
@@ -42,7 +42,7 @@
 </section>
 
 <section class="column column6 group_activity_column">
-  <h1>{% trans "Activity" %}</h1>
+  <h2>{% trans "Activity" %}</h2>
 
     <ul class="profile_recent_activity">
       {% for a in group.metadata.annotations %}
