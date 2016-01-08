@@ -2,7 +2,6 @@ import datetime
 import json
 from collections import namedtuple, OrderedDict, Counter
 
-from django.db.models import Count
 from django.contrib.auth.models import Group
 from django.http import HttpResponse, JsonResponse
 from django.template import RequestContext
@@ -204,14 +203,16 @@ class VideoDetailView(DetailView):
         return context
 
 def home(request, **kw):
+    une_items = (list(Channel.objects.order_by('-promoted', '-modified')[:3])
+                 + list(Video.objects.order_by('-promoted', '-modified')[:3]))
+    une_items.sort(key=lambda o: -o.promoted)
     return render_to_response('home.html', {
         'news': Newsitem.objects.order_by('-published')[:3],
-        'une_items': Chapter.objects.order_by('-promoted', '-modified')[:3],
+        'une_items': une_items[:3],
         'last_videos': Video.objects.order_by('-modified')[:4],
         'username': request.user.username,
         'current_document': 'home',
     }, context_instance=RequestContext(request))
-
 
 def profile(request, **kw):
     return render_to_response('profile.html', {
