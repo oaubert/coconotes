@@ -114,9 +114,11 @@ class Command(BaseCommand):
         if licenses:
             # Associate license
             vid.license = License.objects.get(slug=licenses[0])
-        pic = os.path.join(dirname, 'imagecache', '00.png')
+        pic = os.path.join(dirname, 'thumbnail.jpg')
         if not os.path.exists(pic):
-            pic = os.path.join(dirname, 'imagecache', '000.png')
+            pic = os.path.join(dirname, 'imagecache', '00.png')
+            if not os.path.exists(pic):
+                pic = os.path.join(dirname, 'imagecache', '000.png')
         if os.path.exists(pic):
             with open(pic, 'rb') as f:
                 vid.thumbnail.save(os.path.basename(pic), File(f))
