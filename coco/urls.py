@@ -29,7 +29,7 @@ urlpatterns = [
 
     url(r'^accounts/profile', views.profile, name='profile'),
 
-url(r'^media/(?P<path>.*)$', django.views.static.serve, {'document_root': settings.MEDIA_ROOT}),
+    url(r'^media/(?P<path>.*)$', django.views.static.serve, {'document_root': settings.MEDIA_ROOT}),
 
     url(r'^search/$', views.search, name='search'),
 
