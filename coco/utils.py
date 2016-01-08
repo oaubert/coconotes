@@ -44,5 +44,10 @@ def generic_search(request, model, fields, query_param="q"):
         return model.objects.all()
 
     entry_query = build_query(query_string, fields)
-    found_entries = model.objects.filter(entry_query)
+    try:
+        model.annotationtype
+        prefetch_related = ('creator', 'contributor', 'annotationtype')
+    except AttributeError:
+        prefetch_related = ('creator', 'contributor')
+    found_entries = model.objects.prefetch_related(*prefetch_related).filter(entry_query)
     return found_entries
