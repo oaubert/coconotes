@@ -345,7 +345,7 @@ class Video(Resource):
             "url": self.url,
             "meta": {
                 "coco:slug": self.slug or "",
-                "coco:can_edit": (self.creator.username == context.username or self.contributor.username == context.username),
+                "coco:can_edit": (self.creator.pk == context.user or self.contributor.pk == context.user),
                 "dc:contributor": self.contributor,
                 "dc:creator": self.creator,
                 "dc:created": self.created,
@@ -431,7 +431,7 @@ class AnnotationType(Element):
             "dc:creator": self.creator,
             "dc:created": self.created,
             "dc:modified": self.modified,
-            "coco:can_edit": self.creator.username == context.username,
+            "coco:can_edit": self.creator.pk == context.user,
             "dc:title": self.title,
             "dc:description": self.description,
         }
@@ -480,9 +480,9 @@ class Annotation(UserContent):
         cat = 'other'
         if context is None:
             return cat
-        if self.creator.username == context.username:
+        if self.creator.pk == context.user:
             cat = 'own'
-        elif self.creator.username in context.teacher_set:
+        elif self.creator.pk in context.teacher_set:
             cat = 'teacher'
         return cat
 
@@ -498,7 +498,7 @@ class Annotation(UserContent):
                 pass
         return {
             "id": self.uuid,
-            "media": self.video.uuid,
+            "media": context.video.uuid or self.video.uuid,
             "type": self.annotationtype.uuid,
             "begin": long(self.begin * 1000),
             "end": long(self.end * 1000),
@@ -507,7 +507,7 @@ class Annotation(UserContent):
                 "coco:group": self.group.id if self.group else 0,
                 "coco:category": self.coco_category(context),
                 "coco:featured": self.promoted,
-                "coco:can_edit": self.creator.username == context.username,
+                "coco:can_edit": self.creator.pk == context.user,
                 "id-ref": self.annotationtype.uuid,
                 "dc:contributor": self.contributor,
                 "dc:creator": self.creator,

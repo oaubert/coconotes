@@ -2,6 +2,7 @@ import datetime
 import json
 from collections import namedtuple, OrderedDict, Counter
 
+from django.conf import settings
 from django.contrib.auth.models import Group
 from django.http import HttpResponse, JsonResponse
 from django.template import RequestContext
@@ -255,7 +256,7 @@ def search(request, **kw):
         'current_document': 'profile',
     }, context_instance=RequestContext(request))
 
-CocoContext = namedtuple('Context', ['username', 'teacher_set', 'current_group'])
+CocoContext = namedtuple('Context', ['user', 'teacher_set', 'current_group', 'video'])
 
 def cinelab(request, slug=None, pk=None, **kw):
     """Generate a cinelab package in json format for the given video.
@@ -285,16 +286,20 @@ def cinelab(request, slug=None, pk=None, **kw):
         "main_media": unicode(v.uuid),
         "dc:description": ""
     }
-    context = CocoContext(username=request.user.username,
-                          teacher_set=[u.username for u in v.activity.chapter.teachers.all()],
+    context = CocoContext(user=request.user.pk,
+                          teacher_set=[u.pk for u in v.activity.chapter.teachers.all()],
+                          video=v,
                           current_group='')  # FIXME: get from cookie/session info?
     data['medias'].append(v.cinelab(context=context))
     data['annotations'].extend(a.cinelab(context=context)
-                               for a in Annotation.objects.filter(video=v)
+                               for a in Annotation.objects.filter(video=v).prefetch_related('group', 'creator', 'contributor', 'annotationtype')
                                if a.can_access(request.user))
     # Add defined annotation types + a selection of basic types
-    data['annotation-types'].extend(a.cinelab(context=context) for a in AnnotationType.objects.all())
-    return JsonResponse(data)
+    data['annotation-types'].extend(a.cinelab(context=context) for a in AnnotationType.objects.prefetch_related('creator', 'contributor').all())
+    if settings.DEBUG and request.GET.get('debug'):
+        return HttpResponse(content='<html><head><title>test</title></head><body><h1>OK</h1><pre>%s</pre></body></html>' % json.dumps(data, indent=2), status=200)
+    else:
+        return JsonResponse(data)
 
 
 @login_required
@@ -319,8 +324,8 @@ def annotation_add(request, **kw):
                     title=data['content']['title'],
                     description=data['content']['description'])
     an.save()
-    context = CocoContext(username=request.user.username,
-                          teacher_set=[u.username for u in video.activity.chapter.teachers.all()],
+    context = CocoContext(user=request.user.pk,
+                          teacher_set=[u.pk for u in video.activity.chapter.teachers.all()],
                           current_group='')  # FIXME: get from cookie/session info?
     return JsonResponse(an.cinelab(context=context))
 
@@ -355,8 +360,8 @@ def annotation_edit(request, pk=None, **kw):
             an.end = an.begin
         an.save()
         # FIXME: check how to populate django changelist
-        context = CocoContext(username=request.user.username,
-                              teacher_set=[t.username for t in an.video.activity.chapter.teachers.all()],
+        context = CocoContext(user=request.user.pk,
+                              teacher_set=[t.pk for t in an.video.activity.chapter.teachers.all()],
                               current_group='')
         return JsonResponse(an.cinelab(context=context))
     elif request.method == 'DELETE':
@@ -387,7 +392,7 @@ def slide_level(request, pk=None, **kw):
         an.parsed_content(data)
         an.save()
         # FIXME: check how to populate django logentries
-        context = CocoContext(username=request.user.username,
-                              teacher_set=[u.username for u in an.video.activity.chapter.teachers.all()],
+        context = CocoContext(user=request.user.pk,
+                              teacher_set=[u.pk for u in an.video.activity.chapter.teachers.all()],
                               current_group='')
         return JsonResponse(an.cinelab(context=context))
