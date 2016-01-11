@@ -526,7 +526,7 @@ class Annotation(UserContent):
                     "src": thumb
                 },
             },
-            "tags": list(self.tags.values('name'))
+            #"tags": list(self.tags.values('name'))
         }
 
 
