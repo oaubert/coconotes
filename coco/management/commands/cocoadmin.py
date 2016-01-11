@@ -71,7 +71,7 @@ class Command(BaseCommand):
             data = json.load(f)
         self.stdout.write("Saving %s\n" % data.get("title"))
 
-        adminuser = get_user('admin')
+        adminuser = get_user('coco')
         dirname = os.path.dirname(os.path.abspath(info))
         try:
             c = Channel.objects.get(title=channel)
