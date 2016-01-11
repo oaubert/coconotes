@@ -59,6 +59,14 @@
 
       <div id="extrajs">
         {% block extrajs %}
+        <script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/jquery.dotdotdot.min.js" %}"></script>
+        <script type="text/javascript">
+          $(document).ready(function() {
+              $(".content .description").dotdotdot({
+              });
+          });
+        </script>
         {% endblock %}
       </div>
   </body>

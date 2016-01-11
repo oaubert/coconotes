@@ -704,6 +704,8 @@ h1.highlighted {
 
 .minicapsule .content {
     margin: 20px;
+    /* Substract 2 * 20px padding */
+    height: calc(100% - 40px);
 }
 .minicapsule img {
     width: 100%;
@@ -751,6 +753,8 @@ h1.highlighted {
 
 .capsule .description, .minicapsule .description {
     font-size: 11px;
+    overflow-y: hidden;
+    height: calc(100% - 152px);
 }
 
 .microcapsule {
@@ -770,6 +774,8 @@ h1.highlighted {
 .minicapsule .detail,
 .searchcapsule .detail {
     display: block;
+    position: absolute;
+    right: 16px;
     font-family: Roboto;
     text-transform: uppercase;
     color: #6cf;
