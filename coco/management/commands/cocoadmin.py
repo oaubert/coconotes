@@ -37,9 +37,9 @@ def register(f):
 def get_group(annotationtype):
     """Return the group corresponding to a given annotation type
     """
-    g = re.search("at_converted(\d+)", annotationtype)
+    g = re.search("at_converted(\d*)", annotationtype)
     if g:
-        group, created = Group.objects.get_or_create(name='Groupe ' + g.group(1))
+        group, created = Group.objects.get_or_create(name='Groupe ' + (g.group(1) or "0"))
     else:
         group = None
     return group
