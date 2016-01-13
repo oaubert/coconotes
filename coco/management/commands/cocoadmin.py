@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 
-import sys
-import os
-import re
-import json
-import urllib
-import logging
+from argparse import RawDescriptionHelpFormatter
 import dateutil.parser
+import inspect
+import json
+import os
+import logging
+import re
+import subprocess
+import sys
+import urllib
 
 from django.db.models import Q
 from django.core.management.base import BaseCommand, CommandError
@@ -362,8 +365,20 @@ class Command(BaseCommand):
                         o.save()
             os.unlink(thumbnail_name)
         vid.save()
+
+    def add_arguments(self, parser):
+        def arg_signature(f):
+            spec = inspect.getargspec(f)
+            if spec.varargs:
+                args = spec.args[1:] + ['*' + spec.varargs]
+            else:
+                args = spec.args[1:] or ["[none]"]
+            return ", ".join(args)
+
+        self.help = self.help + "\n".join("%s - %s\n\tParameters: %s" % (k, v.__doc__.strip(), arg_signature(v)) for (k, v) in REGISTERED.items())
+        parser.formatter_class = RawDescriptionHelpFormatter
+
     def handle(self, *args, **options):
-        self.help = self.help + "\n\n" + "\n\n".join("\t%s: %s" % (k, v.__doc__) for (k, v) in REGISTERED.items())
         if not args:
             self.print_help(sys.argv[0], sys.argv[1])
             return
