@@ -325,6 +325,7 @@ def annotation_add(request, **kw):
                     description=data['content']['description'])
     an.save()
     context = CocoContext(user=request.user.pk,
+                          video=video,
                           teacher_set=[u.pk for u in video.activity.chapter.teachers.all()],
                           current_group='')  # FIXME: get from cookie/session info?
     return JsonResponse(an.cinelab(context=context))
@@ -361,6 +362,7 @@ def annotation_edit(request, pk=None, **kw):
         an.save()
         # FIXME: check how to populate django changelist
         context = CocoContext(user=request.user.pk,
+                              video=an.video,
                               teacher_set=[t.pk for t in an.video.activity.chapter.teachers.all()],
                               current_group='')
         return JsonResponse(an.cinelab(context=context))
@@ -393,6 +395,7 @@ def slide_level(request, pk=None, **kw):
         an.save()
         # FIXME: check how to populate django logentries
         context = CocoContext(user=request.user.pk,
+                              video=an.video,
                               teacher_set=[u.pk for u in an.video.activity.chapter.teachers.all()],
                               current_group='')
         return JsonResponse(an.cinelab(context=context))
