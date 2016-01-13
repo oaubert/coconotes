@@ -306,6 +306,62 @@ class Command(BaseCommand):
                 if fixup:
                     g.user_set.add(u)
 
+    @register
+    def publish(self, channeltitle, url, title=""):
+        """Publish the video (channeltitle, url, title)
+        """
+        adminuser = get_user('coco')
+        try:
+            channel = Channel.objects.get(Q(slug=channeltitle) | Q(title=channeltitle))
+        except:
+            channel = Channel(creator=adminuser, contributor=adminuser, title=channeltitle, slug=slugify(channeltitle))
+            channel.save()
+
+        if not title:
+            title = os.path.basename(url)
+        slug = slugify(title)
+        try:
+            chapter = Chapter.objects.get(title=title, channel=channel)
+        except Chapter.DoesNotExist:
+            chapter = Chapter(creator=adminuser, contributor=adminuser, channel=channel, title=title, slug=slug)
+            chapter.save()
+
+        activity = Activity(creator=adminuser, contributor=adminuser,
+                            title=title,
+                            slug=slug,
+                            chapter=chapter)
+        activity.save()
+
+        # Get length
+        duration = 0
+        dur = subprocess.check_output('gst-discoverer-1.0 "%s" | grep Duration' % url, shell=True)
+        if dur:
+            info = re.search('(\d+):(\d+):(\d+.\d+)', dur)
+            if info:
+                duration = float(info.group(1)) * 24 * 60 + float(info.group(2)) * 60 + float(info.group(3))
+
+        vid = Video(creator=adminuser, contributor=adminuser,
+                    activity=activity,
+                    title=title,
+                    url=url,
+                    slug=slug,
+                    duration=duration)
+
+        # Get thumbnail
+        thumbnail_name = os.tmpnam() + ".jpg"
+        # Low-dependency thumbnailer
+        subprocess.call('gst-launch-1.0 gnlurisource "uri=%s" start=4000000 duration=2000000 ! videoconvert ! jpegenc ! filesink location=%s' % (url, thumbnail_name), shell=True)
+        if os.path.exists(thumbnail_name):
+            with open(thumbnail_name, 'rb') as f:
+                vid.thumbnail.save(os.path.basename(thumbnail_name), File(f))
+            for o in (vid.activity, vid.activity.chapter, vid.activity.chapter.channel):
+                if not o.thumbnail:
+                    # Use same thumbnail
+                    with open(thumbnail_name, 'rb') as f:
+                        o.thumbnail.save(os.path.basename(thumbnail_name), File(f))
+                        o.save()
+            os.unlink(thumbnail_name)
+        vid.save()
     def handle(self, *args, **options):
         self.help = self.help + "\n\n" + "\n\n".join("\t%s: %s" % (k, v.__doc__) for (k, v) in REGISTERED.items())
         if not args:
