@@ -285,7 +285,7 @@ $(document).ready(function () {
                                             // Get the modified annotation
                                             var a = _myPlayer.sourceManager.getElement(annotation_id);
                                             // Update its content according to the returned data
-                                            a.source.deSerialize({ 'annotations': [ data ]});
+                                            a.source.deSerialize(data);
                                             _myPlayer.trigger("AnnotationsList.refresh");
                                         }
                                     });
