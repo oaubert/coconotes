@@ -1,6 +1,7 @@
+from collections import namedtuple, OrderedDict, Counter
 import datetime
 import json
-from collections import namedtuple, OrderedDict, Counter
+import re
 
 from django.conf import settings
 from django.contrib.auth.models import Group
@@ -16,6 +17,7 @@ from rest_framework import permissions, viewsets
 
 
 from .models import Channel, Video, Newsitem, Chapter, Activity, Annotation, Comment, AnnotationType, Resource
+from .models import VISIBILITY_PRIVATE, VISIBILITY_GROUP, VISIBILITY_PUBLIC
 from .serializers import ChannelSerializer, ChapterSerializer, ActivitySerializer, VideoSerializer
 from .serializers import AnnotationSerializer, CommentSerializer, ResourceSerializer, NewsitemSerializer, AnnotationTypeSerializer
 from .utils import generic_search
@@ -359,6 +361,14 @@ def annotation_edit(request, pk=None, **kw):
         an.begin = data['begin']
         if an.end < an.begin:
             an.end = an.begin
+        m = re.search('^shared-(\d+)$', data['sharing'])
+        if m:
+            an.visibility = VISIBILITY_GROUP
+            an.group = Group.objects.get(pk=long(m.group(1)))
+        elif data['sharing'] == 'public':
+            an.visibility = VISIBILITY_PUBLIC
+        else:
+            an.visibility = VISIBILITY_PRIVATE
         an.save()
         # FIXME: check how to populate django changelist
         context = CocoContext(user=request.user.pk,
