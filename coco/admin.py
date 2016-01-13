@@ -36,6 +36,7 @@ class ElementAdmin(AjaxSelectAdmin, CreatorMixin, admin.ModelAdmin):
     class Media:
         js = ['js/admin_filter_collapse.js']
 
+    save_on_top = True
     list_display = ('title', 'slug', 'promoted')
     search_fields = ('title',)
 
