@@ -181,9 +181,21 @@ class Command(BaseCommand):
                                         description=atjson['dc:description'])
                     at.save()
                 ats[atjson['id']] = at
+
+            if 'Notes' not in ats:
+                at = AnnotationType(creator=adminuser,
+                                    title="Notes",
+                                    slug="Notes",
+                                    description="User note")
+                at.save()
+                ats["Notes"] = at
+
             self.stdout.write("Copying %d annotations" % len(package['annotations']))
             for a in package['annotations']:
-                at = ats[a['meta']['id-ref']]
+                if a['meta']['id-ref'] == "at_contributions":
+                    at = ats['Notes']
+                else:
+                    at = ats[a['meta']['id-ref']]
                 self.stdout.write(".", ending="")
                 self.stdout.flush()
                 tags = []
@@ -195,8 +207,8 @@ class Command(BaseCommand):
                 visibility = VISIBILITY_PRIVATE
                 if group is not None:
                     visibility = VISIBILITY_GROUP
-                    # Use "Contributions" type since we now have the group information
-                    at = ats['at_contributions']
+                    # Use "Notes" type since we now have the group information
+                    at = ats['Notes']
                 if at.title not in ('Quiz', 'QuizPerso', TYPE_SLIDES, 'Partie'):
                     description = description or title
                     title = ""
@@ -205,7 +217,7 @@ class Command(BaseCommand):
                     creator = contributor = get_user('admin')
                 if 'public' in at.title.lower():
                     visibility = VISIBILITY_PUBLIC
-                    at = ats['at_contributions']
+                    at = ats['Notes']
                 m = re.match("^\[([\w-]+,)?(\w+)](.*)", description)
                 if m:
                     creator = contributor = get_user(m.group(2), context=a['meta']['id-ref'])
