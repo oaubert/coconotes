@@ -306,7 +306,7 @@ def cinelab(request, slug=None, pk=None, **kw):
 
 @login_required
 def annotation_add(request, **kw):
-    # We get data serialized by ldt
+    # We get data serialized by ldt_annotate
     # {"id":"f98d0acb-e7d8-f37a-6b67-6fb7a1282ebe","begin":0,"end":0,"content":{"data":{},"description":"Test","title":""},"tags":[],"media":"e7e856b1-dd32-44fa-8dda-56edab47729c","type_title":"Contributions","type":"ee3b536e-b8d7-428b-9df1-5283b72ef0ed","meta":{"created":"2015-11-25T16:00:02.141Z"}}
     data = json.loads(request.body.decode('utf-8'))
     # Validity checks...
@@ -328,6 +328,7 @@ def annotation_add(request, **kw):
                     end=long(data['end']) / 1000.0,
                     title=data['content']['title'],
                     description=data['content']['description'])
+    an.visibility_deserialize(data['sharing'])
     an.save()
     context = CocoContext(user=request.user.pk,
                           video=video,
@@ -348,7 +349,7 @@ def annotation_edit(request, pk=None, **kw):
             'begin': an.begin,
             'title': an.title,
             'description': an.description,
-            'sharing': an.visibility_as_string
+            'sharing': an.visibility_serialize
             }, user=request.user, annotation=an)
         return render(request, 'coco/annotation_form.html', {'form': f})
     elif request.method == 'POST':
@@ -364,14 +365,7 @@ def annotation_edit(request, pk=None, **kw):
         an.begin = data['begin']
         if an.end < an.begin:
             an.end = an.begin
-        m = re.search('^shared-(\d+)$', data['sharing'])
-        if m:
-            an.visibility = VISIBILITY_GROUP
-            an.group = Group.objects.get(pk=long(m.group(1)))
-        elif data['sharing'] == 'public':
-            an.visibility = VISIBILITY_PUBLIC
-        else:
-            an.visibility = VISIBILITY_PRIVATE
+        an.visibility_deserialize(data['sharing'])
         an.save()
         # FIXME: check how to populate django changelist
         context = CocoContext(user=request.user.pk,
