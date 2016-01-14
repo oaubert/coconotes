@@ -314,6 +314,8 @@ def annotation_add(request, **kw):
     atype = get_object_or_404(AnnotationType, uuid=data['type'])
     # FIXME: check that type_title is consistent with type ?
 
+    promoted = int(request.user in video.activity.chapter.teachers.all())
+
     # Create the annotation
     an = Annotation(uuid=data['id'],
                     creator=request.user,
@@ -321,6 +323,7 @@ def annotation_add(request, **kw):
                     modified=datetime.datetime.now(),
                     annotationtype=atype,
                     video=video,
+                    promoted=promoted,
                     begin=long(data['begin']) / 1000.0,
                     end=long(data['end']) / 1000.0,
                     title=data['content']['title'],
