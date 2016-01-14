@@ -508,6 +508,7 @@ class Annotation(UserContent):
                 "coco:category": self.coco_category(context),
                 "coco:featured": self.promoted,
                 "coco:can_edit": self.creator.pk == context.user,
+                "coco:visibility": self.visibility_as_string,
                 "id-ref": self.annotationtype.uuid,
                 "dc:contributor": self.contributor,
                 "dc:creator": self.creator,
