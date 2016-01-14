@@ -127,7 +127,11 @@ $(document).ready(function () {
                 annotation_type: "Contributions",
                 api_endpoint_template: action_url("add_annotation"),
                 api_serializer: "ldt_annotate",
-                api_method: 'POST'
+                api_method: 'POST',
+                current_group: function () {
+                    /* Return undefined if no shared tab is displayed, -1 if the public tab is displayed, else the group id */
+                    return $(".tabnames .selected[data-group-id]").data('group-id');
+                }
             },
             {
                 type: "EnrichedPlan",
