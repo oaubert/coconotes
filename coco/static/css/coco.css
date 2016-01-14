@@ -391,6 +391,8 @@ h1.highlighted {
 }
 .playertitle {
     padding-top: 8px;
+    color: #fff;
+    position: relative;
 }
 .videotitle {
     display: inline-block;
@@ -872,6 +874,14 @@ h1.highlighted {
 h1 .adminactions,
 .playertitle .adminactions {
     display: none;
+}
+
+.playertitle .adminactions {
+    position: absolute;
+    top: 12px;
+    left: 0px;
+    background-color: #fff;
+    opacity: .6;
 }
 
 h1:hover .adminactions,
