@@ -146,7 +146,7 @@ class Command(BaseCommand):
         packageurl = data.get('dataurl', os.path.join(dirname, 'data.json'))
         if packageurl.startswith('http') or os.path.exists(packageurl):
             self.stdout.write("Loading data from %s" % packageurl)
-            f = urllib.urlopen(packageurl)
+            f = urllib.urlopen(packageurl.replace('https', 'http'))
             try:
                 package = json.loads("".join(f.readlines()))
             except ValueError:
@@ -203,6 +203,9 @@ class Command(BaseCommand):
                 if at.title in ('Quiz', TYPE_SLIDES, 'Partie'):
                     visibility = VISIBILITY_PUBLIC
                     creator = contributor = get_user('admin')
+                if 'public' in at.title.lower():
+                    visibility = VISIBILITY_PUBLIC
+                    at = ats['at_contributions']
                 m = re.match("^\[([\w-]+,)?(\w+)](.*)", description)
                 if m:
                     creator = contributor = get_user(m.group(2), context=a['meta']['id-ref'])
