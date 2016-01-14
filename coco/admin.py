@@ -130,7 +130,7 @@ class ActivityAdmin(ElementAdmin):
 
 @admin.register(Annotation)
 class AnnotationAdmin(ElementAdmin):
-    list_display = ('pk', 'object_link', 'promoted', 'begin', 'title', 'description', 'annotationtype', 'group', 'video_name', 'creator', 'created',)
+    list_display = ('pk', 'object_link', 'promoted', 'begin', 'title', 'description', 'annotationtype', 'group', 'video_name', 'creator', 'created')
     list_editable = ('promoted', 'begin', 'title', 'description', 'group', 'annotationtype')
     list_display_links = ('pk',)
     list_filter = (('annotationtype', admin.RelatedOnlyFieldListFilter),
@@ -155,11 +155,14 @@ class AnnotationAdmin(ElementAdmin):
 
 @admin.register(AnnotationType)
 class AnnotationTypeAdmin(ElementAdmin):
-    list_display = ('pk', 'title', 'creator', 'created',)
+    list_display = ('pk', 'title', 'creator', 'created', 'annotation_count')
     list_editable = ('title',)
     list_display_links = ('pk',)
     list_filter = (('creator', admin.RelatedOnlyFieldListFilter),)
     search_fields = ('title',)
+
+    def annotation_count(self, at):
+        return at.annotation_set.count()
 
     form = make_ajax_form(AnnotationType, {'creator': 'user',
                                            'contributor': 'user'})
