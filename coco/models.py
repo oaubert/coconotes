@@ -482,8 +482,8 @@ class Annotation(UserContent):
             return cat
         if self.creator.pk == context.user:
             cat = 'own'
-        elif self.creator.pk in context.teacher_set:
-            cat = 'teacher'
+        elif self.promoted > 0:
+            cat = 'featured'
         return cat
 
     def cinelab(self, context=None):
