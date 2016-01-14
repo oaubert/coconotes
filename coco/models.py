@@ -2,6 +2,7 @@ from collections import Counter
 from datetime import datetime
 import itertools
 import json
+import re
 import uuid
 
 from django.db import models
@@ -399,7 +400,7 @@ class UserContent(Element):
         return _("User content")
 
     @property
-    def visibility_as_string(self):
+    def visibility_serialize(self):
         if self.visibility == VISIBILITY_GROUP and self.group:
             return 'shared-%s' % self.group.id
         elif self.visibility == VISIBILITY_PUBLIC:
@@ -407,6 +408,17 @@ class UserContent(Element):
         else:
             return 'private'
 
+    def visibility_deserialize(self, vis="", save=False):
+        m = re.search('^shared-(\d+)$', vis or "private")
+        if m:
+            self.visibility = VISIBILITY_GROUP
+            self.group = Group.objects.get(pk=long(m.group(1)))
+        elif vis == 'public':
+            self.visibility = VISIBILITY_PUBLIC
+        else:
+            self.visibility = VISIBILITY_PRIVATE
+        if save:
+            self.save()
 
 class AnnotationType(Element):
     """Annotation Type element
@@ -508,7 +520,7 @@ class Annotation(UserContent):
                 "coco:category": self.coco_category(context),
                 "coco:featured": self.promoted,
                 "coco:can_edit": self.creator.pk == context.user,
-                "coco:visibility": self.visibility_as_string,
+                "coco:visibility": self.visibility_serialize,
                 "id-ref": self.annotationtype.uuid,
                 "dc:contributor": self.contributor,
                 "dc:creator": self.creator,
