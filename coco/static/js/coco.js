@@ -184,6 +184,7 @@ $(document).ready(function () {
                 container: "PublicAnnotationsContainer",
                 annotation_type: "Slides",
                 annotation_types: [ "Notes" ],
+                group: -1,
                 show_controls: true,
                 show_slides: true,
                 show_teacher_notes: false,
