@@ -77,7 +77,7 @@
       <h4>{% trans "Channel" %} <a href="{{ ci.channel.get_absolute_url }}">{{ ci.channel.title_or_description }}</a></h4>
       <ul>
         {% for vi in ci.videos %}
-        <li><a href="{{ vi.video.contextualized_link }}">{{ vi.video.title_or_description }}</a><br>
+        <li><a href="{{ vi.video.get_absolute_url }}">{{ vi.video.title_or_description }}</a><br>
           {{vi.total_annotations}} {{vi.total_annotations|pluralize:"annotation,annotations"}} ({{vi.private_annotations}} {{vi.private_annotations|pluralize:"private,private"}}, {{vi.group_annotations}} {{vi.group_annotations|pluralize:"group,group"}}, {{vi.public_annotations}} {{vi.public_annotations|pluralize:"public,public"}})
         </li>
         {% endfor %}
