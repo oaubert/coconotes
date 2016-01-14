@@ -66,7 +66,7 @@
       {% for g in groups %}
       <li class="tab-group-{{g.id}}" data-group-id="{{g.id}}" data-group-name="{{g.name}}">{% trans "Group" %} {{ g.name }}</li>
       {% endfor %}
-      <li class="tab-public">{% trans "Public notes" %}</li>
+      <li class="tab-public" data-group-id="-1">{% trans "Public notes" %}</li>
     </ul>
     <div class="coco_tabcontents">
       <div class="tabcontent tab-plan {% if not user.is_authenticated %}selected{% endif %}">
