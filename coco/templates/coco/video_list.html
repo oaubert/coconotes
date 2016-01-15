@@ -7,6 +7,7 @@
 
 {% block content %}
 
+<h1>{% blocktrans count video_list|length as count %}{{count}} video{% plural %}{{count}} videos{% endblocktrans %}</h1>
 <div class="capsule_container">
 {% for video in video_list %}
 {% include "item_capsule.html" with item=video %}
