@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-15 10:40+0100\n"
-"PO-Revision-Date: 2016-01-15 10:42+0100\n"
+"PO-Revision-Date: 2016-01-15 16:55+0100\n"
 "Last-Translator: Olivier Aubert <olivier.aubert@univ-nantes.fr>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -427,7 +427,7 @@ msgstr "sur"
 
 #: templates/group_detail.html:58
 msgid "The group does not have much activity yet."
-msgstr "Le group n'a pas encore d'activité."
+msgstr "Le groupe n'a pas encore d'activité."
 
 #: templates/group_list.html:7 templates/group_list.html.py:10
 msgid "Groups"
