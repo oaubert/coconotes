@@ -117,11 +117,6 @@ $(document).ready(function () {
               width: '100%'
             },
             {
-                type: "SlidePreview",
-                container: "SlidePreviewContainer",
-                annotation_type: "Slides"
-            },
-            {
                 type: "CocoCreateAnnotation",
                 container: "coco_annotation_input_widget",
                 annotation_type: "Notes",
@@ -140,11 +135,12 @@ $(document).ready(function () {
                 annotation_types: [ "Notes" ],
                 show_controls: true,
                 show_slides: true,
-                show_teacher_notes: true,
+                show_featured_notes: true,
                 show_other_notes: false,
                 show_own_notes: false,
                 is_admin: metadata.is_admin,
-                action_url: action_url
+                action_url: action_url,
+                bar_container: "AnnotationBarContainer"
             },
             {
                 type: "EnrichedPlan",
@@ -153,7 +149,7 @@ $(document).ready(function () {
                 annotation_types: [ "Notes" ],
                 show_controls: true,
                 show_slides: false,
-                show_teacher_notes: false,
+                show_featured_notes: false,
                 show_other_notes: false,
                 show_own_notes: true,
                 is_admin: metadata.is_admin,
@@ -171,7 +167,7 @@ $(document).ready(function () {
                 annotation_types: [ "Notes" ],
                 show_controls: true,
                 show_slides: false,
-                show_teacher_notes: false,
+                show_featured_notes: false,
                 show_other_notes: true,
                 show_own_notes: true,
                 flat_mode: true,
@@ -187,7 +183,7 @@ $(document).ready(function () {
                 group: -1,
                 show_controls: true,
                 show_slides: true,
-                show_teacher_notes: true,
+                show_featured_notes: true,
                 show_other_notes: true,
                 show_own_notes: true,
                 flat_mode: true,
