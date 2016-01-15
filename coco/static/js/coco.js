@@ -187,9 +187,9 @@ $(document).ready(function () {
                 group: -1,
                 show_controls: true,
                 show_slides: true,
-                show_teacher_notes: false,
+                show_teacher_notes: true,
                 show_other_notes: true,
-                show_own_notes: false,
+                show_own_notes: true,
                 flat_mode: true,
                 is_admin: metadata.is_admin,
                 action_url: action_url
