@@ -78,7 +78,10 @@
       <ul>
         {% for vi in ci.videos %}
         <li><a href="{{ vi.video.get_absolute_url }}">{{ vi.video.title_or_description }}</a><br>
-          {{vi.total_annotations}} {{vi.total_annotations|pluralize:"annotation,annotations"}} ({{vi.private_annotations}} {{vi.private_annotations|pluralize:"private,private"}}, {{vi.group_annotations}} {{vi.group_annotations|pluralize:"group,group"}}, {{vi.public_annotations}} {{vi.public_annotations|pluralize:"public,public"}})
+          {% blocktrans context "profile" count vi.total_annotations as count %}{{count}} annotation{% plural %}{{count}} annotations{% endblocktrans %}
+          ({% blocktrans context "profile" count vi.private_annotations as count %}{{count}} private{% plural %}{{count}} private{% endblocktrans %},
+          {% blocktrans context "profile" count vi.group_annotations as count %}{{count}} group{% plural %}{{count}} group{% endblocktrans %},
+          {% blocktrans context "profile" count vi.public_annotations as count %}{{count}} public{% plural %}{{count}} public{% endblocktrans %})
         </li>
         {% endfor %}
       </ul>
