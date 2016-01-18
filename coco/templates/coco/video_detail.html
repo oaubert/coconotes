@@ -63,10 +63,10 @@
       {% if user.is_authenticated %}
       <li class="tab-mynotes selected">{% trans "Own notes" %}</li>
       {% endif %}
+      <li class="tab-public" data-group-id="-1">{% trans "Public notes" %}</li>
       {% for g in groups %}
       <li class="tab-group-{{g.id}}" data-group-id="{{g.id}}" data-group-name="{{g.name}}">{% trans "Group" %} {{ g.name }}</li>
       {% endfor %}
-      <li class="tab-public" data-group-id="-1">{% trans "Public notes" %}</li>
     </ul>
     <div class="coco_tabcontents">
       <div class="tabcontent tab-plan {% if not user.is_authenticated %}selected{% endif %}">
@@ -77,14 +77,14 @@
         <div id="OwnAnnotationsContainer" class="EnrichedPlanContainer"></div>
       </div>
       {% endif %}
+      <div class="tabcontent tab-public">
+        <div id="PublicAnnotationsContainer" class="EnrichedPlanContainer"></div>
+      </div>
       {% for g in groups %}
       <div class="tabcontent tab-group-{{g.id}}">
         <div id="Group{{g.id}}AnnotationsContainer" class="EnrichedPlanContainer"></div>
       </div>
       {% endfor %}
-      <div class="tabcontent tab-public">
-        <div id="PublicAnnotationsContainer" class="EnrichedPlanContainer"></div>
-      </div>
     </div>
   </div>   <!-- #metadata -->
   <div class="{% if not user.is_authenticated %}inactive_input{% endif %}" id="coco_annotation_input_widget">
