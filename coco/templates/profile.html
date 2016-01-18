@@ -43,9 +43,9 @@
     <ul class="profile_recent_activity">
       {% for a in user.metadata.latest_annotations %}
       <li class="profile_recent_activity_item">{% if a.is_updated %}
-        {% blocktrans %}You modified the annotation{% endblocktrans %}
+        {% blocktrans %}You modified the note{% endblocktrans %}
         {% else %}
-        {% blocktrans %}You created the annotation{% endblocktrans %}
+        {% blocktrans %}You created the note{% endblocktrans %}
         {% endif %}
         <a class="annotation-link" href="{{a.contextualized_link}}">{{a}}</a>
         {% blocktrans %}on{% endblocktrans %}
@@ -89,7 +89,7 @@
 
   <article class="infoblock profile_overview">
     <h2>{% trans "Overview" %}</h2>
-    <div class="profile_overview_count">{{annotationscount}} {{annotationscount|pluralize:"annotation,annotations"}}</div>
+    <div class="profile_overview_count">{{annotationscount}} {{annotationscount|pluralize:"note,notes"}}</div>
     {% for ci in user.metadata.summarized_information %}
     <article class="infoblock">
       <h4><div class="profile_overview_type">{% trans "Channel" %}</div> <a class="profile_overview_channel" href="{{ ci.channel.get_absolute_url }}">{{ ci.channel.title_or_description }}</a></h4>
