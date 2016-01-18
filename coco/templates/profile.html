@@ -8,29 +8,33 @@
 {% block title %}{% blocktrans %}COCo platform{% endblocktrans %} - {{ user.username }}{% endblock %}
 
 {% block content %}
-<h1 class="pagetitle">{% trans "My profile" %}</h1>
+<h1 class="pagetitle highlighted">{% trans "My profile" %}</h1>
 
 <section class="column column8 profile_left">
 
-  <article class="infoblock">
-    <img class="profile_avatar" src="{{ user.metadata.thumbnail_url }}">
-    <h4>{{ user.get_full_name|default:user.username }}</h4>
-    <span class="profile_email">{{ user.email }}</span>
-
-    <div class="profile_description">{{ user.metadata.description }}</div>
-    {% if user.teacher_for.count %}
-    <div class="teacher_info">
-      {% blocktrans %}You are a teacher for the following chapters :{% endblocktrans %}
-      <ul>
-        {% for c in user.teacher_for.all %}
+  <article class="infoblock profile_info">
+    <div>
+      <img class="profile_avatar" src="{{ user.metadata.thumbnail_url }}">
+    </div>
+    <div>
+      <h4>{{ user.get_full_name|default:user.username }}</h4>
+      <span class="profile_email">{{ user.email }}</span>
+      <div class="profile_change_password"><a href="/accounts/password/change/">{% blocktrans %}Change password{% endblocktrans %}</a></div>
+      <div class="profile_description">{{ user.metadata.description }}</div>
+      {% if user.teacher_for.count %}
+      <div class="teacher_info">
+        {% blocktrans %}You are a teacher for the following chapters :{% endblocktrans %}
+        <ul>
+          {% for c in user.teacher_for.all %}
         <li><a href="{{ c.get_absolute_url }}">{{ c.title }}</a></li>
         {% endfor %}
-      </ul>
+        </ul>
+      </div>
+      {% endif %}
+      {% if user.is_staff %}
+      {% blocktrans %}You are an administrator, you can access the <a href="/admin">administration interface</a>.{% endblocktrans %}
+      {% endif %}
     </div>
-    {% endif %}
-    {% if user.is_staff %}
-    {% blocktrans %}You are an administrator, you can access the <a href="/admin">administration interface</a>.{% endblocktrans %}
-    {% endif %}
   </article>
 
   <article class="infoblock">
@@ -38,7 +42,7 @@
 
     <ul class="profile_recent_activity">
       {% for a in user.metadata.latest_annotations %}
-      <li>{% if a.is_updated %}
+      <li class="profile_recent_activity_item">{% if a.is_updated %}
         {% blocktrans %}You modified the annotation{% endblocktrans %}
         {% else %}
         {% blocktrans %}You created the annotation{% endblocktrans %}
@@ -57,31 +61,47 @@
 
 <section class="column column4 profile_right">
 
-  <article class="infoblock">
-    <h2>{% trans "My groups" %}</h2>
+  <article class="infoblock profile_groups">
+    <h2 class="profile_groups_title">{% trans "My groups" %}</h2>
+    <div class="profile_groups_info">
     {% if user.groups.count == 1 %}
     {% blocktrans with group=user.groups.all.0 %}You are member of the unique group {{group}}.{% endblocktrans %}
     {% else %}
     {% blocktrans count count=user.groups.count %}You are not member of any group{% plural %}You are member of {{count}} groups.{% endblocktrans %}
     {% endif %}
+    </div>
+    {% for g in user.groups.all|slice:":2" %}
+    <div class="profile_groups_group">
+      <img class="thumbnail_mini" src="{{g.metadata.thumbnail_url}}">
+      <div class="profile_groups_group_info">
+        <h4>{{g.name}}</h4>
+        <p>{{g.metadata.description}}</p>
+      </div>
+    </div>
+    {% endfor %}
+    <div class="profile_groups_link">
     {% if user.groups.count %}
     <a href="/group/">See all my groups</a>
     {% endif %}
+    </div>
   </article>
 
 
-  <article class="infoblock">
-    <h2>{% trans "Overview" %} ({{annotationscount}} {{annotationscount|pluralize:"annotation,annotations"}})</h2>
+  <article class="infoblock profile_overview">
+    <h2>{% trans "Overview" %}</h2>
+    <div class="profile_overview_count">{{annotationscount}} {{annotationscount|pluralize:"annotation,annotations"}}</div>
     {% for ci in user.metadata.summarized_information %}
     <article class="infoblock">
-      <h4>{% trans "Channel" %} <a href="{{ ci.channel.get_absolute_url }}">{{ ci.channel.title_or_description }}</a></h4>
-      <ul>
+      <h4><div class="profile_overview_type">{% trans "Channel" %}</div> <a class="profile_overview_channel" href="{{ ci.channel.get_absolute_url }}">{{ ci.channel.title_or_description }}</a></h4>
+      <ul class="profile_overview_video_list">
         {% for vi in ci.videos %}
-        <li><a href="{{ vi.video.get_absolute_url }}">{{ vi.video.title_or_description }}</a><br>
-          {% blocktrans context "profile" count vi.total_annotations as count %}{{count}} annotation{% plural %}{{count}} annotations{% endblocktrans %}
+        <li><a class="profile_overview_video_url" href="{{ vi.video.get_absolute_url }}">{{ vi.video.title_or_description }}</a><br>
+          <span class="profile_overview_video_info">
+          {% blocktrans context "profile" count vi.total_annotations as count %}{{count}} note{% plural %}{{count}} annotations{% endblocktrans %}
           ({% blocktrans context "profile" count vi.private_annotations as count %}{{count}} private{% plural %}{{count}} private{% endblocktrans %},
           {% blocktrans context "profile" count vi.group_annotations as count %}{{count}} group{% plural %}{{count}} group{% endblocktrans %},
           {% blocktrans context "profile" count vi.public_annotations as count %}{{count}} public{% plural %}{{count}} public{% endblocktrans %})
+          </span>
         </li>
         {% endfor %}
       </ul>

@@ -652,26 +652,126 @@ h1.highlighted {
 .infoblock {
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .infoblock h2 {
     margin-top: 4px;
+    padding-bottom: 0;
 }
 
-.profile_left .infoblock:first-child,
+.profile_left .infoblock:first-child {
+    height: 280px;
+}
+
 .profile_right .infoblock:first-child {
-    background-color: #ddd;
-    height: 300px;
+    background-color: #dcf0ff;
+    height: 280px;
+}
+
+.profile_info {
+    display: flex;
+    flex-direction: row;
+}
+
+.profile_info h4 {
+    font-family: Roboto;
+    font-size: 30px;
+    color: #6cf;
+}
+
+.profile_email {
+    font-family: Roboto;
+    font-size: 11px;
+    color: #6cf;
 }
 
 .profile_avatar {
-    width: 20%;
+    width: 100%;
     min-width: 48px;
     max-width: 320px;
     float: left;
     padding-right: .5em;
 }
 
+.profile_groups {
+    font-family: Roboto;
+    font-size: 14px;
+    color: #6cf;
+    text-transform: uppercase;
+}
+
+.profile_groups h2.profile_groups_title {
+    padding: 0;
+    color: #000;
+}
+
+.profile_groups_link {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+}
+
+.profile_groups_link a {
+    color: #6cf;
+}
+
+.profile_groups_group {
+    color: #000;
+    margin: 10px;
+}
+
+.profile_overview_count {
+    font-family: Roboto;
+    font-size: 14px;
+    color: #6cf;
+}
+
+.profile_overview_type {
+    font-family: Roboto;
+    font-size: 11px;
+    display: inline-block;
+    min-width: 6em;
+    background-color: #6cf;
+    padding: 0px;
+    color: #fff;
+    text-align: center;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+.profile_overview_channel {
+    font-family: Roboto;
+    font-size: 14px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #000;
+}
+
+.profile_overview_video_url {
+    color: #000;
+    text-decoration: none;
+    font-size: 11px;
+}
+.profile_overview_video_info {
+    font-size: 10px;
+    color: #706b6b;
+}
+
+.profile_recent_activity {
+    list-style: none;
+    font-size: 11px;
+}
+
+.profile_recent_activity a {
+    text-decoration: none;
+}
+.profile_recent_activity_item {
+    padding-top: 10px;
+}
+.profile_overview_video_list {
+    list-style: none;
+}
 .infoblock .thumbnail_mini {
     width: 20%;
     min-width: 48px;
