@@ -843,7 +843,7 @@ h1.highlighted {
 }
 .minicapsule img {
     width: 100%;
-    max-height: 100px;
+    height: 100px;
     float: left;
     margin-bottom: 1em;
     border: 1px solid #cfcfcf;
