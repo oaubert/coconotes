@@ -158,6 +158,12 @@ class Element(models.Model):
     def __unicode__(self):
         return u"%s (%s)" % (self.title_or_description,
                              self.__class__.__name__)
+
+    def shortcut(self):
+        """Return a shortcut element.
+        """
+        return self
+
     @property
     def edit_url(self):
         return reverse("admin:%s_%s_change" % (self._meta.app_label, self._meta.model_name), args=(self.pk,))
@@ -267,6 +273,14 @@ class Chapter(Element):
         """
         return Video.objects.filter(activity__chapter=self)
 
+    def shortcut(self):
+        """Return a shortcut element.
+        """
+        if self.activity_set.count() == 1:
+            return self.activity_set.first().shortcut()
+        else:
+            return self
+
     def element_information(self):
         n = len(self.videos)
         return _("Chapter - %(count)d %(name)s") % {
@@ -292,6 +306,13 @@ class Activity(Element):
     def subtitle_link(self):
         return self.chapter.get_absolute_url()
 
+    def shortcut(self):
+        """Return a shortcut element.
+        """
+        if self.video_set.count() == 1:
+            return self.video_set.first()
+        else:
+            return self
 
 class Video(Resource):
     DEFAULT_AVATAR = static("img/default_video.svg")

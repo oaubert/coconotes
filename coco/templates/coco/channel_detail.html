@@ -19,7 +19,7 @@
 
   <div class="capsule_container">
     {% for chapter in channel.chapter_set.all %}
-    {% include "item_capsule.html" with item=chapter %}
+    {% include "item_capsule.html" with item=chapter.shortcut %}
     {% endfor %}
   </div>
 
