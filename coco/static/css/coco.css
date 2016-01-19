@@ -383,11 +383,12 @@ h1.highlighted {
     padding: 6px;
     width: 100%;
 }
-.breadcrumb {
+.breadcrumb, .channeltitle {
     color: #999;
     font-family: Roboto;
     font-size: 14px;
     text-transform: uppercase;
+    text-decoration: none;
 }
 .playertitle {
     padding-top: 8px;
