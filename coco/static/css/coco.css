@@ -462,12 +462,16 @@ h1.highlighted {
     padding-right: 20px;
 }
 
-.tabnames.overflowing:after {
+.tabnames_overflow_indicator {
     position: absolute;
+    cursor: pointer;
     color: #fff;
     top: 22px;
     right: 0;
-    content: '...';
+    display: none;
+}
+.tabnames_overflow_indicator.overflowing {
+    display: inline;
 }
 .tabnames li {
     display: inline-block;

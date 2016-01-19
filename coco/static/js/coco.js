@@ -44,9 +44,9 @@ $(document).ready(function () {
     function check_tablabels_overflow() {
         if (tablabels.offsetHeight + 10 < tablabels.scrollHeight || tablabels.offsetWidth + 10 < tablabels.scrollWidth) {
             // There is an overflow
-            $(tablabels).addClass("overflowing");
+            $(".tabnames_overflow_indicator").addClass("overflowing");
         } else {
-            $(tablabels).removeClass("overflowing");
+            $(".tabnames_overflow_indicator").removeClass("overflowing");
         }
     }
     $(window).on("resize", check_tablabels_overflow);
