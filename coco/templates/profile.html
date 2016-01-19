@@ -10,9 +10,9 @@
 {% block content %}
 <h1 class="pagetitle highlighted">{% trans "My profile" %}</h1>
 
-<section class="column column8 profile_left">
+<section class="profile_top">
 
-  <article class="infoblock profile_info">
+  <article class="column column8 infoblock profile_info">
     <div>
       <img class="profile_avatar" src="{{ user.metadata.thumbnail_url }}">
     </div>
@@ -37,7 +37,34 @@
     </div>
   </article>
 
-  <article class="infoblock">
+  <article class="column column4 infoblock profile_groups">
+    <h2 class="profile_groups_title">{% trans "My groups" %}</h2>
+    <div class="profile_groups_info">
+    {% if user.groups.count == 1 %}
+    {% blocktrans with group=user.groups.all.0 %}You are member of the unique group {{group}}.{% endblocktrans %}
+    {% else %}
+    {% blocktrans count count=user.groups.count %}You are not member of any group{% plural %}You are member of {{count}} groups.{% endblocktrans %}
+    {% endif %}
+    </div>
+    <div class="profile_groups_group_list">
+      {% for g in user.groups.all %}
+      <div class="profile_groups_group">
+        <img class="profile_groups_group_thumbnail" src="{{g.metadata.thumbnail_url}}">
+        <div class="profile_groups_group_name">{{g.name}}</div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="profile_groups_link">
+    {% if user.groups.count %}
+    <a href="/group/">See all my groups</a>
+    {% endif %}
+    </div>
+  </article>
+
+</section>
+<section class="profile_bottom">
+
+  <article class="infoblock column column8 profile_activity">
     <h2>{% trans "My recent activity" %}</h2>
 
     <ul class="profile_recent_activity">
@@ -57,37 +84,7 @@
 
   </article>
 
-</section>
-
-<section class="column column4 profile_right">
-
-  <article class="infoblock profile_groups">
-    <h2 class="profile_groups_title">{% trans "My groups" %}</h2>
-    <div class="profile_groups_info">
-    {% if user.groups.count == 1 %}
-    {% blocktrans with group=user.groups.all.0 %}You are member of the unique group {{group}}.{% endblocktrans %}
-    {% else %}
-    {% blocktrans count count=user.groups.count %}You are not member of any group{% plural %}You are member of {{count}} groups.{% endblocktrans %}
-    {% endif %}
-    </div>
-    {% for g in user.groups.all|slice:":2" %}
-    <div class="profile_groups_group">
-      <img class="thumbnail_mini" src="{{g.metadata.thumbnail_url}}">
-      <div class="profile_groups_group_info">
-        <h4>{{g.name}}</h4>
-        <p>{{g.metadata.description}}</p>
-      </div>
-    </div>
-    {% endfor %}
-    <div class="profile_groups_link">
-    {% if user.groups.count %}
-    <a href="/group/">See all my groups</a>
-    {% endif %}
-    </div>
-  </article>
-
-
-  <article class="infoblock profile_overview">
+  <article class="infoblock column column4 profile_overview">
     <h2>{% trans "Overview" %}</h2>
     <div class="profile_overview_count">{{annotationscount}} {{annotationscount|pluralize:"note,notes"}}</div>
     {% for ci in user.metadata.summarized_information %}

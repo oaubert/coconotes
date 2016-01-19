@@ -660,13 +660,8 @@ h1.highlighted {
     padding-bottom: 0;
 }
 
-.profile_left .infoblock:first-child {
-    height: 280px;
-}
-
-.profile_right .infoblock:first-child {
-    background-color: #dcf0ff;
-    height: 280px;
+.profile_top {
+    padding-bottom: 20px;
 }
 
 .profile_info {
@@ -699,6 +694,8 @@ h1.highlighted {
     font-size: 14px;
     color: #6cf;
     text-transform: uppercase;
+    padding: 10px;
+    background-color: #dcf0ff;
 }
 
 .profile_groups h2.profile_groups_title {
@@ -716,15 +713,41 @@ h1.highlighted {
     color: #6cf;
 }
 
+.profile_groups_group_list {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 16px;
+    overflow-x: hidden;
+    flex-wrap: nowrap;
+}
+
 .profile_groups_group {
     color: #000;
     margin: 10px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.profile_groups_group_thumbnail {
+    width: 20%;
+    min-width: 48px;
+    max-width: 128px;
+}
+
+.profile_groups_group_name {
+    font-weight: bold;
+}
+
+.profile_activity,
+.profile_overview {
+    padding-top: 20px;
 }
 
 .profile_overview_count {
     font-family: Roboto;
     font-size: 14px;
     color: #6cf;
+    text-transform: uppercase;
 }
 
 .profile_overview_type {
