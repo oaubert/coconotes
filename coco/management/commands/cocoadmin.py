@@ -382,6 +382,29 @@ class Command(BaseCommand):
             os.unlink(thumbnail_name)
         vid.save()
 
+    @register
+    def create_user(self, email, username="", fullname=""):
+        """Create a new user.
+        """
+        if not username:
+            username = email[:email.index('@')]
+        if ' ' in fullname:
+            first_name, last_name = fullname.split(" ", 1)
+        elif '.' in fullname:
+            first_name, last_name = fullname.split(".", 1)
+        else:
+            first_name = fullname
+            last_name = ''
+        username = username.lower()
+        user, created = User.objects.get_or_create(username=username,
+                                                   defaults={ 'email': email,
+                                                              'first_name': first_name,
+                                                              'last_name': last_name })
+        if created:
+            self.stdout.write("Created user %s (%s)" % (username, email))
+        else:
+            self.stdout.write("User %s already exists" % username)
+
     def add_arguments(self, parser):
         def arg_signature(f):
             spec = inspect.getargspec(f)
