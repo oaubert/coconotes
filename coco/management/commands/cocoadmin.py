@@ -183,11 +183,12 @@ class Command(BaseCommand):
                 ats[atjson['id']] = at
 
             if 'Notes' not in ats:
-                at = AnnotationType(creator=adminuser,
-                                    title="Notes",
-                                    slug="Notes",
-                                    description="User note")
-                at.save()
+                at = AnnotationType.objects.get_or_create(title="Notes",
+                                                          slug=slugify("Notes"),
+                                                          defaults={
+                                                              'creator': adminuser,
+                                                              'description': "User note"
+                                                          })[0]
                 ats["Notes"] = at
 
             self.stdout.write("Copying %d annotations" % len(package['annotations']))
@@ -214,7 +215,7 @@ class Command(BaseCommand):
                     title = ""
                 if at.title in ('Quiz', TYPE_SLIDES, 'Partie'):
                     visibility = VISIBILITY_PUBLIC
-                    creator = contributor = get_user('admin')
+                    creator = contributor = get_user('coco')
                 if 'public' in at.title.lower():
                     visibility = VISIBILITY_PUBLIC
                     at = ats['Notes']
@@ -265,7 +266,7 @@ class Command(BaseCommand):
     def _postnews(self, title, subtitle, data):
         """Post a newsitem message.
         """
-        adminuser = User.objects.get(username='admin')
+        adminuser = User.objects.get(username='coco')
         n = Newsitem(creator=adminuser, title=title, subtitle=subtitle, description=data)
         n.save()
 
