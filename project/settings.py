@@ -19,6 +19,12 @@ DEBUG = options.get('development', False)
 
 ALLOWED_HOSTS = []
 
+EMAIL_HOST = 'localhost'
+DEFAULT_FROM_EMAIL = options.get('admin_email', 'webmaster@comin-ocw.org')
+SERVER_EMAIL = options.get('admin_email', 'webmaster@comin-ocw.org')
+EMAIL_SUBJECT_PREFIX = '[COCoNotes] '
+ADMINS = [ ('Webmaster', options.get('admin_email', 'webmaster@comin-ocw.org')) ]
+
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
 MEDIA_ROOT = os.path.join(APPROOT, "media/")
