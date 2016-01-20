@@ -13,7 +13,7 @@ from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.template.defaultfilters import pluralize
 from django.utils.translation import ugettext_lazy as _
 
-from annoying.fields import AutoOneToOneField
+from annoying.fields import AutoOneToOneField, JSONField
 from taggit_autosuggest.managers import TaggableManager
 from taggit.models import TaggedItemBase
 from sorl.thumbnail import ImageField
@@ -380,6 +380,7 @@ class Video(Resource):
 
 
 class UserContent(Element):
+    # We cannot use JSONField here since there may be other content-types
     contentdata = models.TextField(_("Content"),
                                    blank=True)
     contenttype = models.CharField(_("Content-Type"),
@@ -635,6 +636,9 @@ class UserMetadata(models.Model):
     thumbnail = ImageField(upload_to='thumbnails',
                            blank=True,
                            null=True)
+
+    config = JSONField(_("Configuration"),
+                       blank=True, null=True)
 
     def __unicode__(self):
         return "Metadata for %s" % self.title
