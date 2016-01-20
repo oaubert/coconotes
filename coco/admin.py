@@ -203,6 +203,9 @@ class GroupMetadataInline(admin.StackedInline):
     ]
 GroupAdmin.inlines = [GroupMetadataInline, UserInline] + list(GroupAdmin.inlines)
 GroupAdmin.search_fields = ('name', 'metadata__description')
+GroupAdmin.user_count = lambda self, g: g.user_set.count()
+GroupAdmin.annotation_count = lambda self, g: Annotation.objects.filter(group=g).count()
+GroupAdmin.list_display = ('name', 'user_count', 'annotation_count')
 
 class UserMetadataInline(admin.StackedInline):
     model = UserMetadata
