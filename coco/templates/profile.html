@@ -47,14 +47,14 @@
     {% endif %}
     </div>
     <div class="profile_groups_group_list">
-      {% for g in user.groups.all %}
+      {% for g in user.groups.all|slice:":5" %}
       <div class="profile_groups_group">
         <div class="square_div">
           <div class="square_content">
-            <img class="profile_groups_group_thumbnail" src="{{g.metadata.thumbnail_url}}">
+            <a href="{{g.metadata.get_absolute_url}}"><img class="profile_groups_group_thumbnail" src="{{g.metadata.thumbnail_url}}"></a>
           </div>
         </div>
-        <div class="profile_groups_group_name">{{g.name}}</div>
+        <div class="profile_groups_group_name"><a href="{{g.metadata.get_absolute_url}}">{{g.name}}</a></div>
       </div>
       {% endfor %}
     </div>

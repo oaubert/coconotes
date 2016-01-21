@@ -615,6 +615,9 @@ class GroupMetadata(Element):
 
     group = AutoOneToOneField(Group, related_name='metadata', unique=True)
 
+    def get_absolute_url(self):
+        return reverse('view-group-detail', args=[ str(self.group.pk) ])
+
     @property
     def annotations(self):
         return Annotation.objects.filter(group=self.group).filter(Q(visibility=VISIBILITY_PUBLIC) | Q(visibility=VISIBILITY_GROUP)).order_by("-modified")
