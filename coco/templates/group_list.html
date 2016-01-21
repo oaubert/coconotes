@@ -10,8 +10,12 @@
           <h1 class="pagetitle">{% blocktrans %}Groups{% endblocktrans %}</h1>
 
           {% for group in group_list %}
-          <article class="capsule">
-            <img class="thumbnail_mini" src="{{ group.metadata.thumbnail_url }}">
+          <article class="infoblock">
+            <div class="square_div_20">
+              <div class="square_content">
+               <img class="thumbnail_mini" src="{{ group.metadata.thumbnail_url }}">
+              </div>
+            </div>
             <h4><a href="{{ group.id }}">{{ group.name }}</a> ({{ group.user_set.count }})</h4>
           </article>
           {% endfor %}

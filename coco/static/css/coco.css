@@ -627,11 +627,12 @@ h1.highlighted {
     color: inherit;
 }
 
-.capsule a, .minicapsule a {
+.capsule a, .minicapsule a, .infoblock a {
     text-decoration: none;
+    color: inherit;
 }
 
-.capsule h4, .capsule h4 a, .minicapsule h4 {
+.capsule h4, .capsule h4 a, .minicapsule h4, .infoblock h4 {
     font-family: Roboto;
     font-variant: small-caps;
     font-size: 21px;
@@ -732,11 +733,33 @@ h1.highlighted {
     align-items: center;
     display: flex;
     flex-direction: column;
+    width: 20%;
 }
-.profile_groups_group_thumbnail {
+.square_div {
+    width: 100%;
+    padding-bottom: 100%;
+    position: relative;
+}
+.square_div_20 {
     width: 20%;
     min-width: 48px;
     max-width: 128px;
+    padding-bottom: 20%;
+    position: relative;
+}
+.square_content {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+}
+.profile_groups_group_thumbnail {
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .profile_groups_group_name {
@@ -801,11 +824,8 @@ h1.highlighted {
     list-style: none;
 }
 .infoblock .thumbnail_mini {
-    width: 20%;
-    min-width: 48px;
-    max-width: 128px;
-    float: left;
-    padding-right: .5em;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .group_profile {
