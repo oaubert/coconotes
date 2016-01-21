@@ -2,6 +2,8 @@
 import os
 APPROOT = os.path.dirname(os.path.dirname(__file__)) + os.sep
 
+import logging, copy
+from django.utils.log import DEFAULT_LOGGING
 from django.utils.translation import ugettext_lazy as _
 
 # local_settings should define a 'options' dictionary with
@@ -183,3 +185,18 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100
 }
+
+if DEBUG:
+    LOGGING = copy.deepcopy(DEFAULT_LOGGING)
+    LOGGING['filters']['suppress_deprecated'] = {
+        '()': 'project.settings.SuppressDeprecated'
+    }
+    LOGGING['handlers']['console']['filters'].append('suppress_deprecated')
+
+    class SuppressDeprecated(logging.Filter):
+        def filter(self, record):
+            WARNINGS_TO_SUPPRESS = [
+                'RemovedInDjango19Warning'
+            ]
+            # Return false to suppress message.
+            return not any([warn in record.getMessage() for warn in WARNINGS_TO_SUPPRESS])
