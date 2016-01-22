@@ -74,6 +74,33 @@ header {
     clear: both;
 }
 
+.django-messages {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    font-size: 11px;
+    font-family: Roboto;
+}
+
+.django-alert {
+    margin: 3px;
+    padding: 3px;
+}
+
+.django-alert-alert-info {
+    background-color: yellow;
+}
+.django-alert-alert-success {
+    background-color: #0b650b;
+}
+.django-alert-alert-error {
+    background-color: red;
+}
+
 /* Header content */
 #logo {
     float: left;

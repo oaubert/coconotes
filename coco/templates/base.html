@@ -14,7 +14,7 @@
     {% endblock %}
   </head>
   <body>
-      <header>
+    <header>
         <div id="logo">
           <a href="/"><img src="{% static "img/logo_coconotes.svg" %}" /></a>
         </div>
@@ -57,6 +57,14 @@
         {% endblock %}
       </div>
 
+      <div class="django-messages">
+        {% for msg in messages %}
+        <div class="django-alert django-alert-{{msg.level_tag}}" role="alert">
+ 	      {{msg.message}}
+	    </div>
+        {% endfor %}
+      </div>
+
       <div id="extrajs">
         {% block extrajs %}
         <script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
@@ -65,6 +73,7 @@
           $(document).ready(function() {
               $(".content .description").dotdotdot({
               });
+              $(".django-messages").fadeIn(2000, function () { $(this).delay(2000).fadeOut(1000); });
           });
         </script>
         {% endblock %}
