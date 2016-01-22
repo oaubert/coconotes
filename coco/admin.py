@@ -3,12 +3,15 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import GroupAdmin, UserAdmin
 
+import adminactions.actions as actions
 from ajax_select.admin import AjaxSelectAdmin
 from ajax_select.helpers import make_ajax_form
 
 from .models import Channel, Video, Chapter, License, AnnotationType, Annotation, Comment, Resource, Newsitem, Activity
 from .models import UserMetadata, GroupMetadata
 
+# register all adminactions
+actions.add_to_site(admin.site)
 admin.site.register(License)
 admin.site.register(Resource)
 

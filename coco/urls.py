@@ -92,5 +92,6 @@ url(r'^annotation/add$', views.AnnotationCreateView.as_view(), name='view-annota
     url(r'^api/v1/annotation_add$', views.annotation_add, name='api-annotation-add'),
     url(r'^api/v1/', include(router.urls)),
 
-    url(r'^ajax_select/', include(ajax_select_urls))
+    url(r'^ajax_select/', include(ajax_select_urls)),
+    url(r'^adminactions/', include('adminactions.urls')),
 ]

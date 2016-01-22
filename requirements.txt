@@ -16,3 +16,5 @@ six
 sqlparse
 python-dateutil
 django-admin-bootstrapped
+django-adminactions
+
