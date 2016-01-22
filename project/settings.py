@@ -3,6 +3,7 @@ import os
 APPROOT = os.path.dirname(os.path.dirname(__file__)) + os.sep
 
 import logging, copy
+from django.contrib import messages
 from django.utils.log import DEFAULT_LOGGING
 from django.utils.translation import ugettext_lazy as _
 
@@ -49,10 +50,17 @@ if options.get('redis_cache'):
     }
     SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
+MESSAGE_TAGS = {
+    messages.SUCCESS: 'alert-success success',
+    messages.WARNING: 'alert-warning warning',
+    messages.ERROR: 'alert-danger error'
+}
+
 # Application definition
 INSTALLED_APPS = [
     'coco',
     'ajax_select',
+    'django_admin_bootstrapped',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
