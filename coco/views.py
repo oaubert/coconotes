@@ -372,7 +372,7 @@ def annotation_edit(request, pk=None, **kw):
                               video=an.video,
                               teacher_set=[t.pk for t in an.video.activity.chapter.teachers.all()],
                               current_group='')
-        return JsonResponse(an.cinelab(context=context))
+        return JsonResponse({'annotations': [an.cinelab(context=context)]})
     elif request.method == 'DELETE':
         an.delete()
         return JsonResponse({'id': pk})
