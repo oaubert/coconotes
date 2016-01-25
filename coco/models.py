@@ -96,7 +96,7 @@ class Element(models.Model):
                             default=uuid.uuid4,
                             editable=False)
 
-    creator = models.ForeignKey(User, related_name='created_%(class)s', null=True)
+    creator = models.ForeignKey(User, related_name='created_%(class)s', blank=True, null=True)
 
     created = models.DateTimeField(_('Creation date'),
                                    help_text=_('Element creation date'),
@@ -108,7 +108,8 @@ class Element(models.Model):
 
     modified = AutoDateTimeField(_('Modification date'),
                                  help_text=_('Element modification date'),
-                                 null=True, editable=True)
+                                 null=True, editable=True,
+                                 default=datetime.now)
 
     state = models.CharField(_("State"),
                              max_length=16,
