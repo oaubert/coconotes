@@ -11,7 +11,9 @@ import subprocess
 import sys
 import urllib
 
+from django.db import models
 from django.db.models import Q
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import User, Group
 from django.core.files import File
@@ -324,6 +326,29 @@ class Command(BaseCommand):
                     self.stdout.write("User %s not in group %s but created group annotations" % (u.username, g.name))
                 if fixup:
                     g.user_set.add(u)
+
+        def check_foreign_key(model, field):
+            foreign_model = field.related.model
+            def check_instance(instance):
+                try:
+                    getattr(instance, field.name)
+                    return True
+                except ObjectDoesNotExist:
+                    print '%s with pk %s refers via field %s to nonexistent %s with pk %s' % \
+                        (model.__class__, str(instance.pk), field.name, foreign_model.__class__, getattr(instance, field.attname))
+            return check_instance
+
+        # Data integrity check
+        coco = models.get_app('coco')
+        for model in models.get_models(coco):
+            if hasattr(model, 'creator'):
+                # Check creator
+                missing = model.objects.filter(creator=None)
+                if missing.count():
+                    self.stdout.write("Missing creator for %s (%d)" % (model.__name__, missing.count()))
+            for field in model._meta.local_fields + model._meta.local_many_to_many + model._meta.virtual_fields:
+                if isinstance(field, models.ForeignKey):
+                    check_foreign_key(model, field)
 
     @register
     def publish(self, channeltitle, url, title=""):
