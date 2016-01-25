@@ -24,4 +24,12 @@
     </ol>
 {% endif %}
 </form>
+  <script type="text/javascript">
+    (function () {
+        var desc = $("#id_description");
+        // Set cursor to end. Unefficient version, but we deal with short contents anyway.
+        var val = desc.val();
+        desc.val("").val(val);
+    })();
+</script>
 {% endblock %}
