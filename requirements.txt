@@ -15,6 +15,6 @@ django-ajax-selects
 six
 sqlparse
 python-dateutil
-django-admin-bootstrapped
+django-grappelli
 django-adminactions
 

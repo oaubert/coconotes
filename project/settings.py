@@ -61,7 +61,7 @@ INSTALLED_APPS = [
     'coco',
     'ajax_select',
     'adminactions',
-    'django_admin_bootstrapped',
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
