@@ -218,6 +218,13 @@ GroupAdmin.search_fields = ('name', 'metadata__description')
 GroupAdmin.user_count = lambda self, g: g.user_set.count()
 GroupAdmin.annotation_count = lambda self, g: Annotation.objects.filter(group=g).count()
 GroupAdmin.list_display = ('name', 'user_count', 'annotation_count')
+def save_group_model(self, request, obj, form, change):
+    if not getattr(obj.metadata, 'creator', None):
+        obj.metadata.creator = request.user
+    obj.metadata.contributor = request.user
+    obj.metadata.modified = datetime.datetime.now()
+    obj.save()
+GroupAdmin.save_model = save_group_model
 
 class UserMetadataInline(admin.StackedInline):
     model = UserMetadata
