@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import Group
@@ -45,6 +47,13 @@ class ElementAdmin(AjaxSelectAdmin, CreatorMixin, admin.ModelAdmin):
 
     prepopulated_fields = {'slug': ('title',)}
     list_select_related = True
+
+    def get_changeform_initial_data(self, request):
+        return {
+            'creator': request.user.pk,
+            'contributor': request.user.pk,
+            'modified': datetime.datetime.now
+        }
 
     def object_link(self, item):
         try:
