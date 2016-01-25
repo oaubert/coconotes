@@ -247,6 +247,30 @@ $(document).ready(function () {
         var edit_url = action_url('edit', annotation_id);
         IriSP.jQuery('<div/>', {'class': 'element-form-dialog', 'id': IriSP.generateUuid() })
             .load(edit_url, function () {
+                function validate(dialog) {
+                    var formdata = IriSP.jQuery(dialog).find("form").serializeArray();
+                    /* We know we do not have multiple attributes with the same name */
+                    var data = IriSP._.object(IriSP._.pluck(formdata, 'name'), IriSP._.pluck(formdata, 'value'));
+                    IriSP.jQuery.ajax({
+                        url: edit_url,
+                        timeout: 5000,
+                        type: "POST",
+                        contentType: 'application/json',
+                        data: JSON.stringify(data),
+                        dataType: 'json',
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            alert("An error has occurred making the request: " + errorThrown);
+                        },
+                        success: function(data) {
+                            IriSP.jQuery(dialog).dialog("close");
+                            // Get the modified annotation
+                            var a = _myPlayer.sourceManager.getElement(annotation_id);
+                            // Update its content according to the returned data
+                            a.source.deSerialize(data);
+                            _myPlayer.trigger("AnnotationsList.refresh");
+                        }
+                    });
+                };
                 IriSP.jQuery(this).appendTo('body')
                     .dialog({
                         width: "60%",
@@ -262,34 +286,18 @@ $(document).ready(function () {
                             IriSP.jQuery('.ui-widget-overlay').bind('click', function () {
                                 IriSP.jQuery(dialog).dialog('close');
                             });
+                            $(dialog).keypress(function(e) {
+                                if (e.ctrlKey && (e.keyCode == $.ui.keyCode.ENTER || e.keyCode == 10)) {
+                                    e.preventDefault();
+                                    validate(dialog);
+                                }
+                            });
                         },
                         buttons: [
                             {
                                 text: "Validate",
                                 click: function () {
-                                    var dialog = this;
-                                    var formdata = IriSP.jQuery(dialog).find("form").serializeArray();
-                                    /* We know we do not have multiple attributes with the same name */
-                                    var data = IriSP._.object(IriSP._.pluck(formdata, 'name'), IriSP._.pluck(formdata, 'value'));
-                                    IriSP.jQuery.ajax({
-                                        url: edit_url,
-                                        timeout: 5000,
-                                        type: "POST",
-                                        contentType: 'application/json',
-                                        data: JSON.stringify(data),
-                                        dataType: 'json',
-                                        error: function(XMLHttpRequest, textStatus, errorThrown) {
-                                            alert("An error has occurred making the request: " + errorThrown);
-                                        },
-                                        success: function(data) {
-                                            IriSP.jQuery(dialog).dialog("close");
-                                            // Get the modified annotation
-                                            var a = _myPlayer.sourceManager.getElement(annotation_id);
-                                            // Update its content according to the returned data
-                                            a.source.deSerialize(data);
-                                            _myPlayer.trigger("AnnotationsList.refresh");
-                                        }
-                                    });
+                                    validate(this);
                                 }
                             },
                             {
