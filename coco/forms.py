@@ -29,5 +29,6 @@ class AnnotationEditForm(forms.Form):
         # self.fields['begin'].max_value = [video].duration
         # Restrict group field choices to user groups
         self.fields['sharing'].choices = self.sharing_choices(self.user)
+        self.fields['description'].widget.attrs['autofocus'] = ""
         if self.annotation and not self.annotation.title:
             self.fields['title'].widget.attrs['class'] = 'hide_element'
