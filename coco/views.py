@@ -1,7 +1,6 @@
 from collections import namedtuple, OrderedDict, Counter
 import datetime
 import json
-import re
 
 from django.conf import settings
 from django.contrib.auth.models import Group
