@@ -14,5 +14,10 @@ ${LOCALEDIR}/django.po: ${SOURCE} ${TEMPLATES}
 	cd ${TOPDIR}/coco ; django-admin makemessages --no-wrap --locale fr
 
 upload:
-	${TOPDIR}/upload
+	${TOPDIR}/scripts/upload
 
+download:
+	${TOPDIR}/scripts/download
+
+backup:
+	/usr/bin/env python ${TOPDIR}/manage.py dumpdata | gzip -c > dump.json.gz
