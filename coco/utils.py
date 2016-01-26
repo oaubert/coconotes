@@ -1,7 +1,8 @@
 import re
 
 from django.db.models import Q
-
+from django.contrib.admin.models import LogEntry, ADDITION, CHANGE, DELETION
+from django.contrib.contenttypes.models import ContentType
 
 # Generic search code from https://github.com/squarepegsys/django-simple-search/
 # Interim code, to be removed after solr integration
@@ -51,3 +52,24 @@ def generic_search(request, model, fields, query_param="q"):
         prefetch_related = ('creator', 'contributor')
     found_entries = model.objects.prefetch_related(*prefetch_related).filter(entry_query)
     return found_entries
+
+
+ACTION = {
+    'addition': ADDITION,
+    'change': CHANGE,
+    'deletion': DELETION
+}
+def update_object_history(request, obj, action='change', message=None):
+    """Update object history.
+    action is a string: addition, change, deletion
+    """
+    if not message:
+        message =  '%s of %s' % (unicode(obj), action)
+    LogEntry.objects.log_action(
+        user_id         = request.user.pk,
+        content_type_id = ContentType.objects.get_for_model(obj).pk,
+        object_id       = obj.pk,
+        object_repr     = unicode(obj),
+        action_flag     = ACTION[action],
+        change_message  = message
+    )

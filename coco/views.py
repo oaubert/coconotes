@@ -19,7 +19,7 @@ from .models import Channel, Video, Newsitem, Chapter, Activity, Annotation, Com
 from .models import VISIBILITY_PRIVATE, VISIBILITY_GROUP, VISIBILITY_PUBLIC
 from .serializers import ChannelSerializer, ChapterSerializer, ActivitySerializer, VideoSerializer
 from .serializers import AnnotationSerializer, CommentSerializer, ResourceSerializer, NewsitemSerializer, AnnotationTypeSerializer
-from .utils import generic_search
+from .utils import generic_search, update_object_history
 from .permissions import IsOwnerOrReadOnly
 from .forms import AnnotationEditForm
 from .templatetags.coco import parse_timecode
@@ -329,6 +329,7 @@ def annotation_add(request, **kw):
                     description=data['content']['description'])
     an.visibility_deserialize(data['sharing'])
     an.save()
+    update_object_history(request, an, action='addition')
     context = CocoContext(user=request.user.pk,
                           video=video,
                           teacher_set=[u.pk for u in video.activity.chapter.teachers.all()],
@@ -366,6 +367,7 @@ def annotation_edit(request, pk=None, **kw):
             an.end = an.begin
         an.visibility_deserialize(data['sharing'])
         an.save()
+        update_object_history(request, an)
         # FIXME: check how to populate django changelist
         context = CocoContext(user=request.user.pk,
                               video=an.video,
@@ -374,6 +376,7 @@ def annotation_edit(request, pk=None, **kw):
         return JsonResponse({'annotations': [an.cinelab(context=context)]})
     elif request.method == 'DELETE':
         an.delete()
+        update_object_history(request, an, action='deletion')
         return JsonResponse({'id': pk})
 
 
@@ -399,6 +402,7 @@ def slide_level(request, pk=None, **kw):
         data['level'] = level
         an.parsed_content(data)
         an.save()
+        update_object_history(request, an)
         # FIXME: check how to populate django logentries
         context = CocoContext(user=request.user.pk,
                               video=an.video,
