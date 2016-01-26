@@ -23,6 +23,7 @@ from fields import SlugOrNullField
 from .templatetags.coco import format_timecode
 
 TYPE_SLIDES = 'Slides'
+TYPE_NOTES = 'Notes'
 
 # Monkeypatch support for serializing uuids to json. This allows it to
 # be enabled for external libs such as ajaxselect
@@ -342,7 +343,12 @@ class Video(Resource):
         return self.activity.get_absolute_url()
 
     def element_information(self):
-        return format_timecode(self.duration)
+        count = self.annotation_set.filter(visibility=VISIBILITY_PUBLIC,
+                                           annotationtype__title=TYPE_NOTES).count()
+        return "%(count)s %(name)s - %(duration)s" % {
+            'count': count,
+            'name': pluralize(count, "public note,public notes"),
+            'duration': format_timecode(self.duration) }
 
     @property
     def has_slides(self):
