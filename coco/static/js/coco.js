@@ -49,7 +49,7 @@ $(document).ready(function () {
             $(".tabnames_overflow_indicator").removeClass("overflowing");
         }
     }
-    $(window).on("resize", check_tablabels_overflow);
+
     function generateUuid() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
             var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
@@ -240,7 +240,7 @@ $(document).ready(function () {
     _myPlayer.on("Annotation.create", function () {
         e.preventDefault();
         IriSP.jQuery('<div/>', {'class': 'element-form-dialog', 'id': IriSP.generateUuid() })
-            .load("/annotation/add/").appendTo('body').dialog({ width: "70%" });
+            .load("/annotation/add/").appendTo('body').dialog({width: "60%"});
     });
 
     _myPlayer.on("Annotation.edit", function (annotation_id) {
@@ -361,21 +361,27 @@ $(document).ready(function () {
     })();
     /* Piwik */
 
-    var splitter, splitter2;
-    // Splitter between the Player/metadataplayer column and the tabs column
-    splitter =  $("#main").touchSplit({ barPosition: .66,
-                                        thickness: "22px",
-                                        secondMin: 400 })
-        .on("dragstart", function () {
-            $(this).find(".splitter-bar").addClass("active");
-        })
-        .on("dragstop", function () {
-            $(this).find(".splitter-bar").removeClass("active");
-            check_tablabels_overflow();
-        });
+    var splitter;
+    if ($(window).width() > 640) {
+        // Splitter between the Player/metadataplayer column and the tabs column
+        splitter =  $("#main").touchSplit({ barPosition: .66,
+                                            thickness: "22px",
+                                            secondMin: 400 })
+            .on("dragstart", function () {
+                $(this).find(".splitter-bar").addClass("active");
+            })
+            .on("dragstop", function () {
+                $(this).find(".splitter-bar").removeClass("active");
+                check_tablabels_overflow();
+            });
+        check_tablabels_overflow();
+    } else {
+        // See coco.css for the specific data
+    }
 
-    check_tablabels_overflow();
-
+    $(window).on("resize", function () {
+        check_tablabels_overflow();
+    });
     $(".videodetails").on("click touchstart", function (e) {
         e.stopPropagation();
         e.preventDefault();
