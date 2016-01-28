@@ -402,14 +402,25 @@ $(document).ready(function () {
             });
     });
     _myPlayer.on("Player.tweet", function () {
+        var title = $(".videotitle").text();
         var mf = find_widgets_by_type("Mediafragment");
         if (mf.length) {
             // Update URL
             mf[0].setHashToTime();
         }
-        var twitter_param = IriSP.jQuery.param({
+        var el = $(".Ldt-EnrichedPlan-Selected-Timecode");
+        if (el.length) {
+            title = el.find(".Ldt-EnrichedPlan-Note-Text").text();
+            mf[0].setHashToAnnotation({
+                id: el[0].dataset.id,
+                begin: el[0].dataset.timecode
+            });
+        } else {
+            mf[0].setHashToTime();
+        }
+        var twitter_param = $.param({
             url: document.location.href,
-            text: IriSP.textFieldHtml($(".videotitle").text()) + ' #COCoNotes'
+            text: IriSP.textFieldHtml(title) + ' #COCoNotes'
         });
         window.open("https://twitter.com/intent/tweet?" + twitter_param);
     });
