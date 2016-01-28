@@ -375,9 +375,7 @@ $(document).ready(function () {
                 check_tablabels_overflow();
             });
         check_tablabels_overflow();
-    } else {
-        // See coco.css for the specific data
-    }
+    };
 
     $(window).on("resize", function () {
         check_tablabels_overflow();
@@ -402,5 +400,17 @@ $(document).ready(function () {
                     }
                 });
             });
+    });
+    _myPlayer.on("Player.tweet", function () {
+        var mf = find_widgets_by_type("Mediafragment");
+        if (mf.length) {
+            // Update URL
+            mf[0].setHashToTime();
+        }
+        var twitter_param = IriSP.jQuery.param({
+            url: document.location.href,
+            text: IriSP.textFieldHtml($(".videotitle").text()) + ' #COCoNotes'
+        });
+        window.open("https://twitter.com/intent/tweet?" + twitter_param);
     });
 });
