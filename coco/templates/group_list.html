@@ -9,6 +9,7 @@
 {% block content %}
           <h1 class="pagetitle">{% blocktrans %}Groups{% endblocktrans %}</h1>
 
+          <div class="group_list">
           {% for group in group_list %}
           <article class="infoblock">
             <div class="square_div_20">
@@ -19,5 +20,5 @@
             <h4><a href="{{ group.id }}">{{ group.name }}</a> ({{ group.user_set.count }})</h4>
           </article>
           {% endfor %}
-
+          </div>
 {% endblock %}

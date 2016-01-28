@@ -855,6 +855,17 @@ h1.highlighted {
     max-height: 100%;
 }
 
+.group_list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.group_list .infoblock {
+    min-width: 200px;
+    margin-bottom: 20px;
+}
+
 .group_profile {
     padding-top: 1em;
     text-align: center;
