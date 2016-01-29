@@ -117,7 +117,7 @@ header {
     position: absolute;
     bottom: 6px;
     right: 0;
-    width: 540px;
+    width: 520px;
     max-width: calc(100% - 224px);
     display: inline-block;
     vertical-align: bottom;
