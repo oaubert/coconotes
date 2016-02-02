@@ -228,7 +228,7 @@ GroupAdmin.save_model = save_group_model
 
 class UserMetadataInline(admin.StackedInline):
     model = UserMetadata
-    fieldsets = [(None,       {'fields': [ ('thumbnail', 'description') ]})]
+    fieldsets = [(None,       {'fields': [ ('thumbnail', 'description'), 'config' ]})]
 UserAdmin.inlines = [UserMetadataInline] + list(UserAdmin.inlines)
 UserAdmin.search_fields = ('username', 'metadata__description')
 
