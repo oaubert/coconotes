@@ -648,6 +648,7 @@ class UserMetadata(models.Model):
                            null=True)
 
     config = JSONField(_("Configuration"),
+                       default={},
                        blank=True, null=True)
 
     def __unicode__(self):
