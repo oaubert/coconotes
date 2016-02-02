@@ -9,7 +9,8 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, render
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.decorators.http import require_http_methods
-from django.views.generic import CreateView, UpdateView, DeleteView, RedirectView, DetailView, ListView
+from django.utils.decorators import method_decorator
+from django.views.generic import CreateView, UpdateView, DeleteView, RedirectView, DetailView, ListView, View
 from django.template.defaultfilters import pluralize
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from rest_framework import permissions, viewsets
@@ -408,3 +409,32 @@ def slide_level(request, pk=None, **kw):
                               teacher_set=[u.pk for u in an.video.activity.chapter.teachers.all()],
                               current_group='')
         return JsonResponse(an.cinelab(context=context))
+
+
+class UserSetting(View):
+    """Manipulate user settings.
+    """
+    WHITELIST = ['tabconfig']
+
+    def get(self, request, name=None, **kw):
+        if name not in self.WHITELIST:
+            return HttpResponse(status=422)
+        config = request.user.metadata.config or {}
+        return JsonResponse({name: config.get(name, "")})
+
+    def post(self, request, name=None, **kw):
+        if name not in self.WHITELIST:
+            return HttpResponse(status=422)
+        data = json.loads(request.body.decode('utf-8'))
+        if not isinstance(data, {}) or name not in data:
+            # We are expecting a dict with the parameter name as key
+            return HttpResponse(status=422)
+        if request.user.metadata.config is None:
+            request.user.metadata.config = {}
+        request.user.metadata.config[name] = data.get(name)
+        request.user.metadata.save()
+        return JsonResponse({name: request.user.metadata.config.get(name, "")})
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(UserSetting, self).dispatch(*args, **kwargs)

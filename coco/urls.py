@@ -27,6 +27,7 @@ urlpatterns = [
 
     url(r'^i18n/', include('django.conf.urls.i18n')),
 
+    url(r'^accounts/profile/(?P<name>.+)$', views.UserSetting.as_view(), name='profile-settting'),
     url(r'^accounts/profile', views.profile, name='profile'),
 
     url(r'^media/(?P<path>.*)$', django.views.static.serve, {'document_root': settings.MEDIA_ROOT}),
@@ -82,7 +83,7 @@ urlpatterns = [
     url(r'^group/$', views.GroupListView.as_view(), name='group-list'),
     url(r'^group/(?P<pk>\d+)/$', views.GroupDetailView.as_view(), name='view-group-detail'),
 
-url(r'^annotation/add$', views.AnnotationCreateView.as_view(), name='view-annotation-create'),
+    url(r'^annotation/add$', views.AnnotationCreateView.as_view(), name='view-annotation-create'),
     url(r'^annotation/(?P<pk>[\w\d_-]+)/$', views.AnnotationDetailView.as_view(), name='view-annotation-detail'),
                        url(r'^annotation/(?P<pk>[\w\d_-]+)/edit/$', views.annotation_edit, name='view-annotation-update'),
     url(r'^annotation/(?P<pk>[\w\d_-]+)/delete/$', views.AnnotationDeleteView.as_view(), name='view-annotation-delete'),
