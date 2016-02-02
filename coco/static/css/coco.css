@@ -679,6 +679,10 @@ h1.highlighted {
     position: relative;
 }
 
+.infoblock.highlighted  {
+    background-color: #dcf0ff;
+}
+
 .infoblock h2 {
     margin-top: 4px;
     padding-bottom: 0;

@@ -11,15 +11,15 @@
 
 <section class="column column3">
 
-  {% for group in user.groups.all %}
-  <article class="infoblock">
+  {% for g in user.groups.all %}
+  <article class="infoblock {% if g == group %}highlighted{% endif %}">
     <div class="square_div_20">
       <div class="square_content">
-        <img class="thumbnail_mini" src="{{ group.metadata.thumbnail_url }}">
+        <img class="thumbnail_mini" src="{{ g.metadata.thumbnail_url }}">
       </div>
     </div>
-    <h4><a href="../{{ group.id }}">{{ group.name }}</a></h4>
-    <div class="group_description">{{ group.metadata.description }}</div>
+    <h4><a href="../{{ g.id }}">{{ g.name }}</a></h4>
+    <div class="group_description">{{ g.metadata.description }}</div>
   </article>
   {% endfor %}
 
