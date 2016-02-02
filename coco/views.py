@@ -16,7 +16,6 @@ from rest_framework import permissions, viewsets
 
 
 from .models import Channel, Video, Newsitem, Chapter, Activity, Annotation, Comment, AnnotationType, Resource
-from .models import VISIBILITY_PRIVATE, VISIBILITY_GROUP, VISIBILITY_PUBLIC
 from .serializers import ChannelSerializer, ChapterSerializer, ActivitySerializer, VideoSerializer
 from .serializers import AnnotationSerializer, CommentSerializer, ResourceSerializer, NewsitemSerializer, AnnotationTypeSerializer
 from .utils import generic_search, update_object_history
