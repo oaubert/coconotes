@@ -708,7 +708,7 @@ h1.highlighted {
 .profile_avatar {
     width: 100%;
     min-width: 48px;
-    max-width: 320px;
+    max-width: 128px;
     float: left;
     padding-right: .5em;
 }
