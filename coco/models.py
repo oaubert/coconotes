@@ -670,6 +670,21 @@ class UserMetadata(models.Model):
     def annotations(self):
         return Annotation.objects.filter(Q(creator=self.user) | Q(contributor=self.user))
 
+    def tabconfig(self):
+        """Return tab configuration settings as an ordered list of (group, is_visible) tuples.
+        """
+        groups = []
+        # Get ordered, visible groups from settings
+        settings = (self.user.metadata.config or {}).get('tabconfig', [])
+        for t in settings:
+            try:
+                groups.append((self.user.groups.get(pk=t[0]), t[1]))
+            except Group.DoesNotExist:
+                pass
+        # Complete with groups with no settings (default visible)
+        groups.extend((g, True) for g in self.user.groups.exclude(pk__in=[ t[0] for t in settings ]))
+        return groups
+
     def latest_annotations(self, count=50):
         """Return the latest n annotations.
         """

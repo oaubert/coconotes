@@ -21,6 +21,7 @@
       <span class="profile_email">{{ user.email }}</span>
       <div class="profile_change_password"><a href="/accounts/password/change/">{% blocktrans %}Change password{% endblocktrans %}</a></div>
       <div class="profile_description">{{ user.metadata.description }}</div>
+      <div class="profile_configuration"><a href="/accounts/profile/tabconfig/form">{% blocktrans %}Configuration of displayed tabs{% endblocktrans %}</a></div>
       {% if user.teacher_for.count %}
       <div class="teacher_info">
         {% blocktrans %}You are a teacher for the following chapters :{% endblocktrans %}

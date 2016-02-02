@@ -1,0 +1,37 @@
+{% extends  "formbase.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block form %}
+<div>{% blocktrans %}You can specify which groups are displayed in the tab area.{% endblocktrans %}</div>
+<form action="{% url 'profile-settting-form' 'tabconfig' %}" class="tabconfig_edit_form" method="post">
+  {% csrf_token %}
+  <ul class="tabconfig_edit_form_list">
+    {% for gi in user.metadata.tabconfig %}
+    <li class="ui-state-default">
+      <input name="{{gi.0.id}}" class="tabconfig_edit_form_checkbox" data-id="{{gi.0.id}}" {% if gi.1 %}checked{% endif %} type="checkbox" />
+      <input type="hidden" name="reference" value="{{gi.0.id}}" />
+      {{gi.0.name}} ({{gi.0.id}})
+    </li>
+    {% endfor %}
+</ul>
+  <div class="tabconfig_edit_form_validate">
+    <input type="submit" value="{% blocktrans %}Validate{% endblocktrans %}" />
+  </div>
+{% if form.errors %}
+    <ol>
+    {% for error in form.errors %}
+        <li><strong>{{ error|escape }}</strong></li>
+    {% endfor %}
+    </ol>
+    {% endif %}
+</form>
+<script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+<script type="text/javascript">
+    (function () {
+        $(".tabconfig_edit_form_list").sortable().disableSelection();
+    })();
+</script>
+{% endblock %}

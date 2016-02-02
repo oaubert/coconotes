@@ -380,6 +380,56 @@ $(document).ready(function () {
     $(window).on("resize", function () {
         check_tablabels_overflow();
     });
+    $(".tabnames_overflow_indicator").on("click", function () {
+        $('<div/>', {'class': 'tabconfig-form-dialog', 'id': IriSP.generateUuid() })
+            .load("/accounts/profile/tabconfig/form", function () {
+                $(this).appendTo('body').dialog({
+                    width: "60%",
+                    closeOnEscape: true,
+                    dialogClass: "tabconfig_popup",
+                    modal: true,
+                    position: { my: "center", at: "center" },
+                    open: function() {
+                        var dialog = this;
+                        // On open, hide the original submit button
+                        $(this).find("[type=submit]").hide();
+                        $('.ui-widget-overlay').on('click', function () {
+                            $(dialog).dialog('close');
+                        });
+                    },
+                    buttons: [
+                        {
+                            text: "Validate",
+                            click: function () {
+                                var dialog = $(this);
+                                var form = $(dialog).find("form");
+                                $.ajax({
+                                    type: form.attr("method"),
+                                    url: form.attr("action"),
+                                    cache: false,
+                                    data: form.serialize(),
+                                    timeout: 5000,
+                                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                        // FIXME: shoudl report error
+                                        dialog.dialog("close");
+                                    },
+                                    success: function (data) {
+                                        dialog.dialog("close");
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        },
+                        {
+                            text: "Close",
+                            click: function () {
+                                $(this).dialog("close");
+                            }
+                        }
+                    ]
+                });
+            });
+    });
     $(".videodetails").on("click touchstart", function (e) {
         e.stopPropagation();
         e.preventDefault();

@@ -1130,6 +1130,28 @@ h1:hover .adminactions,
     margin-bottom: 1em;
 }
 
+.tabconfig_edit_form {
+    max-width: 20em;
+    margin: auto;
+}
+
+.tabconfig_edit_form_list {
+    list-style: none;
+}
+
+.tabconfig_edit_form_checkbox {
+    -webkit-appearance: checkbox;
+}
+
+.tabconfig_edit_form_validate {
+    text-transform: uppercase;
+    text-align: center;
+    width: 100%;
+    font-size: 20px;
+    border: none;
+    background-color: #fff;
+}
+
 #id_begin {
     align-self: flex-start;
 }

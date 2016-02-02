@@ -4,7 +4,7 @@ import json
 
 from django.conf import settings
 from django.contrib.auth.models import Group
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, render
 from django.contrib.auth.decorators import login_required, permission_required
@@ -201,7 +201,9 @@ class VideoDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(VideoDetailView, self).get_context_data(**kwargs)
-        context['groups'] = self.request.user.groups.all()
+        context['groups'] = [ t[0]
+                              for t in self.request.user.metadata.tabconfig()
+                              if t[1] ]
         return context
 
 def home(request, **kw):
@@ -414,7 +416,9 @@ def slide_level(request, pk=None, **kw):
 class UserSetting(View):
     """Manipulate user settings.
     """
-    WHITELIST = ['tabconfig']
+    WHITELIST = [
+        'tabconfig' # Ordered list of (group_id, is_visible) tuples
+    ]
 
     def get(self, request, name=None, **kw):
         if name not in self.WHITELIST:
@@ -438,3 +442,26 @@ class UserSetting(View):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(UserSetting, self).dispatch(*args, **kwargs)
+
+class UserSettingForm(UserSetting):
+    """Display user settings form
+    """
+    def get(self, request, name=None, **kw):
+        if name not in self.WHITELIST:
+            return HttpResponse(status=422)
+        return render_to_response('account/%s_form.html' % name,
+                                  context_instance=RequestContext(request))
+
+    def post(self, request, name=None, **kw):
+        if name not in self.WHITELIST:
+            return HttpResponse(status=422)
+        if name == 'tabconfig':
+            groups = [ (int(gid),
+                        request.POST.get(gid) == 'on')
+                       for gid in request.POST.getlist('reference') ]
+            if request.user.metadata.config is None:
+                request.user.metadata.config = {}
+            request.user.metadata.config[name] = groups
+            request.user.metadata.save()
+            return HttpResponseRedirect("")
+        return HttpResponse(content="Invalid parameter", status=422)

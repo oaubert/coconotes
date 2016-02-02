@@ -27,6 +27,7 @@ urlpatterns = [
 
     url(r'^i18n/', include('django.conf.urls.i18n')),
 
+    url(r'^accounts/profile/(?P<name>.+)/form$', views.UserSettingForm.as_view(), name='profile-settting-form'),
     url(r'^accounts/profile/(?P<name>.+)$', views.UserSetting.as_view(), name='profile-settting'),
     url(r'^accounts/profile', views.profile, name='profile'),
 
