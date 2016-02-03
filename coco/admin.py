@@ -56,19 +56,21 @@ class ElementAdmin(AjaxSelectAdmin, CreatorMixin, admin.ModelAdmin):
         }
 
     def object_link(self, item):
+        ret = u'<a title="Edit item" target="_blank" href="{adminurl}">\u270f</a> <a title="View on site" target="_blank" href="{absurl}">\u25ce</a>'.format(adminurl=item.pk, absurl=item.get_absolute_url())
         try:
-            return u'<a target="_blank" href="{absurl}">\u25ce</a> <a target="_blank" href="{url}">\u21eb</a>'.format(absurl=item.get_absolute_url(), url=item.url)
+            ret = ret + u'<a title="View source url" target="_blank" href="{url}">\u21eb</a>'.format(url=item.url)
         except AttributeError:
-            return u'<a target="_blank" href="{absurl}">\u25ce</a>'.format(absurl=item.get_absolute_url())
+            pass
+        return ret
     object_link.short_description = 'View'
     object_link.allow_tags = True
 
 
 @admin.register(Video)
 class VideoAdmin(ElementAdmin):
-    list_display = ('pk', 'object_link', 'promoted', 'title', 'slug', 'creator', 'duration', 'created', 'thumbnail')
+    list_display = ('object_link', 'promoted', 'title', 'slug', 'creator', 'duration', 'created', 'thumbnail')
     list_editable = ('promoted', 'title', 'slug', 'creator', 'duration', 'thumbnail')
-    list_display_links = ('pk',)
+    list_display_links = None
     list_filter = (('creator', admin.RelatedOnlyFieldListFilter),
                    'promoted')
     search_fields = ('title', 'slug')
@@ -87,9 +89,9 @@ class VideoAdmin(ElementAdmin):
 
 @admin.register(Channel)
 class ChannelAdmin(ElementAdmin):
-    list_display = ('pk', 'object_link', 'promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'category')
+    list_display = ('object_link', 'promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'category')
     list_editable = ('promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'category')
-    list_display_links = ('pk',)
+    list_display_links = None
     list_filter = (('creator', admin.RelatedOnlyFieldListFilter),
                    'category',
                    'promoted')
@@ -106,9 +108,9 @@ class ChannelAdmin(ElementAdmin):
 
 @admin.register(Chapter)
 class ChapterAdmin(ElementAdmin):
-    list_display = ('pk', 'object_link', 'promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'channel')
+    list_display = ('object_link', 'promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'channel')
     list_editable = ('promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'channel')
-    list_display_links = ('pk',)
+    list_display_links = None
     list_filter = (('creator', admin.RelatedOnlyFieldListFilter),
                    'channel', 'promoted')
     search_fields = ('title',)
@@ -124,9 +126,9 @@ class ChapterAdmin(ElementAdmin):
 
 @admin.register(Activity)
 class ActivityAdmin(ElementAdmin):
-    list_display = ('pk', 'object_link', 'promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'chapter')
+    list_display = ('object_link', 'promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'chapter')
     list_editable = ('promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'chapter')
-    list_display_links = ('pk',)
+    list_display_links = None
     list_filter = (('creator', admin.RelatedOnlyFieldListFilter),
                    'chapter', 'promoted')
     search_fields = ('title',)
@@ -142,9 +144,9 @@ class ActivityAdmin(ElementAdmin):
 
 @admin.register(Annotation)
 class AnnotationAdmin(ElementAdmin):
-    list_display = ('pk', 'object_link', 'promoted', 'begin', 'title', 'description', 'annotationtype', 'group', 'video_name', 'creator', 'created')
+    list_display = ('object_link', 'promoted', 'begin', 'title', 'description', 'annotationtype', 'group', 'visibility', 'video_name', 'creator', 'created')
     list_editable = ('promoted', 'begin', 'title', 'description', 'group', 'annotationtype')
-    list_display_links = ('pk',)
+    list_display_links = None
     list_filter = (('annotationtype', admin.RelatedOnlyFieldListFilter),
                    ('group', admin.RelatedOnlyFieldListFilter),
                    ('video', admin.RelatedOnlyFieldListFilter),
