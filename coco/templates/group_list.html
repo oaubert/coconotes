@@ -17,7 +17,11 @@
                <img class="thumbnail_mini" src="{{ group.metadata.thumbnail_url }}">
               </div>
             </div>
-            <h4><a href="{{ group.id }}">{{ group.name }}</a> ({{ group.user_set.count }})</h4>
+            <h4><a href="{{ group.id }}">{{ group.name }}</a></h4>
+            <div class="group_metadata">
+              {{ group.user_set.count }} {% blocktrans %}members{% endblocktrans %}<br/>
+              {% blocktrans count group.metadata.annotations.count as count %}{{count}} shared note{% plural %}{{count}} shared notes{% endblocktrans %}
+            </div>
           </article>
           {% endfor %}
           </div>
