@@ -56,7 +56,16 @@
 <section class="column column6 group_activity_column">
   <h2>{% trans "Activity" %}</h2>
 
-    <ul class="profile_recent_activity">
+  <div class="infoblock group_annotated_videos">
+    <h5>Annotated videos</h5>
+    <ul class="annotated_videos_summary">
+    {% for vi in group.metadata.videos %}
+    <li><a href="{{vi.video.get_absolute_url}}">{{ vi.video.title }}</a> - <span>{% blocktrans count vi.annotationcount as count %}{{count}} shared note{% plural %}{{count}} shared notes{% endblocktrans %}</span></li>
+    {% endfor %}
+    </ul>
+  </div>
+  <h5>Timeline</h5>
+  <ul class="profile_recent_activity">
       {% for a in group.metadata.annotations %}
       <li>{% if a.is_updated %}
         {% blocktrans with user=a.contributor %}{{user}} modified the annotation{% endblocktrans %}

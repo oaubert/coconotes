@@ -884,6 +884,10 @@ h1.highlighted {
     margin-left: 1em;
 }
 
+.annotated_videos_summary {
+    font-size: 10px;
+}
+
 .minicapsule {
     margin: 0 12px 12px 0;
     float: left;

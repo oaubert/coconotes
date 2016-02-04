@@ -629,6 +629,17 @@ class GroupMetadata(Element):
     def annotations(self):
         return Annotation.objects.filter(group=self.group).filter(Q(visibility=VISIBILITY_PUBLIC) | Q(visibility=VISIBILITY_GROUP)).order_by("-modified")
 
+    @property
+    def videos(self):
+        return [
+            {
+                'video': video,
+                'annotationcount': len(list(videoannotations))
+            }
+            for video, videoannotations in itertools.groupby(self.annotations,
+                                                             lambda a: a.video)
+        ]
+
     def __unicode__(self):
         return "Metadata for %s" % self.group.name
 
