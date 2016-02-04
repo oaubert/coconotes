@@ -380,7 +380,7 @@ $(document).ready(function () {
     $(window).on("resize", function () {
         check_tablabels_overflow();
     });
-    $(".tabnames_overflow_indicator").on("click", function () {
+    function popup_tabconfig_dialog() {
         $('<div/>', {'class': 'tabconfig-form-dialog', 'id': IriSP.generateUuid() })
             .load("/accounts/profile/tabconfig/form", function () {
                 $(this).appendTo('body').dialog({
@@ -429,7 +429,11 @@ $(document).ready(function () {
                     ]
                 });
             });
-    });
+    }
+
+    $(".tabnames_overflow_indicator").on("click", popup_tabconfig_dialog);
+    _myPlayer.on("Player.tabconfig", popup_tabconfig_dialog);
+
     $(".videodetails").on("click touchstart", function (e) {
         e.stopPropagation();
         e.preventDefault();
