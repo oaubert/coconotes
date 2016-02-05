@@ -7,6 +7,10 @@
 
 {% block title %}{% blocktrans %}COCo platform{% endblocktrans %} - {{ user.username }}{% endblock %}
 
+{% block breadcrumb %}
+<span class="topmenu_item active"><a href="#">{% trans "Profile" %}</a></span>
+{% endblock %}
+
 {% block content %}
 <h1 class="pagetitle highlighted">{% trans "My profile" %}</h1>
 

@@ -4,6 +4,9 @@
 {% load admin_urls %}
 
 
+{% block breadcrumb %}
+<span class="topmenu_item active"><a href="#">{% trans "Channel" %} {{channel.title}}</a></span>
+{% endblock %}
 {% block title %}{% blocktrans %}Channel{% endblocktrans %} {{ channel.title }}{% endblock %}
 
 {% block content %}

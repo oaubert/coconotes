@@ -3,6 +3,9 @@
 {% load i18n %}
 {% load admin_urls %}
 
+{% block breadcrumb %}
+<span class="topmenu_item active"><a href="/search">{% trans "Search" %}</a></span>
+{% endblock %}
 
 {% block title %}{% trans "COCo project" %} - {% trans "search for" %} {{ query_string }}{% endblock %}
 {% block extra_head %}

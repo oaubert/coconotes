@@ -4,6 +4,10 @@
 {% load admin_urls %}
 
 
+{% block breadcrumb %}
+<span class="topmenu_item"><a href="{{ chapter.channel.get_absolute_url }}">{% trans "Channel" %} {{video.channel.title}}</a></span>
+<span class="topmenu_item active"><a href="#">{% trans "Chapter" %}</a></span>
+{% endblock %}
 {% block title %}{% blocktrans %}Chapter{% endblocktrans %} {{ chapter.title }}{% endblock %}
 
 {% block content %}
