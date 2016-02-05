@@ -256,7 +256,7 @@ def search(request, **kw):
         'elements': elements,
         'username': request.user.username,
         'query_string': request.GET.get('q', ''),
-        'current_document': 'profile',
+        'current_document': 'search',
     }, context_instance=RequestContext(request))
 
 CocoContext = namedtuple('Context', ['user', 'teacher_set', 'current_group', 'video'])
