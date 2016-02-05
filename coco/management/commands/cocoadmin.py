@@ -20,7 +20,7 @@ from django.core.files import File
 from django.utils.timezone import make_naive, is_aware
 from django.utils.text import slugify
 
-from coco.models import Activity, Channel, Video, Chapter, Annotation, Newsitem, AnnotationType, License
+from coco.models import Activity, Channel, Video, Chapter, Annotation, Newsitem, AnnotationType, License, UserMetadata
 from coco.models import VISIBILITY_PUBLIC, VISIBILITY_GROUP, VISIBILITY_PRIVATE, TYPE_SLIDES
 
 logger = logging.getLogger(__name__)
@@ -406,6 +406,22 @@ class Command(BaseCommand):
                         o.save()
             os.unlink(thumbnail_name)
         vid.save()
+
+    @register
+    def fix_user_metadata(self):
+        """Fix UserMetadata.config fields after a loaddata
+        """
+        for u in UserMetadata.objects.exclude(config=None):
+            if isinstance(u.config, basestring):
+                # Wrong field, probably bad serialization
+                # Try to restore json data from python serialization
+                try:
+                    data = json.loads(u.config.lower().replace("u'", "'").replace("'", '"'))
+                    print "Fixed config for %s" % u.user.username
+                    u.config = data
+                    u.save()
+                except ValueError:
+                    print "Impossible to fix config metadata for %s" % u.user.username
 
     @register
     def create_user(self, email, username="", fullname=""):
