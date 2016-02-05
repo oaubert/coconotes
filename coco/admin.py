@@ -68,8 +68,8 @@ class ElementAdmin(AjaxSelectAdmin, CreatorMixin, admin.ModelAdmin):
 
 @admin.register(Video)
 class VideoAdmin(ElementAdmin):
-    list_display = ('object_link', 'promoted', 'title', 'slug', 'creator', 'duration', 'created', 'thumbnail')
-    list_editable = ('promoted', 'title', 'slug', 'creator', 'duration', 'thumbnail')
+    list_display = ('object_link', 'promoted', 'title', 'description', 'slug', 'creator', 'duration', 'created', 'thumbnail')
+    list_editable = ('promoted', 'title', 'slug', 'description', 'creator', 'duration', 'thumbnail')
     list_display_links = None
     list_filter = (('creator', admin.RelatedOnlyFieldListFilter),
                    'promoted')
@@ -89,8 +89,8 @@ class VideoAdmin(ElementAdmin):
 
 @admin.register(Channel)
 class ChannelAdmin(ElementAdmin):
-    list_display = ('object_link', 'promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'category')
-    list_editable = ('promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'category')
+    list_display = ('object_link', 'promoted', 'title', 'description', 'slug', 'creator', 'created', 'thumbnail', 'category')
+    list_editable = ('promoted', 'title', 'description', 'slug', 'creator', 'created', 'thumbnail', 'category')
     list_display_links = None
     list_filter = (('creator', admin.RelatedOnlyFieldListFilter),
                    'category',
@@ -108,8 +108,8 @@ class ChannelAdmin(ElementAdmin):
 
 @admin.register(Chapter)
 class ChapterAdmin(ElementAdmin):
-    list_display = ('object_link', 'promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'channel')
-    list_editable = ('promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'channel')
+    list_display = ('object_link', 'promoted', 'title', 'description', 'slug', 'creator', 'created', 'thumbnail', 'channel')
+    list_editable = ('promoted', 'title', 'description', 'slug', 'creator', 'created', 'thumbnail', 'channel')
     list_display_links = None
     list_filter = (('creator', admin.RelatedOnlyFieldListFilter),
                    'channel', 'promoted')
@@ -126,8 +126,8 @@ class ChapterAdmin(ElementAdmin):
 
 @admin.register(Activity)
 class ActivityAdmin(ElementAdmin):
-    list_display = ('object_link', 'promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'chapter')
-    list_editable = ('promoted', 'title', 'slug', 'creator', 'created', 'thumbnail', 'chapter')
+    list_display = ('object_link', 'promoted', 'title', 'description', 'slug', 'creator', 'created', 'thumbnail', 'chapter')
+    list_editable = ('promoted', 'title', 'slug', 'description', 'creator', 'created', 'thumbnail', 'chapter')
     list_display_links = None
     list_filter = (('creator', admin.RelatedOnlyFieldListFilter),
                    'chapter', 'promoted')
