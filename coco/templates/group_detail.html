@@ -38,7 +38,7 @@
         <img class="thumbnail_mini" src="{{ group.metadata.thumbnail_url }}">
       </div>
     </div>
-    <p>created by {{group.metadata.creator.username|default:"admin"}}</p>
+    <p>{% blocktrans with name %}created by{% endblocktrans %} {{group.metadata.creator.username|default:"admin"}}</p>
     <p>{{ group.metadata.description|default:"No description" }}</p>
   </article>
 
@@ -61,14 +61,14 @@
   <h2>{% trans "Activity" %}</h2>
 
   <div class="infoblock group_annotated_videos">
-    <h5>Annotated videos</h5>
+    <h5>{% blocktrans %}Annotated videos{% endblocktrans %}</h5>
     <ul class="annotated_videos_summary">
     {% for vi in group.metadata.videos %}
     <li><a href="{{vi.video.get_absolute_url}}">{{ vi.video.title }}</a> - <span>{% blocktrans count vi.annotationcount as count %}{{count}} shared note{% plural %}{{count}} shared notes{% endblocktrans %}</span></li>
     {% endfor %}
     </ul>
   </div>
-  <h5>Timeline</h5>
+  <h5>{% blocktrans %}Timeline{% endblocktrans %}</h5>
   <ul class="profile_recent_activity">
       {% for a in group.metadata.annotations %}
       <li>{% if a.is_updated %}
