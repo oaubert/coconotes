@@ -4,6 +4,10 @@
 {% load admin_urls %}
 {% load humanize %}
 
+{% block breadcrumb %}
+<span class="topmenu_item"><a href="#">{% trans "Groups" %}</a></span>
+<span class="topmenu_item active"><a href="#">{% trans "Group" %} {{ group.name }}</a></span>
+{% endblock %}
 {% block title %}{% blocktrans %}COCo platform{% endblocktrans %} - {% blocktrans %}Group{% endblocktrans %} {{ group.name }}{% endblock %}
 
 {% block content %}
