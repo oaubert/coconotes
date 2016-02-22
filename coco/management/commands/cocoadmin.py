@@ -391,6 +391,8 @@ class Command(BaseCommand):
                     slug=slug,
                     duration=duration)
 
+        # Save anyway, so that we have a valid video even if thumbnailing fails
+        vid.save()
         # Get thumbnail
         thumbnail_name = os.tmpnam() + ".jpg"
         # Low-dependency thumbnailer
