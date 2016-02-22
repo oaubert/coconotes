@@ -201,9 +201,13 @@ class VideoDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(VideoDetailView, self).get_context_data(**kwargs)
-        context['groups'] = [ t[0]
-                              for t in self.request.user.metadata.tabconfig()
-                              if t[1] ]
+        try:
+            context['groups'] = [ t[0]
+                                  for t in self.request.user.metadata.tabconfig()
+                                  if t[1] ]
+        except AttributeError:
+            # AnonymousUser does not have a metadata field
+            context['groups'] = [ ]
         return context
 
 def home(request, **kw):
