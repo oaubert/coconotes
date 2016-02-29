@@ -636,7 +636,7 @@ class GroupMetadata(Element):
                 'video': video,
                 'annotationcount': len(list(videoannotations))
             }
-            for video, videoannotations in itertools.groupby(self.annotations,
+            for video, videoannotations in itertools.groupby(self.annotations.order_by('video'),
                                                              lambda a: a.video)
         ]
 
