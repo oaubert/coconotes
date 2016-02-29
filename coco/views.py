@@ -222,6 +222,7 @@ def home(request, **kw):
         'current_document': 'home',
     }, context_instance=RequestContext(request))
 
+@login_required
 def profile(request, **kw):
     return render_to_response('profile.html', {
         'username': request.user.username,
