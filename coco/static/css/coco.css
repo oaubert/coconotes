@@ -976,6 +976,10 @@ h1.highlighted {
     font-size: 11px;
 }
 
+.snippet_hightlight {
+    background-color: #ffc;
+}
+
 .latest_videos {
     margin-top: 40px;
 }

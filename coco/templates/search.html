@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load admin_urls %}
+{% load coco %}
 
 {% block breadcrumb %}
 <span class="topmenu_item active"><a href="/search">{% trans "Search" %}</a></span>
@@ -85,9 +86,9 @@
   <article class="searchcapsule">
     <a title="{{ item.title }}" href="{{ item.get_absolute_url }}"><img src="{{ item.thumbnail_url }}"></a>
     <div class="content">
-      <h5><span class="searchcapsule_type">{{ item.element_type }}</span> <a title="{{ item.title }}" href="{{ item.get_absolute_url }}">{{ item.title }}</a></h5>
-      <span class="description">{{ item.description|truncatechars_html:300 }}</span>
-      <span class="detail">{{ item.element_information }}</span>
+      <h5><span class="searchcapsule_type">{{ item.element_type }}</span> <a title="{{ item.title }}" href="{{ item.get_absolute_url }}">{{ item.title|term_highlight:query_string }}</a></h5>
+      <span class="description">{{ item.description|term_highlight:query_string|truncatechars_html:300 }}</span>
+      <span class="detail">{{ item.element_information|term_highlight:query_string }}</span>
     </div>
   </article>
   {% empty %}

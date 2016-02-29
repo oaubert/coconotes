@@ -5,6 +5,7 @@ import time
 
 from django import template
 from django.template.defaultfilters import stringfilter
+from django.utils.html import mark_safe, conditional_escape
 
 register = template.Library()
 
@@ -97,3 +98,14 @@ def parse_timecode(s):
         else:
             raise ValueError("Unknown time format for %s" % s)
     return tc
+
+@register.filter(needs_autoescape=True)
+@stringfilter
+def term_highlight(text, searched_term="", autoescape=None):
+    if autoescape:
+        esc = conditional_escape
+    else:
+        esc = lambda x: x
+    pattern = re.compile('(%s)' % esc(searched_term), re.IGNORECASE)
+    (result, count) = pattern.subn(r'<span class="snippet_hightlight">\1</span>', esc(unicode(text)))
+    return mark_safe(result)
