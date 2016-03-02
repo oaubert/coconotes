@@ -965,8 +965,7 @@ h1.highlighted {
     font-size: 14px;
 }
 
-.minicapsule .detail,
-.searchcapsule .detail {
+.minicapsule .detail {
     display: block;
     position: absolute;
     right: 16px;

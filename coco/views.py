@@ -1,5 +1,6 @@
 from collections import namedtuple, OrderedDict, Counter
 import datetime
+import itertools
 import json
 
 from django.conf import settings
@@ -242,20 +243,47 @@ MODEL_MAP = OrderedDict((
 
 
 def search(request, **kw):
-    elements = []
+    found = {}
 
     for model, fields in MODEL_MAP.iteritems():
-        elements += [ el
-                      for el in generic_search(request, model, fields, 'q')
-                      if el.can_access(request.user) ]
+        found[model] = [ el
+                            for el in generic_search(request, model, fields, 'q')
+                            if el.can_access(request.user) ]
 
-    counts = Counter(el.element_type for el in elements)
-    # Reorder counter info to match MODEL_MAP key order
-    counts = [(value, name) for (name, value) in counts.iteritems()]
-    map_order = dict((key.__name__, count) for (count, key) in enumerate(MODEL_MAP))
-    counts.sort(key=lambda t: map_order.get(t[1], -1))
+    # Videos corresponding to matching annotations
+    containing_videos = set(a.video for a in found[Annotation])
+    # Remove these videos from matching videos
+    found[Video] = set(found[Video]) - containing_videos
+
+    # Add channels
+    containing_channels = set(v.channel for v in containing_videos)
+    found[Channel] = set(found[Channel]) - containing_channels
+
+    # Count number of annotations of different types
+    counter = Counter(el.element_type for el in found[Annotation])
+    counts = [(value, name) for (name, value) in counter.iteritems()]
+    # Add count number for other elements
+    counts += [ (len(found[model]), model.__name__) for model in (Comment, Channel, Video, Chapter) ]
+
+    # Build element list (list of [ { element: el, children: [ {}...] } ])
+    # First annotations (and their containing_videos)
+    elements = [ {
+        'element': channel,
+        'children': [ { 'element': v,
+                        'children': [ { 'element': a }
+                                      for a in found[Annotation]
+                                      if a.video == v ]
+        }
+                      for v in containing_videos if v.channel == channel
+        ]
+    }
+                 for channel in containing_channels ]
+    # Next all other elements
+    elements.extend({ 'element': e } for e in itertools.chain(found[Channel], found[Chapter], found[Video]))
+
+
     summary = u", ".join(u"%d %s%s" % (count, name.rstrip('s'), pluralize(count))
-                         for (count, name) in counts)
+                         for (count, name) in counts if count)
     return render_to_response('search.html', {
         'summary': summary,
         'elements': elements,

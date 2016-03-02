@@ -62,6 +62,17 @@
       margin-left: 20px;
   }
 
+  .searchcapsule .detail {
+      display: block;
+      position: absolute;
+      right: 16px;
+      bottom: 4px;
+      font-family: Roboto;
+      text-transform: uppercase;
+      color: #6cf;
+      font-size: 11px;
+  }
+
   .searchcapsule .description {
       font-family: Merriweather;
       font-size: 10px;
@@ -70,8 +81,26 @@
       display: flex;
       flex-direction: column;
       max-width: 60em;
+      margin: auto;
   }
 
+  .searchitem_content {
+      display: flex;
+      flex-direction: row;
+      position: relative;
+  }
+
+  .searchitem {
+      display: flex;
+      flex-direction: column;
+  }
+  .searchitem_children {
+      margin-left: 100px;
+  }
+
+  .searchitem_Notes img, .searchitem_Slides img, .searchitem_Quiz img {
+    display: none;
+}
   </style>
 {% endblock %}
 
@@ -79,17 +108,12 @@
 
 <section class="search_results">
   {% if elements %}
-  <h2>{{ elements|length }} {% trans "results" %} : {{ summary }}</h2>
+  <h2>{% trans "Results" %} : {{ summary }}</h2>
   {% endif %}
   <div class="result_list">
   {% for item in elements %}
   <article class="searchcapsule">
-    <a title="{{ item.title }}" href="{{ item.get_absolute_url }}"><img src="{{ item.thumbnail_url }}"></a>
-    <div class="content">
-      <h5><span class="searchcapsule_type">{{ item.element_type }}</span> <a title="{{ item.title }}" href="{{ item.get_absolute_url }}">{{ item.title|term_highlight:query_string }}</a></h5>
-      <span class="description">{{ item.description|term_highlight:query_string|truncatechars_html:300 }}</span>
-      <span class="detail">{{ item.element_information|term_highlight:query_string }}</span>
-    </div>
+    {% include "searchitem.html" with item=item.element children=item.children %}
   </article>
   {% empty %}
   <h1>{% trans "No result" %}.</h1>
