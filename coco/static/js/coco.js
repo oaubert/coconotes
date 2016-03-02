@@ -167,7 +167,7 @@ $(document).ready(function () {
                 annotation_types: [ "Notes" ],
                 show_controls: true,
                 show_slides: false,
-                show_featured_notes: false,
+                show_featured_notes: true,
                 show_other_notes: true,
                 show_own_notes: true,
                 flat_mode: true,
