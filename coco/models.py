@@ -638,6 +638,19 @@ class GroupMetadata(Element):
         return Annotation.objects.filter(group=self.group).filter(Q(visibility=VISIBILITY_PUBLIC) | Q(visibility=VISIBILITY_GROUP)).order_by("-modified")
 
     @property
+    def active_users(self):
+        users = [
+            {
+                'user': user,
+                'annotationcount': len(list(userannotations))
+            }
+            for user, userannotations in itertools.groupby(self.annotations.order_by('contributor'),
+                                                           lambda a: a.contributor)
+        ]
+        users.sort(key=lambda ui: -ui['annotationcount'])
+        return users
+
+    @property
     def videos(self):
         return [
             {
