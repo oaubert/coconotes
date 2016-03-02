@@ -360,6 +360,10 @@ class Video(Resource):
     def channel(self):
         return self.activity.chapter.channel
 
+    @property
+    def chapter(self):
+        return self.activity.chapter
+
     def latest_annotations(self, username, count=50):
         return self.annotation_set.filter(Q(creator__username=username) | Q(contributor__username=username)).order_by('-modified')[:count]
 
