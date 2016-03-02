@@ -505,6 +505,10 @@ class Annotation(UserContent):
     def element_type(self):
         return _(self.annotationtype.title)
 
+    def element_information(self):
+        return "%s - %s" % (_(self.annotationtype.title),
+                            format_timecode(self.begin))
+
     @property
     def subtitle(self):
         return ""
