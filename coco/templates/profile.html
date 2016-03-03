@@ -12,7 +12,20 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="pagetitle highlighted">{% trans "My profile" %}</h1>
+<div class="pagetitle highlighted">
+  <h1>{% trans "My profile" %}</h1>
+  <div class="profile-actionmenu">
+    <label for="profile-actionmenu-menu" class="profile-actionmenu-toggle"></label>
+    <input type="checkbox" class="profile-actionmenu-home" id="profile-actionmenu-menu"/>
+    <ul class="profile_actions">
+      <li><a href="/accounts/password/change/">{% blocktrans %}Change password{% endblocktrans %}</a></li>
+      <li><a target="_blank" href="/accounts/profile/tabconfig/form?next={{request.get_full_path|urlencode}}">{% blocktrans %}Configuration of displayed tabs{% endblocktrans %}</a></li>
+      {% if user.is_staff %}
+      <li><a href="/admin">{% blocktrans %}Access the administration interface</a>{% endblocktrans %}</li>
+      {% endif %}
+    </ul>
+  </div>
+</div>
 
 <section class="profile_top">
 
@@ -23,9 +36,7 @@
     <div>
       <h4>{{ user.get_full_name|default:user.username }}</h4>
       <span class="profile_email">{{ user.email }}</span>
-      <div class="profile_change_password"><a href="/accounts/password/change/">{% blocktrans %}Change password{% endblocktrans %}</a></div>
       <div class="profile_description">{{ user.metadata.description }}</div>
-      <div class="profile_configuration"><a href="/accounts/profile/tabconfig/form">{% blocktrans %}Configuration of displayed tabs{% endblocktrans %}</a></div>
       {% if user.teacher_for.count %}
       <div class="teacher_info">
         {% blocktrans %}You are a teacher for the following chapters :{% endblocktrans %}
@@ -36,10 +47,6 @@
         </ul>
       </div>
       {% endif %}
-      {% if user.is_staff %}
-      {% blocktrans %}You are an administrator, you can access the <a href="/admin">administration interface</a>.{% endblocktrans %}
-      {% endif %}
-    </div>
   </article>
 
   <article class="column column4 infoblock profile_groups">
