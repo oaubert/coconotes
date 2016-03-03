@@ -503,10 +503,10 @@ class Annotation(UserContent):
 
     @property
     def element_type(self):
-        return _(self.annotationtype.title)
+        return _(self.annotationtype.title.rstrip("s"))
 
     def element_information(self):
-        return "%s - %s" % (_(self.annotationtype.title),
+        return "%s - %s" % (_(self.annotationtype.title.rstrip("s")),
                             format_timecode(self.begin))
 
     @property
