@@ -102,10 +102,20 @@ def parse_timecode(s):
 @register.filter(needs_autoescape=True)
 @stringfilter
 def term_highlight(text, searched_term="", autoescape=None):
+    """Highlight term.
+    """
     if autoescape:
         esc = conditional_escape
     else:
         esc = lambda x: x
     pattern = re.compile('(%s)' % esc(searched_term), re.IGNORECASE)
-    (result, count) = pattern.subn(r'<span class="snippet_hightlight">\1</span>', esc(unicode(text)))
+    (result, count) = pattern.subn(r'<mark class="snippet_hightlight">\1</mark>', esc(unicode(text)))
     return mark_safe(result)
+
+@register.filter
+def get_item(container, key):
+    if type(container) is dict:
+        return container.get(key)
+    elif type(container) in (list, tuple):
+        return container[key] if len(container) > key else None
+    return None

@@ -635,19 +635,17 @@ class GroupMetadata(Element):
 
     @property
     def annotations(self):
+        """Return public/shared annotations associated to this group.
+        """
         return Annotation.objects.filter(group=self.group).filter(Q(visibility=VISIBILITY_PUBLIC) | Q(visibility=VISIBILITY_GROUP)).order_by("-modified")
 
     @property
     def active_users(self):
-        users = [
-            {
-                'user': user,
-                'annotationcount': len(list(userannotations))
-            }
-            for user, userannotations in itertools.groupby(self.annotations.order_by('contributor'),
-                                                           lambda a: a.contributor)
-        ]
-        users.sort(key=lambda ui: -ui['annotationcount'])
+        """Return a dictionary of active users in this group with annotation count as value.
+        """
+        users = dict((user.username, len(list(userannotations)))
+                     for user, userannotations in itertools.groupby(self.annotations.order_by('contributor'),
+                                                                    lambda a: a.contributor))
         return users
 
     @property
