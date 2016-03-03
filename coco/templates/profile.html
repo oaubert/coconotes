@@ -85,14 +85,15 @@
 
     <ul class="profile_recent_activity">
       {% for a in user.metadata.latest_annotations %}
-      <li class="profile_recent_activity_item">{% if a.is_updated %}
-        {% blocktrans %}You modified the note{% endblocktrans %}
+      <li class="profile_recent_activity_item">{{a.modified|naturaltime}},
+        {% if a.is_updated %}
+        {% blocktrans %}you modified the note{% endblocktrans %}
         {% else %}
-        {% blocktrans %}You created the note{% endblocktrans %}
+        {% blocktrans %}you created the note{% endblocktrans %}
         {% endif %}
-        <a class="annotation-link" href="{{a.contextualized_link}}">{{a}}</a>
+        <a class="annotation-link" href="{{a.contextualized_link}}"><small>{{a}}</small></a>
         {% blocktrans %}on{% endblocktrans %}
-        <a href="{{a.video.get_absolute_url}}">{{a.video.title_or_description}}</a> {{a.modified|naturaltime}}</li>
+        <a href="{{a.video.get_absolute_url}}"><small>{{a.video.title_or_description}}</small></a></li>
       {% empty %}
       {% blocktrans %}You do not have much activity yet.{% endblocktrans %}
       {% endfor %}
