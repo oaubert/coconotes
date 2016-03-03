@@ -91,7 +91,7 @@
     <div title="{% blocktrans %}Select visible tabs{% endblocktrans %}" class="tabnames_overflow_indicator">...</div>
   </div>
   <div class="{% if not user.is_authenticated %}inactive_input{% endif %}" id="coco_annotation_input_widget">
-    <div class="unauthenticated_comment">{% blocktrans with currenturl=request.path_info %}Please <a href="/accounts/login/?next={{ currenturl }}">log in</a> to be able to comment on the video.{% endblocktrans %}</div>
+    <div class="unauthenticated_comment">{% blocktrans with currenturl=request.get_full_path|urlencode %}Please <a href="/accounts/login/?next={{currenturl}}">log in</a> to be able to comment on the video.{% endblocktrans %}</div>
   </div>
 </div>
 
