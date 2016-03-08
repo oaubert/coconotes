@@ -4,6 +4,7 @@
 {% load i18n %}
 {% load admin_urls %}
 {% load humanize %}
+{% load staticfiles %}
 
 {% block breadcrumb %}
 <span class="topmenu_item"><a href="../">{% trans "Groups" %}</a></span>
@@ -35,7 +36,8 @@
       {% for u in group.user_set.all %}
       {% with username=u.username active=group.metadata.active_users %}
       {% with annotationcount=active|get_item:username %}
-      <article data-username="{{username}}" data-annotationcount="{{annotationcount}}" class="itemblock">
+      <article data-annotationcount="{{annotationcount}}" class="itemblock">
+        <input data-username="{{username}}" type="checkbox" checked class="activity_selector" />
         <img alt="" class="thumbnail_micro" src="{{ u.metadata.thumbnail_url }}">
         &nbsp;<span class="username group_detail_username">{{ u.get_full_name|default:u.username }}</span>
         {% if annotationcount %}&nbsp;- {% blocktrans count count=annotationcount  %}{{count}} shared note{% plural %}{{count}} shared notes{% endblocktrans %}{% endif %}
@@ -54,7 +56,15 @@
     <h5>{% blocktrans %}Annotated videos{% endblocktrans %}</h5>
     <ul class="annotated_videos_summary">
     {% for vi in group.metadata.videos %}
-    <li><a data-video="{{ vi.video.uuid }}" href="{{vi.video.get_absolute_url}}"><img alt="" class="thumbnail_micro" src="{{vi.video.thumbnail_url}}">{{ vi.video.title }}</a> - <span>{% blocktrans count vi.annotationcount as count %}{{count}} shared note{% plural %}{{count}} shared notes{% endblocktrans %}</span></li>
+    <li>
+      <input type="checkbox" checked data-video="{{ vi.video.uuid }}" class="activity_selector" />
+      <a href="{{vi.video.get_absolute_url}}">
+        <img alt="" class="thumbnail_micro" src="{{vi.video.thumbnail_url}}">
+        {{ vi.video.title }}
+      </a>
+      -
+      <span>{% blocktrans count vi.annotationcount as count %}{{count}} shared note{% plural %}{{count}} shared notes{% endblocktrans %}</span>
+    </li>
     {% endfor %}
     </ul>
   </div>
@@ -80,5 +90,18 @@
 </section>
 
 
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+<script type="text/javascript">
+    $(".activity_selector").on("change", function (e) {
+        if (this.dataset.username) {
+            $(".profile_recent_activity [data-username='" + this.dataset.username + "']").toggle(this.checked);
+        } else if (this.dataset.video) {
+            $(".profile_recent_activity [data-video='" + this.dataset.video + "']").toggle(this.checked);
+        }
+    });
+</script>
 {% endblock %}
 
