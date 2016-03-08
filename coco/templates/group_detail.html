@@ -54,7 +54,7 @@
     <h5>{% blocktrans %}Annotated videos{% endblocktrans %}</h5>
     <ul class="annotated_videos_summary">
     {% for vi in group.metadata.videos %}
-    <li><a href="{{vi.video.get_absolute_url}}"><img alt="" class="thumbnail_micro" src="{{vi.video.thumbnail_url}}">{{ vi.video.title }}</a> - <span>{% blocktrans count vi.annotationcount as count %}{{count}} shared note{% plural %}{{count}} shared notes{% endblocktrans %}</span></li>
+    <li><a data-video="{{ vi.video.uuid }}" href="{{vi.video.get_absolute_url}}"><img alt="" class="thumbnail_micro" src="{{vi.video.thumbnail_url}}">{{ vi.video.title }}</a> - <span>{% blocktrans count vi.annotationcount as count %}{{count}} shared note{% plural %}{{count}} shared notes{% endblocktrans %}</span></li>
     {% endfor %}
     </ul>
   </div>
@@ -62,7 +62,7 @@
   <h5>{% blocktrans %}Timeline{% endblocktrans %}</h5>
   <ul class="profile_recent_activity">
       {% for a in group.metadata.annotations %}
-      <li>{{a.modified|naturaltime}}
+      <li data-username="{{a.contributor.username}}" data-video="{{a.video.uuid}}">{{a.modified|naturaltime}}
       {% if a.is_updated %}
         {% blocktrans with user=a.contributor %}{{user}} modified the annotation{% endblocktrans %}
         {% else %}
@@ -81,3 +81,4 @@
 
 
 {% endblock %}
+
