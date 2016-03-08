@@ -22,7 +22,7 @@ html, body {
 /* Safari/iOS related fixes */
 
 input, textarea {
-    -webkit-appearance: none;
+/*    -webkit-appearance: none; */
     -webkit-border-radius: 0;
 }
 
