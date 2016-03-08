@@ -70,6 +70,21 @@
        url('../fonts/roboto-v15-latin-700italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+ */
        url('../fonts/roboto-v15-latin-700italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
+/* roboto-black - latin */
+@font-face {
+  font-family: 'Roboto Black';
+  font-style: normal;
+  src: local('Roboto Black'), local('Roboto-Black'),
+       url('../fonts/Roboto-Black-webfont.woff') format('woff');
+}
+/* roboto-blackitalic - latin */
+@font-face {
+  font-family: 'Roboto BlackItalic';
+  font-style: normal;
+  src: local('Roboto BlackItalic'), local('Roboto-BlackItalic'),
+       url('../fonts/Roboto-BlackItalic-webfont.woff') format('woff');
+}
+
 /* merriweather-300 - latin-ext_latin */
 @font-face {
   font-family: 'Merriweather';
