@@ -19,7 +19,10 @@ def format_timecode(tc, format="short"):
         return '--:--'
     elif tc < 0:
         return '00:00'
-    tc = float(tc)
+    try:
+        tc = float(tc)
+    except ValueError:
+        return '--:--'
     s = long(tc)
     ms = long(1000 * (tc - s))
     # Format: HH:MM:SS.mmm
