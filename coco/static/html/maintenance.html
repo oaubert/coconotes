@@ -6,8 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COCo project - maintenance</title>
     <style type="text/css">
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,500,400italic,500italic);
-@import url(http://fonts.googleapis.com/css?family=Merriweather:400,800,300);
+/* roboto-700 - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Roboto Bold'), local('Roboto-Bold'),
+       url('../fonts/roboto-v15-latin-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+ */
+       url('../fonts/roboto-v15-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* merriweather-regular - latin-ext_latin */
+@font-face {
+  font-family: 'Merriweather';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Merriweather'), local('Merriweather-Regular'),
+       url('../fonts/merriweather-v11-latin-ext_latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+ */
+       url('../fonts/merriweather-v11-latin-ext_latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
 
 *, :before, :after {
     box-sizing: border-box;
@@ -71,7 +87,7 @@ header {
 /* Main content */
 h1.pagetitle, .column h1, #main h1 {
     font-family: Roboto;
-    font-weight: 800;
+    font-weight: 700;
     font-size: 32px;
     width: 100%;
     text-transform: uppercase;

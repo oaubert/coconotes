@@ -1,5 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,500,400italic,500italic);
-@import url(http://fonts.googleapis.com/css?family=Merriweather:400,800,300);
+@import url(fonts.css);
 
 *, :before, :after {
     box-sizing: border-box;
@@ -231,7 +230,7 @@ header {
 /* Main content */
 h1.pagetitle, .column h1, #main h1 {
     font-family: Roboto;
-    font-weight: 800;
+    font-weight: 700;
     font-size: 32px;
     width: 100%;
     text-transform: uppercase;
@@ -432,7 +431,7 @@ div.pagetitle {
 .videotitle {
     display: inline-block;
     font-family: Roboto;
-    font-weight: 200;
+    font-weight: 700;
     font-size: 21px;
     text-transform: uppercase;
     text-overflow: ellipsis;
