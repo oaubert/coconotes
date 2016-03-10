@@ -133,10 +133,6 @@ header {
     width: 100%;
     padding-left: .5em;
 }
-#searchbutton {
-    width: 16%;
-    min-width: 5em;
-}
 #profilemenu {
     display: inline-block;
     text-align: right;
@@ -157,10 +153,6 @@ header {
     content: "> ";
     color: #fff;
     padding-left: 6px;
-}
-
-.profile_annotation_list ul {
-    list-style: none;
 }
 
 #langswitch {
@@ -318,12 +310,6 @@ div.pagetitle {
     margin-bottom: 3em;
 }
 
-.login_form .errorlist {
-    list-style: none;
-    text-align: right;
-    font-size: 9px;
-    color: #f44;
-}
 .login_connect_with {
     text-align: center;
     color: #767676;
@@ -529,10 +515,6 @@ div.pagetitle {
     display: block;
 }
 
-.Ldt-Ctrl {
-    width: 100%;
-}
-
 .EnrichedPlanContainer {
     font-family: Roboto;
     font-size: 14px !important;
@@ -540,13 +522,6 @@ div.pagetitle {
     overflow-y: auto;
     height: 100%;
     width: 100%;
-}
-.Ldt-AnnotationsList-Input {
-    height: 50px;
-}
-.Ldt-AnnotationsList-InputText {
-    width: 100%;
-    font-size: 16px;
 }
 
 .Ldt-SlideVideoPlayer {
@@ -579,21 +554,10 @@ div.pagetitle {
     text-transform: uppercase;
 }
 
-.creator {
-    text-transform: uppercase;
-    padding-left: 5px;
-    font-size: 10px;
-}
-
 .annotation_control {
     display: block;
     text-align: center;
     font-size: xx-small;
-}
-
-.timestamp {
-    font-size: xx-small;
-    display: block;
 }
 
 .column {
@@ -901,13 +865,6 @@ div.pagetitle {
     width: 300px;
     box-shadow: grey 2px 2px 2px;
 }
-.profile-actionmenu-home ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    position: relative;
-    background-color: #fff;
-}
 
 .profile_actions a {
     text-decoration: none;
@@ -932,29 +889,6 @@ div.pagetitle {
 .group_list .infoblock {
     min-width: 200px;
     margin-bottom: 20px;
-}
-
-.group_profile {
-    padding-top: 1em;
-    text-align: center;
-}
-
-.group_activity_column {
-    max-height: calc(100% - 84px);
-    overflow-y: auto;
-}
-
-.group_profile img {
-    width: 50%;
-}
-
-.group_profile button {
-    padding: .8em;
-    border-radius: 5px;
-    font-size: 110%;
-    margin-top: 2em;
-    margin-right: 1em;
-    margin-left: 1em;
 }
 
 .group_detail_head {
@@ -1069,7 +1003,7 @@ div.pagetitle {
     font-size: 11px;
 }
 
-.snippet_hightlight {
+.snippet_highlight {
     background-color: #ffc;
 }
 
