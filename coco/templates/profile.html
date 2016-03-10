@@ -21,7 +21,7 @@
       <li><a href="/accounts/password/change/">{% blocktrans %}Change password{% endblocktrans %}</a></li>
       <li><a target="_blank" href="/accounts/profile/tabconfig/form?next={{request.get_full_path|urlencode}}">{% blocktrans %}Configuration of displayed tabs{% endblocktrans %}</a></li>
       {% if user.is_staff %}
-      <li><a href="/admin">{% blocktrans %}Access the administration interface</a>{% endblocktrans %}</li>
+      <li><a href="/admin">{% blocktrans %}Access the administration interface{% endblocktrans %}</a></li>
       {% endif %}
     </ul>
   </div>
