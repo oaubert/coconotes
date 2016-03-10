@@ -26,7 +26,7 @@
   .searchcapsule {
       margin-top: 20px;
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
   }
   .searchcapsule:hover {
       background-color: #dcf0ff;
@@ -58,8 +58,53 @@
       object-fit: cover;
   }
 
-  .searchcapsule .content {
-      margin-left: 20px;
+  .searchcapsule_title {
+      display: flex;
+      flex-direction: row;
+  }
+  .searchcapsule_content {
+      display: flex;
+      flex-direction: row;
+  }
+  .searchcapsule_thumbnail {
+      width: 120px;
+  }
+  .searchcapsule_thumbnail img {
+      width: 100%;
+      padding: 4px;
+  }
+
+  .searchcapsule_video_title {
+      flex-grow: 1;
+      text-decoration: none;
+      color: #000;
+  }
+  .searchcapsule_video_channel {
+      text-decoration: none;
+      font-family: Roboto-italic;
+      font-size: 14px;
+      color: #000;
+  }
+  .searchcapsule_annotations ul {
+      list-style: none;
+  }
+  .searchcapsule_annotation_title {
+      text-decoration: none;
+      font-family: Roboto;
+      font-style: italic;
+      font-size: 14px;
+      color: #000;
+  }
+  .searchcapsule_annotation_timecode {
+      color: #999;
+      font-size: 9px;
+      font-family: Roboto;
+  }
+  .searchcapsule_annotations li {
+      margin-top: 2px;
+  }
+  .searchcapsule_annotations li:hover {
+      background-color: #fff;
   }
 
   .searchcapsule .detail {
@@ -97,10 +142,6 @@
   .searchitem_children {
       margin-left: 100px;
   }
-
-  .searchitem_Notes img, .searchitem_Slides img, .searchitem_Quiz img {
-    display: none;
-}
   </style>
 {% endblock %}
 
@@ -111,13 +152,39 @@
   <h2>{% trans "Results" %} : {{ summary }}</h2>
   {% endif %}
   <div class="result_list">
-  {% for item in elements %}
-  <article class="searchcapsule">
-    {% include "searchitem.html" with item=item.element children=item.children %}
-  </article>
-  {% empty %}
-  <h1>{% trans "No result" %}.</h1>
-  {% endfor %}
+    {% for v in annotated_videos %}
+    <article class="searchcapsule">
+      <div class="searchcapsule_title">
+        <div class="searchcapsule_type">{{v.element.element_type}}</div>
+        <a class="searchcapsule_video_title" href="{{v.element.get_absolute_url}}"><h5>{{v.element.title}}</h5></a>
+        <a class="searchcapsule_video_channel" href="{{v.element.channel.get_absolute_url}}">{{v.element.channel.title}}</a>
+      </div>
+      <div class="searchcapsule_content">
+        <div class="searchcapsule_thumbnail">
+          <img src="{{v.element.thumbnail_url}}" alt="">
+        </div>
+        <div class="searchcapsule_annotations">
+          <ul>
+            {% for a in v.children %}
+            <li>
+              <span class="searchcapsule_type">{{a.element.element_type}}</span>
+              <a href="{{a.element.contextualized_link}}" class="searchcapsule_annotation_title">{{ a.element.title_or_description|term_highlight:query_string }}</a>
+              <span class="searchcapsule_annotation_timecode">{{a.element.begin|format_timecode}}</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+
+    {% for item in elements %}
+    <article class="searchcapsule">
+      {% include "searchitem.html" with item=item.element children=item.children %}
+    </article>
+    {% empty %}
+    <h1>{% trans "No result" %}.</h1>
+    {% endfor %}
   </div>
 </section>
 

@@ -250,6 +250,8 @@ def search(request, **kw):
                             for el in generic_search(request, model, fields, 'q')
                             if el.can_access(request.user) ]
 
+    found[Annotation].sort(key=lambda a: a.begin)
+
     # Videos corresponding to matching annotations
     containing_videos = set(a.video for a in found[Annotation])
     # Remove these videos from matching videos
@@ -267,26 +269,21 @@ def search(request, **kw):
 
     # Build element list (list of [ { element: el, children: [ {}...] } ])
     # First annotations (and their containing_videos)
-    elements = [ {
-        'element': channel,
-        'children': [ { 'element': v,
-                        'children': [ { 'element': a }
-                                      for a in found[Annotation]
-                                      if a.video == v ]
-        }
-                      for v in containing_videos if v.channel == channel
-        ]
-    }
-                 for channel in containing_channels ]
+    annotated_videos = [ { 'element': v,
+                           'children': [ { 'element': a }
+                                         for a in found[Annotation]
+                                         if a.video == v ]
+                         }
+                         for v in containing_videos ]
     # Next all other elements
-    elements.extend({ 'element': e } for e in itertools.chain(found[Channel], found[Chapter], found[Video]))
-
+    elements = [ { 'element': e } for e in itertools.chain(found[Channel], found[Chapter], found[Video]) ]
 
     summary = u", ".join(u"%d %s%s" % (count, name.rstrip('s'), pluralize(count))
                          for (count, name) in counts if count)
     return render_to_response('search.html', {
         'summary': summary,
         'elements': elements,
+        'annotated_videos': annotated_videos,
         'username': request.user.username,
         'query_string': request.GET.get('q', ''),
         'current_document': 'search',
