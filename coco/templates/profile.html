@@ -85,7 +85,7 @@
 
     <ul class="profile_recent_activity">
       {% for a in user.metadata.latest_annotations %}
-      <li class="profile_recent_activity_item">{{a.modified|naturaltime}},
+      <li class="profile_recent_activity_item"><time datetime="{{a.modified}}">{{a.modified|naturaltime}}</time>,
         {% if a.is_updated %}
         {% blocktrans %}you modified the note{% endblocktrans %}
         {% else %}

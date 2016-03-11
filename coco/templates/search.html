@@ -170,7 +170,7 @@
             <li>
               <span class="searchcapsule_type">{{a.element.element_type}}</span>
               <a href="{{a.element.contextualized_link}}" class="searchcapsule_annotation_title">{{ a.element.title_or_description|term_highlight:query_string }}</a>
-              <span class="searchcapsule_annotation_timecode">{{a.element.begin|format_timecode}}</span>
+              <time class="searchcapsule_annotation_timecode">{{a.element.begin|format_timecode}}</time>
             </li>
             {% endfor %}
           </ul>

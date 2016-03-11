@@ -72,7 +72,8 @@
   <h5>{% blocktrans %}Timeline{% endblocktrans %}</h5>
   <ul class="profile_recent_activity">
       {% for a in group.metadata.annotations %}
-      <li data-username="{{a.contributor.username}}" data-video="{{a.video.uuid}}">{{a.modified|naturaltime}}
+      <li data-username="{{a.contributor.username}}" data-video="{{a.video.uuid}}">
+        <time datetime="{{a.modified}}">{{a.modified|naturaltime}}</time>
       {% if a.is_updated %}
         {% blocktrans with user=a.contributor %}{{user}} modified the annotation{% endblocktrans %}
         {% else %}

@@ -30,7 +30,7 @@
       {% for item in news %}
       <article class="newsitem">
         <h5>{{ item.subtitle }}</h5>
-        <h4>{{ item.title }} <span class="news_published">{{ item.published|naturaltime }}</span></h4>
+        <h4>{{ item.title }} <time datetime="{{item.published}}" class="news_published">{{ item.published|naturaltime }}</time></h4>
         <span class="description">{{ item.description }}<a href="{{ item.get_absolute_url }}" class="readmore">{% trans "Read more" %}</a>
         </span>
       </article>
