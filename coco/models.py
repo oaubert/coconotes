@@ -316,8 +316,15 @@ class Activity(Element):
         else:
             return self
 
-class Video(Resource):
+class Video(Element):
     DEFAULT_AVATAR = static("img/default_video.svg")
+    url = models.URLField(_("URL"),
+                          blank=True,
+                          max_length=250)
+
+    license = models.ForeignKey(License,
+                                blank=True,
+                                null=True)
     activity = models.ForeignKey(Activity,
                                  blank=True,
                                  null=True)
