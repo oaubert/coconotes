@@ -72,16 +72,20 @@
   <h5>{% blocktrans %}Timeline{% endblocktrans %}</h5>
   <ul class="profile_recent_activity">
       {% for a in group.metadata.annotations %}
-      <li data-username="{{a.contributor.username}}" data-video="{{a.video.uuid}}">
-        <time datetime="{{a.modified}}">{{a.modified|naturaltime}}</time>
+      <li class="profile_recent_activity_item" data-username="{{a.contributor.username}}" data-video="{{a.video.uuid}}">
+        <time class="activity_date" datetime="{{a.modified|date:'c'}}">{{a.modified|naturaltime}}</time>
       {% if a.is_updated %}
-        {% blocktrans with user=a.contributor %}{{user}} modified the annotation{% endblocktrans %}
+        <span class="activity_type" data-user="{{a.contributor}}" data-action="modify">
+          {% blocktrans with user=a.contributor %}{{user}} modified the annotation{% endblocktrans %}
+        </span>
         {% else %}
-        {% blocktrans with user=a.creator%}{{user}} created the annotation{% endblocktrans %}
+        <span class="activity_type" data-user="{{a.creator}}" data-action="create">
+          {% blocktrans with user=a.creator%}{{user}} created the annotation{% endblocktrans %}
+        </span>
         {% endif %}
         <a class="annotation-link" href="{{a.contextualized_link}}"><small>{{a.title_or_description|slice:":140"}}</small></a>
         {% blocktrans %}on{% endblocktrans %}
-        <a href="{{a.video.get_absolute_url}}"><small>{{a.video.title_or_description}}</small></a>
+        <a class="video-link" data-video="{{a.video.uuid}}" href="{{a.video.get_absolute_url}}"><small>{{a.video.title_or_description}}</small></a>
       </li>
       {% empty %}
       {% blocktrans %}The group does not have much activity yet.{% endblocktrans %}
@@ -105,4 +109,3 @@
     });
 </script>
 {% endblock %}
-
