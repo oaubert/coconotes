@@ -4,6 +4,20 @@
 {% load coco %}
 {% load admin_urls %}
 {% load humanize %}
+{% load staticfiles %}
+
+{% block extra_head %}
+  <style type="text/css">
+  #activity_chart {
+      display: inline-block;
+      width: 80%;
+  }
+  #video_chart {
+      display: inline-block;
+      width: 20%;
+  }
+  </style>
+{% endblock %}
 
 {% block title %}{% blocktrans %}COCo platform{% endblocktrans %} - {{ user.username }}{% endblock %}
 
@@ -82,18 +96,23 @@
 
   <article class="infoblock column column8 profile_activity">
     <h2>{% trans "My recent activity" %}</h2>
-
+    <div class="charts">
+      <div id="activity_chart"></div>
+      <div id="video_chart"></div>
+    </div>
     <ul class="profile_recent_activity">
       {% for a in user.metadata.latest_annotations %}
-      <li class="profile_recent_activity_item"><time datetime="{{a.modified}}">{{a.modified|naturaltime}}</time>,
+      <li class="profile_recent_activity_item">
+        <time class="activity_date" datetime="{{a.modified|date:'c'}}">{{a.modified|naturaltime}}</time>,
         {% if a.is_updated %}
-        {% blocktrans %}you modified the note{% endblocktrans %}
+        {% blocktrans %}<span class="activity_type" data-action="modify">you modified the note</span>{% endblocktrans %}
         {% else %}
-        {% blocktrans %}you created the note{% endblocktrans %}
+        {% blocktrans %}<span class="activity_type" data-action="create">you created the note</span>{% endblocktrans %}
         {% endif %}
         <a class="annotation-link" href="{{a.contextualized_link}}"><small>{{a}}</small></a>
         {% blocktrans %}on{% endblocktrans %}
-        <a href="{{a.video.get_absolute_url}}"><small>{{a.video.title_or_description}}</small></a></li>
+        <small><a class="video-link" data-video="{{a.video.uuid}}" href="{{a.video.get_absolute_url}}">{{a.video.title_or_description}}</a></small>
+      </li>
       {% empty %}
       {% blocktrans %}You do not have much activity yet.{% endblocktrans %}
       {% endfor %}
@@ -124,4 +143,52 @@
   </article>
 
 </section>
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+<link rel="stylesheet" type="text/css" href="http://dc-js.github.io/dc.js/css/dc.css"/>
+<script type="text/javascript" src="http://dc-js.github.io/dc.js/js/d3.js"></script>
+<script type="text/javascript" src="http://dc-js.github.io/dc.js/js/crossfilter.js"></script>
+<script type="text/javascript" src="http://dc-js.github.io/dc.js/js/dc.js"></script>
+  <script type="text/javascript">
+  var timeline = dc.barChart('#activity_chart', 'activity');
+  var video_hist = dc.rowChart('#video_chart', 'activity');
+
+  var data = $(".profile_recent_activity_item").map(function () {
+      return {
+          "date": new Date($(this).find(".activity_date").attr("datetime")),
+          "type": $(this).find(".activity_type").attr("data-action"),
+          "video": $(this).find(".video-link").attr("data-video"),
+          "videotitle": $(this).find(".video-link").text()
+      }
+  }).toArray();
+  var ndx                 = crossfilter(data),
+      dateDimension       = ndx.dimension(function(d) {return d.date;}),
+      videoDimension      = ndx.dimension(function(d) {return d.videotitle;}),
+      dateGroup           = dateDimension.group(function (d) { return new Date(d).setHours(0, 0, 0, 0); }).reduceCount(),
+      videoGroup          = videoDimension.group();
+
+  timeline
+    .width($("#activity_chart").width())
+    .height(200)
+    .x(d3.time.scale().domain([ dateDimension.bottom(1)[0].date, dateDimension.top(1)[0].date ]))
+    .y(d3.scale.linear())
+    .brushOn(true)
+    .elasticX(true)
+    .elasticY(true)
+    .round(d3.time.day.round)
+    .xUnits(d3.time.days)
+    .renderHorizontalGridLines(true)
+    .dimension(dateDimension)
+    .group(dateGroup)
+    .render();
+
+  video_hist
+    .width($("#video_chart").width())
+    .height(200)
+    .dimension(videoDimension)
+    .group(videoGroup)
+    .render();
+</script>
 {% endblock %}
