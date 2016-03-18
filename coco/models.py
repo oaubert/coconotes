@@ -586,6 +586,36 @@ class Annotation(UserContent):
             #"tags": list(self.tags.values('name'))
         }
 
+    def webannotation(self):
+        """Return a Web Annotation jsonld representation.
+        """
+        return {
+            "@context": "http://www.w3.org/ns/anno.jsonld",
+            "id": self.get_absolute_url(),
+            "type": "Annotation",
+            "motivation": "commenting",
+            "creator": {
+                "id": reverse('profile-named', args=[self.creator.username]),
+                "type": "Person",
+                "name": self.creator.get_full_name(),
+                "nick": self.creator.username
+            },
+            "created": self.created,
+            "modified": self.modified,
+            "body": {
+                "type": "TextualBody",
+                "role": "commenting",
+                "text": self.title_or_description
+            },
+            "target": {
+                "source": self.video.url,
+                "selector": {
+                    "type": "FragmentSelector",
+                    "conformsTo": "http://www.w3.org/TR/media-frags/",
+                    "value": "t=%d,%d" % (self.begin, self.end)
+                }
+            }
+        }
 
 class Comment(UserContent):
     class Meta(Element.Meta):
