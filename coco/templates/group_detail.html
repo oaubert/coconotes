@@ -6,6 +6,19 @@
 {% load humanize %}
 {% load staticfiles %}
 
+{% block extra_head %}
+  <style type="text/css">
+  #activity_chart {
+      display: inline-block;
+      width: 80%;
+  }
+  #video_chart {
+      display: inline-block;
+      width: 20%;
+  }
+  </style>
+{% endblock %}
+
 {% block breadcrumb %}
 <span class="topmenu_item"><a href="../">{% trans "Groups" %}</a></span>
 <span class="topmenu_item active"><a href="#">{% trans "Group" %} {{ group.name }}</a></span>
@@ -51,7 +64,10 @@
 
 <section class="group_detail_activity infoblock">
   <h2>{% trans "Group activity" %}</h2>
-
+  <div class="charts">
+    <div id="activity_chart"></div>
+    <div id="video_chart"></div>
+  </div>
   <div class="infoblock group_detail_annotated_videos">
     <h5>{% blocktrans %}Annotated videos{% endblocktrans %}</h5>
     <ul class="annotated_videos_summary">
@@ -99,6 +115,10 @@
 
 {% block extrajs %}
 <script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+<link rel="stylesheet" type="text/css" href="http://dc-js.github.io/dc.js/css/dc.css"/>
+<script type="text/javascript" src="http://dc-js.github.io/dc.js/js/d3.js"></script>
+<script type="text/javascript" src="http://dc-js.github.io/dc.js/js/crossfilter.js"></script>
+<script type="text/javascript" src="http://dc-js.github.io/dc.js/js/dc.js"></script>
 <script type="text/javascript">
     $(".activity_selector").on("change", function (e) {
         if (this.dataset.username) {
@@ -107,5 +127,46 @@
             $(".profile_recent_activity [data-video='" + this.dataset.video + "']").toggle(this.checked);
         }
     });
+  var timeline = dc.barChart('#activity_chart', 'activity');
+  var video_hist = dc.rowChart('#video_chart', 'activity');
+
+  var data = $(".profile_recent_activity_item").map(function () {
+      return {
+          "date": new Date($(this).find(".activity_date").attr("datetime")),
+          "type": $(this).find(".activity_type").attr("data-action"),
+          "video": $(this).find(".video-link").attr("data-video"),
+          "videotitle": $(this).find(".video-link").text(),
+          "user": $(this).find(".activity_type").attr("user")
+      }
+  }).toArray();
+  var ndx                 = crossfilter(data),
+      dateDimension       = ndx.dimension(function(d) {return d.date;}),
+      videoDimension      = ndx.dimension(function(d) {return d.videotitle;}),
+      userDimension       = ndx.dimension(function(d) {return d.user;}),
+      dateGroup           = dateDimension.group(function (d) { return new Date(d).setHours(0, 0, 0, 0); }).reduceCount(),
+      videoGroup          = videoDimension.group(),
+      userGroup           = userDimension.group();
+
+  timeline
+    .width($("#activity_chart").width())
+    .height(200)
+    .x(d3.time.scale().domain([ dateDimension.bottom(1)[0].date, dateDimension.top(1)[0].date ]))
+    .y(d3.scale.linear())
+    .brushOn(true)
+    .elasticX(true)
+    .elasticY(true)
+    .round(d3.time.day.round)
+    .xUnits(d3.time.days)
+    .renderHorizontalGridLines(true)
+    .dimension(dateDimension)
+    .group(dateGroup)
+    .render();
+
+  video_hist
+    .width($("#video_chart").width())
+    .height(200)
+    .dimension(videoDimension)
+    .group(videoGroup)
+    .render();
 </script>
 {% endblock %}
