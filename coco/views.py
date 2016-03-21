@@ -4,7 +4,7 @@ import itertools
 import json
 
 from django.conf import settings
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, render
@@ -229,6 +229,16 @@ def profile(request, **kw):
         'username': request.user.username,
         'default_avatar': static('img/default_user.svg'),
         'annotationscount': Annotation.objects.filter(creator=request.user).count(),
+        'current_document': 'profile',
+    }, context_instance=RequestContext(request))
+
+@login_required
+def userprofile(request, username=None):
+    user = get_object_or_404(User, username=username)
+    return render_to_response('userprofile.html', {
+        'username': username,
+        'other': user,
+        'default_avatar': static('img/default_user.svg'),
         'current_document': 'profile',
     }, context_instance=RequestContext(request))
 

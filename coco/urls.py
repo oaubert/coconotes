@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'^accounts/profile/(?P<name>.+)/form$', views.UserSettingForm.as_view(), name='profile-setting-form'),
     url(r'^accounts/profile/(?P<name>.+)$', views.UserSetting.as_view(), name='profile-setting'),
     url(r'^accounts/profile', views.profile, name='profile'),
-    url(r'^accounts/(?P<name>.+)$', views.profile, name='profile-named'),
+    url(r'^user/(?P<username>.*)$', views.userprofile, name='profile-named'),
 
     url(r'^media/(?P<path>.*)$', django.views.static.serve, {'document_root': settings.MEDIA_ROOT}),
 

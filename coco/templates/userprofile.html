@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load coco %}
+{% load admin_urls %}
+{% load humanize %}
+{% load staticfiles %}
+
+{% block extra_head %}
+  <style type="text/css">
+  #activity_chart {
+      display: inline-block;
+      width: 80%;
+  }
+  #video_chart {
+      display: inline-block;
+      width: 20%;
+  }
+  </style>
+{% endblock %}
+
+{% block title %}{% blocktrans %}COCo platform{% endblocktrans %} - {{ other.username }}{% endblock %}
+
+{% block breadcrumb %}
+<span class="topmenu_item active"><a href="#">{% trans "Profile" %}</a></span>
+{% endblock %}
+
+{% block content %}
+<div class="pagetitle highlighted">
+  <h1>{% trans "Profile" %}</h1>
+</div>
+
+<section class="profile_top">
+
+  <article class="column column8 infoblock profile_info">
+    <div>
+      <img class="profile_avatar" src="{{ other.metadata.thumbnail_url }}">
+    </div>
+    <div>
+      <h4>{{ other.get_full_name|default:other.username }}</h4>
+      <div class="profile_description">{{ other.metadata.description }}</div>
+  </article>
+</section>
+{% endblock %}
+
+{% block extrajs %}
+{% endblock %}
