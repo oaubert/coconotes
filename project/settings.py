@@ -20,7 +20,7 @@ SECRET_KEY = options.get('secret_key', 'no_secret_at_all_key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = options.get('development', False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = options.get('allowed_hosts', [])
 
 EMAIL_HOST = 'localhost'
 DEFAULT_FROM_EMAIL = options.get('admin_email', 'webmaster@comin-ocw.org')
