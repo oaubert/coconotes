@@ -852,6 +852,10 @@ div.pagetitle {
     width: 24px;
     height: 24px;
 }
+.profile-actionmenu-home {
+    -webkit-appearance: none;
+}
+
 .profile-actionmenu-home + ul {
     position: relative;
     right: 276px;
