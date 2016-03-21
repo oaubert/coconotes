@@ -5,7 +5,7 @@ content. However, it can be used for any type of video content.
 
 ## Install ##
 
-- Configure project/local_settings.py
+- Configure project/local_settings.py (copy and customize local_settings-example.py)
 
 - Create a database
 For mysql backend, specify utf8 as character set:
@@ -15,3 +15,6 @@ For mysql backend, specify utf8 as character set:
   ./manage.py migrate
 
 - Create initial data
+
+There is a `cocoadmin` management command that allows quick creation of content from the command line.
+
