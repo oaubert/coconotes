@@ -122,6 +122,7 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
+                'coco.context_processors.siteinfo'
             ],
             'debug': options.get('development', False)
         },
@@ -129,6 +130,8 @@ TEMPLATES = [
 ]
 
 SITE_ID = 1
+
+SITE_VARIANT = options.get('site_variant', '')
 
 RAVEN_CONFIG = {
     'dsn': options.get('raven_dsn', ''),
