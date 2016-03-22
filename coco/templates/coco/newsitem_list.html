@@ -17,7 +17,11 @@
     {% else %}
     {{ item.title_en|default:item.title }}
     {% endif %}
-    <time datetime="{{item.published}}" class="news_published">{{ item.published|naturaltime }}</time></h4>
+    <time datetime="{{item.published}}" class="news_published">{{ item.published|naturaltime }}</time>
+    {% if user.is_staff %}
+    <span class="adminactions"><a class="editelement" target="_blank" href="{% url 'admin:coco_newsitem_change' item.uuid %}"></a></span>
+    {% endif %}
+  </h4>
   {% if item.thumbnail %}
   <img src="{{ item.thumbnail.url }}">
   {% endif %}
@@ -29,8 +33,16 @@
   </span>
 </article>
 {% empty %}
-{% blocktrans %}No news is good news.{% endblocktrans %}
+<article class="newsitem">
+  {% blocktrans %}No news is good news.{% endblocktrans %}
+</article>
 {% endfor %}
+{% if user.is_staff %}
+<article class="newsitem newsitem_add">
+  <div class="adminactions"><a target="_blank" href="{% url 'admin:coco_newsitem_add' %}">{% blocktrans %}Add news item{% endblocktrans %}</a></div>
+</article>
+{% endif %}
+
 </div>
 
 {% endblock %}
