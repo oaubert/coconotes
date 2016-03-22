@@ -236,13 +236,13 @@ UserAdmin.search_fields = ('username', 'metadata__description')
 
 @admin.register(Newsitem)
 class NewsitemAdmin(ElementAdmin):
-    list_display = ('pk', 'title', 'description', 'published', 'creator', 'created',)
-    list_editable = ('title', 'description', 'published')
+    list_display = ('pk', 'title', 'title_en', 'description', 'description_en', 'published', 'creator', 'created',)
+    list_editable = ('title', 'title_en', 'description', 'description_en')
     list_display_links = ('pk',)
     list_filter = (('creator', admin.RelatedOnlyFieldListFilter),)
     search_fields = ('title', 'description')
 
     form = make_ajax_form(Newsitem, {'creator': 'user',
                                      'contributor': 'user'})
-    fieldsets = [(None,               {'fields': [('published'), ('title', 'thumbnail'), 'description', 'slug']}),
+    fieldsets = [(None,               {'fields': [('published', 'thumbnail'), ('title', 'title_en'), ('description', 'description_en'), 'slug']}),
                  (_("Metadata"),      {'fields': [('creator', 'created', 'contributor', 'modified')], 'classes': ['collapse']})]

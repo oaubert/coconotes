@@ -11,12 +11,22 @@
 <div class="newsitem_list">
 {% for item in object_list %}
 <article class="newsitem" id="{{item.uuid}}">
-  <h5>{{ item.subtitle }}</h5>
-  <h4>{{ item.title }} <time datetime="{{item.published}}" class="news_published">{{ item.published|naturaltime }}</time></h4>
+  {% get_current_language as LANGUAGE_CODE %}
+  <h4>{% if LANGUAGE_CODE == "fr" %}
+    {{ item.title }}
+    {% else %}
+    {{ item.title_en|default:item.title }}
+    {% endif %}
+    <time datetime="{{item.published}}" class="news_published">{{ item.published|naturaltime }}</time></h4>
   {% if item.thumbnail %}
   <img src="{{ item.thumbnail.url }}">
   {% endif %}
-  <span class="description">{{ item.description }}</span>
+  <span class="description">{% if LANGUAGE_CODE == "fr" %}
+    {{ item.description }}
+    {% else %}
+    {{ item.description_en|default:item.description }}
+    {% endif %}
+  </span>
 </article>
 {% empty %}
 {% blocktrans %}No news is good news.{% endblocktrans %}

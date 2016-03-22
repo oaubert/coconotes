@@ -651,6 +651,13 @@ class Newsitem(Element):
                                      help_text=_('Publication date'),
                                      null=True, editable=True)
 
+    title_en = models.CharField(_("Title (english)"),
+                                blank=True,
+                                max_length=250)
+
+    description_en = models.TextField(_("Description (english)"),
+                                      blank=True)
+
     def get_absolute_url(self):
         return "%s#%s" % (reverse('view-newsitem-list'), self.pk)
 
