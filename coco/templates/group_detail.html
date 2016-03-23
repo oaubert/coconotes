@@ -24,7 +24,7 @@
           <img alt="" class="thumbnail_mini" src="{{ group.metadata.thumbnail_url }}">
         </div>
       </div>
-      <p>{% blocktrans with name=group.metadata.creator.username|default:"admin" %}created by {{name}}{% endblocktrans %}</p>
+      <p>{% blocktrans with name=group.metadata.creator.username|default:"admin" created=group.metadata.created %}created by {{name}} on {{created}}{% endblocktrans %}</p>
       <p>{{ group.metadata.description|default:"<em>No description</em>" }}</p>
     </article>
   </section>
