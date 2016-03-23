@@ -352,10 +352,13 @@ class Video(Element):
     def element_information(self):
         count = self.annotation_set.filter(visibility=VISIBILITY_PUBLIC,
                                            annotationtype__title=TYPE_NOTES).count()
-        return "%(count)s %(name)s - %(duration)s" % {
-            'count': count,
-            'name': pluralize(count, "public note,public notes"),
-            'duration': format_timecode(self.duration) }
+        if count == 0:
+            return format_timecode(self.duration)
+        else:
+            return "%(count)s %(name)s - %(duration)s" % {
+                'count': count,
+                'name': pluralize(count, "public note,public notes"),
+                'duration': format_timecode(self.duration) }
 
     @property
     def has_slides(self):
