@@ -773,6 +773,9 @@ div.pagetitle {
     max-width: 100%;
     max-height: 100%;
 }
+.profile_groups_group .square_content {
+    border: 1px solid #dfdfdf;
+}
 
 .profile_groups_group_name {
     font-weight: bold;
