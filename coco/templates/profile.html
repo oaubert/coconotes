@@ -86,7 +86,7 @@
     </div>
     <div class="profile_groups_link">
     {% if user.groups.count %}
-    <a href="/group/">See all my groups</a>
+    <a href="/group/">{% blocktrans %}See all my groups{% endblocktrans %}</a>
     {% endif %}
     </div>
   </article>
@@ -105,9 +105,9 @@
       <li class="profile_recent_activity_item">
         <time class="activity_date" datetime="{{a.modified|date:'c'}}">{{a.modified|naturaltime}}</time>,
         {% if a.is_updated %}
-        {% blocktrans %}<span class="activity_type" data-action="modify">you modified the note</span>{% endblocktrans %}
+        <span class="activity_type" data-action="modify">{% blocktrans %}you modified the note{% endblocktrans %}</span>
         {% else %}
-        {% blocktrans %}<span class="activity_type" data-action="create">you created the note</span>{% endblocktrans %}
+        <span class="activity_type" data-action="create">{% blocktrans %}you created the note{% endblocktrans %}</span>
         {% endif %}
         <a class="annotation-link" href="{{a.contextualized_link}}"><small>{{a}}</small></a>
         {% blocktrans %}on{% endblocktrans %}
