@@ -153,6 +153,11 @@
   <h2>{% trans "Results" %} : {{ summary }}</h2>
   {% endif %}
   <div class="result_list">
+    {% for item in elements %}
+    <article class="searchcapsule">
+      {% include "searchitem.html" with item=item.element children=item.children %}
+    </article>
+    {% endfor %}
     {% for v in annotated_videos %}
     <article class="searchcapsule">
       <div class="searchcapsule_title">
@@ -176,12 +181,6 @@
           </ul>
         </div>
       </div>
-    </article>
-    {% endfor %}
-
-    {% for item in elements %}
-    <article class="searchcapsule">
-      {% include "searchitem.html" with item=item.element children=item.children %}
     </article>
     {% endfor %}
   </div>
