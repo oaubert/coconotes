@@ -246,7 +246,6 @@ def userprofile(request, username=None):
 MODEL_MAP = OrderedDict((
     (Channel, ["title", "description", "category", "syllabus"]),
     (Video, ["title", "description"]),
-    (Chapter, ["title", "description"]),
     (Annotation, ["title", "description", "contentdata"]),
     (Comment, ["title", "description", "contentdata"]),
 ))
@@ -275,7 +274,7 @@ def search(request, **kw):
     counter = Counter(el.element_type for el in found[Annotation])
     counts = [(value, name) for (name, value) in counter.iteritems()]
     # Add count number for other elements
-    counts += [ (len(found[model]), model.__name__) for model in (Comment, Channel, Video, Chapter) ]
+    counts += [ (len(found[model]), model.__name__) for model in (Comment, Channel, Video) ]
 
     # Build element list (list of [ { element: el, children: [ {}...] } ])
     # First annotations (and their containing_videos)
@@ -286,7 +285,7 @@ def search(request, **kw):
                          }
                          for v in containing_videos ]
     # Next all other elements
-    elements = [ { 'element': e } for e in itertools.chain(found[Channel], found[Chapter], found[Video]) ]
+    elements = [ { 'element': e } for e in itertools.chain(found[Channel], found[Video]) ]
 
     summary = u", ".join(u"%d %s%s" % (count, name.rstrip('s'), pluralize(count))
                          for (count, name) in counts if count)
