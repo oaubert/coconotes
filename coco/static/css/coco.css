@@ -854,6 +854,7 @@ div.pagetitle {
 }
 .profile-actionmenu-home {
     -webkit-appearance: none;
+    opacity: 0;
 }
 
 .profile-actionmenu-home + ul {
