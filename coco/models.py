@@ -91,7 +91,7 @@ class Element(models.Model):
     class Meta:
         abstract = True
         ordering = ("-promoted", "-modified", "title")
-        get_latest_by = "modify"
+        get_latest_by = "modified"
 
     uuid = models.UUIDField(primary_key=True,
                             default=uuid.uuid4,
@@ -690,9 +690,20 @@ class GroupMetadata(Element):
     def active_users(self):
         """Return a dictionary of active users in this group with annotation count as value.
         """
-        users = dict((user.username, len(list(userannotations)))
-                     for user, userannotations in itertools.groupby(self.annotations.order_by('contributor'),
-                                                                    lambda a: a.contributor))
+        # Initialize for all users with 0 count
+        users = dict( (u, { 'count': 0, 'latest': None}) for u in self.group.user_set.all())
+        for user, userannotations in itertools.groupby(self.annotations.prefetch_related('contributor').order_by('contributor',
+                                                                                                                 '-modified'),
+                                                       lambda a: a.contributor):
+            try:
+                latest = userannotations.next()
+                count = 1 + sum(1 for a in userannotations)
+            except:
+                # Should not happen
+                latest = None
+                count = 0
+            users[user] = { 'count': count,
+                            'latest': latest }
         return users
 
     @property

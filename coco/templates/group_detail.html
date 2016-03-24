@@ -24,25 +24,20 @@
           <img alt="" class="thumbnail_mini" src="{{ group.metadata.thumbnail_url }}">
         </div>
       </div>
-      <p>{% blocktrans with name=group.metadata.creator.username|default:"admin" created=group.metadata.created %}created by {{name}} on {{created}}{% endblocktrans %}</p>
+      <p>{% blocktrans with name=group.metadata.creator.username|default:"admin" created=group.metadata.created|naturaltime %}created by {{name}} {{created}}{% endblocktrans %}</p>
       <p>{{ group.metadata.description|default:"<em>No description</em>" }}</p>
     </article>
   </section>
 
   <section class="group_detail_members infoblock">
     <h2 class="">{% trans "Members" %}</h2>
-
     <div class="group_detail_member_list">
-      {% for u in group.user_set.all %}
-      {% with username=u.username active=group.metadata.active_users %}
-      {% with annotationcount=active|get_item:username %}
-      <article data-annotationcount="{{annotationcount}}" class="itemblock">
+      {% for u, data in group.metadata.active_users.items %}
+      <article data-annotationcount="{{data.count}}" class="itemblock">
         <img alt="" class="thumbnail_micro" src="{{ u.metadata.thumbnail_url }}">
         &nbsp;<span class="username group_detail_username">{{ u.get_full_name|default:u.username }}</span>
-        {% if annotationcount %}&nbsp;- {% blocktrans count count=annotationcount  %}{{count}} shared note{% plural %}{{count}} shared notes{% endblocktrans %}{% endif %}
+        {% if data.count %}&nbsp;- {% blocktrans count count=data.count  %}{{count}} shared note{% plural %}{{count}} shared notes{% endblocktrans %}, {% blocktrans with latest=data.latest.modified|naturaltime %}latest {{latest}}{% endblocktrans %}{% endif %}
       </article>
-      {% endwith %}
-      {% endwith %}
       {% endfor %}
     </div>
   </section>
