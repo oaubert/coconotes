@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-24 16:07+0100\n"
-"PO-Revision-Date: 2016-03-24 16:08+0100\n"
+"POT-Creation-Date: 2016-03-25 15:42+0100\n"
+"PO-Revision-Date: 2016-03-25 15:43+0100\n"
 "Last-Translator: Olivier Aubert <olivier.aubert@univ-nantes.fr>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -16,27 +16,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: admin.py:30 admin.py:185 admin.py:215 admin.py:248
+#: admin.py:31 admin.py:191 admin.py:221 admin.py:254
 msgid "Metadata"
 msgstr "Métadonnées"
 
-#: admin.py:31 admin.py:186 admin.py:216 models.py:405
+#: admin.py:32 admin.py:192 admin.py:222 models.py:405
 msgid "Content"
 msgstr "Contenu"
 
-#: admin.py:32
+#: admin.py:33
 msgid "Tags"
 msgstr "Tags"
 
-#: admin.py:35 models.py:443
+#: admin.py:36 models.py:443
 msgid "User content"
 msgstr "Contenu utilisateur"
 
-#: admin.py:83
+#: admin.py:84
 msgid "Video specific"
 msgstr "Spécifique à la vidéo"
 
-#: admin.py:105
+#: admin.py:106
 msgid "Channel specific"
 msgstr "Spécifique à la chaîne"
 
@@ -518,17 +518,18 @@ msgid "Welcome"
 msgstr "Bienvenue"
 
 #: templates/home.html:19
+#, fuzzy
 msgid ""
 "\n"
-"      <p class=\"subtitle\">COCo platform is a place to find open education\n"
-"        resources that are free to use/reuse and of high\n"
-"        quality.</p>\n"
+"      <p class=\"subtitle\">The COCoNotes platform is a place to find\n"
+"        high quality education resources, most of them free to\n"
+"        use/reuse.</p>\n"
 "      <p>Feel free to use our tools when going through the\n"
 "        resources, they were designed to help you in your learning path.</p>\n"
 "      "
 msgstr ""
 "\n"
-"      <p class=\"subtitle\">Vous pourrez trouver sur la plateforme COCo des ressources ouvertes (OER) libres d'utilisation et de réutilisation, et de haute qualité.</p>\n"
+"      <p class=\"subtitle\">Vous pourrez trouver sur la plateforme COCo des ressources de qualité, pour la plupart libres d'utilisation et de réutilisation.</p>\n"
 "      <p>Utilisez nos outils pour consulter ces ressources, ils ont été conçus pour vous aider dans votre apprentissage.</p>\n"
 "      "
 
