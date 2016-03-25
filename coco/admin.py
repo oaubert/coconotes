@@ -11,6 +11,7 @@ from ajax_select.helpers import make_ajax_form
 
 from .models import Channel, Video, Chapter, License, AnnotationType, Annotation, Comment, Resource, Newsitem, Activity
 from .models import UserMetadata, GroupMetadata
+from .models import VISIBILITY_PUBLIC
 
 # register all adminactions
 actions.add_to_site(admin.site)
@@ -142,6 +143,11 @@ class ActivityAdmin(ElementAdmin):
     ] + ELEMENT_FIELDSETS
 
 
+def make_public(self, modeladmin, request, queryset):
+    queryset.update(visibility=VISIBILITY_PUBLIC)
+make_public.short_description = "Make selected annotations public"
+
+
 @admin.register(Annotation)
 class AnnotationAdmin(ElementAdmin):
     list_display = ('object_link', 'promoted', 'begin', 'title', 'description', 'annotationtype', 'group', 'visibility', 'video_name', 'creator', 'created')
@@ -153,6 +159,7 @@ class AnnotationAdmin(ElementAdmin):
                    'promoted',
                    ('creator', admin.RelatedOnlyFieldListFilter))
     search_fields = ('title', 'description',)
+    actions = [ make_public ]
 
     form = make_ajax_form(Annotation, {'video': 'video',
                                        'creator': 'user',
@@ -165,7 +172,6 @@ class AnnotationAdmin(ElementAdmin):
 
     def video_name(self, a):
         return a.video.title
-
 
 @admin.register(AnnotationType)
 class AnnotationTypeAdmin(ElementAdmin):
