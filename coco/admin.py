@@ -147,6 +147,10 @@ def make_public(self, modeladmin, request, queryset):
     queryset.update(visibility=VISIBILITY_PUBLIC)
 make_public.short_description = "Make selected annotations public"
 
+def make_featured(self, modeladmin, request, queryset):
+    queryset.update(featured=1)
+make_featured.short_description = "Make selected annotations featured"
+
 
 @admin.register(Annotation)
 class AnnotationAdmin(ElementAdmin):
@@ -159,7 +163,7 @@ class AnnotationAdmin(ElementAdmin):
                    'promoted',
                    ('creator', admin.RelatedOnlyFieldListFilter))
     search_fields = ('title', 'description',)
-    actions = [ make_public ]
+    actions = [ make_public, make_featured ]
 
     form = make_ajax_form(Annotation, {'video': 'video',
                                        'creator': 'user',
