@@ -250,14 +250,32 @@ MODEL_MAP = OrderedDict((
     (Comment, ["title", "description", "contentdata"]),
 ))
 
+SNIPPET_MAX_LENGTH = 150
+def get_snippet(query, element):
+    """Return the first matching snippet for an element.
+    """
+    for field in MODEL_MAP[type(element)]:
+        s = getattr(element, field)
+        # Assume that query has been normalized to lowercase
+        i = s.lower().find(query)
+        if i > -1:
+            snippet = s
+            if len(snippet) <= SNIPPET_MAX_LENGTH:
+                return snippet
+            if i > SNIPPET_MAX_LENGTH / 2:
+                snippet = u"\u2026" + snippet[i - SNIPPET_MAX_LENGTH / 2:]
+            if len(snippet) > SNIPPET_MAX_LENGTH:
+                snippet = snippet[:SNIPPET_MAX_LENGTH - 1] + u"\u2026"
+            return snippet
+    return element.title_or_description
 
 def search(request, **kw):
     found = {}
 
     for model, fields in MODEL_MAP.iteritems():
         found[model] = [ el
-                            for el in generic_search(request, model, fields, 'q')
-                            if el.can_access(request.user) ]
+                         for el in generic_search(request, model, fields, 'q')
+                         if el.can_access(request.user) ]
 
     found[Annotation].sort(key=lambda a: a.begin)
 
@@ -277,15 +295,20 @@ def search(request, **kw):
     counts += [ (len(found[model]), model.__name__) for model in (Comment, Channel, Video) ]
 
     # Build element list (list of [ { element: el, children: [ {}...] } ])
+    query = request.GET.get("q", "").strip().lower()
+
     # First annotations (and their containing_videos)
     annotated_videos = [ { 'element': v,
-                           'children': [ { 'element': a }
+                           'snippet': get_snippet(query, v),
+                           'children': [ { 'element': a,
+                                           'snippet': get_snippet(query, a) }
                                          for a in found[Annotation]
                                          if a.video == v ]
                          }
                          for v in containing_videos ]
     # Next all other elements
-    elements = [ { 'element': e } for e in itertools.chain(found[Channel], found[Video]) ]
+    elements = [ { 'element': e,
+                   'snippet': get_snippet(query, e) } for e in itertools.chain(found[Channel], found[Video]) ]
 
     summary = u", ".join(u"%d %s%s" % (count, name.rstrip('s'), pluralize(count))
                          for (count, name) in counts if count)

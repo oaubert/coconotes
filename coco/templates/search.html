@@ -155,7 +155,7 @@
   <div class="result_list">
     {% for item in elements %}
     <article class="searchcapsule">
-      {% include "searchitem.html" with item=item.element children=item.children %}
+      {% include "searchitem.html" with item=item.element snippet=item.snippet children=item.children %}
     </article>
     {% endfor %}
     {% for v in annotated_videos %}
@@ -174,7 +174,7 @@
             {% for a in v.children %}
             <li>
               <span class="searchcapsule_type">{{a.element.element_type}}</span>
-              <a href="{{a.element.contextualized_link}}" class="searchcapsule_annotation_title">{{ a.element.title_or_description|term_highlight:query_string }}</a>
+              <a href="{{a.element.contextualized_link}}" class="searchcapsule_annotation_title">{{ a.snippet|term_highlight:query_string }}</a>
               <time class="searchcapsule_annotation_timecode">{{a.element.begin|format_timecode}}</time>
             </li>
             {% endfor %}

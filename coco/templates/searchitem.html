@@ -3,7 +3,7 @@
   <div class="searchitem_content">
     <a title="{{ item.title }}" href="{{ item.get_absolute_url }}"><img src="{{ item.thumbnail_url }}"></a>
     <div class="searchitem_description">
-      <h5><span class="searchcapsule_type">{{ item.element_type }}</span> <a title="{{ item.title_or_description }}" href="{{ item.get_absolute_url }}">{{ item.title_or_description|term_highlight:query_string }}</a></h5>
+      <h5><span class="searchcapsule_type">{{ item.element_type }}</span> <a title="{{ item.title_or_description }}" href="{{ item.get_absolute_url }}">{{ snippet|term_highlight:query_string }}</a></h5>
       {% if item.title %}
       <span class="description">{{ item.description|term_highlight:query_string|truncatechars_html:300 }}</span>
       {% endif %}
