@@ -154,8 +154,8 @@ make_featured.short_description = "Make selected annotations featured"
 
 @admin.register(Annotation)
 class AnnotationAdmin(ElementAdmin):
-    list_display = ('object_link', 'promoted', 'begin', 'title', 'description', 'annotationtype', 'group', 'visibility', 'video_name', 'creator', 'created')
-    list_editable = ('promoted', 'begin', 'title', 'description', 'group', 'annotationtype')
+    list_display = ('object_link', 'promoted', 'begin', 'title', 'description', 'group', 'visibility', 'annotationtype', 'video_name', 'creator', 'created')
+    list_editable = ('promoted', 'begin', 'title', 'description', 'group', 'visibility', 'annotationtype')
     list_display_links = None
     list_filter = (('annotationtype', admin.RelatedOnlyFieldListFilter),
                    ('group', admin.RelatedOnlyFieldListFilter),
