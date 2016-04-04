@@ -5,6 +5,7 @@ import json
 
 from django.conf import settings
 from django.contrib.auth.models import Group, User
+from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, render
@@ -18,6 +19,7 @@ from rest_framework import permissions, viewsets
 
 
 from .models import Channel, Video, Newsitem, Chapter, Activity, Annotation, Comment, AnnotationType, Resource
+from .models import VISIBILITY_PUBLIC, VISIBILITY_PRIVATE
 from .serializers import ChannelSerializer, ChapterSerializer, ActivitySerializer, VideoSerializer
 from .serializers import AnnotationSerializer, CommentSerializer, ResourceSerializer, NewsitemSerializer, AnnotationTypeSerializer
 from .utils import generic_search, update_object_history
@@ -196,6 +198,53 @@ class GroupDetailView(DetailView):
     def get_queryset(self):
         return self.request.user.groups.all()
 
+class GroupActivityView(DetailView):
+    model = Group
+    template_name = 'group_activity.html'
+
+    def get_queryset(self):
+        return self.request.user.groups.all()
+
+    def render_to_response(self, context):
+        # Look for a 'format=json' GET argument
+        if self.request.GET.get('format') == 'json':
+            return self.render_to_json_response(context)
+        else:
+            return super(GroupActivityView, self).render_to_response(context)
+
+    def render_to_json_response(self, context):
+        """Generate JSON data for group activity
+        """
+        group = self.get_object()
+        # Build pseudo-activity from annotations for now.
+        data = {
+            'actions': [ {
+                "actor": {
+                    "username": a.contributor.username,
+                    "fullname": a.contributor.get_full_name()
+                } if a.is_updated else {
+                    "username": a.creator.username,
+                    "fullname": a.creator.get_full_name()
+                },
+                "verb": "updated" if a.is_updated else "created",
+                "object": {
+                    "uuid": a.uuid,
+                    "url": a.contextualized_link,
+                    "type": "annotation",
+                    "title": a.title_or_description
+                },
+                "date": a.modified,
+                "date_natural": naturaltime(a.modified),
+                "video": {
+                    "uuid": a.video.uuid,
+                    "url": a.video.get_absolute_url(),
+                    "title": a.video.title,
+                    "thumbnail": a.video.thumbnail_url(),
+                }
+            } for a in group.metadata.annotations ]
+        }
+        return JsonResponse(data)
+
 class VideoDetailView(DetailView):
     model = Video
     context_object_name='video'
@@ -251,10 +300,12 @@ MODEL_MAP = OrderedDict((
 ))
 
 SNIPPET_MAX_LENGTH = 150
-def get_snippet(query, element):
+def get_snippet(query, element, fields=None):
     """Return the first matching snippet for an element.
     """
-    for field in MODEL_MAP[type(element)]:
+    if fields is None:
+        fields = MODEL_MAP[type(element)]
+    for field in fields:
         s = getattr(element, field)
         # Assume that query has been normalized to lowercase
         i = s.lower().find(query)
@@ -299,7 +350,7 @@ def search(request, **kw):
 
     # First annotations (and their containing_videos)
     annotated_videos = [ { 'element': v,
-                           'snippet': get_snippet(query, v),
+                           'snippet': get_snippet(query, v, [ "description" ]),
                            'children': [ { 'element': a,
                                            'snippet': get_snippet(query, a) or a.title_or_description }
                                          for a in found[Annotation]
