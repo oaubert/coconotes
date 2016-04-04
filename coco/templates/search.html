@@ -86,6 +86,11 @@
       font-size: 14px;
       color: #000;
   }
+  .searchcapsule_video_snippet {
+      font-family: Roboto-italic;
+      font-size: 14px;
+      color: #000;
+  }
   .searchcapsule_annotations ul {
       list-style: none;
   }
@@ -170,6 +175,7 @@
           <img src="{{v.element.thumbnail_url}}" alt="">
         </div>
         <div class="searchcapsule_annotations">
+          <div class="searchcapsule_video_snippet">{{ v.snippet|term_highlight:query_string }}</div>
           <ul>
             {% for a in v.children %}
             <li>

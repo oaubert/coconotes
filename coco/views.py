@@ -267,7 +267,7 @@ def get_snippet(query, element):
             if len(snippet) > SNIPPET_MAX_LENGTH:
                 snippet = snippet[:SNIPPET_MAX_LENGTH - 1] + u"\u2026"
             return snippet
-    return element.title_or_description
+    return ""
 
 def search(request, **kw):
     found = {}
@@ -301,14 +301,15 @@ def search(request, **kw):
     annotated_videos = [ { 'element': v,
                            'snippet': get_snippet(query, v),
                            'children': [ { 'element': a,
-                                           'snippet': get_snippet(query, a) }
+                                           'snippet': get_snippet(query, a) or a.title_or_description }
                                          for a in found[Annotation]
                                          if a.video == v ]
                          }
                          for v in containing_videos ]
     # Next all other elements
     elements = [ { 'element': e,
-                   'snippet': get_snippet(query, e) } for e in itertools.chain(found[Channel], found[Video]) ]
+                   'snippet': get_snippet(query, e) or e.title_or_description }
+                 for e in itertools.chain(found[Channel], found[Video]) ]
 
     summary = u", ".join(u"%d %s%s" % (count, name.rstrip('s'), pluralize(count))
                          for (count, name) in counts if count)
