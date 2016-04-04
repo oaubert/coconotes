@@ -107,7 +107,7 @@ IriSP.Widgets.Controller.prototype.draw = function () {
     this.$playButton.click(this.functionWrapper("playHandler"));
 
     if (this.enable_quiz_toggle !== undefined) {
-        this.toggleQuiz(this.enable_quiz_toggle);
+        this.toggleQuiz(null, this.enable_quiz_toggle);
     } else {
         this.$.find(".Ldt-Ctrl-Quiz-Enable").hide();
     }
@@ -258,7 +258,7 @@ IriSP.Widgets.Controller.prototype.createQuiz = function () {
     this.player.trigger("QuizCreator.create");
 };
 
-IriSP.Widgets.Controller.prototype.toggleQuiz = function (force_state) {
+IriSP.Widgets.Controller.prototype.toggleQuiz = function (event, force_state) {
     if (force_state !== undefined) {
         this.enable_quiz_toggle = force_state;
     } else {

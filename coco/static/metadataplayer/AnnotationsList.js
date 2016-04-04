@@ -402,7 +402,7 @@ IriSP.Widgets.AnnotationsList.prototype.refresh = function (_forceRedraw) {
     }
     var _this = this,
         _currentTime = this.media.getCurrentTime();
-    var _list = this.annotation_type ? this.currentSource.getAnnotationsByTypeTitle(this.annotation_type) : this.currentSource.getAnnotations();
+    var _list = this.getWidgetAnnotations();
     if (this.mashupMode) {
         var _currentAnnotation = this.source.currentMedia.getAnnotationAtTime(_currentTime);
         if (typeof _currentAnnotation !== "undefined") {
