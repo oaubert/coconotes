@@ -167,7 +167,7 @@
     <article class="searchcapsule">
       <div class="searchcapsule_title">
         <div class="searchcapsule_type">{{v.element.element_type}}</div>
-        <a class="searchcapsule_video_title" href="{{v.element.get_absolute_url}}"><h5>{{v.element.title}}</h5></a>
+        <a class="searchcapsule_video_title" href="{{v.element.get_absolute_url}}"><h5>{{v.element.title|term_highlight:query_string}}</h5></a>
         <a class="searchcapsule_video_channel" href="{{v.element.channel.get_absolute_url}}">{{v.element.channel.title}}</a>
       </div>
       <div class="searchcapsule_content">
