@@ -519,7 +519,38 @@ def slide_level(request, pk=None, **kw):
         an.parsed_content(data)
         an.save()
         update_object_history(request, an)
-        # FIXME: check how to populate django logentries
+        context = CocoContext(user=request.user.pk,
+                              video=an.video,
+                              teacher_set=[u.pk for u in an.video.activity.chapter.teachers.all()],
+                              current_group='')
+        return JsonResponse(an.cinelab(context=context))
+
+@permission_required("annotation_change")
+@require_http_methods(["GET", "POST"])
+def toggle_annotation(request, pk=None, prop=None, **kw):
+    """Toggle a property on an annotation.
+
+    The property is either featured or public.
+    """
+    an = get_object_or_404(Annotation, pk=pk)
+    if prop not in ('featured', 'public'):
+        return HttpResponse("Invalid property", status=405)
+    if request.method == 'GET':
+        if prop == 'featured':
+            value = an.promoted
+        elif prop == 'public':
+            value = (an.visibility == VISIBILITY_PUBLIC)
+        return JsonResponse({prop: value})
+    elif request.method == 'POST':
+        if prop == 'featured':
+            an.promoted = int(not an.promoted)
+        elif prop == 'public':
+            if an.visibility == VISIBILITY_PUBLIC:
+                an.visibility = VISIBILITY_PRIVATE
+            else:
+                an.visibility = VISIBILITY_PUBLIC
+        an.save()
+        update_object_history(request, an)
         context = CocoContext(user=request.user.pk,
                               video=an.video,
                               teacher_set=[u.pk for u in an.video.activity.chapter.teachers.all()],

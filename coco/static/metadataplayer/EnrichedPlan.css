@@ -140,7 +140,7 @@
 
 .Ldt-EnrichedPlan-Note-Featured,
 .Ldt-EnrichedPlan-Note-Link.Ldt-EnrichedPlan-Note-Featured {
-    color: #e5007e;
+    color: #e5007e !important;
     font-style: italic;
 }
 .Ldt-EnrichedPlan-Note-Own,
@@ -350,6 +350,9 @@ label:hover:before {
     background: url(img/notes_edit.svg);
 }
 
+.Ldt-EnrichedPlan-EditControl-Featured {
+    background: url(img/notes_featured.svg);
+}
 .Ldt-EnrichedPlan-EditControl-Delete {
     background: url(img/notes_delete.svg);
 }

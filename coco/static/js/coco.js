@@ -73,6 +73,12 @@ $(document).ready(function () {
         case 'add_annotation':
             return "/api/v1/annotation_add";
             break;
+        case 'featured':
+            return "/annotation/" + elementid + "/toggle/featured/";
+            break;
+        case 'public':
+            return "/annotation/" + elementid + "/toggle/public/";
+            break;
         }
         return "/annotation/" + elementid + "#broken_action_url";
     }

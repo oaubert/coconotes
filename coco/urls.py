@@ -90,6 +90,7 @@ urlpatterns = [
                        url(r'^annotation/(?P<pk>[\w\d_-]+)/edit/$', views.annotation_edit, name='view-annotation-update'),
     url(r'^annotation/(?P<pk>[\w\d_-]+)/delete/$', views.AnnotationDeleteView.as_view(), name='view-annotation-delete'),
     url(r'^annotation/(?P<pk>[\w\d_-]+)/level/$', views.slide_level, name='view-slide-level'),
+    url(r'^annotation/(?P<pk>[\w\d_-]+)/toggle/(?P<prop>public|featured)/$', views.toggle_annotation, name='view-annotation-toggle'),
 
     # REST API
     url(r'^api/v1/annotation_add$', views.annotation_add, name='api-annotation-add'),

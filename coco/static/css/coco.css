@@ -1120,6 +1120,11 @@ h1:hover .adminactions,
 .playertitle:hover .adminactions {
     display: inline-block;
 }
+.adminactions a {
+    text-decoration: none;
+    color: black;
+}
+
 .adminactions .editelement {
     text-decoration: none;
     color: black;
