@@ -918,6 +918,17 @@ div.pagetitle {
 .group_detail_member_list .infoblock {
     width: 80px;
 }
+.group_detail_activity_link {
+    text-align: right;
+}
+
+.group_detail_activity_link a {
+    text-decoration: none;
+    color: #6cf;
+    font-family: Roboto;
+    font-size: 21px;
+    text-transform: uppercase;
+}
 
 .annotated_videos_summary {
     list-style: none;

@@ -84,6 +84,7 @@ urlpatterns = [
 
     url(r'^group/$', views.GroupListView.as_view(), name='group-list'),
     url(r'^group/(?P<pk>\d+)/$', views.GroupDetailView.as_view(), name='view-group-detail'),
+    url(r'^group/(?P<pk>\d+)/activity$', views.GroupActivityView.as_view(), name='view-group-activity'),
 
     url(r'^annotation/add$', views.AnnotationCreateView.as_view(), name='view-annotation-create'),
     url(r'^annotation/(?P<pk>[\w\d_-]+)/$', views.AnnotationDetailView.as_view(), name='view-annotation-detail'),
