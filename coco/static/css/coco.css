@@ -1052,6 +1052,11 @@ div.pagetitle {
     margin-bottom: 32px;
 }
 
+.welcome a {
+    text-decoration: none;
+    color: #666;
+}
+
 .home_news {
     width: 100%;
 }
