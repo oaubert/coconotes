@@ -37,6 +37,14 @@
 
 {% block content %}
 <div class="player">
+  <div class="player_usage">
+    <p>{% blocktrans %}This platform is a product of the <a title="Projet COCo - CominOpenCourseware" href="https://comin-ocw.org/">COCo project</a>. Please see our website for overall information.{% endblocktrans %}</p>
+    <p>{% blocktrans %}Some usage information:{% endblocktrans %}</p>
+    <ul>
+      <li>{% blocktrans %}There are keyboard shortcuts to control the video player: Control-Space toggles play/pause, Control-left arrow and Control-right arrow move backwards/forward in the video.{% endblocktrans %}</li>
+      <li>{% blocktrans %}If you pause the video, the page URL is updated to reflect your current position (using the <a href="http://www.w3.org/TR/media-frags/‎">MediaFragment</a> syntax). You can then bookmark it, copy it in an e-mail...{% endblocktrans %}</li>
+    </ul>
+  </div>
   <div class="titleblock">
     <div class="breadcrumb">
       <span class="channelcategory">{{ video.channel.category }}</span>
@@ -94,5 +102,4 @@
     <div class="unauthenticated_comment">{% blocktrans with currenturl=request.get_full_path|urlencode %}Please <a href="/accounts/login/?next={{currenturl}}">log in</a> to be able to comment on the video.{% endblocktrans %}</div>
   </div>
 </div>
-
 {% endblock %}

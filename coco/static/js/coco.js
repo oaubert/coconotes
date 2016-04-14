@@ -484,4 +484,22 @@ $(document).ready(function () {
         });
         window.open("https://twitter.com/intent/tweet?" + twitter_param);
     });
+
+    $('.profilemenu_help_usage').on("click", function () {
+        $("#profilemenu_help_menu")[0].checked = false;
+        $(".player_usage").dialog({
+            width: "60%",
+            closeOnEscape: true,
+            dialogClass: "video_info_popup",
+            modal: true,
+            position: { my: "center", at: "center" },
+            title: "Usage",
+            open: function() {
+                var dialog = this;
+                $('.ui-widget-overlay').on('click', function () {
+                    $(dialog).dialog('close');
+                });
+            }
+        });
+    });
 });

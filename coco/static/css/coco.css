@@ -492,6 +492,9 @@ div.pagetitle {
     color: #fff;
     padding-left: 6px;
 }
+.player_usage {
+    display: none;
+}
 
 .VideoContainer {
     height: 100%;
