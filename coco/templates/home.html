@@ -16,12 +16,15 @@
     <h1 class="highlighted">{% trans "Welcome" %}</h1>
 
     <article class="welcome">
-      {% blocktrans %}
-      <p class="subtitle">The COCoNotes platform is a place to find
-        high quality education resources, most of them free to
-        use/reuse.</p>
-      <p>The <a href="http://comin-ocw.org/">COCo project</a> is funded both by a French government support granted to the <a title="managed by the National Research Agency in the 'Investing for the Future' program under reference ANR-JO-LABX-07-0J" href="http://www.cominlabs.ueb.eu/">COMIN Labs excellence laboratory</a>, and <a class="sponsor" title="Région Pays de la Loire" href="http://www.paysdelaloire.fr/" target="_blank">Région Pays de Loire</a>.</p>
-      {% endblocktrans %}
+      <p class="subtitle">
+        {% blocktrans %}
+        The COCoNotes platform is a place to find high
+        quality education resources, most of them free to use/reuse.
+        {% endblocktrans %}
+        </p>
+      <p>
+        {% blocktrans %}The <a href="http://comin-ocw.org/">COCo project</a> is funded both by a French government support granted to the <a title="managed by the National Research Agency in the 'Investing for the Future' program under reference ANR-JO-LABX-07-0J" href="http://www.cominlabs.ueb.eu/">COMIN Labs excellence laboratory</a>, and <a class="sponsor" title="Région Pays de la Loire" href="http://www.paysdelaloire.fr/" target="_blank">Région Pays de Loire</a>.{% endblocktrans %}
+      </p>
     </article>
 
     <article class="capsule home_news">
