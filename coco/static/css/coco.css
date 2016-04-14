@@ -994,6 +994,7 @@ div.pagetitle {
 
 .capsule .description, .minicapsule .description {
     font-size: 11px;
+    line-height: 18px;
     overflow-y: hidden;
     height: calc(100% - 152px);
 }
