@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-25 15:42+0100\n"
-"PO-Revision-Date: 2016-03-25 15:43+0100\n"
+"POT-Creation-Date: 2016-04-14 17:06+0200\n"
+"PO-Revision-Date: 2016-04-14 17:09+0200\n"
 "Last-Translator: Olivier Aubert <olivier.aubert@univ-nantes.fr>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: admin.py:31 admin.py:191 admin.py:221 admin.py:254
+#: admin.py:31 admin.py:195 admin.py:225 admin.py:258
 msgid "Metadata"
 msgstr "Métadonnées"
 
-#: admin.py:32 admin.py:192 admin.py:222 models.py:405
+#: admin.py:32 admin.py:196 admin.py:226 models.py:405
 msgid "Content"
 msgstr "Contenu"
 
@@ -58,7 +58,7 @@ msgid "Private"
 msgstr "Privé"
 
 #: models.py:80 templates/coco/video_detail.html:70
-#: templates/group_activity.html:24 templates/group_activity.html.py:26
+#: templates/group_activity.html:28 templates/group_activity.html.py:30
 #: templates/group_detail.html:11 templates/group_detail.html.py:13
 msgid "Group"
 msgstr "Groupe"
@@ -303,13 +303,16 @@ msgid "New on  %(site_name)s? Please <a href=\"%(signup_url)s\">sign up</a> firs
 msgstr "Nouveau sur %(site_name)s? <a href=\"%(signup_url)s\">créez un compte</a> d'abord."
 
 #: templates/account/logout.html:5 templates/account/logout.html.py:9
-#: templates/account/logout.html:17
 msgid "Sign Out"
 msgstr "Déconnexion"
 
 #: templates/account/logout.html:12
 msgid "Are you sure you want to sign out?"
 msgstr "Êtes-vous certain de vouloir vous déconnecter ?"
+
+#: templates/account/logout.html:17
+msgid "Yes, Sign Me Out"
+msgstr "Oui, je me déconnecte"
 
 #: templates/account/signup.html:6 templates/account/signup.html.py:11
 #: templates/account/signup.html:22
@@ -326,7 +329,6 @@ msgid "You can specify which groups are displayed in the tab area."
 msgstr "Vous pouvez indiquer les groupes affichés dans les onglets."
 
 #: templates/account/tabconfig_form.html:20
-#: templates/coco/annotation_form.html:17
 msgid "Validate"
 msgstr "Valider"
 
@@ -366,6 +368,10 @@ msgstr "Temps dans la vidéo"
 msgid "This annotation is"
 msgstr "Cette annotation est"
 
+#: templates/coco/annotation_form.html:17
+msgid "Save"
+msgstr "Sauver"
+
 #: templates/coco/channel_list.html:6 templates/coco/channel_list.html.py:9
 msgid "Channels"
 msgstr "Chaînes"
@@ -383,13 +389,13 @@ msgid "All elements"
 msgstr "Tous les éléments"
 
 #: templates/coco/newsitem_detail.html:7 templates/coco/newsitem_list.html:7
-#: templates/group_activity.html:26 templates/group_detail.html:13
+#: templates/group_activity.html:30 templates/group_detail.html:13
 #: templates/group_list.html:10 templates/profile.html:22
 #: templates/userprofile.html:22
 msgid "COCo platform"
 msgstr "Plateforme COCo"
 
-#: templates/coco/newsitem_list.html:7 templates/home.html:29
+#: templates/coco/newsitem_list.html:7 templates/home.html:28
 msgid "News"
 msgstr "Nouvelles"
 
@@ -441,56 +447,56 @@ msgid_plural "%(count)s videos"
 msgstr[0] "%(count)s vidéo"
 msgstr[1] "%(count)s vidéos"
 
-#: templates/group_activity.html:23 templates/group_detail.html:10
+#: templates/group_activity.html:27 templates/group_detail.html:10
 #: templates/group_list.html:8 templates/group_list.html.py:10
 #: templates/group_list.html:13
 msgid "Groups"
 msgstr "Groupes"
 
-#: templates/group_activity.html:29
+#: templates/group_activity.html:33
 #, python-format
 msgid "%(groupname)s activity"
 msgstr "Activité de %(groupname)s"
 
-#: templates/group_activity.html:34 templates/group_detail.html:33
+#: templates/group_activity.html:37 templates/group_detail.html:33
 msgid "Members"
 msgstr "Membres"
 
-#: templates/group_activity.html:44 templates/group_activity.html.py:70
-#: templates/group_detail.html:39 templates/group_list.html:26
+#: templates/group_activity.html:41
+msgid "Videos"
+msgstr "Vidéos"
+
+#: templates/group_activity.html:47 templates/group_activity.html.py:68
+msgid "Timeline"
+msgstr "Historique"
+
+#: templates/group_activity.html:52
+msgid "Annotated videos"
+msgstr "Vidéos annotées"
+
+#: templates/group_activity.html:62 templates/group_detail.html:39
+#: templates/group_list.html:26
 #, python-format
 msgid "%(count)s shared note"
 msgid_plural "%(count)s shared notes"
 msgstr[0] "%(count)s note partagée"
 msgstr[1] "%(count)s notes partagées"
 
-#: templates/group_activity.html:54
-msgid "Group activity"
-msgstr "Activité du groupe"
-
-#: templates/group_activity.html:60
-msgid "Annotated videos"
-msgstr "Vidéos annotées"
-
 #: templates/group_activity.html:76
-msgid "Timeline"
-msgstr "Historique"
-
-#: templates/group_activity.html:83
 #, python-format
 msgid "%(user)s modified the annotation"
 msgstr "%(user)s a modifié l'annotation"
 
-#: templates/group_activity.html:87
+#: templates/group_activity.html:80
 #, python-format
 msgid "%(user)s created the annotation"
 msgstr "%(user)s a créé l'annotation"
 
-#: templates/group_activity.html:91 templates/profile.html:113
+#: templates/group_activity.html:84 templates/profile.html:113
 msgid "on"
 msgstr "sur"
 
-#: templates/group_activity.html:95
+#: templates/group_activity.html:88
 msgid "The group does not have much activity yet."
 msgstr "Le groupe n'a pas encore d'activité."
 
@@ -518,31 +524,29 @@ msgid "Welcome"
 msgstr "Bienvenue"
 
 #: templates/home.html:19
-#, fuzzy
 msgid ""
 "\n"
 "      <p class=\"subtitle\">The COCoNotes platform is a place to find\n"
 "        high quality education resources, most of them free to\n"
 "        use/reuse.</p>\n"
-"      <p>Feel free to use our tools when going through the\n"
-"        resources, they were designed to help you in your learning path.</p>\n"
+"      <p>The <a href=\"http://comin-ocw.org/\">COCo project</a> is funded both by a French government support granted to the <a title=\"managed by the National Research Agency in the 'Investing for the Future' program under reference ANR-JO-LABX-07-0J\" href=\"http://www.cominlabs.ueb.eu/\">COMIN Labs excellence laboratory</a>, and <a class=\"sponsor\" title=\"Région Pays de la Loire\" href=\"http://www.paysdelaloire.fr/\" target=\"_blank\">Région Pays de Loire</a>.</p>\n"
 "      "
 msgstr ""
 "\n"
-"      <p class=\"subtitle\">Vous pourrez trouver sur la plateforme COCo des ressources de qualité, pour la plupart libres d'utilisation et de réutilisation.</p>\n"
-"      <p>Utilisez nos outils pour consulter ces ressources, ils ont été conçus pour vous aider dans votre apprentissage.</p>\n"
+"      <p class=\"subtitle\">La plateforme COCoNotes est un dépôt de resources scientifiques et pédagogiques de qualité, permettant leur ré/utilisation pour la plupart.</p>\n"
+"      <p>Le <a href=\"http://comin-ocw.org/\">projet COCo</a> est co-financé par un soutien du gouvernement français accordé au <a title=\"managed by the National Research Agency in the 'Investing for the Future' program under reference ANR-JO-LABX-07-0J\" href=\"http://www.cominlabs.ueb.eu/\">Labex CominLabs</a>, et la <a class=\"sponsor\" title=\"Région Pays de la Loire\" href=\"http://www.paysdelaloire.fr/\" target=\"_blank\">Région Pays de Loire</a>.</p>\n"
 "      "
 
-#: templates/home.html:46
+#: templates/home.html:45
 msgid "Read more"
 msgstr "Lire plus"
 
-#: templates/home.html:58
+#: templates/home.html:57
 msgid "Featured"
 msgstr "À la une"
 
 # Les dernières vidéos
-#: templates/home.html:69
+#: templates/home.html:68
 msgid "Latest videos"
 msgstr "Les dernières vidéos"
 
@@ -655,9 +659,27 @@ msgstr "Projet COCo"
 msgid "search for"
 msgstr "recherche de"
 
-#: templates/search.html:153
+#: templates/search.html:158
 msgid "Results"
 msgstr "Résultats"
+
+#~ msgid "Group activity"
+#~ msgstr "Activité du groupe"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "      <p class=\"subtitle\">The COCoNotes platform is a place to find\n"
+#~ "        high quality education resources, most of them free to\n"
+#~ "        use/reuse.</p>\n"
+#~ "      <p>Feel free to use our tools when going through the\n"
+#~ "        resources, they were designed to help you in your learning path.</p>\n"
+#~ "      "
+#~ msgstr ""
+#~ "\n"
+#~ "      <p class=\"subtitle\">Vous pourrez trouver sur la plateforme COCo des ressources de qualité, pour la plupart libres d'utilisation et de réutilisation.</p>\n"
+#~ "      <p>Utilisez nos outils pour consulter ces ressources, ils ont été conçus pour vous aider dans votre apprentissage.</p>\n"
+#~ "      "
 
 #~ msgid "No result"
 #~ msgstr "Pas de résultat"

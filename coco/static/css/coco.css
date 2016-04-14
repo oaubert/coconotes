@@ -155,6 +155,10 @@ header {
     padding-left: 6px;
 }
 
+.profilemenu_item_separator {
+    color: #fff;
+}
+
 #langswitch {
     position: absolute;
     top: 3px;

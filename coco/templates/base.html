@@ -25,9 +25,9 @@
           <a href="/accounts/profile"><span id="loginname" class="profilemenu_item">{{ user.username }}</span></a><a href="/accounts/logout/"><span class="profilemenu_item">Log out</span></a>
           {% else %}
           <span class="profilemenu_item">
-            <a href="/accounts/login/">{% trans "Log in" %}</a>
-            /
-            <a href="/accounts/signup/">{% trans "Sign in" %}</a>
+            <a title="{% trans "Log in" %}" href="/accounts/login/">{% trans "Log in" %}</a>
+            <span class="profilemenu_item_separator">/</span>
+            <a title="{% trans "Sign in" %}" href="/accounts/signup/">{% trans "Sign in" %}</a>
           </span>
           {% endif %}</div>
         <div id="langswitch">
