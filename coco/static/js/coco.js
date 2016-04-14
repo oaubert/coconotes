@@ -301,7 +301,7 @@ $(document).ready(function () {
                         },
                         buttons: [
                             {
-                                text: "Validate",
+                                text: "Save",
                                 click: function () {
                                     validate(this);
                                 }
@@ -440,7 +440,7 @@ $(document).ready(function () {
     $(".tabnames_overflow_indicator").on("click", popup_tabconfig_dialog);
     _myPlayer.on("Player.tabconfig", popup_tabconfig_dialog);
 
-    $(".videodetails").on("click touchstart", function (e) {
+    $(".playertitle").on("click touchstart", function (e) {
         e.stopPropagation();
         e.preventDefault();
         $('<div/>', {'class': 'element-form-dialog', 'id': IriSP.generateUuid() })

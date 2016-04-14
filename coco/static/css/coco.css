@@ -416,6 +416,7 @@ div.pagetitle {
 }
 .videotitle {
     display: inline-block;
+    cursor: pointer;
     font-family: Roboto;
     font-weight: 700;
     font-size: 21px;

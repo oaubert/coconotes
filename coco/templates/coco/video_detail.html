@@ -43,7 +43,7 @@
       <a href="{{video.channel.get_absolute_url}}" class="channeltitle">{{ video.channel.title }}</a>
     </div>
     <div class="playertitle">
-      <span class="videotitle">{{ video.title }}</span>
+      <span title="{{video.description}}" class="videotitle">{{ video.title }}</span>
       <div class="videodetails">i</div>
       {% if user.is_staff %}<div class="adminactions"><a href="{{ video.edit_url }}" class="editelement">&#x270f;</a></div>{% endif %}
     </div>
