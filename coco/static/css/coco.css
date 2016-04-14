@@ -144,20 +144,63 @@ header {
     text-transform: uppercase;
     color: #66ccff;
 }
-#profilemenu a, #profilemenu a:visited, #profilemenu a:hover {
+#profilemenu a, #profilemenu a:visited, #profilemenu a:hover, .profilemenu_help label {
     text-decoration: none;
     color: #66ccff;
     cursor: pointer;
 }
+
+#profilemenu a:hover,
+.profilemenu_help label:hover {
+    text-shadow: #66ccff 0 0 2px;
+}
+
 .profilemenu_item:before {
     content: "> ";
     color: #fff;
     padding-left: 6px;
+    display: inline-flex;
+    flex-direction: row;
 }
 
 .profilemenu_item_separator {
     color: #fff;
 }
+
+.profilemenu_help {
+    display: none;
+}
+
+
+.help-view-video-detail {
+    display: inline;
+}
+
+.profilemenu_help_toggle {
+    display: inline-block;
+}
+.profilemenu_help_menu {
+    -webkit-appearance: none;
+    opacity: 0;
+}
+.profilemenu_help_menu + ul {
+    position: relative;
+    z-index: 2;
+    display: none;
+    list-style: none;
+}
+.profilemenu_help_menu:checked + ul {
+    display: block;
+    width: 10em;
+    margin-left: 8em;
+    background-color: black;
+    right: 0px;
+    flex-direction: column;
+}
+.profilemenu_help_actions li {
+    margin: 1em;
+}
+
 
 #langswitch {
     position: absolute;

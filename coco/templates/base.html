@@ -22,14 +22,25 @@
         <a href="/"><img src="{% static "img/logo_coconotes.svg" %}" /></a>
       </div>
         <div id="profilemenu">{% if user.is_authenticated %}
-          <a href="/accounts/profile"><span id="loginname" class="profilemenu_item">{{ user.username }}</span></a><a href="/accounts/logout/"><span class="profilemenu_item">Log out</span></a>
+          <a href="/accounts/profile"><span id="loginname" class="profilemenu_item">{{ user.username }}</span></a>
+          <a href="/accounts/logout/"><span class="profilemenu_item">{% blocktrans %}Log out{% endblocktrans %}</span></a>
           {% else %}
           <span class="profilemenu_item">
             <a title="{% trans "Log in" %}" href="/accounts/login/">{% trans "Log in" %}</a>
             <span class="profilemenu_item_separator">/</span>
             <a title="{% trans "Sign in" %}" href="/accounts/signup/">{% trans "Sign in" %}</a>
           </span>
-          {% endif %}</div>
+          {% endif %}
+          <div class="profilemenu_help help-{{request.resolver_match.url_name}} profilemenu_item">
+            <label for="profilemenu_help_menu" class="profilemenu_help_toggle">{% blocktrans %}Help{% endblocktrans %}</label>
+            <input type="checkbox" class="profilemenu_help_menu" id="profilemenu_help_menu"/>
+            <ul class="profilemenu_help_actions">
+              <li><a class="profilemenu_help_tour">{% blocktrans %}Guided tour{% endblocktrans %}</a></li>
+              <li><a class="profilemenu_help_usage">{% blocktrans %}Usage{% endblocktrans %}</a></li>
+              <li><a href="/credits" class="profilemenu_help_credits">{% blocktrans %}Credits{% endblocktrans %}</a></li>
+            </ul>
+          </div>
+        </div>
         <div id="langswitch">
           {% get_current_language as LANGUAGE_CODE %}
           <form action="{% url 'set_language' %}" method="post">{% csrf_token %}<input name="language" type="hidden" value="fr" /><input type="submit" class="lang_item lang_fr {% if "fr" == LANGUAGE_CODE %}active{% endif %}" value="FR"></input></form>
