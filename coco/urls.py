@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
 from django.conf import settings
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 import django.views.static
 
 from rest_framework.routers import DefaultRouter
@@ -27,6 +27,7 @@ urlpatterns = [
 
     url(r'^i18n/', include('django.conf.urls.i18n')),
 
+    url(r'^credits/', TemplateView.as_view(template_name="credits.html"), name='credits'),
     url(r'^accounts/profile/(?P<name>.+)/form$', views.UserSettingForm.as_view(), name='profile-setting-form'),
     url(r'^accounts/profile/(?P<name>.+)$', views.UserSetting.as_view(), name='profile-setting'),
     url(r'^accounts/profile', views.profile, name='profile'),
