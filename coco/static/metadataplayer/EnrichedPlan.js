@@ -14,6 +14,7 @@ IriSP.Widgets.EnrichedPlan.prototype.messages = {
         delete_annotation: "Delete note",
         confirm_delete_message: "You are about to delete {{ annotation.title }}. Are you sure you want to delete it?",
         featured_notes: "Featured notes",
+        toggle_featured: "Toggle featured state",
         other_notes: "Other Notes",
         own_notes: "Pers. notes",
         popup_tabconfig: "Configure tab display",
@@ -25,6 +26,7 @@ IriSP.Widgets.EnrichedPlan.prototype.messages = {
         delete_annotation: "Supprimer la note",
         confirm_delete_message: "Vous allez supprimer {{ annotation.title }}. Êtes-vous certain(e) ?",
         featured_notes: "Notes Promues",
+        toggle_featured: "Dé/promouvoir",
         other_notes: "Notes Autres",
         own_notes: "Notes perso.",
         popup_tabconfig: "Configurer les onglets",
@@ -108,7 +110,7 @@ IriSP.Widgets.EnrichedPlan.prototype.slideBarTemplate =
       '<div data-id="{{ id }}" data-timecode="{{begintc}}" data-level="{{level}}" title="{{begin}} - {{atitle}}" style="left: {{position}}%" class="Ldt-EnrichedPlan-Bar-Slide Ldt-EnrichedPlan-Slide-Display Ldt-EnrichedPlan-Bar-Slide{{ level }}">'
     + '</div>';
 
-IriSP.Widgets.EnrichedPlan.prototype.annotationTemplate = '<div title="{{ begin }} - {{ atitle }}" data-id="{{ id }}" data-timecode="{{begintc}}" class="Ldt-EnrichedPlan-SlideItem Ldt-EnrichedPlan-Note {{category}} {{filtered}} Ldt-EnrichedPlan-{{visibility}} {{#featured}}Ldt-EnrichedPlan-Note-Featured{{/featured}}"><div class="Ldt-EnrichedPlan-NoteTimecode">{{ begin }}</div><a class="Ldt-EnrichedPlan-Note-Link" href="{{ url }}"><span class="Ldt-EnrichedPlan-Note-Text">{{{ text }}}</span></a> <span class="Ldt-EnrichedPlan-Note-Author">{{ author }}</span> {{#can_edit}}<span class="Ldt-EnrichedPlan-EditControl">{{#is_admin}}<span data-id="{{id}}" class="Ldt-EnrichedPlan-EditControl-Featured"></span>{{/is_admin}}<span data-id="{{id}}" class="Ldt-EnrichedPlan-EditControl-Edit"></span></span>{{/can_edit}}{{#is_admin}}<div class="adminactions"><a class="Ldt-EnrichedPlan-Toggle-Featured" title="Toggle featured" data-id="{{id}}" href="#">*</a> <a target="_blank" data-id="{{id}}" href="{{ admin_url }}" class="editelement">&#x270f;</a></div>{{/is_admin}}</div>';
+IriSP.Widgets.EnrichedPlan.prototype.annotationTemplate = '<div title="{{ begin }} - {{ atitle }}" data-id="{{ id }}" data-timecode="{{begintc}}" class="Ldt-EnrichedPlan-SlideItem Ldt-EnrichedPlan-Note {{category}} {{filtered}} Ldt-EnrichedPlan-{{visibility}} {{#featured}}Ldt-EnrichedPlan-Note-Featured{{/featured}}"><div class="Ldt-EnrichedPlan-NoteTimecode">{{ begin }}</div><a class="Ldt-EnrichedPlan-Note-Link" href="{{ url }}"><span class="Ldt-EnrichedPlan-Note-Text">{{{ text }}}</span></a> <span class="Ldt-EnrichedPlan-Note-Author">{{ author }}</span> {{#can_edit}}<span class="Ldt-EnrichedPlan-EditControl">{{#is_admin}}<span data-id="{{id}}" title="{{l10n.toggle_featured}}" class="Ldt-EnrichedPlan-EditControl-Featured"></span>{{/is_admin}}<span data-id="{{id}}" class="Ldt-EnrichedPlan-EditControl-Edit"></span></span>{{/can_edit}}{{#is_admin}}<div class="adminactions"> <a target="_blank" data-id="{{id}}" href="{{ admin_url }}" class="editelement">&#x270f;</a></div>{{/is_admin}}</div>';
 
 IriSP.Widgets.EnrichedPlan.prototype.annotationBarTemplate = '<div title="{{ begin }} - {{ atitle }}" data-id="{{ id }}" data-timecode="{{begintc}}" style="left: {{position}}%" class="Ldt-EnrichedPlan-Bar-Note {{category}} {{filtered}} {{#featured}}Ldt-EnrichedPlan-Note-Featured{{/featured}}"></div>';
 
@@ -169,10 +171,10 @@ IriSP.Widgets.EnrichedPlan.prototype.init_component = function () {
         }
     });
 
-    _this.container.on("click", ".Ldt-EnrichedPlan-EditControl-Edit .editelement", function () {
+    _this.container.on("click", ".Ldt-EnrichedPlan-EditControl-Edit", function () {
         _this.player.trigger("Annotation.edit", this.dataset.id);
     });
-    _this.container.on("click", ".Ldt-EnrichedPlan-Toggle-Featured", toggle_featured);
+    _this.container.on("click", ".Ldt-EnrichedPlan-EditControl-Featured", toggle_featured);
     _this.container.on("click", ".Ldt-EnrichedPlan-EditControl-Delete", function () {
         var _annotation = _this.source.getElement(this.dataset.id);
         if (confirm(Mustache.to_html(_this.l10n.confirm_delete_message, { annotation: _annotation }))) {
