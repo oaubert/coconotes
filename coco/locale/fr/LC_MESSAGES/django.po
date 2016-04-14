@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-14 17:06+0200\n"
-"PO-Revision-Date: 2016-04-14 17:09+0200\n"
+"POT-Creation-Date: 2016-04-14 20:45+0200\n"
+"PO-Revision-Date: 2016-04-14 20:49+0200\n"
 "Last-Translator: Olivier Aubert <olivier.aubert@univ-nantes.fr>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -57,7 +57,7 @@ msgstr "publique"
 msgid "Private"
 msgstr "Privé"
 
-#: models.py:80 templates/coco/video_detail.html:70
+#: models.py:80 templates/coco/video_detail.html:78
 #: templates/group_activity.html:28 templates/group_activity.html.py:30
 #: templates/group_detail.html:11 templates/group_detail.html.py:13
 msgid "Group"
@@ -329,26 +329,47 @@ msgid "You can specify which groups are displayed in the tab area."
 msgstr "Vous pouvez indiquer les groupes affichés dans les onglets."
 
 #: templates/account/tabconfig_form.html:20
+#: templates/coco/annotation_form.html:17
 msgid "Validate"
 msgstr "Valider"
 
-#: templates/base.html:28
+#: templates/base.html:26
+msgid "Log out"
+msgstr "Déconnexion"
+
+#: templates/base.html:29
 msgid "Log in"
 msgstr "Connexion"
 
-#: templates/base.html:30
+#: templates/base.html:31
 msgid "Sign in"
 msgstr "Inscription"
 
+#: templates/base.html:35
+msgid "Help"
+msgstr "Aide"
+
+#: templates/base.html:38
+msgid "Guided tour"
+msgstr "Visite guidée"
+
 #: templates/base.html:39
+msgid "Usage"
+msgstr "Usage"
+
+#: templates/base.html:40 templates/credits.html:14
+msgid "Credits"
+msgstr "Crédits"
+
+#: templates/base.html:50
 msgid "Search for videos or channels"
 msgstr "Cherchez des vidéos ou des chaînes"
 
-#: templates/base.html:42
+#: templates/base.html:53
 msgid "Home"
 msgstr "Accueil"
 
-#: templates/base.html:44
+#: templates/base.html:55
 msgid "All channels"
 msgstr "Toutes les chaînes"
 
@@ -367,10 +388,6 @@ msgstr "Temps dans la vidéo"
 #: templates/coco/annotation_form.html:14
 msgid "This annotation is"
 msgstr "Cette annotation est"
-
-#: templates/coco/annotation_form.html:17
-msgid "Save"
-msgstr "Sauver"
 
 #: templates/coco/channel_list.html:6 templates/coco/channel_list.html.py:9
 msgid "Channels"
@@ -395,7 +412,7 @@ msgstr "Tous les éléments"
 msgid "COCo platform"
 msgstr "Plateforme COCo"
 
-#: templates/coco/newsitem_list.html:7 templates/home.html:28
+#: templates/coco/newsitem_list.html:7 templates/home.html:31
 msgid "News"
 msgstr "Nouvelles"
 
@@ -407,23 +424,39 @@ msgstr "Pas de nouvelles, bonne nouvelle."
 msgid "Add news item"
 msgstr "Ajouter une nouvelle"
 
-#: templates/coco/video_detail.html:64
+#: templates/coco/video_detail.html:41
+msgid "This platform is a product of the <a title=\"Projet COCo - CominOpenCourseware\" href=\"https://comin-ocw.org/\">COCo project</a>. Please see our website for overall information."
+msgstr "Cette plateforme est réalisée dans le cadre du <a title=\"Projet COCo - CominOpenCourseware\" href=\"https://comin-ocw.org/\">projet COCo</a>. Consultez notre site web pour plus de détails."
+
+#: templates/coco/video_detail.html:42
+msgid "Some usage information:"
+msgstr "Quelques informations d'utilisation :"
+
+#: templates/coco/video_detail.html:44
+msgid "There are keyboard shortcuts to control the video player: Control-Space toggles play/pause, Control-left arrow and Control-right arrow move backwards/forward in the video."
+msgstr "Le lecteur vidéo peut être contrôlé via des raccourcis clavier:  Contrôle-espace pour jouer/mettre en pause, Contrôle-flèche à gauche et Contrôle-flèche à droite pour se déplacer dans la vidéo."
+
+#: templates/coco/video_detail.html:45
+msgid "If you pause the video, the page URL is updated to reflect your current position (using the <a href=\"http://www.w3.org/TR/media-frags/‎\">MediaFragment</a> syntax). You can then bookmark it, copy it in an e-mail..."
+msgstr "Si vous mettez la vidéo en pause, l'URL de la page sera mise à jour pour correspondre à votre position actuelle (en utilisant la syntaxe <a href=\"http://www.w3.org/TR/media-frags/‎\">MediaFragment</a>). Vous pouvez alors la copier en signet, l'échanger par mail..."
+
+#: templates/coco/video_detail.html:72
 msgid "Plan"
 msgstr "Plan"
 
-#: templates/coco/video_detail.html:66
+#: templates/coco/video_detail.html:74
 msgid "Own notes"
 msgstr "Notes perso."
 
-#: templates/coco/video_detail.html:68
+#: templates/coco/video_detail.html:76
 msgid "Public notes"
 msgstr "Notes publiques"
 
-#: templates/coco/video_detail.html:91
+#: templates/coco/video_detail.html:99
 msgid "Select visible tabs"
 msgstr "Sélectionner les onglets visibles"
 
-#: templates/coco/video_detail.html:94
+#: templates/coco/video_detail.html:102
 #, python-format
 msgid "Please <a href=\"/accounts/login/?next=%(currenturl)s\">log in</a> to be able to comment on the video."
 msgstr "Veuillez vous <a href=\"/accounts/login/?next=%(currenturl)s\">connecter</a> pour pouvoir commenter la vidéo."
@@ -446,6 +479,14 @@ msgid "%(count)s video"
 msgid_plural "%(count)s videos"
 msgstr[0] "%(count)s vidéo"
 msgstr[1] "%(count)s vidéos"
+
+#: templates/credits.html:18 templates/home.html:26
+msgid "The <a href=\"http://comin-ocw.org/\">COCo project</a> is funded both by a French government support granted to the <a title=\"managed by the National Research Agency in the 'Investing for the Future' program under reference ANR-JO-LABX-07-0J\" href=\"http://www.cominlabs.ueb.eu/\">COMIN Labs excellence laboratory</a>, and <a class=\"sponsor\" title=\"Région Pays de la Loire\" href=\"http://www.paysdelaloire.fr/\" target=\"_blank\">Région Pays de Loire</a>."
+msgstr "Le <a href=\"http://comin-ocw.org/\">projet COCo</a> est co-financé par un soutien du gouvernement français accordé au <a title=\"managed by the National Research Agency in the 'Investing for the Future' program under reference ANR-JO-LABX-07-0J\" href=\"http://www.cominlabs.ueb.eu/\">Labex CominLabs</a>, et la <a class=\"sponsor\" title=\"Région Pays de la Loire\" href=\"http://www.paysdelaloire.fr/\" target=\"_blank\">Région Pays de Loire</a>."
+
+#: templates/credits.html:21
+msgid "The video interface is based on <a href=\"https://github.com/IRI-Research/metadataplayer\">MetaDataPlayer</a> (CeCILL-C licence) from <a href=\"http://www.iri.centrepompidou.fr/\">Institut de Recherche et d'Innovation</a>."
+msgstr "L'interface est basée sur <a href=\"https://github.com/IRI-Research/metadataplayer\">MetaDataPlayer</a> (licence CeCILL-C) réalisé par l'<a href=\"http://www.iri.centrepompidou.fr/\">Institut de Recherche et d'Innovation</a>."
 
 #: templates/group_activity.html:27 templates/group_detail.html:10
 #: templates/group_list.html:8 templates/group_list.html.py:10
@@ -523,30 +564,24 @@ msgstr "membres"
 msgid "Welcome"
 msgstr "Bienvenue"
 
-#: templates/home.html:19
+#: templates/home.html:20
 msgid ""
 "\n"
-"      <p class=\"subtitle\">The COCoNotes platform is a place to find\n"
-"        high quality education resources, most of them free to\n"
-"        use/reuse.</p>\n"
-"      <p>The <a href=\"http://comin-ocw.org/\">COCo project</a> is funded both by a French government support granted to the <a title=\"managed by the National Research Agency in the 'Investing for the Future' program under reference ANR-JO-LABX-07-0J\" href=\"http://www.cominlabs.ueb.eu/\">COMIN Labs excellence laboratory</a>, and <a class=\"sponsor\" title=\"Région Pays de la Loire\" href=\"http://www.paysdelaloire.fr/\" target=\"_blank\">Région Pays de Loire</a>.</p>\n"
-"      "
-msgstr ""
-"\n"
-"      <p class=\"subtitle\">La plateforme COCoNotes est un dépôt de resources scientifiques et pédagogiques de qualité, permettant leur ré/utilisation pour la plupart.</p>\n"
-"      <p>Le <a href=\"http://comin-ocw.org/\">projet COCo</a> est co-financé par un soutien du gouvernement français accordé au <a title=\"managed by the National Research Agency in the 'Investing for the Future' program under reference ANR-JO-LABX-07-0J\" href=\"http://www.cominlabs.ueb.eu/\">Labex CominLabs</a>, et la <a class=\"sponsor\" title=\"Région Pays de la Loire\" href=\"http://www.paysdelaloire.fr/\" target=\"_blank\">Région Pays de Loire</a>.</p>\n"
-"      "
+"        The COCoNotes platform is a place to find high\n"
+"        quality education resources, most of them free to use/reuse.\n"
+"        "
+msgstr "\nVous pourrez trouver sur la plateforme COCo des ressources de qualité, pour la plupart libres d'utilisation et de réutilisation."
 
-#: templates/home.html:45
+#: templates/home.html:48
 msgid "Read more"
 msgstr "Lire plus"
 
-#: templates/home.html:57
+#: templates/home.html:60
 msgid "Featured"
 msgstr "À la une"
 
 # Les dernières vidéos
-#: templates/home.html:68
+#: templates/home.html:71
 msgid "Latest videos"
 msgstr "Les dernières vidéos"
 
@@ -662,6 +697,9 @@ msgstr "recherche de"
 #: templates/search.html:158
 msgid "Results"
 msgstr "Résultats"
+
+#~ msgid "Save"
+#~ msgstr "Sauver"
 
 #~ msgid "Group activity"
 #~ msgstr "Activité du groupe"
