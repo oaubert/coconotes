@@ -289,9 +289,6 @@ $(document).ready(function () {
                             var dialog = this;
                             // On open, hide the original submit button
                             IriSP.jQuery(this).find("[type=submit]").hide();
-                            IriSP.jQuery('.ui-widget-overlay').bind('click', function () {
-                                IriSP.jQuery(dialog).dialog('close');
-                            });
                             $(dialog).keypress(function(e) {
                                 if (e.ctrlKey && (e.keyCode == $.ui.keyCode.ENTER || e.keyCode == 10)) {
                                     e.preventDefault();
