@@ -404,6 +404,14 @@ div.pagetitle {
     text-decoration: none;
     color: #66ccff;
 }
+.channel_description,
+.chapter_description {
+    max-width: 40em;
+    margin: 1em auto;
+    border-top: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
+}
+
 /* Popups */
 .ui-corner-all {
     border-radius: 0;
