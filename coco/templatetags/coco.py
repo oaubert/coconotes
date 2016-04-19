@@ -112,7 +112,7 @@ def term_highlight(text, searched_term="", autoescape=None):
     else:
         esc = lambda x: x
     pattern = re.compile('(%s)' % esc(searched_term), re.IGNORECASE)
-    (result, count) = pattern.subn(r'<mark class="snippet_hightlight">\1</mark>', esc(unicode(text)))
+    (result, count) = pattern.subn(r'<mark class="snippet_highlight">\1</mark>', esc(unicode(text)))
     return mark_safe(result)
 
 @register.filter
