@@ -531,7 +531,7 @@ class Annotation(UserContent):
     def contextualized_link(self):
         """Return the link to the contextualized annotation.
         """
-        return "%s#t=%d&id=%s" % (reverse('view-video-detail', args=[str(self.video.pk)]),
+        return "%s#t=%d&id=%s" % (reverse('view-video-detail', args=[self.video.slug or str(self.video.pk)]),
                                   self.begin,
                                   self.uuid)
 
