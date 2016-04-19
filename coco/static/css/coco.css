@@ -1181,6 +1181,9 @@ div.pagetitle {
 h1 .adminactions,
 .playertitle .adminactions {
     display: none;
+    position: absolute;
+    right: 0;
+    background-color: rgba(255, 255, 255, .5);
 }
 
 .playertitle .adminactions {
