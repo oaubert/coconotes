@@ -1083,7 +1083,8 @@ div.pagetitle {
 }
 
 .snippet_highlight {
-    background-color: #ffc;
+    color: #66ccff;
+    background-color: inherit;
 }
 
 .latest_videos {
