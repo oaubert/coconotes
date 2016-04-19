@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load admin_urls %}
 {% load coco %}
+{% load staticfiles %}
 
 {% block breadcrumb %}
 <span class="topmenu_item active"><a href="/search">{% trans "Search" %}</a></span>
@@ -26,7 +27,7 @@
   .searchcapsule {
       margin-top: 20px;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
   }
   .searchcapsule:hover {
       background-color: #dcf0ff;
@@ -34,13 +35,27 @@
 
   .searchcapsule_type {
       display: inline-block;
-      min-width: 6em;
       background-color: #6cf;
       padding: 3px;
-      color: #fff;
-      text-align: center;
-      font-weight: normal;
-      font-size: 9px;
+      width: 60px;
+      height: 14px;
+  }
+
+  .searchcapsule_annotation-Note,
+  .searchcapsule_annotation-Contribution,
+  .searchcapsule_annotation-Remarque {
+      background: url({% static "img/icon_note.svg" %}) center no-repeat;
+  }
+  .searchcapsule_annotation-Slide {
+      background: url({% static "img/icon_slide.svg" %}) center no-repeat;
+  }
+  .searchcapsule_annotation-Video,
+  .searchcapsule_annotation-Vidéo {
+      background: url({% static "img/icon_video.svg" %}) center no-repeat;
+  }
+  .searchcapsule_annotation-Channel,
+  .searchcapsule_annotation-Chaîne {
+      background: url({% static "img/icon_channel.svg" %}) center no-repeat;
   }
 
   .searchcapsule h5 {
@@ -53,43 +68,72 @@
       text-decoration: none;
   }
 
-  .searchcapsule img {
-      height: 120px;
-      width: 120px;
-      object-fit: cover;
-  }
-
   .searchcapsule_title {
+      margin: 8px;
       display: flex;
       flex-direction: row;
   }
   .searchcapsule_content {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
+      flex-grow: 1;
   }
   .searchcapsule_thumbnail {
-      width: 120px;
+      width: 180px;
+      margin-right: 16px;
+      position: relative;
+  }
+  .searchcapsule_thumbnail-Video:after,
+  .searchcapsule_thumbnail-Vidéo:after {
+      display: inline-block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: "";
+      width: 180px;
+      height: 100px;
+      background: url({% static "img/icon_video_overlay.svg" %}) center no-repeat;
   }
   .searchcapsule_thumbnail img {
-      width: 120px;
+      object-fit: cover;
+      width: 180px;
+      height: 100px;
       padding: 4px;
   }
 
   .searchcapsule_video_title {
+      font-family: Roboto;
+      font-size: 14px;
+      text-transform: uppercase;
+
       flex-grow: 1;
       text-decoration: none;
       color: #000;
   }
   .searchcapsule_video_channel {
+      flex-grow: 0;
       text-decoration: none;
-      font-family: Roboto-italic;
-      font-size: 14px;
-      color: #000;
+      font-family: Merriweather;
+      font-style: italic;
+      font-size: 10px;
+      color: #706b6b;
   }
+  .searchcapsule_video_description {
+      font-family: Merriweather;
+      font-style: italic;
+      font-size: 14px;
+      margin-left: 8px;
+  }
+
   .searchcapsule_video_snippet {
-      font-family: Roboto-italic;
+      display: flex;
+      flex-direction: row;
+
+      font-family: Merriweather;
+      font-style: italic;
       font-size: 14px;
       color: #000;
+      margin: 8px;
   }
   .searchcapsule_annotations ul {
       list-style: none;
@@ -107,7 +151,9 @@
       font-family: Roboto;
   }
   .searchcapsule_annotations li {
-      margin-top: 2px;
+      margin: 8px;
+      display: flex;
+      flex-direction: row;
   }
   .searchcapsule_annotations li:hover {
       background-color: #fff;
@@ -137,7 +183,7 @@
 
   .searchitem_content {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       position: relative;
   }
 
@@ -154,39 +200,74 @@
 {% block content %}
 
 <section class="search_results">
-  {% if elements %}
+  {% if elements or annotated_videos %}
   <h2>{% trans "Results" %} : {{ summary }}</h2>
   {% endif %}
   <div class="result_list">
+
     {% for item in elements %}
     <article class="searchcapsule">
-      {% include "searchitem.html" with item=item.element snippet=item.snippet children=item.children %}
+        <div class="searchcapsule_thumbnail searchcapsule_thumbnail-{{item.element.element_type}}">
+          <a title="{{item.element.title}}" href="{{item.element.get_absolute_url}}"><img src="{{item.element.thumbnail_url}}" alt=""></a>
+        </div>
+
+        <div class="searchcapsule_content">
+
+          <div class="searchcapsule_title">
+            <a class="searchcapsule_video_title" href="{{item.element.get_absolute_url}}">{{item.element.title|term_highlight:query_string}}</a>
+            {% if item.element.channel %}
+            <a class="searchcapsule_video_channel" href="{{item.element.channel.get_absolute_url}}">{% blocktrans %}Channel:{% endblocktrans %} {{item.element.channel.title}}</a>
+            {% endif %}
+          </div>
+          {% if not item.snippet %}
+          <div class="searchcapsule_video_description">{{ item.element.description|term_highlight:query_string }}</div>
+          {% else %}
+          <div class="searchcapsule_video_snippet">
+            <span class="searchcapsule_type searchcapsule_annotation-{{item.element.element_type}}"></span>
+            <span>{{ item.snippet|term_highlight:query_string }}</span>
+          </div>
+          {% endif %}
+
+        </div>
     </article>
     {% endfor %}
+
     {% for v in annotated_videos %}
     <article class="searchcapsule">
-      <div class="searchcapsule_title">
-        <div class="searchcapsule_type">{{v.element.element_type}}</div>
-        <a class="searchcapsule_video_title" href="{{v.element.get_absolute_url}}"><h5>{{v.element.title|term_highlight:query_string}}</h5></a>
-        <a class="searchcapsule_video_channel" href="{{v.element.channel.get_absolute_url}}">{{v.element.channel.title}}</a>
-      </div>
-      <div class="searchcapsule_content">
-        <div class="searchcapsule_thumbnail">
-          <img src="{{v.element.thumbnail_url}}" alt="">
+
+        <div class="searchcapsule_thumbnail searchcapsule_thumbnail-Video">
+          <a title="{{v.element.title}}" href="{{v.element.get_absolute_url}}"><img src="{{v.element.thumbnail_url}}" alt=""></a>
         </div>
-        <div class="searchcapsule_annotations">
-          <div class="searchcapsule_video_snippet">{{ v.snippet|term_highlight:query_string }}</div>
-          <ul>
-            {% for a in v.children %}
-            <li>
-              <span class="searchcapsule_type">{{a.element.element_type}}</span>
-              <a href="{{a.element.contextualized_link}}" class="searchcapsule_annotation_title">{{ a.snippet|term_highlight:query_string }}</a>
-              <time class="searchcapsule_annotation_timecode">{{a.element.begin|format_timecode}}</time>
-            </li>
-            {% endfor %}
-          </ul>
+
+        <div class="searchcapsule_content">
+
+          <div class="searchcapsule_title">
+            <a class="searchcapsule_video_title" href="{{v.element.get_absolute_url}}">{{v.element.title|term_highlight:query_string}}</a>
+            <a class="searchcapsule_video_channel" href="{{v.element.channel.get_absolute_url}}">{% blocktrans %}Channel:{% endblocktrans %} {{v.element.channel.title}}</a>
+          </div>
+
+          <div class="searchcapsule_annotations">
+            {% if not v.snippet %}
+            <div class="searchcapsule_video_description">{{ v.element.description|term_highlight:query_string }}</div>
+            {% else %}
+            <div class="searchcapsule_video_snippet">
+              <span class="searchcapsule_type searchcapsule_annotation-Video"></span>
+              <span>{{ v.snippet|term_highlight:query_string }}</span>
+            </div>
+            {% endif %}
+            <ul>
+              {% for a in v.children %}
+              <li class="searchcapsule_note">
+                <span class="searchcapsule_type searchcapsule_annotation-{{a.element.element_type}}"></span>
+                <span>
+                  <a href="{{a.element.contextualized_link}}" class="searchcapsule_annotation_title">{{ a.snippet|term_highlight:query_string }}</a>
+                  <time class="searchcapsule_annotation_timecode">{{a.element.begin|format_timecode}}</time>
+                </span>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
         </div>
-      </div>
     </article>
     {% endfor %}
   </div>
