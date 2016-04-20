@@ -24,6 +24,7 @@ from .templatetags.coco import format_timecode
 
 TYPE_SLIDES = 'Slides'
 TYPE_NOTES = 'Notes'
+TYPE_QUIZ = 'Quiz'
 
 # Monkeypatch support for serializing uuids to json. This allows it to
 # be enabled for external libs such as ajaxselect

@@ -19,7 +19,7 @@ from rest_framework import permissions, viewsets
 
 
 from .models import Channel, Video, Newsitem, Chapter, Activity, Annotation, Comment, AnnotationType, Resource
-from .models import VISIBILITY_PUBLIC, VISIBILITY_PRIVATE
+from .models import VISIBILITY_PUBLIC, VISIBILITY_PRIVATE, TYPE_QUIZ
 from .serializers import ChannelSerializer, ChapterSerializer, ActivitySerializer, VideoSerializer
 from .serializers import AnnotationSerializer, CommentSerializer, ResourceSerializer, NewsitemSerializer, AnnotationTypeSerializer
 from .utils import generic_search, update_object_history
@@ -328,6 +328,10 @@ def search(request, **kw):
                          for el in generic_search(request, model, fields, 'q')
                          if el.can_access(request.user) ]
 
+    # Filter out quiz elements
+    found[Annotation] = [ el
+                          for el in found[Annotation]
+                          if el.annotationtype.title != TYPE_QUIZ ]
     found[Annotation].sort(key=lambda a: a.begin)
 
     # Videos corresponding to matching annotations
@@ -343,7 +347,7 @@ def search(request, **kw):
     counter = Counter(el.element_type for el in found[Annotation])
     counts = [(value, name) for (name, value) in counter.iteritems()]
     # Add count number for other elements
-    counts += [ (len(found[model]), model.__name__) for model in (Comment, Channel, Video) ]
+    counts = [ (len(found[model]), model.__name__) for model in (Comment, Channel, Video) ] + counts
 
     # Build element list (list of [ { element: el, children: [ {}...] } ])
     query = request.GET.get("q", "").strip().lower()
