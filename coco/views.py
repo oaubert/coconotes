@@ -362,8 +362,11 @@ def search(request, **kw):
                    'snippet': get_snippet(query, e) or e.title_or_description }
                  for e in itertools.chain(found[Channel], found[Video]) ]
 
-    summary = u", ".join(u"%d %s%s" % (count, name.rstrip('s'), pluralize(count))
-                         for (count, name) in counts if count)
+    summary = u" ".join(u'<span class="result_type result_type-%s">%d %s%s</span>' % (name.rstrip('s'),
+                                                                                      count,
+                                                                                      name.rstrip('s'),
+                                                                                      pluralize(count))
+                        for (count, name) in counts if count)
     return render_to_response('search.html', {
         'summary': summary,
         'elements': elements,

@@ -12,17 +12,23 @@
 {% block title %}{% trans "COCo project" %} - {% trans "search for" %} {{ query_string }}{% endblock %}
 {% block extra_head %}
   <style type="text/css">
+  .search_results {
+      max-width: 60em;
+      margin: auto;
+  }
   .search_results h2 {
-      font-family: Roboto-Black;
+      font-family: Roboto;
       font-size: 32px;
       text-transform: uppercase;
       color: #6cf;
+  }
+  .query_string {
+      font-size: 24px;
   }
   .search_results h2:after {
       display: block;
       content: "";
       border: 2px solid #6cf;
-      margin-left: 20px;
   }
   .searchcapsule {
       margin-top: 20px;
@@ -33,28 +39,41 @@
       background-color: #dcf0ff;
   }
 
-  .searchcapsule_type {
+  .result_summary {
+      display: flex;
+      flex-direction: row;
+      margin-top: 8px;
+  }
+
+  .result_type {
+      display: flex;
+      flex-direction: row;
+  }
+
+  .result_type:before {
+      content: "";
       display: inline-block;
       background-color: #6cf;
-      padding: 3px;
-      width: 60px;
+      padding: 4px;
+      margin-right: 6px;
+      width: 24px;
       height: 14px;
   }
 
-  .searchcapsule_annotation-Note,
-  .searchcapsule_annotation-Contribution,
-  .searchcapsule_annotation-Remarque {
+  .result_type-Note:before,
+  .result_type-Contribution:before,
+  .result_type-Remarque:before {
       background: url({% static "img/icon_note.svg" %}) center no-repeat;
   }
-  .searchcapsule_annotation-Slide {
+  .result_type-Slide:before {
       background: url({% static "img/icon_slide.svg" %}) center no-repeat;
   }
-  .searchcapsule_annotation-Video,
-  .searchcapsule_annotation-Vidéo {
+  .result_type-Video:before,
+  .result_type-Vidéo:before {
       background: url({% static "img/icon_video.svg" %}) center no-repeat;
   }
-  .searchcapsule_annotation-Channel,
-  .searchcapsule_annotation-Chaîne {
+  .result_type-Channel:before,
+  .result_type-Chaîne:before {
       background: url({% static "img/icon_channel.svg" %}) center no-repeat;
   }
 
@@ -87,6 +106,7 @@
   .searchcapsule_thumbnail-Vidéo:after {
       display: inline-block;
       position: absolute;
+      pointer-events: none;
       top: 0;
       left: 0;
       content: "";
@@ -177,8 +197,8 @@
   .result_list {
       display: flex;
       flex-direction: column;
-      max-width: 60em;
-      margin: auto;
+      width: 100%;
+      margin-top: 40px;
   }
 
   .searchitem_content {
@@ -200,9 +220,14 @@
 {% block content %}
 
 <section class="search_results">
-  {% if elements or annotated_videos %}
-  <h2>{% trans "Results" %} : {{ summary }}</h2>
-  {% endif %}
+  <div class="search_results_header">
+    {% if elements or annotated_videos %}
+    <h2>{% trans "Results" %} : <span class="query_string">«{{ query_string }}»</span></h2>
+    <div class="result_summary">{{ summary|safe }}</div>
+    {% else %}
+    <h2>{% trans "No results for " %} <span class="query_string">«{{ query_string }}»</span></h2>
+    {% endif %}
+  </div>
   <div class="result_list">
 
     {% for item in elements %}
@@ -223,8 +248,9 @@
           <div class="searchcapsule_video_description">{{ item.element.description|term_highlight:query_string }}</div>
           {% else %}
           <div class="searchcapsule_video_snippet">
-            <span class="searchcapsule_type searchcapsule_annotation-{{item.element.element_type}}"></span>
-            <span>{{ item.snippet|term_highlight:query_string }}</span>
+            <span class="result_type result_type-{{item.element.element_type}}">
+              <span>{{ item.snippet|term_highlight:query_string }}</span>
+            </span>
           </div>
           {% endif %}
 
@@ -251,17 +277,17 @@
             <div class="searchcapsule_video_description">{{ v.element.description|term_highlight:query_string }}</div>
             {% else %}
             <div class="searchcapsule_video_snippet">
-              <span class="searchcapsule_type searchcapsule_annotation-Video"></span>
-              <span>{{ v.snippet|term_highlight:query_string }}</span>
+              <a class="searchcapsule_video_title" href="{{v.element.get_absolute_url}}"><span class="result_type result_type-Video"><span>{{ v.snippet|term_highlight:query_string }}</span></span></a>
             </div>
             {% endif %}
             <ul>
               {% for a in v.children %}
               <li class="searchcapsule_note">
-                <span class="searchcapsule_type searchcapsule_annotation-{{a.element.element_type}}"></span>
-                <span>
-                  <a href="{{a.element.contextualized_link}}" class="searchcapsule_annotation_title">{{ a.snippet|term_highlight:query_string }}</a>
-                  <time class="searchcapsule_annotation_timecode">{{a.element.begin|format_timecode}}</time>
+                <span class="result_type result_type-{{a.element.element_type}}">
+                  <span>
+                    <a href="{{a.element.contextualized_link}}" class="searchcapsule_annotation_title">{{ a.snippet|term_highlight:query_string }}</a>
+                    <time class="searchcapsule_annotation_timecode">{{a.element.begin|format_timecode}}</time>
+                  </span>
                 </span>
               </li>
               {% endfor %}
