@@ -12,10 +12,12 @@ IriSP.Widgets.CocoCreateAnnotation.prototype.defaults = {
 
 IriSP.Widgets.CocoCreateAnnotation.prototype.messages = {
     en: {
-        type_description: "Enter a new note..."
+        type_description: "Enter a new note...",
+        confirm_leave_page: "Your current note will be lost. Are you sure?"
     },
     fr: {
-        type_description: "Prenez vos notes..."
+        type_description: "Prenez vos notes...",
+        confirm_leave_page: "Votre note en cours va être perdue. Êtes-vous sûr ?"
     }
 };
 
@@ -49,6 +51,14 @@ IriSP.Widgets.CocoCreateAnnotation.prototype.draw = function () {
     this.onMediaEvent("pause", function () {
         // Set focus on annotation zone
         textField.focus();
+    });
+
+    IriSP.jQuery(window).on('beforeunload', function () {
+        if (_this.$.find(".Ldt-CocoCreateAnnotation-Text").val().trim()) {
+            return _this.l10n.confirm_leave_page;
+        } else {
+            return;
+        }
     });
 
 };

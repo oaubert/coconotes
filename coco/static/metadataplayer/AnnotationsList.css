@@ -240,8 +240,9 @@ li.Ldt-AnnotationsList-Tag-Li:hover {
     display: none;
 }
 
-.Ldt-AnnotationsList .editableInput {
-    width: 80%;
+.editableInput {
+    width: 100%;
+    height: 100%;
 }
 
 .Ldt-AnnotationsList-ScreenMain {

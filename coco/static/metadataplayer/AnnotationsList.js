@@ -339,8 +339,8 @@ IriSP.Widgets.AnnotationsList.prototype.importAnnotations = function () {
                 title: "Annotation import",
                 autoOpen: true,
                 width: '80%',
-                minHeight: '400',
-                height: 400,
+                minHeight: '200',
+                height: 200,
                 buttons: [ { text: "Close", click: function () { $(this).dialog("close"); } },
                            // { text: "Load", click: function () {
                            //     // TODO
@@ -639,16 +639,16 @@ IriSP.Widgets.AnnotationsList.prototype.refresh = function (_forceRedraw) {
             var _html = Mustache.to_html(_this.annotationTemplate, _data),
                 _el = IriSP.jQuery(_html),
                 _onselect = function () {
-                    _this.$.find('.Ldt-AnnotationsList-li').removeClass("selected");
+                    _this.$.find('.Ldt-AnnotationsList-li').filter(function (e) { return e != _el; }).removeClass("selected");
                     _el.addClass("selected");
                 },
                 _onunselect = function () {
                     _this.$.find('.Ldt-AnnotationsList-li').removeClass("selected");
                 };
-            _el.mouseover(function () {
+            _el.mouseenter(function () {
                     _annotation.trigger("select");
                 })
-                .mouseout(function () {
+                .mouseleave(function () {
                     _annotation.trigger("unselect");
                 })
                 .click(function() {
@@ -691,28 +691,12 @@ IriSP.Widgets.AnnotationsList.prototype.refresh = function (_forceRedraw) {
             var edit_element = function (_this, insertion_point) {
                 var feedback_wrong = "#FF9999";
                 var feedback_ok = "#99FF99";
-
-                // insertion_point can be used to specify where to
-                // insert the input field.  Firefox is buggy wrt input
-                // fields inside <a> or <h?> tags, it does not
-                // propagate mouse clicks. If _this is a <a> then we
-                // have to specify the ancestor before which we can
-                // insert the input widget.
-                if (insertion_point === undefined) {
-                    insertion_point = _this;
-                }
-                // Insert input element
                 var input_element = $(_this.dataset.editable_type === 'multiline' ? "<textarea>" : "<input>")
-                        .addClass("editableInput")
-                        .insertBefore($(insertion_point));
-                input_element[0].value = _this.dataset.editable_value;
-                $(input_element).show().focus();
-                $(_this).addClass("editing");
+                    .addClass("editableInput");
 
                 function feedback(color) {
                     // Give some feedback
                     $(_this).removeClass("editing");
-                    input_element.remove();
                     var previous_color = $(_this).css("background-color");
                     $(_this).stop().css("background-color", color)
                         .animate({ backgroundColor: previous_color}, 1000);
@@ -769,21 +753,53 @@ IriSP.Widgets.AnnotationsList.prototype.refresh = function (_forceRedraw) {
                         // FIXME: use user name, when available
                         an.contributor = widget.player.config.username || "COCo User";
                         widget.player.addLocalAnnotation(an);
+                        save_local_annotations();
                         widget.player.trigger("Annotation.update", an);
                         feedback(feedback_ok);
                     }
-                }
-                $(input_element).bind('keydown', function (e) {
-                    if (e.which == 13) {
-                        e.preventDefault();
-                        validateChanges();
-                    } else if (e.which == 27) {
-                        e.preventDefault();
-                        cancelChanges();
-                    }
-                }).bind("blur", function (e) {
-                    validateChanges();
-                });
+                };
+
+                $(_this).addClass("editing");
+                input_element[0].value = _this.dataset.editable_value;
+                $(input_element).show().focus();
+
+                IriSP.jQuery('<div/>', {'class': 'element-form-dialog'})
+                    .append(input_element)
+                    .dialog({
+                        title: "Edit note",
+                        autoOpen: true,
+                        width: '60%',
+                        minWidth: '200',
+                        minHeight: '220',
+                        height: 220,
+                        open: function() {
+                            var dialog = this;
+                            $(dialog).keypress(function(e) {
+                                if (e.keyCode == $.ui.keyCode.ENTER || e.keyCode == 10 || e.keyCode == 13) {
+                                    e.preventDefault();
+                                    validateChanges();
+                                    $(dialog).dialog("close");
+                                } else if (e.keyCode == $.ui.keyCode.ESCAPE || e.keyCode == 27) {
+                                    e.preventDefault();
+                                    cancelChanges();
+                                    $(dialog).dialog("close");
+                                }
+                            });
+                        },
+                        buttons: [ { text: "Close",
+                                     click: function () {
+                                         cancelChanges();
+                                         $(this).dialog("close");
+                                     }
+                                   },
+                                   { text: "Save",
+                                     click: function () {
+                                         validateChanges();
+                                         $(this).dialog("close");
+                                     }
+                                   }
+                                 ]
+                    });
             };
 
             var get_local_annotation = function (ident) {
