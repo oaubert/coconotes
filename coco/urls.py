@@ -2,6 +2,7 @@ from django.conf.urls import url, include
 from django.conf import settings
 from django.views.generic import ListView, DetailView, TemplateView
 import django.views.static
+from django.views.defaults import page_not_found
 
 from rest_framework.routers import DefaultRouter
 from ajax_select import urls as ajax_select_urls
@@ -100,4 +101,5 @@ urlpatterns = [
 
     url(r'^ajax_select/', include(ajax_select_urls)),
     url(r'^adminactions/', include('adminactions.urls')),
+    url(r'^404/$', page_not_found, ),
 ]
