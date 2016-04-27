@@ -615,5 +615,5 @@ class UserSettingForm(UserSetting):
                 request.user.metadata.config = {}
             request.user.metadata.config[name] = groups
             request.user.metadata.save()
-            return HttpResponseRedirect("")
+            return HttpResponseRedirect(request.GET['next'])
         return HttpResponse(content="Invalid parameter", status=422)
