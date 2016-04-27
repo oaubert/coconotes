@@ -5,7 +5,7 @@
 
 {% block form %}
 <div>{% blocktrans %}You can specify which groups are displayed in the tab area.{% endblocktrans %}</div>
-<form action="{% url 'profile-settting-form' 'tabconfig' %}" class="tabconfig_edit_form" method="post">
+<form action="{% url 'profile-setting-form' 'tabconfig' %}" class="tabconfig_edit_form" method="post">
   {% csrf_token %}
   <ul class="tabconfig_edit_form_list">
     {% for gi in user.metadata.tabconfig %}
