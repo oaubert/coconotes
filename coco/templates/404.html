@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}COCo platform{% endblock %}
+
+{% block content %}
+<div class="pagetitle highlighted">
+  <h1>{% blocktrans %}Error: page not found{% endblocktrans %}</h1>
+</div>
+<p>{% blocktrans %}The document {{ request_path }} cannot be found.{% endblocktrans %}</p>
+{% endblock %}
