@@ -82,7 +82,7 @@ INSTALLED_APPS = [
 #    'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
     #'allauth.socialaccount.providers.openid',
-    'allauth.socialaccount.providers.twitter',
+    #'allauth.socialaccount.providers.twitter',
     #'allauth.socialaccount.providers.vimeo',
     'actstream'
 ]
