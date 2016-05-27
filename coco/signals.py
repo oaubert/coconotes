@@ -14,6 +14,9 @@ def sig_user_logged_out(sender, user, request, **kwargs):
 
 @receiver(pre_save, sender=Annotation)
 def sig_pre_save(sender, instance, raw, using, update_fields, **kwargs):
+    if raw:
+        # Using loaddata
+        return
     try:
         old = sender.objects.get(pk=instance.pk)
     except sender.DoesNotExist:
@@ -35,6 +38,9 @@ def sig_pre_save(sender, instance, raw, using, update_fields, **kwargs):
 
 @receiver(post_save, sender=Annotation)
 def sig_post_save(sender, instance, created, raw, using, update_fields, **kwargs):
+    if raw:
+        # Using loaddata
+        return
     if created:
         # This cannot be set in pre_save, since the object instance is not yet saved to the DB
         action.send(instance.contributor, verb="created", action_object=instance)
