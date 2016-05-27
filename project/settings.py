@@ -60,7 +60,6 @@ MESSAGE_TAGS = {
 INSTALLED_APPS = [
     'coco',
     'ajax_select',
-    'adminactions',
     'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -85,6 +84,7 @@ INSTALLED_APPS = [
     #'allauth.socialaccount.providers.openid',
     'allauth.socialaccount.providers.twitter',
     #'allauth.socialaccount.providers.vimeo',
+    'actstream'
 ]
 if DEBUG:
     INSTALLED_APPS.insert(-1, 'debug_toolbar')
@@ -180,7 +180,7 @@ USE_TZ = False
 URL_FIELD_NAME = 'href'
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.6/howto/static-files/
+# https://docs.djangoproject.com/en/1.8/howto/static-files/
 STATIC_URL = '/static/'
 STATIC_ROOT = APPROOT + 'static/'
 
@@ -196,6 +196,15 @@ if options.get('development'):
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100
+}
+
+ACTSTREAM_SETTINGS = {
+    'MANAGER': 'coco.managers.ActionManager',
+    # Warning: setting FETCH_RELATIONS to True will make the generic foreign key fail. Maybe an issue with using uuids?
+    'FETCH_RELATIONS': False,
+    'USE_PREFETCH': True,
+    'USE_JSONFIELD': True,
+    'GFK_FETCH_DEPTH': 1,
 }
 
 if DEBUG:

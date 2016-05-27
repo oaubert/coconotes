@@ -3,9 +3,13 @@ import datetime
 import itertools
 import json
 
+from actstream import action
+from actstream.models import actor_stream
+
 from django.conf import settings
 from django.contrib.auth.models import Group, User
 from django.contrib.humanize.templatetags.humanize import naturaltime
+from django.contrib.sites.models import Site
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, render
@@ -22,10 +26,11 @@ from .models import Channel, Video, Newsitem, Chapter, Activity, Annotation, Com
 from .models import VISIBILITY_PUBLIC, VISIBILITY_PRIVATE, TYPE_QUIZ
 from .serializers import ChannelSerializer, ChapterSerializer, ActivitySerializer, VideoSerializer
 from .serializers import AnnotationSerializer, CommentSerializer, ResourceSerializer, NewsitemSerializer, AnnotationTypeSerializer
-from .utils import generic_search, update_object_history
+from .utils import generic_search, update_object_history, log_access
 from .permissions import IsOwnerOrReadOnly
 from .forms import AnnotationEditForm
 from .templatetags.coco import parse_timecode
+from .actions import registry
 
 class ChannelViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
@@ -258,8 +263,11 @@ class VideoDetailView(DetailView):
         except AttributeError:
             # AnonymousUser does not have a metadata field
             context['groups'] = [ ]
+        if self.request.user.is_authenticated():
+            action.send(self.request.user, verb='accessed', action_object=self.object, url=self.request.path)
         return context
 
+@log_access
 def home(request, **kw):
     une_items = (list(Channel.objects.order_by('-promoted', '-modified')[:3])
                  + list(Video.objects.order_by('-promoted', '-modified')[:3]))
@@ -273,6 +281,7 @@ def home(request, **kw):
     }, context_instance=RequestContext(request))
 
 @login_required
+@log_access
 def profile(request, **kw):
     return render_to_response('profile.html', {
         'username': request.user.username,
@@ -282,6 +291,7 @@ def profile(request, **kw):
     }, context_instance=RequestContext(request))
 
 @login_required
+@log_access
 def userprofile(request, username=None):
     user = get_object_or_404(User, username=username)
     return render_to_response('userprofile.html', {
@@ -320,7 +330,10 @@ def get_snippet(query, element, fields=None):
             return snippet
     return ""
 
+@log_access
 def search(request, **kw):
+    if request.user.is_authenticated():
+        action.send(request.user, verb='searched', query=request.GET.get("q", "").strip())
     found = {}
 
     for model, fields in MODEL_MAP.iteritems():
@@ -498,6 +511,8 @@ def annotation_edit(request, pk=None, **kw):
                               current_group='')
         return JsonResponse({'annotations': [an.cinelab(context=context)]})
     elif request.method == 'DELETE':
+        # Update the contributor property, which will be used to trace deletion activity actor
+        an.contributor = request.user
         an.delete()
         update_object_history(request, an, action='deletion')
         return JsonResponse({'id': pk})
@@ -564,7 +579,50 @@ def toggle_annotation(request, pk=None, prop=None, **kw):
                               current_group='')
         return JsonResponse(an.cinelab(context=context))
 
-
+@login_required
+@require_http_methods(["GET", "POST"])
+def log_action(request, **kw):
+    if request.method == 'GET':
+        homepage = 'https://' + Site.objects.get_current().domain
+        # Dump activity log as TinCanAPI json
+        return JsonResponse({ 'stream': [
+            {'actor': { "name": a.actor.get_full_name(),
+                        "account": {
+                            "homePage": homepage,
+                            "name": a.actor.username,
+                        }
+            },
+            'verb': { "id": registry.get(a.verb, "http://comin-ocw.org/schema/1.0/%s" % a.verb),
+                      "display": {
+                          "en-US": a.verb
+                      }
+            },
+            'object': { "id": a.action_object.get_absolute_url() if a.action_object else "",
+                        "definition": {
+                            "name": a.action_object.title_or_description if a.action_object else "",
+                        },
+                        "extensions": a.data
+            },
+            'timestamp': a.timestamp.isoformat(),
+            } for a in actor_stream(request.user)]
+        })
+    elif request.method == 'POST':
+        # Get action info from POST data
+        # { action: "action_name", object: "object_id" }
+        # played -> video id
+        try:
+            info = json.loads(request.body.decode('utf-8'))
+        except:
+            return HttpResponse("Malformed data", status=400)
+        verb = info.get('action', None)
+        if verb == 'played':
+            vid = info.get('object', None)
+            try:
+                obj = Video.objects.get(pk=vid)
+                action.send(request.user, verb=verb, action_object=obj)
+            except Video.DoesNotExist:
+                action.send(request.user, verb=verb, videoid=vid)
+        return HttpResponse(status=200)
 class UserSetting(View):
     """Manipulate user settings.
     """

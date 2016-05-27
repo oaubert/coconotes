@@ -17,4 +17,6 @@ sqlparse
 python-dateutil
 django-grappelli
 django-adminactions
+django-activity-stream
+django-jsonfield
 

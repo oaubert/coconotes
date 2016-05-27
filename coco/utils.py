@@ -1,5 +1,7 @@
 import re
 
+from actstream import action
+
 from django.db.models import Q
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE, DELETION
 from django.contrib.contenttypes.models import ContentType
@@ -73,3 +75,10 @@ def update_object_history(request, obj, action='change', message=None):
         action_flag     = ACTION[action],
         change_message  = message
     )
+
+def log_access(func):
+    def wrapper(request, *args, **kwargs):
+        if request.user.is_authenticated():
+            action.send(request.user, verb='accessed', url=request.path)
+        return func(request, *args, **kwargs)
+    return wrapper

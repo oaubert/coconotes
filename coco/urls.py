@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^i18n/', include('django.conf.urls.i18n')),
 
     url(r'^credits/', TemplateView.as_view(template_name="credits.html"), name='credits'),
+    url(r'^accounts/profile/log$', views.log_action, name='profile-log'),
     url(r'^accounts/profile/(?P<name>.+)/form$', views.UserSettingForm.as_view(), name='profile-setting-form'),
     url(r'^accounts/profile/(?P<name>.+)$', views.UserSetting.as_view(), name='profile-setting'),
     url(r'^accounts/profile', views.profile, name='profile'),
@@ -100,6 +101,5 @@ urlpatterns = [
     url(r'^api/v1/', include(router.urls)),
 
     url(r'^ajax_select/', include(ajax_select_urls)),
-    url(r'^adminactions/', include('adminactions.urls')),
     url(r'^404/$', page_not_found, ),
 ]

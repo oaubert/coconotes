@@ -79,6 +79,9 @@ $(document).ready(function () {
         case 'public':
             return "/annotation/" + elementid + "/toggle/public/";
             break;
+        case 'log':
+            return "/accounts/profile/log";
+            break;
         }
         return "/annotation/" + elementid + "#broken_action_url";
     }
@@ -206,8 +209,31 @@ $(document).ready(function () {
         ])
     }; //
     _myPlayer = new IriSP.Metadataplayer(_config);
+    function find_widgets_by_type(typ) {
+        if (_myPlayer.widgets) {
+            return _myPlayer.widgets.filter(function (w) {
+                return w.type == typ; });
+        } else {
+            return [];
+        }
+    }
+
     _myPlayer.on("trace-ready", function () {
         var tracer = tracemanager.get_trace("test");
+
+        find_widgets_by_type("CocoController")[0].onMediaEvent("play", function (e) {
+            var media = this;
+            IriSP.jQuery.ajax({
+                url: action_url("log"),
+                timeout: 2000,
+                type: "POST",
+                contentType: 'application/json',
+                data: JSON.stringify({ action: "played",
+                                       object: media.id,
+                                       time: media.currentTime.milliseconds }),
+                dataType: 'json'});
+            return false;
+        });
         // Setup CSRF globally
         var csrftoken = Cookies.get('csrftoken');
         if (csrftoken !== undefined) {
@@ -335,15 +361,6 @@ $(document).ready(function () {
                     });
             });
     });
-
-    function find_widgets_by_type(typ) {
-        if (_myPlayer.widgets) {
-            return _myPlayer.widgets.filter(function (w) {
-                return w.type == typ; });
-        } else {
-            return [];
-        }
-    }
 
     var get_tab_index = function (id) {
         var l = $("#tab > ul > li a").map(function (i, tab) { if (id == tab.getAttribute('href')) { return i; } });
