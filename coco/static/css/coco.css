@@ -469,9 +469,16 @@ div.pagetitle {
     text-decoration: none;
 }
 .playertitle {
+    display: flex;
+    justify-content: flex-start;
     padding-top: 8px;
     color: #fff;
     position: relative;
+}
+.license {
+    display: inline-block;
+    height: 1em;
+    flex: 0 0;
 }
 .videotitle {
     display: inline-block;
@@ -480,25 +487,26 @@ div.pagetitle {
     font-weight: 700;
     font-size: 21px;
     text-transform: uppercase;
+    min-width: 0;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    max-width: calc(100% - 28px);
+    flex-grow: 1;
 }
 .videodetails {
     display: inline-block;
-    cursor: pointer;
-    font-family: Roboto;
-    font-weight: bold;
-    font-size: 14px;
+    background-image: url(../img/icon_info.svg);
+    background-repeat: no-repeat;
+    flex-basis: 44px;
     height: 18px;
-    width: 18px;
-    border-radius: 9px;
-    border: 1px solid #fff;
-    padding: 1px 0 0 6px;
-    vertical-align: top;
-    margin-top: 4px;
+    cursor: pointer;
+    flex-grow: 0;
 }
+.license img {
+    height: 1em;
+    vertical-align: bottom;
+}
+
 .coursetitle:before {
     content: "> ";
     color: #fff;
