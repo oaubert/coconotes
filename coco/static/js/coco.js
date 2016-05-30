@@ -32,24 +32,6 @@ $(document).ready(function () {
         return _res;
     };
 
-    $(".tabnames li").on("click", function () {
-        var tabname = Array.prototype.slice.call(this.classList).filter(function (s) { return s.indexOf("tab-") == 0; });
-        if (tabname.length) {
-            $(".tabcomponent .selected").removeClass("selected");
-            $(".tabcomponent ." + tabname[0]).addClass("selected");
-        }
-    });
-
-    var tablabels = $(".tabnames")[0];
-    function check_tablabels_overflow() {
-        if (tablabels.offsetHeight + 10 < tablabels.scrollHeight || tablabels.offsetWidth + 10 < tablabels.scrollWidth) {
-            // There is an overflow
-            $(".tabnames_overflow_indicator").addClass("overflowing");
-        } else {
-            $(".tabnames_overflow_indicator").removeClass("overflowing");
-        }
-    }
-
     function generateUuid() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
             var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
@@ -278,6 +260,25 @@ $(document).ready(function () {
 
     });
     document._myPlayer = _myPlayer;
+
+    $(".tabnames li").on("click", function () {
+        var tabname = Array.prototype.slice.call(this.classList).filter(function (s) { return s.indexOf("tab-") == 0; });
+        if (tabname.length) {
+            $(".tabcomponent .selected").removeClass("selected");
+            $(".tabcomponent ." + tabname[0]).addClass("selected");
+            find_widgets_by_type("CocoCreateAnnotation")[0].set_placeholder(this.dataset.placeholder);
+        }
+    });
+
+    var tablabels = $(".tabnames")[0];
+    function check_tablabels_overflow() {
+        if (tablabels.offsetHeight + 10 < tablabels.scrollHeight || tablabels.offsetWidth + 10 < tablabels.scrollWidth) {
+            // There is an overflow
+            $(".tabnames_overflow_indicator").addClass("overflowing");
+        } else {
+            $(".tabnames_overflow_indicator").removeClass("overflowing");
+        }
+    }
 
     _myPlayer.on("Annotation.create", function () {
         e.preventDefault();

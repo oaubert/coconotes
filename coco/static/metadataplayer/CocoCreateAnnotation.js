@@ -12,11 +12,11 @@ IriSP.Widgets.CocoCreateAnnotation.prototype.defaults = {
 
 IriSP.Widgets.CocoCreateAnnotation.prototype.messages = {
     en: {
-        type_description: "Enter a new note...",
+        type_description: "Enter a personal note...",
         confirm_leave_page: "Your current note will be lost. Are you sure?"
     },
     fr: {
-        type_description: "Prenez vos notes...",
+        type_description: "Prenez une note personnelle...",
         confirm_leave_page: "Votre note en cours va être perdue. Êtes-vous sûr ?"
     }
 };
@@ -24,7 +24,7 @@ IriSP.Widgets.CocoCreateAnnotation.prototype.messages = {
 IriSP.Widgets.CocoCreateAnnotation.prototype.template =
     '<form method="post" class="Ldt-CocoCreateAnnotation-Form">' +
     '  <input class="Ldt-CocoCreateAnnotation-Timecode" type="text" value="??:??">' +
-    '  <textarea class="Ldt-CocoCreateAnnotation-Text" autofocus placeholder="??:?? {{ l10n.type_description }}"></textarea>' +
+    '  <textarea class="Ldt-CocoCreateAnnotation-Text" autofocus placeholder="{{ l10n.type_description }}"></textarea>' +
     '</form>';
 
 IriSP.Widgets.CocoCreateAnnotation.prototype.draw = function () {
@@ -61,6 +61,10 @@ IriSP.Widgets.CocoCreateAnnotation.prototype.draw = function () {
         }
     });
 
+};
+
+IriSP.Widgets.CocoCreateAnnotation.prototype.set_placeholder = function (msg) {
+    this.$.find(".Ldt-CocoCreateAnnotation-Text").attr("placeholder", msg);
 };
 
 IriSP.Widgets.CocoCreateAnnotation.prototype.setBegin = function (t) {
