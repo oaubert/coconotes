@@ -80,6 +80,7 @@ $(document).ready(function () {
             return "/annotation/" + elementid + "/toggle/public/";
             break;
         case 'log':
+        case 'quiz_log':
             return "/accounts/profile/log";
             break;
         }
@@ -136,6 +137,15 @@ $(document).ready(function () {
                     /* Return undefined if no shared tab is displayed, -1 if the public tab is displayed, else the group id */
                     return $(".tabnames .selected[data-group-id]").data('group-id');
                 }
+            },
+            {
+                type: "Quiz",
+                container: "VideoContainer",
+                session_id: generateUuid(),
+                annotation_type: "Quiz",
+                api_method: 'POST',
+                analytics_api: action_url('quiz_log'),
+                enable_add_question: false
             },
             {
                 type: "EnrichedPlan",

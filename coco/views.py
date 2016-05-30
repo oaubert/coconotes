@@ -622,7 +622,33 @@ def log_action(request, **kw):
                 action.send(request.user, verb=verb, action_object=obj)
             except Video.DoesNotExist:
                 action.send(request.user, verb=verb, videoid=vid)
+        elif verb is None:
+            # Maybe it is analytics info from Quiz module:
+            #            data = {
+            #                "username": user,
+            #                "useruuid": user_id,
+            #                "subject": question,
+            #                "property": prop,
+            #                "value": val,
+            #                "session": _this.session_id
+            #            };
+            # with property in wrong_answer right_answer skipped_answer useful useless skipped_vote
+            prop = info.get('property', None)
+            if prop:
+                try:
+                    question = Annotation.objects.get(pk=info.get('subject', ''))
+                except:
+                    question = None
+                if prop == 'right_answer' or prop == 'wrong_answer':
+                    action.send(request.user, verb='answered', action_object=question, result={"success": (prop == "right_answer"),
+                                                                                               "value": info.get('value')})
+                elif prop == 'skipped_answer':
+                    action.send(request.user, verb='skipped', action_object=question)
+                elif prop == 'useful' or prop == 'useless':
+                    action.send(request.user, verb='rated', action_object=question, result={"score": 1 if prop == 'useful' else -1 })
         return HttpResponse(status=200)
+
+
 class UserSetting(View):
     """Manipulate user settings.
     """

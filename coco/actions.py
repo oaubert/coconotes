@@ -21,4 +21,7 @@ registry = {
     'favorited': 'http://activitystrea.ms/schema/1.0/favorite',
     'joined': 'http://activitystrea.ms/schema/1.0/join',
     'left': 'http://activitystrea.ms/schema/1.0/leave',
+    'answered': 'http://adlnet.gov/expapi/verbs/answered',
+    'skipped': 'http://id.tincanapi.com/verb/skipped',
+    'rated': 'http://id.tincanapi.com/verb/rated',
 }
