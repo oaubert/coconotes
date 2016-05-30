@@ -7,6 +7,7 @@
 {% load staticfiles %}
 
 {% block extra_head %}
+  <link rel="stylesheet" type="text/css" href="http://dc-js.github.io/dc.js/css/dc.css"/>
   <style type="text/css">
   #activity_chart {
       display: inline-block;
@@ -15,6 +16,9 @@
   #video_chart {
       display: inline-block;
       width: 20%;
+  }
+  .dc-chart g.row text {
+      fill: #000;
   }
   </style>
 {% endblock %}
@@ -147,7 +151,6 @@
 
 {% block extrajs %}
 <script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
-<link rel="stylesheet" type="text/css" href="http://dc-js.github.io/dc.js/css/dc.css"/>
 <script type="text/javascript" src="http://dc-js.github.io/dc.js/js/d3.js"></script>
 <script type="text/javascript" src="http://dc-js.github.io/dc.js/js/crossfilter.js"></script>
 <script type="text/javascript" src="http://dc-js.github.io/dc.js/js/dc.js"></script>
@@ -187,6 +190,7 @@
   video_hist
     .width($("#video_chart").width())
     .height(200)
+    .elasticX(true)
     .dimension(videoDimension)
     .group(videoGroup)
     .render();
