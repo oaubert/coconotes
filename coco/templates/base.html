@@ -26,9 +26,9 @@
           <a href="/accounts/logout/"><span class="profilemenu_item">{% blocktrans %}Log out{% endblocktrans %}</span></a>
           {% else %}
           <span class="profilemenu_item">
-            <a title="{% trans "Log in" %}" href="/accounts/login/">{% trans "Log in" %}</a>
+            <a title="{% trans "Log in" %}" href="/accounts/login/?next={{request.path}}">{% trans "Log in" %}</a>
             <span class="profilemenu_item_separator">/</span>
-            <a title="{% trans "Sign in" %}" href="/accounts/signup/">{% trans "Sign in" %}</a>
+            <a title="{% trans "Sign in" %}" href="/accounts/signup/?next={{request.path}}">{% trans "Sign in" %}</a>
           </span>
           {% endif %}
           <div class="profilemenu_help help-{{request.resolver_match.url_name}} profilemenu_item">
