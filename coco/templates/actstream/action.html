@@ -1,22 +1,38 @@
 {% load i18n %}
 {% load humanize %}
+
 {% if action.actor.get_absolute_url %}<a href="{{ action.actor.get_absolute_url }}">{{ action.actor }}</a>
-{% else %}<a class="action_actor" href="{{ action.actor_url }}">{{ action.actor }}</a>{% endif %}
-{{ action.verb }}
+{% else %}<a class="action_actor" href="{{ action.actor_url }}">{{ action.actor }}</a>
+{% endif %}
+
+<a class="action_verb">{{ action.verb }}</a>
+
 {% if action.action_object %}
-    {% if action.action_object.get_absolute_url %}<a class="action_object" href="{{ action.action_object.get_absolute_url }}">{{ action.action_object }}</a>
-    {% else %}<a class="action_object" href="{{ action.action_object_url }}">{{ action.action_object }}</a>{% endif %}
-{% else %}
+  {% if action.action_object.get_absolute_url %}<a class="action_object" href="{{ action.action_object.get_absolute_url }}">{{ action.action_object }}</a>
+  {% else %}<a class="action_object" href="{{ action.action_object_url }}">{{ action.action_object }}</a>
+  {% endif %}
+{% endif %}
+
 {% if action.data.url %}
-<a class="action_url action_data" href="{{action.data.url}}">{{action.data.url}}</a>
+  <a class="action_url action_data" href="{{action.data.url}}">{{action.data.url}}</a>
+{% elif action.data.query %}
+  <a class="action_query action_data" href="{{action.data.query}}">{{action.data.query}}</a>
+{% elif action.data.result %}
+  (
+  {% for key, value in action.data.result.items %}
+  <span class="action_result_{{key}} action_data_result">{{key}}: {{value}}</span>
+  {% endfor %}
+  )
+{% else %}
+  {% for key, value in action.data.items %}
+  <span class="action_{{key}} action_data">{{key}}: {{value}}</span>
+  {% endfor %}
 {% endif %}
-{% endif %}
-{% if action.data.query %}
-<a class="action_query action_data" href="{{action.data.query}}">{{action.data.query}}</a>
-{% endif %}
-{% if action.action_object and action.target %}to{% endif %}
+
 {% if action.target %}
-    {% if action.target.get_absolute_url %}<a class="action_target" href="{{ action.target.get_absolute_url }}">{{ action.target }}</a>
-    {% else %}<a class="action_target" href="{{ action.target_url }}">{{ action.target }}</a>{% endif %}
+  {% if action.target.get_absolute_url %}<a class="action_target" href="{{ action.target.get_absolute_url }}">{{ action.target }}</a>
+  {% else %}<a class="action_target" href="{{ action.target_url }}">{{ action.target }}</a>
+  {% endif %}
 {% endif %}
-<time datetime="{{action.timestamp}}">{{ action.timestamp|naturaltime }}</time>
+
+<time class="action_date" datetime="{{action.timestamp}}">{{ action.timestamp|naturaltime }}</time>
