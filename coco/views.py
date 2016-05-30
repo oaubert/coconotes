@@ -585,27 +585,43 @@ def log_action(request, **kw):
     if request.method == 'GET':
         homepage = 'https://' + Site.objects.get_current().domain
         # Dump activity log as TinCanAPI json
-        return JsonResponse({ 'stream': [
-            {'actor': { "name": a.actor.get_full_name(),
-                        "account": {
-                            "homePage": homepage,
-                            "name": a.actor.username,
-                        }
-            },
-            'verb': { "id": registry.get(a.verb, "http://comin-ocw.org/schema/1.0/%s" % a.verb),
-                      "display": {
-                          "en-US": a.verb
-                      }
-            },
-            'object': { "id": a.action_object.get_absolute_url() if a.action_object else "",
-                        "definition": {
-                            "name": a.action_object.title_or_description if a.action_object else "",
-                        },
-                        "extensions": a.data
-            },
-            'timestamp': a.timestamp.isoformat(),
-            } for a in actor_stream(request.user)]
-        })
+        if request.GET.get('compact'):
+            return JsonResponse({ 'stream': [
+                {'actor': a.actor.username,
+                 'verb': a.verb,
+                 'object': { "id": a.action_object.get_absolute_url() if a.action_object else "",
+                             "definition": {
+                                 "name": a.action_object.title_or_description if a.action_object else "",
+                             },
+                             "extensions": a.data
+                 },
+                 'result': a.data.get('result', {}) if a.data else {},
+                 'timestamp': a.timestamp.isoformat(),
+                } for a in actor_stream(request.user)]
+            })
+        else:
+            return JsonResponse({ 'stream': [
+                {'actor': { "name": a.actor.get_full_name(),
+                            "account": {
+                                "homePage": homepage,
+                                "name": a.actor.username,
+                            }
+                },
+                 'verb': { "id": registry.get(a.verb, "http://comin-ocw.org/schema/1.0/%s" % a.verb),
+                           "display": {
+                               "en-US": a.verb
+                           }
+                 },
+                 'object': { "id": a.action_object.get_absolute_url() if a.action_object else "",
+                             "definition": {
+                                 "name": a.action_object.title_or_description if a.action_object else "",
+                             },
+                             "extensions": a.data
+                 },
+                 'result': a.data.get('result', {}) if a.data else {},
+                 'timestamp': a.timestamp.isoformat(),
+                } for a in actor_stream(request.user)]
+            })
     elif request.method == 'POST':
         # Get action info from POST data
         # { action: "action_name", object: "object_id" }
