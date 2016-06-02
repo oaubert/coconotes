@@ -23,7 +23,7 @@ from rest_framework import permissions, viewsets
 
 
 from .models import Channel, Video, Newsitem, Chapter, Activity, Annotation, Comment, AnnotationType, Resource
-from .models import VISIBILITY_PUBLIC, VISIBILITY_PRIVATE, TYPE_QUIZ
+from .models import VISIBILITY_PUBLIC, VISIBILITY_PRIVATE, TYPE_QUIZ, TYPE_NOTES
 from .serializers import ChannelSerializer, ChapterSerializer, ActivitySerializer, VideoSerializer
 from .serializers import AnnotationSerializer, CommentSerializer, ResourceSerializer, NewsitemSerializer, AnnotationTypeSerializer
 from .utils import generic_search, update_object_history, log_access
@@ -369,6 +369,7 @@ def search(request, **kw):
     annotated_videos = [ { 'element': v,
                            'snippet': get_snippet(query, v, [ "description" ]),
                            'children': [ { 'element': a,
+                                           'creator': a.creator if a.annotationtype.title == TYPE_NOTES else "",
                                            'snippet': get_snippet(query, a) or a.title_or_description }
                                          for a in found[Annotation]
                                          if a.video == v ]
