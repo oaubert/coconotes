@@ -7,7 +7,7 @@
 
 {% block breadcrumb %}
 <span class="topmenu_item"><a href="{{ video.channel.get_absolute_url }}">{% trans "Channel" %} {{video.channel.title}}</a></span>
-<span class="topmenu_item active"><a href="#">{% trans "Video" %}</a></span>
+<span class="topmenu_item active"><a href="#">{% trans "Video" %} {{ video.title|truncatechars:10 }}</a></span>
 {% endblock %}
 {% block extra_head %}
 <link rel="stylesheet" href="{% static "libs/jquery.touchsplitter.css" %}">
