@@ -172,12 +172,17 @@ header {
 }
 
 .profilemenu_help {
+    display: inline-block;
+}
+
+.profilemenu_help_tour,
+.profilemenu_help_usage {
     display: none;
 }
 
-
-.help-view-video-detail {
-    display: inline;
+.help-view-video-detail .profilemenu_help_tour,
+.help-view-video-detail .profilemenu_help_usage {
+    display: inline-block;
 }
 
 .profilemenu_help_toggle {
@@ -188,7 +193,7 @@ header {
     opacity: 0;
 }
 .profilemenu_help_menu + ul {
-    position: relative;
+    position: absolute;
     z-index: 2;
     display: none;
     list-style: none;
@@ -202,7 +207,7 @@ header {
     flex-direction: column;
 }
 .profilemenu_help_actions li {
-    margin: 1em;
+    margin: .8em;
 }
 
 
@@ -1336,10 +1341,12 @@ h1:hover .adminactions,
   position: absolute;
   top: 19px; left: -21px;
 }
-.credits p {
-    max-width: 20em;
-    margin: auto;
+.about_text article {
     margin-top: 2em;
+}
+.about_text a {
+    text-decoration: none;
+    color: #555;
 }
 
 @media only screen and (max-width: 780px) {
