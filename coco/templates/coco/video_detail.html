@@ -46,14 +46,13 @@
     </ul>
   </div>
   <div class="titleblock">
-    <div class="breadcrumb">
-      <span class="channelcategory">{{ video.channel.category }}</span>
+    <div class="player_subtitle">
       <a href="{{video.channel.get_absolute_url}}" class="channeltitle">{{ video.channel.title }}</a>
-    </div>
-    <div class="playertitle">
       {% if video.license %}
       <div class="license"><a title="{{ video.title }} is licensed under a Creative Commons {{video.license.title}} License" rel="license" href="{{video.license.url}}"><img class="licenseicon" alt="({{video.license.slug}})" style="border-width:0" src="{{video.license.thumbnail}}" /></a></div>
       {% endif %}
+    </div>
+    <div class="playertitle">
       <div title="{{video.description}}" class="videotitle">{{ video.title }}</div>
       <div class="videodetails"></div>
       {% if user.is_staff %}<div class="adminactions"><a href="{{ video.edit_url }}" class="editelement">&#x270f;</a></div>{% endif %}
