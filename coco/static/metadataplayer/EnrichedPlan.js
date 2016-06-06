@@ -17,6 +17,7 @@ IriSP.Widgets.EnrichedPlan.prototype.messages = {
         toggle_featured: "Toggle featured state",
         other_notes: "Other Notes",
         own_notes: "Pers. notes",
+        quiz_notes: "Quiz questions",
         popup_tabconfig: "Configure tab display",
         slides: "Slides",
         search: "Search...",
@@ -29,6 +30,7 @@ IriSP.Widgets.EnrichedPlan.prototype.messages = {
         toggle_featured: "Dé/promouvoir",
         other_notes: "Notes Autres",
         own_notes: "Notes perso.",
+        quiz_notes: "Questions de quiz",
         popup_tabconfig: "Configurer les onglets",
         slides: "Diapo",
         search: "Recherchez...",
@@ -46,6 +48,7 @@ IriSP.Widgets.EnrichedPlan.prototype.defaults = {
     show_featured_notes: true,
     show_other_notes: true,
     show_own_notes: true,
+    show_quiz_notes: false,
     is_admin: false,
     flat_mode: false,
     /* Group is either a group id, or -1 for public notes */
@@ -77,6 +80,10 @@ IriSP.Widgets.EnrichedPlan.prototype.template =
     + ' <li>'
     + '  <input id="{{prefix}}own_notes_checkbox" class="Ldt-EnrichedPlan-Control-Checkbox Ldt-EnrichedPlan-Note-Own" {{#show_own_notes}}checked{{/show_own_notes}} type="checkbox">'
     + '  <label for="{{prefix}}own_notes_checkbox" class="Ldt-EnrichedPlan-Control-Label Ldt-EnrichedPlan-Note-Own">{{ l10n.own_notes }}</label>'
+    + ' </li>'
+    + ' <li>'
+    + '  <input id="{{prefix}}quiz_notes_checkbox" class="Ldt-EnrichedPlan-Control-Checkbox Ldt-EnrichedPlan-Note-Quiz" {{#show_quiz_notes}}checked{{/show_quiz_notes}} type="checkbox">'
+    + '  <label for="{{prefix}}quiz_notes_checkbox" class="Ldt-EnrichedPlan-Control-Label Ldt-EnrichedPlan-Note-Quiz">{{ l10n.quiz_notes }}</label>'
     + ' </li>'
     + '{{^flat_mode}}'
     + ' <li>'
@@ -326,6 +333,9 @@ IriSP.Widgets.EnrichedPlan.prototype.update_content = function () {
     // Returns the note category: Own, Other, Featured
     function note_category(a) {
         var category = a.meta["coco:category"] || 'other';
+        if (a.getAnnotationType().title == 'Quiz') {
+            category = "quiz";
+        };
         return capitalize(category);
     };
 
@@ -360,7 +370,9 @@ IriSP.Widgets.EnrichedPlan.prototype.update_content = function () {
                     category: "Ldt-EnrichedPlan-Note-" + cat,
                     filtered: ((cat == 'Own' && !_this.show_own_notes)
                                 || (cat == 'Other' && !_this.show_other_notes)
-                                || (cat == 'Featured' && !_this.show_featured_notes)) ? 'filtered_out' : ''
+                                || (cat == 'Featured' && !_this.show_featured_notes)
+                               || (cat == 'Quiz' && !_this.show_quiz_notes)
+                              ) ? 'filtered_out' : ''
                 };
                 if (_this.bar) {
                     _this.bar.append(IriSP.jQuery(Mustache.to_html(_this.annotationBarTemplate, annData)));

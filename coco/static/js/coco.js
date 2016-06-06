@@ -180,7 +180,7 @@ $(document).ready(function () {
                 type: "EnrichedPlan",
                 container: "PublicAnnotationsContainer",
                 annotation_type: "Slides",
-                annotation_types: [ "Notes" ],
+                annotation_types: [ "Notes", "Quiz" ],
                 group: -1,
                 show_controls: true,
                 show_slides: true,
