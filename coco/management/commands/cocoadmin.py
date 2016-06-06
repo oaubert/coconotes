@@ -243,7 +243,7 @@ class Command(BaseCommand):
                                 description=description)
                 # FIXME: handle tags
                 if 'data' in a['content']:
-                    an.contenttype = a['content'].get('mimetype', 'text/plain')
+                    an.contenttype = a['content'].get('mimetype', 'application/json')
                     an.contentdata = json.dumps(a['content']['data'])
                 elif 'level' in a['content']:
                     an.contenttype = 'application/json'
