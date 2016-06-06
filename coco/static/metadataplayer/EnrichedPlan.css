@@ -151,6 +151,10 @@
 .Ldt-EnrichedPlan-Note-Link.Ldt-EnrichedPlan-Note-Other {
     color: #996633;
 }
+.Ldt-EnrichedPlan-Note-Quiz,
+.Ldt-EnrichedPlan-Note-Link.Ldt-EnrichedPlan-Note-Quiz {
+    color: #669933;
+}
 
 .Ldt-EnrichedPlan-Bar-Note.Ldt-EnrichedPlan-Note-Own {
     border-color: #6cf;
@@ -160,6 +164,10 @@
 }
 .Ldt-EnrichedPlan-Bar-Note.Ldt-EnrichedPlan-Note-Other {
     border-color: #996633;
+}
+.Ldt-EnrichedPlan-Bar-Note.Ldt-EnrichedPlan-Note-Quiz {
+    border-color: #669933;
+    border-width: 3px;
 }
 
 .Ldt-EnrichedPlan-Note-Text {
