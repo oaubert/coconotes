@@ -1,0 +1,88 @@
+{% extends  "base.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block extra_head %}
+  <style type="text/css">
+  .profile_form {
+      margin-left:auto;
+      margin-right:auto;
+      max-width: 500px;
+      background: #FFF;
+      padding: 25px 15px 25px 10px;
+      font: 12px Merriweather;
+      color: #888;
+      text-shadow: 1px 1px 1px #FFF;
+      border:1px solid #E4E4E4;
+  }
+  .profile_form label {
+      display: block;
+      margin: 0px;
+  }
+  .profile_form label>span {
+      float: left;
+      width: 20%;
+      text-align: right;
+      padding-right: 10px;
+      margin-top: 10px;
+      color: #888;
+  }
+  .profile_form input[type="text"], .profile_form input[type="email"], .profile_form textarea, .profile_form select {
+      border: 1px solid #DADADA;
+      color: #888;
+      height: 30px;
+      margin-bottom: 16px;
+      margin-right: 6px;
+      margin-top: 2px;
+      outline: 0 none;
+      padding: 3px 3px 3px 5px;
+      width: 70%;
+      font-size: 12px;
+      line-height:15px;
+      box-shadow: inset 0px 1px 4px #ECECEC;
+      -moz-box-shadow: inset 0px 1px 4px #ECECEC;
+      -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
+  }
+  .profile_form textarea{
+      padding: 5px 3px 3px 5px;
+  }
+  .profile_form select {
+      text-indent: 0.01px;
+      text-overflow: '';
+      width: 70%;
+      height: 35px;
+      line-height: 25px;
+  }
+  .profile_form textarea{
+      height: 100px;
+  }
+  .profile_form input[type=submit] {
+      font-weight: bold;
+      font-size: 18px;
+      width: 100%;
+      color: #fff;
+      border: none;
+      background-color: #000;
+      text-transform: uppercase;
+      padding: 4px;
+      margin-top: 1em;
+      margin-bottom: 3em;
+  }
+  .profile_form .button:hover {
+      background: #CF7A7A
+  }
+  </style>
+{% endblock %}
+
+
+{% block content %}
+<form class="profile_form" enctype="multipart/form-data" action="" method="post">
+  {% csrf_token %}
+  {{form|crispy}}
+  {% for f in inlines %}
+  {{f|crispy}}
+  {% endfor %}
+    <input type="submit" value="Submit" />
+</form>
+{% endblock %}

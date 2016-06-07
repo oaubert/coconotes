@@ -30,6 +30,7 @@ urlpatterns = [
 
     url(r'^about/', TemplateView.as_view(template_name="about.html"), name='about'),
     url(r'^accounts/profile/log$', views.log_action, name='profile-log'),
+    url(r'^accounts/profile/edit/?$', views.UpdateProfile.as_view(), name='profile-update'),
     url(r'^accounts/profile/(?P<name>.+)/form$', views.UserSettingForm.as_view(), name='profile-setting-form'),
     url(r'^accounts/profile/(?P<name>.+)$', views.UserSetting.as_view(), name='profile-setting'),
     url(r'^accounts/profile', views.profile, name='profile'),

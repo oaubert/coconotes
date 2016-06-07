@@ -19,4 +19,4 @@ django-grappelli
 django-adminactions
 django-activity-stream
 django-jsonfield
-
+django-extra-views
