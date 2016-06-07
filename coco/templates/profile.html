@@ -36,6 +36,7 @@
     <label for="profile-actionmenu-menu" class="profile-actionmenu-toggle"></label>
     <input type="checkbox" class="profile-actionmenu-home" id="profile-actionmenu-menu"/>
     <ul class="profile_actions">
+      <li><a href="/accounts/profile/edit/">{% blocktrans %}Edit profile{% endblocktrans %}</a></li>
       <li><a href="/accounts/password/change/">{% blocktrans %}Change password{% endblocktrans %}</a></li>
       <li><a target="_blank" href="/accounts/profile/tabconfig/form?next={{request.get_full_path|urlencode}}">{% blocktrans %}Configuration of displayed tabs{% endblocktrans %}</a></li>
       {% if user.is_staff %}

@@ -10,6 +10,7 @@ from django.conf import settings
 from django.contrib.auth.models import Group, User
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.contrib.sites.models import Site
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, render
@@ -19,10 +20,11 @@ from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, UpdateView, DeleteView, RedirectView, DetailView, ListView, View
 from django.template.defaultfilters import pluralize
 from django.contrib.staticfiles.templatetags.staticfiles import static
+
 from rest_framework import permissions, viewsets
+from extra_views import UpdateWithInlinesView, InlineFormSet
 
-
-from .models import Channel, Video, Newsitem, Chapter, Activity, Annotation, Comment, AnnotationType, Resource
+from .models import Channel, Video, Newsitem, Chapter, Activity, Annotation, Comment, AnnotationType, Resource, UserMetadata
 from .models import VISIBILITY_PUBLIC, VISIBILITY_PRIVATE, TYPE_QUIZ, TYPE_NOTES
 from .serializers import ChannelSerializer, ChapterSerializer, ActivitySerializer, VideoSerializer
 from .serializers import AnnotationSerializer, CommentSerializer, ResourceSerializer, NewsitemSerializer, AnnotationTypeSerializer
@@ -718,3 +720,22 @@ class UserSettingForm(UserSetting):
             request.user.metadata.save()
             return HttpResponseRedirect(request.GET.get('next', ''))
         return HttpResponse(content="Invalid parameter", status=422)
+
+
+class UserMetadataInline(InlineFormSet):
+    model = UserMetadata
+    fields = ['description', 'thumbnail' ]
+    can_delete = False
+
+
+class UpdateProfile(UpdateWithInlinesView):
+    model = User
+    inline_model = UserMetadata
+    fields = ['first_name', 'last_name']
+    inlines = [UserMetadataInline]
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_success_url(self):
+        return reverse('profile')
