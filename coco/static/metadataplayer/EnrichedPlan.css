@@ -83,12 +83,23 @@
     border-left: 1px solid #fff;
     position: absolute;
 }
-.Ldt-EnrichedPlan-Bar-Slide:hover,
+.Ldt-EnrichedPlan-Bar-Slide {
+    background-color: rgba(200, 200, 200, .5);
+}
+
+.Ldt-EnrichedPlan-Bar-Slide:hover {
+    background-color: #fff;
+}
+
 .Ldt-EnrichedPlan-Bar-Note:hover {
     border-width: 5px;
 }
 
 .Ldt-EnrichedPlan-FlatMode .Ldt-EnrichedPlan-SlideThumbnail {
+    display: none;
+}
+
+.Ldt-EnrichedPlan-SlideDescription {
     display: none;
 }
 
@@ -260,6 +271,7 @@
   display: inline-block;
 }
 
+.Ldt-EnrichedPlan-Slide.non_matching,
 .Ldt-EnrichedPlan-Note.non_matching {
     display: none;
 }
