@@ -194,7 +194,7 @@ $(document).ready(function () {
             { type: "Trace",
               url: "http://comin-ocw.org/trace/",
               requestmode: "GET",
-              default_subject: "comin"
+              default_subject: metadata.username || user_uuid
             },
             { type: "Mediafragment"},
             { type: "Shortcuts"}
