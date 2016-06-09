@@ -39,7 +39,7 @@ IriSP.Widgets.CocoCreateAnnotation.prototype.draw = function () {
     textField = this.$.find(".Ldt-CocoCreateAnnotation-Text");
 
     this.begin = new IriSP.Model.Time();
-    textField.on("change keyup input paste", this.functionWrapper("onTextChange"));
+    textField.on("keyup paste", this.functionWrapper("onTextChange"));
     this.$.find("form").submit(this.functionWrapper("onSubmit"));
 
     this.onMediaEvent("timeupdate", function (_time) {
@@ -92,6 +92,15 @@ IriSP.Widgets.CocoCreateAnnotation.prototype.onTextChange = function (e) {
     var _field = this.$.find(".Ldt-CocoCreateAnnotation-Text"),
         _timecodeField = this.$.find(".Ldt-CocoCreateAnnotation-Timecode"),
         _contents = _field.val();
+
+    if (!this.previousInput && e.keyCode == 32) {
+        // Let's consider it improbable to have a leading space in a note.
+        // Reset text entry
+        _contents = "";
+        _field.val("");
+        // Toggle play/pause
+        this.media.togglePlayPause();
+    };
     _field.css("border-color", !!_contents ? "#666666" : "#ff0000");
     if (!!_contents) {
         if (!this.previousInput) {
