@@ -263,6 +263,13 @@ IriSP.generateUuid = function () {
     });
 };
 
+/**
+ * Return a non-accentuated version of the given string
+ */
+IriSP.unaccent = function (s) {
+    return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+};
+
 /* js is where data is stored in a standard form, whatever the serializer */
 
 //TODO: Separate Project-specific data from Source
@@ -943,6 +950,14 @@ IriSP.Model = (function (ns) {
 
     Playable.prototype.pause = function() {
         this.trigger("setpause");
+    };
+
+    Playable.prototype.togglePlayPause = function () {
+        if (this.getPaused()) {
+            this.play();
+        } else {
+            this.pause();
+        };
     };
 
     Playable.prototype.show = function() {};
@@ -2318,7 +2333,8 @@ IriSP.libFiles = {
         processing: "processing-1.3.6.min.js",
         recordMicSwf: "record_mic.swf",
         mousetrap: "mousetrap.min.js",
-        mousetrapGlobal: "mousetrap-global-bind.js"
+        mousetrapGlobal: "mousetrap-global-bind.js",
+        markjs: "jquery.mark.min.js"
     },
     locations : {
         // use to define locations outside default_dir
@@ -2399,6 +2415,9 @@ IriSP.widgetsRequirements = {
     },
     Shortcuts: {
         requires: [ "mousetrap", "mousetrapGlobal" ]
+    },
+    EnrichedPlan: {
+        requires: [ "markjs" ]
     }
 };
 

@@ -21,7 +21,8 @@ IriSP.Widgets.EnrichedPlan.prototype.messages = {
         popup_tabconfig: "Configure tab display",
         slides: "Slides",
         search: "Search...",
-        whole_video: "Whole video"
+        whole_video: "Whole video",
+        expand_slide: "Show the slide content"
     },
     fr: {
         delete_annotation: "Supprimer la note",
@@ -34,7 +35,8 @@ IriSP.Widgets.EnrichedPlan.prototype.messages = {
         popup_tabconfig: "Configurer les onglets",
         slides: "Diapo",
         search: "Recherchez...",
-        whole_video: "Vidéo entière"
+        whole_video: "Vidéo entière",
+        expand_slide: "Montrer le contenu de la diapo"
     }
 };
 
@@ -49,6 +51,8 @@ IriSP.Widgets.EnrichedPlan.prototype.defaults = {
     show_other_notes: true,
     show_own_notes: true,
     show_quiz_notes: false,
+    // Automatically scroll so that current slide is visible
+    autoscroll: true,
     is_admin: false,
     flat_mode: false,
     /* Group is either a group id, or -1 for public notes */
@@ -108,8 +112,9 @@ IriSP.Widgets.EnrichedPlan.prototype.slideTemplate =
     + '  <div class="Ldt-EnrichedPlan-SlideItem Ldt-EnrichedPlan-SlideTimecode">{{ begin }}</div>'
     + '  <div data-timecode="{{begin_ms}}" class="Ldt-EnrichedPlan-SlideItem {{^show_slides}}filtered_out{{/show_slides}} Ldt-EnrichedPlan-SlideThumbnail Ldt-EnrichedPlan-Slide-Display">{{#thumbnail}}<img title="{{ begin }} - {{ atitle }}" src="{{ thumbnail }}">{{/thumbnail}}</div>'
     + '  <div class="Ldt-EnrichedPlan-SlideContent">'
+    + '     <div title="{{l10.expand_slide}}" class="Ldt-EnrichedPlan-SlideExpander"></div>'
     + '     <div data-timecode="{{begin_ms}}" class="Ldt-EnrichedPlan-SlideTitle Ldt-EnrichedPlan-SlideTitle{{ level }}" data-level="{{level}}">{{#is_admin}}<div class="adminactions"><a target="_blank" href="{{ admin_url }}" class="editelement">&#x270f;</a> <a data-id="{{id}}" target="_blank" class="level_decr">&nbsp;&lt;&nbsp;</a> <a data-id="{{id}}" target="_blank" class="level_incr">&nbsp;&gt;&nbsp;</a></div>{{/is_admin}}{{ atitle }}</div>'
-    + '     <div data-timecode="{{begin_ms}}" class="Ldt-EnrichedPlan-SlideDescription">{{description}}</div>'
+    + '     <div data-timecode="{{begin_ms}}" class="Ldt-EnrichedPlan-SlideDescription">{{{description}}}</div>'
     + '     <div class="Ldt-EnrichedPlan-SlideNotes">{{{ notes }}}</div>'
     + '  </div>'
     + '</div>';
@@ -160,6 +165,9 @@ IriSP.Widgets.EnrichedPlan.prototype.init_component = function () {
         _this.player.trigger("Player.tabconfig");
     });
 
+    _this.container.on("click", ".Ldt-EnrichedPlan-SlideExpander", function () {
+        IriSP.jQuery(this).parent().toggleClass("Ldt-EnrichedPlan-Expanded");
+    });
     _this.container.on("click", ".Ldt-EnrichedPlan-Control-Checkbox", function () {
         var classname = _.first(_.filter(this.classList, function (s) {
             return s != "Ldt-EnrichedPlan-Control-Checkbox";
@@ -245,40 +253,49 @@ IriSP.Widgets.EnrichedPlan.prototype.init_component = function () {
         var q = IriSP.jQuery(this).val().toLocaleLowerCase();
         if (q === "") {
             // Show all
-            _this.content.find(".Ldt-EnrichedPlan-Note").removeClass("non_matching");
-            _this.content.find(".Ldt-EnrichedPlan-Slide").removeClass("non_matching");
+            IriSP.jQuery(".Ldt-EnrichedPlan-Content").unmark().find(".non_matching").removeClass("non_matching");
             if (_this.bar) {
-                _this.bar.find(".Ldt-EnrichedPlan-Bar-Note").removeClass("non_matching");
+                _this.bar.find(".non_matching").removeClass("non_matching");
             }
         } else {
             _this.content.find(".Ldt-EnrichedPlan-Slide").each(function () {
                 var node = IriSP.jQuery(this);
-                if (node.text().toLocaleLowerCase().indexOf(q) > -1) {
-                    node.removeClass("non_matching");
-                    if (_this.bar) {
-                        _this.bar.find("[data-id=" + this.dataset.id + "]").removeClass("non_matching");
-                    }
-                    // Hide non-matching notes from the slide
-                    node.find(".Ldt-EnrichedPlan-Note").each(function () {
-                        var node = IriSP.jQuery(this);
-                        if (node.text().toLocaleLowerCase().indexOf(q) > -1) {
-                            node.removeClass("non_matching");
-                            if (_this.bar) {
-                                _this.bar.find("[data-id=" + this.dataset.id + "]").removeClass("non_matching");
-                            }
-                        } else {
-                            node.addClass("non_matching");
-                            if (_this.bar) {
-                                _this.bar.find("[data-id=" + this.dataset.id + "]").addClass("non_matching");
-                            }
+                node.unmark().mark(q, {
+                    filter: [ '.filtered_out' ],
+                    diacritics: true,
+                    noMatch: function () {
+                        node.addClass("non_matching");
+                        if (_this.bar) {
+                            _this.bar.find("[data-id=" + node[0].dataset.id + "]").addClass("non_matching");
                         }
-                    });
-                } else {
-                    node.addClass("non_matching");
-                    if (_this.bar) {
-                        _this.bar.find("[data-id=" + this.dataset.id + "]").addClass("non_matching");
+                    },
+                    each: function () {
+                        node.removeClass("non_matching");
+                        if (_this.bar) {
+                            _this.bar.find("[data-id=" + node[0].dataset.id + "]").removeClass("non_matching");
+                        }
+                        // Hide non-matching notes from the slide
+                        node.find(".Ldt-EnrichedPlan-Note").each(function () {
+                            var note = IriSP.jQuery(this);
+                            note.unmark().mark(q, {
+                                filter: [ '.filtered_out' ],
+                                diacritics: true,
+                                noMatch: function () {
+                                    note.addClass("non_matching");
+                                    if (_this.bar) {
+                                        _this.bar.find("[data-id=" + note[0].dataset.id + "]").addClass("non_matching");
+                                    }
+                                },
+                                each: function () {
+                                    note.removeClass('non_matching').removeClass('filtered_out');
+                                    if (_this.bar) {
+                                        _this.bar.find("[data-id=" + note[0].dataset.id + "]").removeClass("non_matching").removeClass('filtered_out');
+                                    }
+                                }
+                            });
+                        });
                     }
-                }
+                });
             });
         }
     });
