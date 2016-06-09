@@ -192,7 +192,7 @@ $(document).ready(function () {
                 action_url: action_url
             },
             { type: "Trace",
-              url: "http://comin-ocw.org/trace/",
+              url: "https://comin-ocw.org/trace/",
               requestmode: "GET",
               default_subject: metadata.username || user_uuid
             },
