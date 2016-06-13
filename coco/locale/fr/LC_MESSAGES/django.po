@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-30 17:41+0200\n"
-"PO-Revision-Date: 2016-05-30 17:41+0200\n"
+"POT-Creation-Date: 2016-06-13 16:11+0200\n"
+"PO-Revision-Date: 2016-06-13 16:12+0200\n"
 "Last-Translator: Olivier Aubert <olivier.aubert@univ-nantes.fr>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -126,7 +126,7 @@ msgstr "chaînes"
 #: models.py:248 templates/coco/channel.html:7
 #: templates/coco/channel_detail.html:8 templates/coco/channel_detail.html:10
 #: templates/coco/chapter_detail.html:8 templates/coco/video_detail.html:9
-#: templates/coco/video_info.html:8 templates/profile.html:132
+#: templates/coco/video_info.html:8 templates/profile.html:133
 msgid "Channel"
 msgstr "Chaîne"
 
@@ -290,6 +290,10 @@ msgstr "Erreur : page introuvable"
 msgid "The document %(request_path)s cannot be found."
 msgstr "Le document %(request_path)s est introuvable."
 
+#: templates/about.html:8 templates/base.html:40
+msgid "About"
+msgstr "À propos"
+
 #: templates/account/login.html:6 templates/account/login.html.py:11
 msgid "Sign In"
 msgstr "Connexion"
@@ -366,10 +370,6 @@ msgstr "Visite guidée"
 msgid "Usage"
 msgstr "Usage"
 
-#: templates/base.html:40 templates/credits.html:14
-msgid "Credits"
-msgstr "Crédits"
-
 #: templates/base.html:50
 msgid "Search for videos or channels"
 msgstr "Cherchez des vidéos ou des chaînes"
@@ -433,19 +433,19 @@ msgstr "Pas de nouvelles, bonne nouvelle."
 msgid "Add news item"
 msgstr "Ajouter une nouvelle"
 
-#: templates/coco/video_detail.html:41
+#: templates/coco/video_detail.html:42
 msgid "This platform is a product of the <a title=\"Projet COCo - CominOpenCourseware\" href=\"https://comin-ocw.org/\">COCo project</a>. Please see our website for overall information."
 msgstr "Cette plateforme est réalisée dans le cadre du <a title=\"Projet COCo - CominOpenCourseware\" href=\"https://comin-ocw.org/\">projet COCo</a>. Consultez notre site web pour plus de détails."
 
-#: templates/coco/video_detail.html:42
+#: templates/coco/video_detail.html:43
 msgid "Some usage information:"
 msgstr "Quelques informations d'utilisation :"
 
-#: templates/coco/video_detail.html:44
+#: templates/coco/video_detail.html:45
 msgid "There are keyboard shortcuts to control the video player: Control-Space toggles play/pause, Control-left arrow and Control-right arrow move backwards/forward in the video."
 msgstr "Le lecteur vidéo peut être contrôlé via des raccourcis clavier:  Contrôle-espace pour jouer/mettre en pause, Contrôle-flèche à gauche et Contrôle-flèche à droite pour se déplacer dans la vidéo."
 
-#: templates/coco/video_detail.html:45
+#: templates/coco/video_detail.html:46
 msgid "If you pause the video, the page URL is updated to reflect your current position (using the <a href=\"http://www.w3.org/TR/media-frags/‎\">MediaFragment</a> syntax). You can then bookmark it, copy it in an e-mail..."
 msgstr "Si vous mettez la vidéo en pause, l'URL de la page sera mise à jour pour correspondre à votre position actuelle (en utilisant la syntaxe <a href=\"http://www.w3.org/TR/media-frags/‎\">MediaFragment</a>). Vous pouvez alors la copier en signet, l'échanger par mail..."
 
@@ -502,14 +502,6 @@ msgid_plural "%(count)s videos"
 msgstr[0] "%(count)s vidéo"
 msgstr[1] "%(count)s vidéos"
 
-#: templates/credits.html:18 templates/home.html:26
-msgid "The <a href=\"http://comin-ocw.org/\">COCo project</a> is funded both by a French government support granted to the <a title=\"managed by the National Research Agency in the 'Investing for the Future' program under reference ANR-JO-LABX-07-0J\" href=\"http://www.cominlabs.ueb.eu/\">COMIN Labs excellence laboratory</a>, and <a class=\"sponsor\" title=\"Région Pays de la Loire\" href=\"http://www.paysdelaloire.fr/\" target=\"_blank\">Région Pays de Loire</a>."
-msgstr "Le <a href=\"http://comin-ocw.org/\">projet COCo</a> est co-financé par un soutien du gouvernement français accordé au <a title=\"managed by the National Research Agency in the 'Investing for the Future' program under reference ANR-JO-LABX-07-0J\" href=\"http://www.cominlabs.ueb.eu/\">Labex CominLabs</a>, et la <a class=\"sponsor\" title=\"Région Pays de la Loire\" href=\"http://www.paysdelaloire.fr/\" target=\"_blank\">Région Pays de Loire</a>."
-
-#: templates/credits.html:21
-msgid "The video interface is based on <a href=\"https://github.com/IRI-Research/metadataplayer\">MetaDataPlayer</a> (CeCILL-C licence) from <a href=\"http://www.iri.centrepompidou.fr/\">Institut de Recherche et d'Innovation</a>."
-msgstr "L'interface est basée sur <a href=\"https://github.com/IRI-Research/metadataplayer\">MetaDataPlayer</a> (licence CeCILL-C) réalisé par l'<a href=\"http://www.iri.centrepompidou.fr/\">Institut de Recherche et d'Innovation</a>."
-
 #: templates/group_activity.html:31 templates/group_detail.html:10
 #: templates/group_list.html:8 templates/group_list.html.py:10
 #: templates/group_list.html:13
@@ -555,7 +547,7 @@ msgstr "%(user)s a modifié l'annotation"
 msgid "%(user)s created the annotation"
 msgstr "%(user)s a créé l'annotation"
 
-#: templates/group_activity.html:88 templates/profile.html:117
+#: templates/group_activity.html:88 templates/profile.html:118
 msgid "on"
 msgstr "sur"
 
@@ -596,6 +588,10 @@ msgstr ""
 "\n"
 "Vous pourrez trouver sur la plateforme COCo des ressources de qualité, pour la plupart libres d'utilisation et de réutilisation."
 
+#: templates/home.html:26
+msgid "The <a href=\"http://comin-ocw.org/\">COCo project</a> is funded both by a French government support granted to the <a title=\"managed by the National Research Agency in the 'Investments for the Future' program under reference ANR-JO-LABX-07-0J\" href=\"http://www.cominlabs.ueb.eu/\">COMIN Labs excellence laboratory</a>, and <a class=\"sponsor\" title=\"Région Pays de la Loire\" href=\"http://www.paysdelaloire.fr/\" target=\"_blank\">Région Pays de Loire</a>."
+msgstr "Le <a href=\"http://comin-ocw.org/\">projet COCo</a> est co-financé par un soutien du gouvernement français accordé au <a title=\"géré par l'Agence Nationale de la Recherche dans le programme  'Investissements d'avenir' sous la référence ANR-JO-LABX-07-0J\" href=\"http://www.cominlabs.ueb.eu/\">Labex CominLabs</a>, et la <a class=\"sponsor\" title=\"Région Pays de la Loire\" href=\"http://www.paysdelaloire.fr/\" target=\"_blank\">Région Pays de Loire</a>."
+
 #: templates/home.html:48
 msgid "Read more"
 msgstr "Lire plus"
@@ -619,62 +615,66 @@ msgid "My profile"
 msgstr "Mon profil"
 
 #: templates/profile.html:39
+msgid "Edit profile"
+msgstr "Éditer mon profil"
+
+#: templates/profile.html:40
 msgid "Change password"
 msgstr "Changer le mot de passe"
 
-#: templates/profile.html:40
+#: templates/profile.html:41
 msgid "Configuration of displayed tabs"
 msgstr "Configuration des onglets affichés"
 
-#: templates/profile.html:42
+#: templates/profile.html:43
 msgid "Access the administration interface"
 msgstr "Accéder à l'interface d'administration"
 
-#: templates/profile.html:60
+#: templates/profile.html:61
 msgid "You are a teacher for the following chapters :"
 msgstr "Vous êtes enseignants pour les chapitres suivants :"
 
-#: templates/profile.html:71
+#: templates/profile.html:72
 msgid "My groups"
 msgstr "Mes groupes"
 
-#: templates/profile.html:74
+#: templates/profile.html:75
 #, python-format
 msgid "You are member of the unique group %(group)s."
 msgstr "Vous êtes membre du seul group %(group)s."
 
-#: templates/profile.html:76
+#: templates/profile.html:77
 #, python-format
 msgid "You are not member of any group"
 msgid_plural "You are member of %(count)s groups."
 msgstr[0] "Vous n'êtes membre d'aucun groupe."
 msgstr[1] "Vous êtes membre de %(count)s groupes."
 
-#: templates/profile.html:93
+#: templates/profile.html:94
 msgid "See all my groups"
 msgstr "Voir tous mes groupes"
 
-#: templates/profile.html:102
+#: templates/profile.html:103
 msgid "My recent activity"
 msgstr "Mon activité récente"
 
-#: templates/profile.html:112
+#: templates/profile.html:113
 msgid "you modified the note"
 msgstr "vous avez modifié la note"
 
-#: templates/profile.html:114
+#: templates/profile.html:115
 msgid "you created the note"
 msgstr "vous avez créé la note"
 
-#: templates/profile.html:121
+#: templates/profile.html:122
 msgid "You do not have much activity yet."
 msgstr "Vous n'avez pas encore d'activité."
 
-#: templates/profile.html:128
+#: templates/profile.html:129
 msgid "My notes"
 msgstr "Mes notes"
 
-#: templates/profile.html:137
+#: templates/profile.html:138
 #, python-format
 msgctxt "profile"
 msgid "%(count)s note"
@@ -682,7 +682,7 @@ msgid_plural "%(count)s notes"
 msgstr[0] "%(count)s note"
 msgstr[1] "%(count)s notes"
 
-#: templates/profile.html:138
+#: templates/profile.html:139
 #, python-format
 msgctxt "profile"
 msgid "%(count)s private"
@@ -690,7 +690,7 @@ msgid_plural "%(count)s private"
 msgstr[0] "%(count)s privée"
 msgstr[1] "%(count)s privées"
 
-#: templates/profile.html:139
+#: templates/profile.html:140
 #, python-format
 msgctxt "profile"
 msgid "%(count)s group"
@@ -698,7 +698,7 @@ msgid_plural "%(count)s group"
 msgstr[0] "%(count)s de groupe"
 msgstr[1] "%(count)s de groupe"
 
-#: templates/profile.html:140
+#: templates/profile.html:141
 #, python-format
 msgctxt "profile"
 msgid "%(count)s public"
@@ -718,17 +718,23 @@ msgstr "Projet COCo"
 msgid "search for"
 msgstr "recherche de"
 
-#: templates/search.html:196
+#: templates/search.html:203
 msgid "Results"
 msgstr "Résultats"
 
-#: templates/search.html:199
+#: templates/search.html:206
 msgid "No results for "
 msgstr "Pas de résultat pour "
 
-#: templates/search.html:215 templates/search.html.py:243
+#: templates/search.html:222 templates/search.html.py:250
 msgid "Channel:"
 msgstr "Chaîne:"
+
+#~ msgid "Credits"
+#~ msgstr "Crédits"
+
+#~ msgid "The video interface is based on <a href=\"https://github.com/IRI-Research/metadataplayer\">MetaDataPlayer</a> (CeCILL-C licence) from <a href=\"http://www.iri.centrepompidou.fr/\">Institut de Recherche et d'Innovation</a>."
+#~ msgstr "L'interface est basée sur <a href=\"https://github.com/IRI-Research/metadataplayer\">MetaDataPlayer</a> (licence CeCILL-C) réalisé par l'<a href=\"http://www.iri.centrepompidou.fr/\">Institut de Recherche et d'Innovation</a>."
 
 #~ msgid "Save"
 #~ msgstr "Sauver"
