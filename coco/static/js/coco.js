@@ -32,6 +32,15 @@ $(document).ready(function () {
         return _res;
     };
 
+    var getAbsoluteUrl = (function() {
+        var a;
+        return function(url) {
+            if (!a) { a = document.createElement('a'); }
+            a.href = url;
+            return a.href;
+        };
+    })();
+
     function generateUuid() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
             var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
@@ -192,8 +201,8 @@ $(document).ready(function () {
                 action_url: action_url
             },
             { type: "Trace",
-              url: "https://comin-ocw.org/trace/",
-              requestmode: "GET",
+              url: getAbsoluteUrl("/trace/"),
+              requestmode: "POST",
               default_subject: metadata.username || user_uuid
             },
             { type: "Mediafragment"},
