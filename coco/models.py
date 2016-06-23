@@ -536,6 +536,12 @@ class Annotation(UserContent):
                                   self.begin,
                                   self.uuid)
 
+    def get_comments(self, context=None):
+        """Return available and accessible comments.
+        """
+        return [ c for c in self.comment_set.prefetch_related('group', 'creator', 'contributor').order_by('created')
+                 if c.can_access(context.user) ]
+
     def coco_category(self, context=None):
         cat = 'other'
         if context is None:
@@ -576,6 +582,7 @@ class Annotation(UserContent):
                 "dc:modified": self.modified,
                 "dc:title": self.title,
                 "dc:description": self.description,
+                "coco:comments": [ c.serialize() for c in self.get_comments(context) ]
             },
             "content": {
                 "mimetype": self.contenttype,
@@ -640,6 +647,21 @@ class Comment(UserContent):
                               null=True)
     tags = TaggableManager(blank=True, through=TaggedComment)
 
+    def serialize(self):
+        return {
+            "id": self.uuid,
+            "creator": self.creator.username,
+            "created": self.created,
+            "contributor": self.contributor.username,
+            "modified": self.modified,
+            "annotation": self.parent_annotation.uuid,
+            "parent": self.parent_comment,
+            "group": self.group,
+            "title": self.title,
+            "description": self.description,
+            "content_type": self.contenttype,
+            "data": self.contentdata
+        }
 
 class Newsitem(Element):
     class Meta(Element.Meta):
