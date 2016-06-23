@@ -74,6 +74,10 @@ $(document).ready(function () {
         case 'quiz_log':
             return "/accounts/profile/log";
             break;
+        case 'add_comment':
+            // Add comment on an annotation
+            return "/annotation/" + elementid + "/comment/";
+            break;
         }
         return "/annotation/" + elementid + "#broken_action_url";
     }
@@ -149,6 +153,7 @@ $(document).ready(function () {
                 show_other_notes: false,
                 show_own_notes: false,
                 is_admin: metadata.is_admin,
+                is_authenticated: metadata.is_authenticated,
                 action_url: action_url,
                 bar_container: "AnnotationBarContainer"
             },
@@ -163,6 +168,7 @@ $(document).ready(function () {
                 show_other_notes: false,
                 show_own_notes: true,
                 is_admin: metadata.is_admin,
+                is_authenticated: metadata.is_authenticated,
                 action_url: action_url,
                 flat_mode: true
             }
@@ -182,6 +188,7 @@ $(document).ready(function () {
                 show_own_notes: true,
                 flat_mode: true,
                 is_admin: metadata.is_admin,
+                is_authenticated: metadata.is_authenticated,
                 action_url: action_url
             };
         }).toArray(), [
@@ -198,6 +205,7 @@ $(document).ready(function () {
                 show_own_notes: true,
                 flat_mode: true,
                 is_admin: metadata.is_admin,
+                is_authenticated: metadata.is_authenticated,
                 action_url: action_url
             },
             { type: "Trace",

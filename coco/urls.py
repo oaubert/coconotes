@@ -92,10 +92,13 @@ urlpatterns = [
 
     url(r'^annotation/add$', views.AnnotationCreateView.as_view(), name='view-annotation-create'),
     url(r'^annotation/(?P<pk>[\w\d_-]+)/$', views.AnnotationDetailView.as_view(), name='view-annotation-detail'),
-                       url(r'^annotation/(?P<pk>[\w\d_-]+)/edit/$', views.annotation_edit, name='view-annotation-update'),
+    url(r'^annotation/(?P<pk>[\w\d_-]+)/edit/$', views.annotation_edit, name='view-annotation-update'),
     url(r'^annotation/(?P<pk>[\w\d_-]+)/delete/$', views.AnnotationDeleteView.as_view(), name='view-annotation-delete'),
     url(r'^annotation/(?P<pk>[\w\d_-]+)/level/$', views.slide_level, name='view-slide-level'),
     url(r'^annotation/(?P<pk>[\w\d_-]+)/toggle/(?P<prop>public|featured)/$', views.toggle_annotation, name='view-annotation-toggle'),
+    url(r'^annotation/(?P<pk>[\w\d_-]+)/comment/$', views.annotation_comment, name='view-annotation-comment'),
+
+    url(r'^comment/(?P<pk>[\w\d_-]+)/edit/$', views.comment_edit, name='view-comment-update'),
 
     # REST API
     url(r'^api/v1/annotation_add$', views.annotation_add, name='api-annotation-add'),

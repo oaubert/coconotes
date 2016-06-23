@@ -17,6 +17,7 @@ from django.shortcuts import render_to_response, get_object_or_404, render
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.decorators.http import require_http_methods
 from django.utils.decorators import method_decorator
+from django.utils.html import strip_tags, escape
 from django.views.generic import CreateView, UpdateView, DeleteView, RedirectView, DetailView, ListView, View
 from django.template.defaultfilters import pluralize
 from django.contrib.staticfiles.templatetags.staticfiles import static
@@ -520,6 +521,24 @@ def annotation_edit(request, pk=None, **kw):
         update_object_history(request, an, action='deletion')
         return JsonResponse({'id': pk})
 
+@login_required
+@require_http_methods(["POST"])
+def annotation_comment(request, pk=None, **kw):
+    an = get_object_or_404(Annotation, pk=pk)
+    if request.method == 'POST':
+        data = json.loads(request.body.decode('utf-8'))
+        # Attributes: body, creator
+        # FIXME: use https://bleach.readthedocs.org/en/latest/index.html to sanitize input
+        desc = escape(strip_tags(data['description']))
+        c = Comment(parent_annotation=an,
+                    creator=request.user,
+                    contributor=request.user,
+                    description=desc,
+                    group=an.group,
+                    visibility=an.visibility)
+        c.save()
+        update_object_history(request, c)
+        return JsonResponse({'comment': c.serialize()})
 
 @permission_required("slide_update")
 @require_http_methods(["GET", "POST", "DELETE"])
