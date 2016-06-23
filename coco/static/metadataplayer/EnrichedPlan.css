@@ -55,7 +55,8 @@
 }
 
 .Ldt-EnrichedPlan-SlideContent {
-    display: inline-block;
+    display: inline-flex;
+    flex-direction: column;
     width: calc(100% - 220px);
     transition: width .4s;
 }
@@ -123,7 +124,7 @@
 
 .Ldt-EnrichedPlan-SlideExpander {
     display: inline-block;
-    background: url(img/right_arrow.svg) center/80% no-repeat;
+    background: url(img/slide_content_show.svg) center/100% no-repeat;
     margin: 1px;
     border: 1px solid grey;
     width: 10px;
@@ -132,7 +133,7 @@
 }
 
 .Ldt-EnrichedPlan-Expanded .Ldt-EnrichedPlan-SlideExpander {
-    background: url(img/checked.svg) center/80% no-repeat;
+    background: url(img/slide_content_hide.svg) center/100% no-repeat;
 }
 
 .Ldt-EnrichedPlan-SlideTitle {
@@ -219,7 +220,8 @@
     word-wrap: break-word;
 }
 
-.Ldt-EnrichedPlan-Note-Author {
+.Ldt-EnrichedPlan-Note-Author,
+.Ldt-EnrichedPlan-Comment-Author {
     text-transform: uppercase;
     font-size: 10px;
 }
@@ -456,4 +458,24 @@ label:hover:before {
     width: 18px;
     height: 18px;
     background: url(img/icon_group.svg);
+}
+
+.Ldt-EnrichedPlan-Comments {
+    display: none;
+}
+.Ldt-EnrichedPlan-Selected-Timecode .Ldt-EnrichedPlan-Comments {
+    display: inline-flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 10px;
+}
+
+.Ldt-EnrichedPlan-Comment-New.Ldt-EnrichedPlan-Expanded {
+    display: inline-flex;
+}
+
+.Ldt-EnrichedPlan-Comment-New-Text {
+    font-family: Merriweather;
+    font-size: 12px;
+    width: 100%;
 }

@@ -22,7 +22,9 @@ IriSP.Widgets.EnrichedPlan.prototype.messages = {
         slides: "Slides",
         search: "Search...",
         whole_video: "Whole video",
-        expand_slide: "Show the slide content"
+        expand_slide: "Show the slide content",
+        comment_count: "comment(s)",
+        new_comment: "Comment on this note"
     },
     fr: {
         delete_annotation: "Supprimer la note",
@@ -36,7 +38,9 @@ IriSP.Widgets.EnrichedPlan.prototype.messages = {
         slides: "Diapo",
         search: "Recherchez...",
         whole_video: "Vidéo entière",
-        expand_slide: "Montrer le contenu de la diapo"
+        expand_slide: "Montrer le contenu de la diapo",
+        comment_count: "commentaire(s)",
+        new_comment: "Commentez cette note"
     }
 };
 
@@ -54,6 +58,7 @@ IriSP.Widgets.EnrichedPlan.prototype.defaults = {
     // Automatically scroll so that current slide is visible
     autoscroll: true,
     is_admin: false,
+    is_authenticated: false,
     flat_mode: false,
     /* Group is either a group id, or -1 for public notes */
     group: undefined,
@@ -112,8 +117,10 @@ IriSP.Widgets.EnrichedPlan.prototype.slideTemplate =
     + '  <div class="Ldt-EnrichedPlan-SlideItem Ldt-EnrichedPlan-SlideTimecode">{{ begin }}</div>'
     + '  <div data-timecode="{{begin_ms}}" class="Ldt-EnrichedPlan-SlideItem {{^show_slides}}filtered_out{{/show_slides}} Ldt-EnrichedPlan-SlideThumbnail Ldt-EnrichedPlan-Slide-Display">{{#thumbnail}}<img title="{{ begin }} - {{ atitle }}" src="{{ thumbnail }}">{{/thumbnail}}</div>'
     + '  <div class="Ldt-EnrichedPlan-SlideContent">'
-    + '     <div title="{{l10.expand_slide}}" class="Ldt-EnrichedPlan-SlideExpander"></div>'
-    + '     <div data-timecode="{{begin_ms}}" class="Ldt-EnrichedPlan-SlideTitle Ldt-EnrichedPlan-SlideTitle{{ level }}" data-level="{{level}}">{{#is_admin}}<div class="adminactions"><a target="_blank" href="{{ admin_url }}" class="editelement">&#x270f;</a> <a data-id="{{id}}" target="_blank" class="level_decr">&nbsp;&lt;&nbsp;</a> <a data-id="{{id}}" target="_blank" class="level_incr">&nbsp;&gt;&nbsp;</a></div>{{/is_admin}}{{ atitle }}</div>'
+    + '     <div data-timecode="{{begin_ms}}" class="Ldt-EnrichedPlan-SlideTitle Ldt-EnrichedPlan-SlideTitle{{ level }}" data-level="{{level}}">'
+    + '       <div title="{{l10.expand_slide}}" class="Ldt-EnrichedPlan-SlideExpander"></div>'
+    + '       {{#is_admin}}<div class="adminactions"><a target="_blank" href="{{ admin_url }}" class="editelement">&#x270f;</a> <a data-id="{{id}}" target="_blank" class="level_decr">&nbsp;&lt;&nbsp;</a> <a data-id="{{id}}" target="_blank" class="level_incr">&nbsp;&gt;&nbsp;</a></div>{{/is_admin}}{{ atitle }}'
+    + '     </div>'
     + '     <div data-timecode="{{begin_ms}}" class="Ldt-EnrichedPlan-SlideDescription">{{{description}}}</div>'
     + '     <div class="Ldt-EnrichedPlan-SlideNotes">{{{ notes }}}</div>'
     + '  </div>'
@@ -123,7 +130,34 @@ IriSP.Widgets.EnrichedPlan.prototype.slideBarTemplate =
       '<div data-id="{{ id }}" data-timecode="{{begin_ms}}" data-end="{{end_ms}}" data-level="{{level}}" title="{{begin}} - {{atitle}}" style="left: {{position}}%; width: {{width}}%;" class="Ldt-EnrichedPlan-Bar-Slide Ldt-EnrichedPlan-Slide-Display Ldt-EnrichedPlan-Bar-Slide{{ level }} Ldt-TraceMe" trace-info="annotation-id:{{id}}, media-id:{{media_id}}">'
     + '</div>';
 
-IriSP.Widgets.EnrichedPlan.prototype.annotationTemplate = '<div title="{{ begin }} - {{ atitle }}" data-id="{{ id }}" data-timecode="{{begin_ms}}" class="Ldt-EnrichedPlan-SlideItem Ldt-EnrichedPlan-Note {{category}} {{filtered}} Ldt-EnrichedPlan-{{visibility}} {{#featured}}Ldt-EnrichedPlan-Note-Featured{{/featured}} Ldt-TraceMe" trace-info="annotation-id:{{id}}, media-id:{{media_id}}"><div class="Ldt-EnrichedPlan-NoteTimecode">{{ begin }}</div><a class="Ldt-EnrichedPlan-Note-Link" href="{{ url }}"><span class="Ldt-EnrichedPlan-Note-Text">{{{ text }}}</span></a> <span class="Ldt-EnrichedPlan-Note-Author">{{ author }}</span> {{#can_edit}}<span class="Ldt-EnrichedPlan-EditControl">{{#is_admin}}<span data-id="{{id}}" title="{{l10n.toggle_featured}}" class="Ldt-EnrichedPlan-EditControl-Featured"></span>{{/is_admin}}<span data-id="{{id}}" class="Ldt-EnrichedPlan-EditControl-Edit"></span></span>{{/can_edit}}{{#is_admin}}<div class="adminactions"> <a target="_blank" data-id="{{id}}" href="{{ admin_url }}" class="editelement">&#x270f;</a></div>{{/is_admin}}</div>';
+IriSP.Widgets.EnrichedPlan.prototype.annotationTemplate =
+      '<div title="{{ begin }} - {{ atitle }}" data-id="{{ id }}" data-timecode="{{begin_ms}}" class="Ldt-EnrichedPlan-SlideItem Ldt-EnrichedPlan-Note {{category}} {{filtered}} Ldt-EnrichedPlan-{{visibility}} {{#featured}}Ldt-EnrichedPlan-Note-Featured{{/featured}} Ldt-TraceMe" trace-info="annotation-id:{{id}}, media-id:{{media_id}}"> \
+  <div class="Ldt-EnrichedPlan-NoteTimecode">{{ begin }}</div>\
+  <a class="Ldt-EnrichedPlan-Note-Link" href="{{ url }}"><span class="Ldt-EnrichedPlan-Note-Text">{{{ text }}}</span></a> \
+  <span class="Ldt-EnrichedPlan-Note-Author">{{ author }}</span> \
+  {{#can_edit}}<span class="Ldt-EnrichedPlan-EditControl">\
+    {{#is_admin}}<span data-id="{{id}}" title="{{l10n.toggle_featured}}" class="Ldt-EnrichedPlan-EditControl-Featured"></span>{{/is_admin}}\
+    <span data-id="{{id}}" class="Ldt-EnrichedPlan-EditControl-Edit"></span>\
+  </span>{{/can_edit}}\
+  {{#is_admin}}<div class="adminactions"> \
+    <a target="_blank" data-id="{{id}}" href="{{ admin_url }}" class="editelement">&#x270f;</a>\
+  </div>{{/is_admin}}\
+  {{#comments.length}}\
+  <span class="Ldt-EnrichedPlan-Comments-Count" data-count="{{comments.length}}">{{comments.length}} {{l10n.comment_count}}</span>\
+  {{/comments.length}}\
+  <div class="Ldt-EnrichedPlan-Comments" data-id="{{id}}" data-length="{{comments.length}}">\
+    {{#comments}}\
+    <div class="Ldt-EnrichedPlan-Comment" data-id="{{id}}">\
+      <span class="Ldt-EnrichedPlan-Comment-Description">{{description}}</span>\
+      <span class="Ldt-EnrichedPlan-Comment-Date">{{modified}}</span>\
+      <span class="Ldt-EnrichedPlan-Comment-Author">{{creator}}</span>\
+    </div>\
+    {{/comments}}\
+    {{#is_authenticated}}\
+    <div class="Ldt-EnrichedPlan-Comment-New"><textarea class="Ldt-EnrichedPlan-Comment-New-Text" placeholder="{{l10n.new_comment}}" data-id="{{id}}"></textarea></div>\
+{{/is_authenticated}}\
+  </div>\
+</div>';
 
 IriSP.Widgets.EnrichedPlan.prototype.annotationBarTemplate = '<div title="{{ begin }} - {{ atitle }}" data-id="{{ id }}" data-timecode="{{begin_ms}}" style="left: {{position}}%" class="Ldt-EnrichedPlan-Bar-Note {{category}} {{filtered}} {{#featured}}Ldt-EnrichedPlan-Note-Featured{{/featured}} Ldt-TraceMe" trace-info="annotation-id:{{id}}, media-id:{{media_id}}"></div>';
 
@@ -196,6 +230,34 @@ IriSP.Widgets.EnrichedPlan.prototype.init_component = function () {
         if (confirm(Mustache.to_html(_this.l10n.confirm_delete_message, { annotation: _annotation }))) {
             _this.source.getAnnotations().removeElement(_annotation);
             _this.player.trigger("Annotation.delete", this.dataset.id);
+        }
+    });
+
+    function add_comment(annotation_id, text) {
+        console.log("Commenting ", annotation_id, text);
+        IriSP.jQuery.ajax({
+            url: _this.action_url("add_comment", annotation_id),
+            timeout: 2000,
+            type: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify({ 'description': text }),
+            dataType: 'json',
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert("An error has occurred making the request: " + errorThrown);
+            },
+            success: function(data) {
+                // Update the local value.
+                var an = _this.source.getElement(annotation_id);
+                an.meta['coco:comments'].push(data.comment);
+                _this.player.trigger("AnnotationsList.refresh");
+            }
+        });
+    };
+
+    _this.container.on("keydown", ".Ldt-EnrichedPlan-Comment-New-Text", function (event) {
+        if (event.keyCode == 13) {
+            add_comment(this.dataset.id, IriSP.jQuery(this).val());
+            return false;
         }
     });
 
@@ -404,6 +466,7 @@ IriSP.Widgets.EnrichedPlan.prototype.update_content = function () {
                 var cat = note_category(a);
                 var annData = {
                     id: a.id,
+                    l10n: _this.l10n,
                     media_id: a.media.id,
                     text: IriSP.textFieldHtml(a.getTitleOrDescription()),
                     url: document.location.href.replace(/#.*$/, '') + '#id=' + a.id + '&t=' + (a.begin / 1000.0),
@@ -413,12 +476,14 @@ IriSP.Widgets.EnrichedPlan.prototype.update_content = function () {
                     end_ms: a.end.milliseconds,
                     atitle: a.getTitleOrDescription().slice(0, 20),
                     is_admin: _this.is_admin,
+                    is_authenticated: _this.is_authenticated,
                     position: 100 * a.begin.milliseconds / _this.media.duration,
                     can_edit: a.meta['coco:can_edit'],
                     visibility: cat == 'Own' ? ((a.meta['coco:visibility'] || "").indexOf('shared-') == 0 ? "shared" : (a.meta['coco:visibility'] || "private")) : "none",
                     featured: a.meta['coco:featured'],
                     admin_url: _this.action_url('admin', a.id),
                     category: "Ldt-EnrichedPlan-Note-" + cat,
+                    comments: a.meta['coco:comments'],
                     filtered: ((cat == 'Own' && !_this.show_own_notes)
                                 || (cat == 'Other' && !_this.show_other_notes)
                                 || (cat == 'Featured' && !_this.show_featured_notes)
