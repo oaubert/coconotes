@@ -426,7 +426,7 @@ def cinelab(request, slug=None, pk=None, **kw):
         "main_media": unicode(v.uuid),
         "dc:description": ""
     }
-    context = CocoContext(user=request.user.pk,
+    context = CocoContext(user=request.user,
                           teacher_set=[u.pk for u in v.activity.chapter.teachers.all()],
                           video=v,
                           current_group='')  # FIXME: get from cookie/session info?
@@ -469,7 +469,7 @@ def annotation_add(request, **kw):
     an.visibility_deserialize(data['sharing'])
     an.save()
     update_object_history(request, an, action='addition')
-    context = CocoContext(user=request.user.pk,
+    context = CocoContext(user=request.user,
                           video=video,
                           teacher_set=[u.pk for u in video.activity.chapter.teachers.all()],
                           current_group='')  # FIXME: get from cookie/session info?
@@ -508,7 +508,7 @@ def annotation_edit(request, pk=None, **kw):
         an.save()
         update_object_history(request, an)
         # FIXME: check how to populate django changelist
-        context = CocoContext(user=request.user.pk,
+        context = CocoContext(user=request.user,
                               video=an.video,
                               teacher_set=[t.pk for t in an.video.activity.chapter.teachers.all()],
                               current_group='')
@@ -544,7 +544,7 @@ def slide_level(request, pk=None, **kw):
         an.parsed_content(data)
         an.save()
         update_object_history(request, an)
-        context = CocoContext(user=request.user.pk,
+        context = CocoContext(user=request.user,
                               video=an.video,
                               teacher_set=[u.pk for u in an.video.activity.chapter.teachers.all()],
                               current_group='')
@@ -576,7 +576,7 @@ def toggle_annotation(request, pk=None, prop=None, **kw):
                 an.visibility = VISIBILITY_PUBLIC
         an.save()
         update_object_history(request, an)
-        context = CocoContext(user=request.user.pk,
+        context = CocoContext(user=request.user,
                               video=an.video,
                               teacher_set=[u.pk for u in an.video.activity.chapter.teachers.all()],
                               current_group='')
