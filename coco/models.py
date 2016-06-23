@@ -389,7 +389,7 @@ class Video(Element):
             "url": self.url,
             "meta": {
                 "coco:slug": self.slug or "",
-                "coco:can_edit": (self.creator.pk == context.user or self.contributor.pk == context.user),
+                "coco:can_edit": (self.creator == context.user or self.contributor == context.user),
                 "dc:contributor": self.contributor,
                 "dc:creator": self.creator,
                 "dc:created": self.created,
@@ -487,7 +487,7 @@ class AnnotationType(Element):
             "dc:creator": self.creator,
             "dc:created": self.created,
             "dc:modified": self.modified,
-            "coco:can_edit": self.creator.pk == context.user,
+            "coco:can_edit": self.creator == context.user,
             "dc:title": self.title,
             "dc:description": self.description,
         }
@@ -540,7 +540,7 @@ class Annotation(UserContent):
         cat = 'other'
         if context is None:
             return cat
-        if self.creator.pk == context.user:
+        if self.creator == context.user:
             cat = 'own'
         elif self.promoted > 0:
             cat = 'featured'
@@ -567,7 +567,7 @@ class Annotation(UserContent):
                 "coco:group": self.group.id if self.group else 0,
                 "coco:category": self.coco_category(context),
                 "coco:featured": self.promoted,
-                "coco:can_edit": self.creator.pk == context.user,
+                "coco:can_edit": self.creator == context.user,
                 "coco:visibility": self.visibility_serialize,
                 "id-ref": self.annotationtype.uuid,
                 "dc:contributor": self.contributor,
