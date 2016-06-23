@@ -23,7 +23,8 @@
         lang: "{% get_current_language as language %}",
         is_admin: {% if user.is_staff %}true{% else %}false{% endif %},
         has_slides: {% if video.has_slides %}true{% else %}false{% endif %},
-        username: "{{user.username}}"
+        username: "{{user.username}}",
+        is_authenticated: {% if user.is_authenticated %}true{% else %}false{% endif %}
     };
 </script>
 <script type="text/javascript" src="{% static "metadataplayer/LdtPlayer-core.js" %}"></script>
