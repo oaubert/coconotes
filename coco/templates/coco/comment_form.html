@@ -1,0 +1,36 @@
+{% extends "formbase.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block form %}
+<form class="comment_edit_form" method="post">
+  {% csrf_token %}
+  <div class="comment_edit_form_content">
+    {{ form.title }}
+    {{ form.description }}
+  </div>
+  <div class="comment_edit_form_sharing">
+    {% blocktrans %}This comment is{% endblocktrans %} {{ form.sharing }}
+  </div>
+  <div class="comment_edit_form_validate">
+    <input type="submit" value="{% blocktrans %}Validate{% endblocktrans %}" />
+  </div>
+  {% if form.errors %}
+  <pre>{{form.errors}}</pre>
+    <ol class="form-errors">
+    {% for error in form.errors %}
+        <li><strong>{{ error|escape }}</strong></li>
+    {% endfor %}
+    </ol>
+{% endif %}
+</form>
+  <script type="text/javascript">
+    (function () {
+        var desc = document.getElementById("id_description");
+        // Set cursor to end. Unefficient version, but we deal with short contents anyway.
+        var val = desc.value;
+        desc.value = "";
+        desc.value = val;
+    })();
+</script>
+{% endblock %}

@@ -98,6 +98,7 @@ urlpatterns = [
     url(r'^annotation/(?P<pk>[\w\d_-]+)/toggle/(?P<prop>public|featured)/$', views.toggle_annotation, name='view-annotation-toggle'),
     url(r'^annotation/(?P<pk>[\w\d_-]+)/comment/$', views.annotation_comment, name='view-annotation-comment'),
 
+    url(r'^comment/(?P<pk>[\w\d_-]+)/$', views.CommentDetailView.as_view(), name='view-comment-detail'),
     url(r'^comment/(?P<pk>[\w\d_-]+)/edit/$', views.comment_edit, name='view-comment-update'),
 
     # REST API

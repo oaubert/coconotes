@@ -78,6 +78,10 @@ $(document).ready(function () {
             // Add comment on an annotation
             return "/annotation/" + elementid + "/comment/";
             break;
+        case 'edit_comment':
+            // Edit a comment
+            return "/comment/" + elementid + '/edit/';
+            break;
         }
         return "/annotation/" + elementid + "#broken_action_url";
     }
