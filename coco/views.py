@@ -31,7 +31,7 @@ from .serializers import ChannelSerializer, ChapterSerializer, ActivitySerialize
 from .serializers import AnnotationSerializer, CommentSerializer, ResourceSerializer, NewsitemSerializer, AnnotationTypeSerializer
 from .utils import generic_search, update_object_history, log_access
 from .permissions import IsOwnerOrReadOnly
-from .forms import AnnotationEditForm
+from .forms import AnnotationEditForm, CommentEditForm
 from .templatetags.coco import parse_timecode
 from .actions import registry
 
@@ -150,6 +150,12 @@ class AnnotationDetailView(RedirectView):
         annotation = get_object_or_404(Annotation, pk=kwargs['pk'])
         return annotation.contextualized_link
 
+class CommentDetailView(RedirectView):
+    permanent = False
+
+    def get_redirect_url(self, *args, **kwargs):
+        comment = get_object_or_404(Comment, pk=kwargs['pk'])
+        return comment.parent_annotation.contextualized_link
 
 class AnnotationCreateView(CreateView):
     model = Annotation
@@ -539,6 +545,40 @@ def annotation_comment(request, pk=None, **kw):
         c.save()
         update_object_history(request, c)
         return JsonResponse({'comment': c.serialize()})
+
+@login_required
+@require_http_methods(["GET", "POST", "DELETE"])
+def comment_edit(request, pk=None, **kw):
+    comment = get_object_or_404(Comment, pk=pk)
+    u = request.user
+    if comment.creator != u and comment.contributor != u:
+        return HttpResponse(status=403)
+    if request.method == 'GET':
+        f = CommentEditForm(initial={
+            'title': comment.title,
+            'description': comment.description,
+            'sharing': comment.visibility_serialize,
+            'annotation': comment.parent_annotation.uuid
+            }, user=request.user, comment=comment)
+        return render(request, 'coco/comment_form.html', {'form': f})
+    elif request.method == 'POST':
+        f = CommentEditForm(request.POST, user=request.user, comment=comment)
+        if f.is_valid():
+            comment.description = f.cleaned_data['description']
+            comment.title = f.cleaned_data['title'] or ""
+            comment.visibility_deserialize(f.cleaned_data['sharing'])
+            comment.contributor = request.user
+            comment.save()
+            update_object_history(request, comment)
+            return JsonResponse({'comment': comment.serialize()})
+        else:
+            return render(request, 'coco/comment_form.html', {'form': f})
+    elif request.method == 'DELETE':
+        # Update the contributor property, which will be used to trace deletion activity actor
+        comment.contributor = request.user
+        comment.delete()
+        update_object_history(request, comment, action='deletion')
+        return JsonResponse({'id': pk})
 
 @permission_required("slide_update")
 @require_http_methods(["GET", "POST", "DELETE"])

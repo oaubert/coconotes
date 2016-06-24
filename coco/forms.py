@@ -5,7 +5,7 @@ from .widgets import TimecodeWidget
 
 class AnnotationEditForm(forms.Form):
     begin = forms.FloatField(widget=TimecodeWidget)
-    title = forms.CharField()
+    title = forms.CharField(required=False)
     description = forms.CharField(widget=forms.Textarea)
     sharing = forms.ChoiceField()
 
@@ -31,4 +31,30 @@ class AnnotationEditForm(forms.Form):
         self.fields['sharing'].choices = self.sharing_choices(self.user)
         self.fields['description'].widget.attrs['autofocus'] = ""
         if self.annotation and not self.annotation.title:
+            self.fields['title'].widget.attrs['class'] = 'hide_element'
+
+class CommentEditForm(forms.Form):
+    title = forms.CharField(required=False)
+    description = forms.CharField(widget=forms.Textarea)
+    sharing = forms.ChoiceField()
+    annotation = forms.HiddenInput()
+
+    class Media:
+        css = {
+             'all': ('comment_edit.css',)
+         }
+
+    def sharing_choices(self, user):
+        return [('private', _("private"))] + \
+            [('shared-%s' % group.id, _("shared with %s") % group.name) for group in user.groups.all()] + \
+            [('public', _("public"))]
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        self.comment = kwargs.pop('comment')
+        super(CommentEditForm, self).__init__(*args, **kwargs)
+        # Restrict group field choices to user groups
+        self.fields['sharing'].choices = self.sharing_choices(self.user)
+        self.fields['description'].widget.attrs['autofocus'] = ""
+        if self.comment and not self.comment.title:
             self.fields['title'].widget.attrs['class'] = 'hide_element'
