@@ -9,6 +9,7 @@ from django.db import models
 from django.db.models import Q
 from django.contrib.auth.models import User, Group
 from django.core.urlresolvers import reverse
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.template.defaultfilters import pluralize
 from django.utils.translation import ugettext_lazy as _
@@ -782,6 +783,10 @@ class UserMetadata(models.Model):
     def annotations(self):
         return Annotation.objects.filter(Q(creator=self.user) | Q(contributor=self.user))
 
+    @property
+    def comments(self):
+        return Comment.objects.filter(Q(creator=self.user) | Q(contributor=self.user))
+
     def tabconfig(self):
         """Return tab configuration settings as an ordered list of (group, is_visible) tuples.
         """
@@ -801,6 +806,20 @@ class UserMetadata(models.Model):
         """Return the latest n annotations.
         """
         return self.annotations.order_by('-modified')[:count]
+
+    def latest_comments(self, count=50):
+        """Return the latest count comments
+        """
+        return self.comments.order_by('-modified')[:count]
+
+    def latest_videos(self, count=6):
+        video_content_id = ContentType.objects.get_for_model(Video)
+        all_videos = self.user.actor_actions.filter(verb='accessed', action_object_content_type_id=video_content_id)[:count]
+        unique = []
+        for item in all_videos:
+            if item.action_object not in unique:
+                unique.append(item.action_object)
+        return unique
 
     def summarized_information(self):
         """Return summarized information about annotations (grouped by Channel/Video)
