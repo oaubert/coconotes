@@ -1,5 +1,6 @@
 from django.conf.urls import url, include
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView, TemplateView
 import django.views.static
 from django.views.defaults import page_not_found
@@ -24,7 +25,7 @@ router.register(r'annotationtype', views.AnnotationTypeViewSet)
 router.register(r'news', views.NewsitemViewSet)
 
 urlpatterns = [
-    url(r'^$', views.home, name='root'),
+    url(r'^$', login_required(views.home), name='root'),
 
     url(r'^i18n/', include('django.conf.urls.i18n')),
 
@@ -58,10 +59,10 @@ urlpatterns = [
         DetailView.as_view(model=Activity, context_object_name='activity'),
         name='view-activity-detail'),
     url(r'^video/$', ListView.as_view(model=Video), name='view-video-list'),
-    url(r'^video/(?P<pk>%s)/$' % uuid_regexp, views.VideoDetailView.as_view(), name='view-video-detail'),
-    url(r'^video/(?P<slug>[\w\d_-]+)/$', views.VideoDetailView.as_view(), name='view-video-detail'),
-                       url(r'^video/(?P<pk>%s)/cinelab$' % uuid_regexp, views.cinelab, name='video-cinelab'),
-    url(r'^video/(?P<slug>[\w\d_-]+)/cinelab$', views.cinelab, name='video-cinelab-slug'),
+    url(r'^video/(?P<pk>%s)/$' % uuid_regexp, login_required(views.VideoDetailView.as_view()), name='view-video-detail'),
+    url(r'^video/(?P<slug>[\w\d_-]+)/$', login_required(views.VideoDetailView.as_view()), name='view-video-detail'),
+    url(r'^video/(?P<pk>%s)/cinelab$' % uuid_regexp, login_required(views.cinelab), name='video-cinelab'),
+    url(r'^video/(?P<slug>[\w\d_-]+)/cinelab$', login_required(views.cinelab), name='video-cinelab-slug'),
 
     url(r'^video/(?P<pk>%s)/info/$' % uuid_regexp,
         DetailView.as_view(model=Video, template_name='coco/video_info.html'),
