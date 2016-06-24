@@ -1,4 +1,4 @@
-from collections import Counter
+from collections import Counter, OrderedDict
 from datetime import datetime
 import itertools
 import json
@@ -815,10 +815,10 @@ class UserMetadata(models.Model):
     def latest_videos(self, count=6):
         video_content_id = ContentType.objects.get_for_model(Video)
         all_videos = self.user.actor_actions.filter(verb='accessed', action_object_content_type_id=video_content_id)[:count]
-        unique = []
+        unique = OrderedDict()
         for item in all_videos:
             if item.action_object not in unique:
-                unique.append(item.action_object)
+                unique[item.action_object] = item
         return unique
 
     def summarized_information(self):
