@@ -142,9 +142,10 @@
   <article class="infoblock column column3 profile_latest_videos">
     <h2>{% trans "Latest viewed videos" %}</h2>
     <ul class="latest_list">
-      {% for v in user.metadata.latest_videos|slice:":6" %}
+      {% for i in user.metadata.latest_videos.values|slice:":6" %}
       <li class="profile_recent_activity_item">
-        <small><a class="video-link" data-video="{{v.uuid}}" href="{{v.get_absolute_url}}">{{v.title_or_description}}</a></small>
+        <small><a class="video-link" data-video="{{i.action_object.uuid}}" href="{{i.action_object.get_absolute_url}}">{{i.action_object.title_or_description}}</a></small>
+        <time class="activity_date" datetime="{{i.timestamp|date:'c'}}">{{i.timestamp|naturaltime}}</time>
       </li>
       {% empty %}
       <li>{% blocktrans %}You do not have much activity yet.{% endblocktrans %}</li>
