@@ -178,7 +178,7 @@ class Element(models.Model):
 
     @property
     def title_or_description(self):
-        return self.title or self.description.splitlines()[0]
+        return self.title or (self.description or "\n").splitlines()[0]
 
     def element_information(self):
         return self.element_type
