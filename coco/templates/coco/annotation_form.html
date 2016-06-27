@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block form %}
-<form action="annotation/{{ object.uuid }}/edit" class="annotation_edit_form" method="post">
+<form action="/annotation/{{ object.uuid }}/edit" class="annotation_edit_form" method="post">
   {% csrf_token %}
   <div class="annotation_edit_form_content">
     <div class="annotation_edit_form_begin">{% blocktrans %}Video timecode{% endblocktrans %} {{ form.begin }}</div>
