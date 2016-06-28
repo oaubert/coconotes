@@ -58,7 +58,7 @@
 
 <section class="profile_top">
 
-  <article class="column column8 infoblock profile_info">
+  <article class="column column6 infoblock profile_info">
     <div>
       <img class="profile_avatar" src="{{ user.metadata.thumbnail_url }}">
     </div>
@@ -78,7 +78,7 @@
       {% endif %}
   </article>
 
-  <article class="column column4 infoblock profile_groups">
+  <article class="column column6 infoblock profile_groups">
     <h2 class="profile_groups_title">{% trans "My groups" %}</h2>
     <div class="profile_groups_info">
     {% if user.groups.count == 1 %}
@@ -178,7 +178,7 @@
 </section>
 
   <section class="profile_bottom column">
-    <article class="infoblock column column8 profile_activity">
+    <article class="infoblock column column12 profile_activity">
     <h2>{% trans "My recent activity" %}</h2>
     <div class="charts">
       <div id="activity_chart"></div>
