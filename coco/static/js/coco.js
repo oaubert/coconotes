@@ -383,7 +383,7 @@ $(document).ready(function () {
                                         success: function(data) {
                                             IriSP.jQuery(dialog).dialog("close");
                                             var a = _myPlayer.sourceManager.getElement(annotation_id);
-                                            a.source.getAnnotations().removeElement(a);
+                                            a.source.getAnnotations().removeElement(a, true);
                                             _myPlayer.trigger("AnnotationsList.refresh");
                                         }
                                     });
