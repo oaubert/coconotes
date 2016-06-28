@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-13 16:11+0200\n"
-"PO-Revision-Date: 2016-06-13 16:12+0200\n"
+"POT-Creation-Date: 2016-06-28 17:13+0200\n"
+"PO-Revision-Date: 2016-06-28 17:14+0200\n"
 "Last-Translator: Olivier Aubert <olivier.aubert@univ-nantes.fr>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Metadata"
 msgstr "Métadonnées"
 
-#: admin.py:32 admin.py:196 admin.py:226 models.py:406
+#: admin.py:32 admin.py:196 admin.py:226 models.py:407
 msgid "Content"
 msgstr "Contenu"
 
@@ -28,7 +28,7 @@ msgstr "Contenu"
 msgid "Tags"
 msgstr "Tags"
 
-#: admin.py:36 models.py:444
+#: admin.py:36 models.py:445
 msgid "User content"
 msgstr "Contenu utilisateur"
 
@@ -40,244 +40,244 @@ msgstr "Spécifique à la vidéo"
 msgid "Channel specific"
 msgstr "Spécifique à la chaîne"
 
-#: forms.py:18
+#: forms.py:18 forms.py:48
 msgid "private"
 msgstr "privée"
 
-#: forms.py:19
+#: forms.py:19 forms.py:49
 #, python-format
 msgid "shared with %s"
 msgstr "partagée avec %s"
 
-#: forms.py:20
+#: forms.py:20 forms.py:50
 msgid "public"
 msgstr "publique"
 
-#: models.py:80
+#: models.py:81
 msgid "Private"
 msgstr "Privé"
 
-#: models.py:81 templates/coco/video_detail.html:81
+#: models.py:82 templates/coco/video_detail.html:82
 #: templates/group_activity.html:32 templates/group_activity.html.py:34
 #: templates/group_detail.html:11 templates/group_detail.html.py:13
 msgid "Group"
 msgstr "Groupe"
 
-#: models.py:82
+#: models.py:83
 msgid "Public"
 msgstr "Public"
 
-#: models.py:103
+#: models.py:104
 msgid "Creation date"
 msgstr "Date de création"
 
-#: models.py:104
+#: models.py:105
 msgid "Element creation date"
 msgstr "Date de création de l'élément"
 
-#: models.py:111
+#: models.py:112
 msgid "Modification date"
 msgstr "Date de  modification"
 
-#: models.py:112
+#: models.py:113
 msgid "Element modification date"
 msgstr "Date de modification de l'élément"
 
-#: models.py:116
+#: models.py:117
 msgid "State"
 msgstr "État"
 
-#: models.py:120 models.py:198
+#: models.py:121 models.py:199
 msgid "Title"
 msgstr "Titre"
 
-#: models.py:124 models.py:732
+#: models.py:125 models.py:755
 msgid "Description"
 msgstr "Description"
 
-#: models.py:134
+#: models.py:135
 msgid "Promoted"
 msgstr "Promue"
 
-#: models.py:135
+#: models.py:136
 msgid "Promoted level - 0 by default"
 msgstr "Niveau de promotion - 0 par défaut"
 
-#: models.py:202 models.py:213 models.py:322
+#: models.py:203 models.py:214 models.py:323
 msgid "URL"
 msgstr "URL"
 
-#: models.py:227 models.py:649
+#: models.py:228 models.py:672
 msgid "Category"
 msgstr "Catégorie"
 
-#: models.py:231
+#: models.py:232
 msgid "Syllabus"
 msgstr "Syllabus"
 
-#: models.py:237
+#: models.py:238
 msgid "channel"
 msgstr "chaîne"
 
-#: models.py:238
+#: models.py:239
 msgid "channels"
 msgstr "chaînes"
 
-#: models.py:248 templates/coco/channel.html:7
+#: models.py:249 templates/coco/channel.html:7
 #: templates/coco/channel_detail.html:8 templates/coco/channel_detail.html:10
 #: templates/coco/chapter_detail.html:8 templates/coco/video_detail.html:9
-#: templates/coco/video_info.html:8 templates/profile.html:133
+#: templates/coco/video_info.html:8 templates/profile.html:161
 msgid "Channel"
 msgstr "Chaîne"
 
-#: models.py:252
+#: models.py:253
 #, python-format
 msgid "Channel - %(count)d %(name)s"
 msgstr "Chaîne - %(count)d %(name)s"
 
-#: models.py:254 models.py:291
+#: models.py:255 models.py:292
 msgid "video,videos"
 msgstr "vidéo,vidéos"
 
-#: models.py:266
+#: models.py:267
 msgid "chapter"
 msgstr "chapitre"
 
-#: models.py:267
+#: models.py:268
 msgid "chapters"
 msgstr "chapitres"
 
-#: models.py:271 templates/coco/chapter_detail.html:9
+#: models.py:272 templates/coco/chapter_detail.html:9
 #: templates/coco/chapter_detail.html:11 templates/coco/chapter_detail.html:16
 msgid "Chapter"
 msgstr "Chapitre"
 
-#: models.py:289
+#: models.py:290
 #, python-format
 msgid "Chapter - %(count)d %(name)s"
 msgstr "Chapitre - %(count)d %(name)s"
 
-#: models.py:301
+#: models.py:302
 msgid "activity"
 msgstr "activité"
 
-#: models.py:302
+#: models.py:303
 msgid "activities"
 msgstr "activités"
 
-#: models.py:332
+#: models.py:333
 msgid "Duration"
 msgstr "Durée"
 
-#: models.py:333
+#: models.py:334
 msgid "Video duration in seconds"
 msgstr "Durée de la vidéo en secondes"
 
-#: models.py:342
+#: models.py:343
 msgid "video"
 msgstr "vidéo"
 
-#: models.py:343
+#: models.py:344
 msgid "videos"
 msgstr "vidéos"
 
-#: models.py:347 templates/coco/video_detail.html:10
+#: models.py:348 templates/coco/video_detail.html:10
 msgid "Video"
 msgstr "Vidéo"
 
-#: models.py:408
+#: models.py:409
 msgid "Content-Type"
 msgstr "Type de contenu"
 
-#: models.py:412
+#: models.py:413
 msgid "Visibility"
 msgstr "Visibilité"
 
-#: models.py:414
+#: models.py:415
 msgid "Content visibility"
 msgstr "Visibilité du contenu"
 
-#: models.py:473
+#: models.py:474
 msgid "annotation type"
 msgstr "type d'annotation"
 
-#: models.py:474
+#: models.py:475
 msgid "annotation types"
 msgstr "types d'annotation"
 
-#: models.py:476
+#: models.py:477
 msgid "Can update slide content"
 msgstr "Peut mettre à jour les slides"
 
-#: models.py:477
+#: models.py:478
 msgid "Can delete slide content"
 msgstr "Peut supprimer des slides"
 
-#: models.py:478
+#: models.py:479
 msgid "Can add slide content"
 msgstr "Peut ajouter des slides"
 
-#: models.py:497
+#: models.py:498
 msgid "Begin"
 msgstr "Début"
 
-#: models.py:498
+#: models.py:499
 msgid "Annotation begin time (in seconds)"
 msgstr "Temps de début de l'annotation (en secondes)"
 
-#: models.py:500
+#: models.py:501
 msgid "End"
 msgstr "Fin"
 
-#: models.py:501
+#: models.py:502
 msgid "Annotation end time (in seconds)"
 msgstr "Temps de fin de l'annotation (en secondes)"
 
-#: models.py:512
+#: models.py:513
 msgid "annotation"
 msgstr "annotation"
 
-#: models.py:513
+#: models.py:514
 msgid "annotations"
 msgstr "annotations"
 
-#: models.py:626
+#: models.py:634
 msgid "comment"
 msgstr "commentaire"
 
-#: models.py:627
+#: models.py:635
 msgid "comments"
 msgstr "commentaires"
 
-#: models.py:646
+#: models.py:669
 msgid "news item"
 msgstr "nouvelle"
 
-#: models.py:647
+#: models.py:670
 msgid "news items"
 msgstr "nouvelles"
 
-#: models.py:654 models.py:655
+#: models.py:677 models.py:678
 msgid "Publication date"
 msgstr "Date de publication"
 
-#: models.py:658
+#: models.py:681
 msgid "Title (english)"
 msgstr "Titre (anglais)"
 
-#: models.py:662
+#: models.py:685
 msgid "Description (english)"
 msgstr "Description (anglais)"
 
-#: models.py:676 models.py:677
+#: models.py:699 models.py:700
 msgid "group metadata"
 msgstr "métadonnées du groupe"
 
-#: models.py:727 models.py:728
+#: models.py:750 models.py:751
 msgid "user metadata"
 msgstr "métadonnées utilisateur"
 
-#: models.py:739
+#: models.py:762
 msgid "Configuration"
 msgstr "Configuration"
 
@@ -290,7 +290,7 @@ msgstr "Erreur : page introuvable"
 msgid "The document %(request_path)s cannot be found."
 msgstr "Le document %(request_path)s est introuvable."
 
-#: templates/about.html:8 templates/base.html:40
+#: templates/about.html:8 templates/base.html:38
 msgid "About"
 msgstr "À propos"
 
@@ -298,22 +298,13 @@ msgstr "À propos"
 msgid "Sign In"
 msgstr "Connexion"
 
-#: templates/account/login.html:22
+#: templates/account/login.html:20
 msgid "Forgot Password?"
 msgstr "Mot de passe oublié ?"
 
-#: templates/account/login.html:24
+#: templates/account/login.html:22
 msgid "Connect"
 msgstr "Se connecter"
-
-#: templates/account/login.html:27 templates/account/signup.html:25
-msgid "or connect with"
-msgstr "ou se connecter avec"
-
-#: templates/account/login.html:45
-#, python-format
-msgid "New on  %(site_name)s? Please <a href=\"%(signup_url)s\">sign up</a> first."
-msgstr "Nouveau sur %(site_name)s? <a href=\"%(signup_url)s\">créez un compte</a> d'abord."
 
 #: templates/account/logout.html:5 templates/account/logout.html.py:9
 msgid "Sign Out"
@@ -332,6 +323,10 @@ msgstr "Oui, je me déconnecte"
 msgid "Sign Up"
 msgstr "Inscription"
 
+#: templates/account/signup.html:25
+msgid "or connect with"
+msgstr "ou se connecter avec"
+
 #: templates/account/signup.html:42
 #, python-format
 msgid "Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
@@ -342,7 +337,7 @@ msgid "You can specify which groups are displayed in the tab area."
 msgstr "Vous pouvez indiquer les groupes affichés dans les onglets."
 
 #: templates/account/tabconfig_form.html:20
-#: templates/coco/annotation_form.html:17
+#: templates/coco/annotation_form.html:17 templates/coco/comment_form.html:16
 msgid "Validate"
 msgstr "Valider"
 
@@ -354,31 +349,27 @@ msgstr "Déconnexion"
 msgid "Log in"
 msgstr "Connexion"
 
-#: templates/base.html:31
-msgid "Sign in"
-msgstr "Inscription"
-
-#: templates/base.html:35
+#: templates/base.html:33
 msgid "Help"
 msgstr "Aide"
 
-#: templates/base.html:38
+#: templates/base.html:36
 msgid "Guided tour"
 msgstr "Visite guidée"
 
-#: templates/base.html:39
+#: templates/base.html:37
 msgid "Usage"
 msgstr "Usage"
 
-#: templates/base.html:50
+#: templates/base.html:48
 msgid "Search for videos or channels"
 msgstr "Cherchez des vidéos ou des chaînes"
 
-#: templates/base.html:53
+#: templates/base.html:51
 msgid "Home"
 msgstr "Accueil"
 
-#: templates/base.html:55
+#: templates/base.html:53
 msgid "All channels"
 msgstr "Toutes les chaînes"
 
@@ -410,18 +401,22 @@ msgstr "Chapitres"
 msgid "All chapters"
 msgstr "Tous les chapitres"
 
+#: templates/coco/comment_form.html:13
+msgid "This comment is"
+msgstr "Ce commentaire est"
+
 #: templates/coco/element_list.html:6
 msgid "All elements"
 msgstr "Tous les éléments"
 
 #: templates/coco/newsitem_detail.html:7 templates/coco/newsitem_list.html:7
 #: templates/group_activity.html:34 templates/group_detail.html:13
-#: templates/group_list.html:10 templates/profile.html:26
+#: templates/group_list.html:10 templates/profile.html:36
 #: templates/userprofile.html:22
 msgid "COCo platform"
 msgstr "Plateforme COCo"
 
-#: templates/coco/newsitem_list.html:7 templates/home.html:31
+#: templates/coco/newsitem_list.html:7 templates/home.html:30
 msgid "News"
 msgstr "Nouvelles"
 
@@ -433,52 +428,52 @@ msgstr "Pas de nouvelles, bonne nouvelle."
 msgid "Add news item"
 msgstr "Ajouter une nouvelle"
 
-#: templates/coco/video_detail.html:42
+#: templates/coco/video_detail.html:43
 msgid "This platform is a product of the <a title=\"Projet COCo - CominOpenCourseware\" href=\"https://comin-ocw.org/\">COCo project</a>. Please see our website for overall information."
 msgstr "Cette plateforme est réalisée dans le cadre du <a title=\"Projet COCo - CominOpenCourseware\" href=\"https://comin-ocw.org/\">projet COCo</a>. Consultez notre site web pour plus de détails."
 
-#: templates/coco/video_detail.html:43
+#: templates/coco/video_detail.html:44
 msgid "Some usage information:"
 msgstr "Quelques informations d'utilisation :"
 
-#: templates/coco/video_detail.html:45
+#: templates/coco/video_detail.html:46
 msgid "There are keyboard shortcuts to control the video player: Control-Space toggles play/pause, Control-left arrow and Control-right arrow move backwards/forward in the video."
 msgstr "Le lecteur vidéo peut être contrôlé via des raccourcis clavier:  Contrôle-espace pour jouer/mettre en pause, Contrôle-flèche à gauche et Contrôle-flèche à droite pour se déplacer dans la vidéo."
 
-#: templates/coco/video_detail.html:46
+#: templates/coco/video_detail.html:47
 msgid "If you pause the video, the page URL is updated to reflect your current position (using the <a href=\"http://www.w3.org/TR/media-frags/‎\">MediaFragment</a> syntax). You can then bookmark it, copy it in an e-mail..."
 msgstr "Si vous mettez la vidéo en pause, l'URL de la page sera mise à jour pour correspondre à votre position actuelle (en utilisant la syntaxe <a href=\"http://www.w3.org/TR/media-frags/‎\">MediaFragment</a>). Vous pouvez alors la copier en signet, l'échanger par mail..."
 
-#: templates/coco/video_detail.html:75 templates/coco/video_detail.html:77
+#: templates/coco/video_detail.html:76 templates/coco/video_detail.html:78
 msgid "Enter a personal note"
 msgstr "Entrez une note personnelle"
 
-#: templates/coco/video_detail.html:75
+#: templates/coco/video_detail.html:76
 msgid "Plan"
 msgstr "Plan"
 
-#: templates/coco/video_detail.html:77
+#: templates/coco/video_detail.html:78
 msgid "Own notes"
 msgstr "Notes perso."
 
-#: templates/coco/video_detail.html:79
+#: templates/coco/video_detail.html:80
 msgid "Share a note with all users"
 msgstr "Partagez une note avec tous les utilisateurs"
 
-#: templates/coco/video_detail.html:79
+#: templates/coco/video_detail.html:80
 msgid "Public notes"
 msgstr "Notes publiques"
 
-#: templates/coco/video_detail.html:81
+#: templates/coco/video_detail.html:82
 #, python-format
 msgid "Share a note with group %(groupname)s"
 msgstr "Partagez une note avec le groupe %(groupname)s"
 
-#: templates/coco/video_detail.html:102
+#: templates/coco/video_detail.html:103
 msgid "Select visible tabs"
 msgstr "Sélectionner les onglets visibles"
 
-#: templates/coco/video_detail.html:105
+#: templates/coco/video_detail.html:106
 #, python-format
 msgid "Please <a href=\"/accounts/login/?next=%(currenturl)s\">log in</a> to be able to comment on the video."
 msgstr "Veuillez vous <a href=\"/accounts/login/?next=%(currenturl)s\">connecter</a> pour pouvoir commenter la vidéo."
@@ -548,6 +543,7 @@ msgid "%(user)s created the annotation"
 msgstr "%(user)s a créé l'annotation"
 
 #: templates/group_activity.html:88 templates/profile.html:118
+#: templates/profile.html.py:197
 msgid "on"
 msgstr "sur"
 
@@ -581,100 +577,101 @@ msgstr "Bienvenue"
 #: templates/home.html:20
 msgid ""
 "\n"
-"        The COCoNotes platform is a place to find high\n"
-"        quality education resources, most of them free to use/reuse.\n"
+"        This version of the COCoNotes platform is aimed at pedagogical experimentations at University of Nantes.\n"
 "        "
-msgstr ""
-"\n"
-"Vous pourrez trouver sur la plateforme COCo des ressources de qualité, pour la plupart libres d'utilisation et de réutilisation."
+msgstr "Cette version de la plateforme COCoNotes est destinée à des expérimentations à l'Université de Nantes."
 
-#: templates/home.html:26
+#: templates/home.html:25
 msgid "The <a href=\"http://comin-ocw.org/\">COCo project</a> is funded both by a French government support granted to the <a title=\"managed by the National Research Agency in the 'Investments for the Future' program under reference ANR-JO-LABX-07-0J\" href=\"http://www.cominlabs.ueb.eu/\">COMIN Labs excellence laboratory</a>, and <a class=\"sponsor\" title=\"Région Pays de la Loire\" href=\"http://www.paysdelaloire.fr/\" target=\"_blank\">Région Pays de Loire</a>."
 msgstr "Le <a href=\"http://comin-ocw.org/\">projet COCo</a> est co-financé par un soutien du gouvernement français accordé au <a title=\"géré par l'Agence Nationale de la Recherche dans le programme  'Investissements d'avenir' sous la référence ANR-JO-LABX-07-0J\" href=\"http://www.cominlabs.ueb.eu/\">Labex CominLabs</a>, et la <a class=\"sponsor\" title=\"Région Pays de la Loire\" href=\"http://www.paysdelaloire.fr/\" target=\"_blank\">Région Pays de Loire</a>."
 
-#: templates/home.html:48
+#: templates/home.html:47
 msgid "Read more"
 msgstr "Lire plus"
 
-#: templates/home.html:60
+#: templates/home.html:59
 msgid "Featured"
 msgstr "À la une"
 
 # Les dernières vidéos
-#: templates/home.html:71
+#: templates/home.html:70
 msgid "Latest videos"
 msgstr "Les dernières vidéos"
 
-#: templates/profile.html:29 templates/userprofile.html:25
+#: templates/profile.html:39 templates/userprofile.html:25
 #: templates/userprofile.html.py:30
 msgid "Profile"
 msgstr "Profil"
 
-#: templates/profile.html:34
+#: templates/profile.html:44
 msgid "My profile"
 msgstr "Mon profil"
 
-#: templates/profile.html:39
+#: templates/profile.html:49
 msgid "Edit profile"
 msgstr "Éditer mon profil"
 
-#: templates/profile.html:40
+#: templates/profile.html:50
 msgid "Change password"
 msgstr "Changer le mot de passe"
 
-#: templates/profile.html:41
+#: templates/profile.html:51
 msgid "Configuration of displayed tabs"
 msgstr "Configuration des onglets affichés"
 
-#: templates/profile.html:43
+#: templates/profile.html:53
 msgid "Access the administration interface"
 msgstr "Accéder à l'interface d'administration"
 
-#: templates/profile.html:61
+#: templates/profile.html:71
 msgid "You are a teacher for the following chapters :"
 msgstr "Vous êtes enseignants pour les chapitres suivants :"
 
-#: templates/profile.html:72
+#: templates/profile.html:82
 msgid "My groups"
 msgstr "Mes groupes"
 
-#: templates/profile.html:75
+#: templates/profile.html:85
 #, python-format
 msgid "You are member of the unique group %(group)s."
 msgstr "Vous êtes membre du seul group %(group)s."
 
-#: templates/profile.html:77
+#: templates/profile.html:87
 #, python-format
 msgid "You are not member of any group"
 msgid_plural "You are member of %(count)s groups."
 msgstr[0] "Vous n'êtes membre d'aucun groupe."
 msgstr[1] "Vous êtes membre de %(count)s groupes."
 
-#: templates/profile.html:94
+#: templates/profile.html:104
 msgid "See all my groups"
 msgstr "Voir tous mes groupes"
 
-#: templates/profile.html:103
-msgid "My recent activity"
-msgstr "Mon activité récente"
-
+# Les dernières vidéos
 #: templates/profile.html:113
-msgid "you modified the note"
-msgstr "vous avez modifié la note"
+msgid "Latest edited notes"
+msgstr "Dernières notes"
 
-#: templates/profile.html:115
-msgid "you created the note"
-msgstr "vous avez créé la note"
-
-#: templates/profile.html:122
+#: templates/profile.html:123 templates/profile.html.py:137
+#: templates/profile.html:151 templates/profile.html.py:201
 msgid "You do not have much activity yet."
 msgstr "Vous n'avez pas encore d'activité."
 
+# Les dernières vidéos
 #: templates/profile.html:129
+msgid "Latest edited comments"
+msgstr "Derniers commentaires"
+
+# Les dernières vidéos
+#: templates/profile.html:143
+msgid "Latest viewed videos"
+msgstr "Dernières vidéos vues"
+
+#: templates/profile.html:157
 msgid "My notes"
 msgstr "Mes notes"
 
-#: templates/profile.html:138
+#: templates/profile.html:166
 #, python-format
 msgctxt "profile"
 msgid "%(count)s note"
@@ -682,7 +679,7 @@ msgid_plural "%(count)s notes"
 msgstr[0] "%(count)s note"
 msgstr[1] "%(count)s notes"
 
-#: templates/profile.html:139
+#: templates/profile.html:167
 #, python-format
 msgctxt "profile"
 msgid "%(count)s private"
@@ -690,7 +687,7 @@ msgid_plural "%(count)s private"
 msgstr[0] "%(count)s privée"
 msgstr[1] "%(count)s privées"
 
-#: templates/profile.html:140
+#: templates/profile.html:168
 #, python-format
 msgctxt "profile"
 msgid "%(count)s group"
@@ -698,13 +695,25 @@ msgid_plural "%(count)s group"
 msgstr[0] "%(count)s de groupe"
 msgstr[1] "%(count)s de groupe"
 
-#: templates/profile.html:141
+#: templates/profile.html:169
 #, python-format
 msgctxt "profile"
 msgid "%(count)s public"
 msgid_plural "%(count)s public"
 msgstr[0] "%(count)s publique"
 msgstr[1] "%(count)s publiques"
+
+#: templates/profile.html:182
+msgid "My recent activity"
+msgstr "Mon activité récente"
+
+#: templates/profile.html:192
+msgid "you modified the note"
+msgstr "vous avez modifié la note"
+
+#: templates/profile.html:194
+msgid "you created the note"
+msgstr "vous avez créé la note"
 
 #: templates/search.html:9
 msgid "Search"
@@ -729,6 +738,21 @@ msgstr "Pas de résultat pour "
 #: templates/search.html:222 templates/search.html.py:250
 msgid "Channel:"
 msgstr "Chaîne:"
+
+#~ msgid "New on  %(site_name)s? Please <a href=\"%(signup_url)s\">sign up</a> first."
+#~ msgstr "Nouveau sur %(site_name)s? <a href=\"%(signup_url)s\">créez un compte</a> d'abord."
+
+#~ msgid "Sign in"
+#~ msgstr "Inscription"
+
+#~ msgid ""
+#~ "\n"
+#~ "        The COCoNotes platform is a place to find high\n"
+#~ "        quality education resources, most of them free to use/reuse.\n"
+#~ "        "
+#~ msgstr ""
+#~ "\n"
+#~ "Vous pourrez trouver sur la plateforme COCo des ressources de qualité, pour la plupart libres d'utilisation et de réutilisation."
 
 #~ msgid "Credits"
 #~ msgstr "Crédits"
