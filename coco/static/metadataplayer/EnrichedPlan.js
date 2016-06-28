@@ -55,6 +55,7 @@ IriSP.Widgets.EnrichedPlan.prototype.defaults = {
     show_other_notes: true,
     show_own_notes: true,
     show_quiz_notes: false,
+    show_comments: false,
     // Automatically scroll so that current slide is visible
     autoscroll: true,
     is_admin: false,
@@ -142,6 +143,7 @@ IriSP.Widgets.EnrichedPlan.prototype.annotationTemplate =
   {{#is_admin}}<div class="adminactions"> \
     <a target="_blank" data-id="{{id}}" href="{{ admin_url }}" class="editelement">&#x270f;</a>\
   </div>{{/is_admin}}\
+  {{#show_comments}}\
   {{#comments.length}}\
   <span class="Ldt-EnrichedPlan-Comments-Count" data-count="{{comments.length}}">{{comments.length}} {{l10n.comment_count}}</span>\
   {{/comments.length}}\
@@ -155,8 +157,9 @@ IriSP.Widgets.EnrichedPlan.prototype.annotationTemplate =
     {{/comments}}\
     {{#is_authenticated}}\
     <div class="Ldt-EnrichedPlan-Comment-New"><textarea class="Ldt-EnrichedPlan-Comment-New-Text" placeholder="{{l10n.new_comment}}" data-id="{{id}}"></textarea></div>\
-{{/is_authenticated}}\
+   {{/is_authenticated}}\
   </div>\
+  {{/show_comments}}\
 </div>';
 
 IriSP.Widgets.EnrichedPlan.prototype.annotationBarTemplate = '<div title="{{ begin }} - {{ atitle }}" data-id="{{ id }}" data-timecode="{{begin_ms}}" style="left: {{position}}%" class="Ldt-EnrichedPlan-Bar-Note {{category}} {{filtered}} {{#featured}}Ldt-EnrichedPlan-Note-Featured{{/featured}} Ldt-TraceMe" trace-info="annotation-id:{{id}}, media-id:{{media_id}}"></div>';
@@ -200,7 +203,7 @@ IriSP.Widgets.EnrichedPlan.prototype.init_component = function () {
     });
 
     _this.container.on("click", ".Ldt-EnrichedPlan-SlideExpander", function () {
-        IriSP.jQuery(this).parent().toggleClass("Ldt-EnrichedPlan-Expanded");
+        IriSP.jQuery(this).parent().parent().toggleClass("Ldt-EnrichedPlan-Expanded");
     });
     _this.container.on("click", ".Ldt-EnrichedPlan-Control-Checkbox", function () {
         var classname = _.first(_.filter(this.classList, function (s) {
@@ -477,6 +480,7 @@ IriSP.Widgets.EnrichedPlan.prototype.update_content = function () {
                     atitle: a.getTitleOrDescription().slice(0, 20),
                     is_admin: _this.is_admin,
                     is_authenticated: _this.is_authenticated,
+                    show_comments: _this.show_comments,
                     position: 100 * a.begin.milliseconds / _this.media.duration,
                     can_edit: a.meta['coco:can_edit'],
                     visibility: cat == 'Own' ? ((a.meta['coco:visibility'] || "").indexOf('shared-') == 0 ? "shared" : (a.meta['coco:visibility'] || "private")) : "none",

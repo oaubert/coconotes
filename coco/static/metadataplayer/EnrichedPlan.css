@@ -314,6 +314,13 @@
 .Ldt-EnrichedPlan-Control- {
     font-style: normal;
 }
+.Ldt-EnrichedPlan-Control-Label {
+    cursor: pointer;
+}
+.Ldt-EnrichedPlan-Control-Label:hover {
+    background-color: #ddd;
+}
+
     /**********************************************************/
 /* Base for label styling */
 .Ldt-EnrichedPlan-Control-Checkbox:not(:checked),
@@ -325,7 +332,6 @@
 .Ldt-EnrichedPlan-Control-Checkbox:checked + label {
   position: relative;
   padding-left: 20px;
-  cursor: pointer;
 }
 
 /* checkbox aspect */
