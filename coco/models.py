@@ -711,6 +711,20 @@ class GroupMetadata(Element):
         return Annotation.objects.filter(group=self.group).filter(Q(visibility=VISIBILITY_PUBLIC) | Q(visibility=VISIBILITY_GROUP)).order_by("-modified")
 
     @property
+    def comments(self):
+        return Comment.objects.filter(group=self.group).filter(Q(visibility=VISIBILITY_PUBLIC) | Q(visibility=VISIBILITY_GROUP)).order_by("-modified")
+
+    def latest_annotations(self, count=50):
+        """Return the latest n annotations.
+        """
+        return self.annotations[:count]
+
+    def latest_comments(self, count=50):
+        """Return the latest count comments
+        """
+        return self.comments[:count]
+
+    @property
     def active_users(self):
         """Return a dictionary of active users in this group with annotation count as value.
         """
@@ -728,18 +742,17 @@ class GroupMetadata(Element):
                 count = 0
             users[user] = { 'count': count,
                             'latest': latest }
-        return users
+        return sorted(users.iteritems(), key=lambda t: -t[1]['count'])
 
     @property
     def videos(self):
-        return [
-            {
-                'video': video,
-                'annotationcount': len(list(videoannotations))
-            }
-            for video, videoannotations in itertools.groupby(self.annotations.order_by('video'),
-                                                             lambda a: a.video)
-        ]
+        return list(sorted(({
+            'video': video,
+            'annotationcount': len(list(videoannotations))
+        }
+        for video, videoannotations in itertools.groupby(self.annotations.order_by('video'),
+                                                         lambda a: a.video)
+        ), key=lambda data: -data['annotationcount']))
 
     def __unicode__(self):
         return "Metadata for %s" % self.group.name

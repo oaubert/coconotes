@@ -980,27 +980,26 @@ div.pagetitle {
     margin-bottom: 20px;
 }
 
-.group_detail_head {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-}
-
-.group_detail_info {
-    min-width: 20em;
-}
-
 .group_detail_member_list {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+    display: block;
 }
 
-.group_detail_member_list .infoblock {
-    width: 80px;
+.group_detail_head {
+    width: 100%;
 }
+
+.group_detail_members {
+    height: 10em;
+    overflow-y: auto;
+}
+
+.group_detail_summary {
+    margin-top: 1em;
+}
+
 .group_detail_activity_link {
     text-align: right;
+    float: clear;
 }
 
 .group_detail_activity_link a {

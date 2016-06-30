@@ -15,9 +15,9 @@
 {% block content %}
 <h1 class="pagetitle highlighted">{% blocktrans with groupname=group.name %}Group {{groupname}}{% endblocktrans %}</h1>
 
-<section class="group_detail_head">
+<section class="group_detail_head column">
 
-  <section class="group_detail_info">
+  <section class="column column4">
     <article class="infoblock">
       <div class="square_div_20">
         <div class="square_content">
@@ -29,19 +29,73 @@
     </article>
   </section>
 
-  <section class="group_detail_members infoblock">
-    <h2 class="">{% trans "Members" %}</h2>
+  <section class="infoblock column column8 group_detail_members">
+    {% with users=group.metadata.active_users %}
+    <h2 class="">{{users|length}} {% trans "members" %}</h2>
     <div class="group_detail_member_list">
-      {% for u, data in group.metadata.active_users.items %}
+      {% for i in users %}
+      {% with u=i.0 data=i.1 %}
       <article data-annotationcount="{{data.count}}" class="itemblock">
         <img alt="" class="thumbnail_micro" src="{{ u.metadata.thumbnail_url }}">
         &nbsp;<span class="username group_detail_username">{{ u.get_full_name|default:u.username }}</span>
         {% if data.count %}&nbsp;- {% blocktrans count count=data.count  %}{{count}} shared note{% plural %}{{count}} shared notes{% endblocktrans %}, {% blocktrans with latest=data.latest.modified|naturaltime %}latest {{latest}}{% endblocktrans %}{% endif %}
       </article>
+      {% endwith %}
       {% endfor %}
     </div>
+    {% endwith %}
   </section>
 </section>
+
+<section class="group_detail_summary column">
+  <article class="infoblock column column4 group_latest_annotations">
+    <h2>{% trans "Latest edited notes" %}</h2>
+    <ul class="latest_list">
+      {% for a in group.metadata.latest_annotations|slice:":6" %}
+      <li class="group_recent_activity_item">
+        <a class="annotation-link" href="{{a.contextualized_link}}"><small>{{a.title_or_description}}</small></a>
+        {% blocktrans %}on{% endblocktrans %}
+        <small><a class="video-link" data-video="{{a.video.uuid}}" href="{{a.video.get_absolute_url}}">{{a.video.title_or_description}}</a></small>
+        {% blocktrans %}by{% endblocktrans %} <a class="annotation-author">{{a.contributor.username}}</a>
+        <time class="activity_date" datetime="{{a.modified|date:'c'}}">{{a.modified|naturaltime}}</time>
+      </li>
+      {% empty %}
+      <li>{% blocktrans %}You do not have much activity yet.{% endblocktrans %}</li>
+      {% endfor %}
+    </ul>
+  </article>
+
+    <article class="infoblock column column4 profile_latest_comments">
+    <h2>{% trans "Latest edited comments" %}</h2>
+    <ul class="latest_list">
+      {% for c in group.metadata.latest_comments|slice:":6" %}
+      <li class="profile_recent_activity_item">
+        <a class="comment-link" href="{{c.parent_annotation.contextualized_link}}"><small>{{c.title_or_description}}</small></a>
+        {% blocktrans %}by{% endblocktrans %} <a class="annotation-author">{{a.contributor.username}}</a>
+        <time class="activity_date" datetime="{{a.modified|date:'c'}}">{{c.modified|naturaltime}}</time>
+      </li>
+      {% empty %}
+      <li>{% blocktrans %}You do not have much activity yet.{% endblocktrans %}</li>
+      {% endfor %}
+    </ul>
+  </article>
+
+  <article class="infoblock column column4 profile_latest_videos">
+    <h2>{% trans "Most annotated videos" %}</h2>
+    <ul class="latest_list">
+      {% for i in group.metadata.videos %}
+      <li class="profile_recent_activity_item">
+        <small><a class="video-link" data-video="{{i.video.uuid}}" href="{{i.video.get_absolute_url}}">{{i.video.title_or_description}}</a></small>
+        (<span class="annotation-count">{{i.annotationcount}}</span> {% blocktrans %}notes{% endblocktrans %})
+      </li>
+      {% empty %}
+      <li>{% blocktrans %}You do not have much activity yet.{% endblocktrans %}</li>
+      {% endfor %}
+    </ul>
+  </article>
+ 
+</section>
+
 <section class="group_detail_activity_link">
   <a href="activity">See group activity</a>
 </section>
