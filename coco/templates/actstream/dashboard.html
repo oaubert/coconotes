@@ -1,0 +1,98 @@
+{% load i18n %}
+{% load staticfiles %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Activity Log</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/d3.3.5.5.min.js" %}" charset="utf-8"></script>
+    <script type="text/javascript" src="{% static "js/keshif.js" %}" charset="utf-8"></script>
+    <link rel="stylesheet" href="{% static "css/keshif.css" %}" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,300,600,700' rel='stylesheet' type='text/css'>
+
+    <script type="text/javascript">
+
+$(document).ready( function() {
+        var monthname = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        var dayname = [ "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" ];
+        browser = new kshf.Browser({
+            domID: "#chart_div",
+            barChartWidth: 80,
+            leftPanelLabelWidth: 200,
+            rightPanelLabelWidth: 180,
+            itemName: "Activity log",
+            source: {
+            /* url: "http://www.chromestatus.com/features", */
+            dirPath: "/api/v1/",
+            fileType: 'json',
+            tables: "access_log"
+    },
+    loadedCb: function(){
+    },
+            summaries: [
+                {name: "actor", textSearch: "actor"},
+                {name: "verb", textSearch: "verb"},
+                {name: "Date", value: function () {
+                    return new Date(this.timestamp);
+                }, panel: "bottom", optimumTickWidth: 20},
+                {name: "object_name", panel: "right"},
+                {name: "url", panel: "right" }
+    ],
+    itemDisplay: {
+        sortBy: { name: 'Date', inverse: true},
+        sortColWidth: 45,
+        textSearch: "",
+        recordView: function(){
+            var date = this.timestamp.split("T")[0];
+            var time = this.timestamp.split("T")[1].substr(0, 8);
+            var str = "";
+            str += "<div class='event'>"
+            str += "<div class='event-attr event event-time'>" + time + "</div> ";
+            str += "<div class='event-attr event-actor'>" + this.actor + "</div> ";
+            str += "<div class='event-attr event-verb'>" + this.verb + "</div> ";
+            str += "<div class='event-attr event-object'>" + this.object_name + "</div>";
+            str += "</div>";
+            return str;
+        }
+    }
+  });
+});
+    </script>
+    <style type="text/css">
+      .content {
+        font-family: 'Open Sans', sans-serif;
+      }
+      .event {
+          display: flex;
+          flex-direction: row;
+      }
+      .event-attr {
+          margin-left: .5em;
+      }
+      .event-app {
+          font-weight: bold;
+          width: 120px;
+      }
+      .event-date {
+          font-size: 9px;
+          width: 100px;
+      }
+      .event-time {
+          font-size: 8px;
+      }
+      .kshf .recordDisplay {
+          max-height: 500px;
+      }
+    </style>
+    </head>
+  <body>
+    <div class="pageTitle" align="center">Activity log</div>
+    <div class="contents"><div id="chart_div"></div></div>
+
+    <div id="infobox" align="center">
+    </div>
+  </body>
+</html>

@@ -4,7 +4,7 @@ import itertools
 import json
 
 from actstream import action
-from actstream.models import actor_stream
+from actstream.models import actor_stream, Action
 
 from django.conf import settings
 from django.contrib.auth.models import Group, User
@@ -14,7 +14,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, render
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.views.decorators.http import require_http_methods
 from django.utils.decorators import method_decorator
 from django.utils.html import strip_tags, escape
@@ -798,3 +798,18 @@ class UpdateProfile(UpdateWithInlinesView):
 
     def get_success_url(self):
         return reverse('profile')
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+@require_http_methods(["GET"])
+def access_log(request, *args, **kw):
+    return JsonResponse([
+        {'actor': a.actor.username,
+         'verb': a.verb,
+         'object_id': a.action_object.get_absolute_url() if a.action_object else "",
+         'object_name': a.action_object.title_or_description if a.action_object else "",
+         "url": a.data.get('url', '') if a.data else '',
+         'result': a.data.get('result', {}) if a.data else {},
+         'timestamp': a.timestamp.isoformat(),
+        } for a in Action.objects.all()
+    ], safe=False)
