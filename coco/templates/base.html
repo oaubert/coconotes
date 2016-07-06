@@ -47,7 +47,7 @@
           <form action="{% url 'set_language' %}" method="post">{% csrf_token %}<input name="language" type="hidden" value="en" /><input type="submit" class="lang_item lang_en {% if "en" == LANGUAGE_CODE %}active{% endif %}" value="EN"></input></form>
         </div>
         <form action="/search" id="form">
-          <input id="searchfield" name="q" type="search" value="{{ query_string }}" placeholder="{% trans "Search for videos or channels" %}"/>
+          <input id="searchfield" name="q" type="search" value="{{ query_string }}" placeholder="{% trans "Search for videos, slides or notes" %}"/>
         </form>
         <div class="topmenu">
           <span class="topmenu_item {% ifequal current_document "home" %}active{% endifequal %}"><a href="/">{% trans "Home" %}</a></span>
