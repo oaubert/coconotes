@@ -127,7 +127,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   -o-transition: -o-transform 700ms ease-in-out, background-color 100ms linear, opacity 200ms linear;
   transition: -webkit-transform 700ms ease-in-out,-moz-transform 700ms ease-in-out,-o-transform 700ms ease-in-out,transform 700ms ease-in-out, background-color 100ms linear, opacity 200ms linear;
 }
-.kshf[noanim=false] .controlLine > .handle {
+.kshf[noanim=false] .controlLine > .rangeHandle {
   -webkit-transition: -webkit-transform 700ms ease-in-out, background-color 100ms linear, opacity 200ms linear;
   -moz-transition: -moz-transform 700ms ease-in-out, background-color 100ms linear, opacity 200ms linear;
   -o-transition: -o-transform 700ms ease-in-out, background-color 100ms linear, opacity 200ms linear;
@@ -231,11 +231,11 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .kshf[measurefunc="Avg"] .measurePercentControl {
   pointer-events: none !important;
 }
-.kshf[measurefunc="Avg"] .scaleModeControl {
-  pointer-events: none !important;
-}
 .kshf[measurefunc="Avg"] .measurePercentControl:after {
   content: "Avg" !important;
+}
+.kshf[measurefunc="Avg"] .scaleModeControl {
+  pointer-events: none !important;
 }
 .kshf[measurefunc="Avg"] .measureFunction_Avg {
   color: black !important;
@@ -256,9 +256,6 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 }
 .kshf[percentLabelMode] .measurePercentControl::after {
   content: "%";
-}
-.kshf[percentLabelMode] .measurePercentControl[highlight="true"]::after {
-  content: '#';
 }
 .kshf[percentLabelMode] .chartAxis_Measure > .tick > .text:after {
   content: "%";
@@ -319,13 +316,13 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .kshf[selectCompare_C] .percentileGroup[percentileChartVisible="Extended"] > .percentileChart_Compare_C {
   display: block;
 }
-.kshf[recordDisplayMapping="sort"] .kshfSummary[summary_type="interval"] .headerGroup .summaryIcons > .useForRecordDisplay:before {
+.kshf[recordDisplayMapping="sort"] .kshfSummary[summary_type="interval"] .useForRecordDisplay:before {
   content: "\f0dc";
 }
-.kshf[recordDisplayMapping="sort"] .kshfSummary[summary_type="interval"] .headerGroup .summaryIcons > .useForRecordDisplay:hover {
-  color: orangered;
+.kshf[recordDisplayMapping="sort"] .kshfSummary[summary_type="interval"] .useForRecordDisplay:hover {
+  color: #cb5454;
 }
-.kshf[recordDisplayMapping="color"] .kshfSummary[summary_type="interval"] .headerGroup .summaryIcons > .useForRecordDisplay {
+.kshf[recordDisplayMapping="color"] .kshfSummary[summary_type="interval"] .useForRecordDisplay {
   position: relative;
   margin: 0;
   border: solid 1px white;
@@ -337,7 +334,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   background-size: 50% 50%;
   transition: 1s;
 }
-.kshf[recordDisplayMapping="color"] .kshfSummary[summary_type="interval"] .headerGroup .summaryIcons > .useForRecordDisplay:hover {
+.kshf[recordDisplayMapping="color"] .kshfSummary[summary_type="interval"] .useForRecordDisplay:hover {
   transform: rotate(360deg);
 }
 .kshf[recordDisplayMapping="color"] .kshfSummary[summary_type="interval"][usedforsorting="true"] > .wrapper > .summaryInterval > .mapColorBar {
@@ -431,7 +428,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   cursor: pointer;
 }
 .kshf .sortButton:hover {
-  color: #ff4500;
+  color: #cb5454;
 }
 .kshf .sortButton:before {
   content: "\f161";
@@ -1105,7 +1102,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
-  padding: 0px 2px 4px 5px;
+  padding: 1px 2px 4px 4px;
   font-size: 0.8em;
   vertical-align: top;
 }
@@ -1127,14 +1124,13 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .kshf .panel_Basic > .breadcrumbs > .crumb {
   display: inline-block;
   position: relative;
-  cursor: pointer;
-  color: #252112;
-  font-weight: 300;
-  background-color: rgba(255, 255, 255, 0.5);
-  margin-right: 5px;
+  margin-right: 4px;
   margin-top: 1px;
-  padding-left: 2px;
+  cursor: pointer;
   max-width: 0px;
+  color: #252112;
+  background-color: rgba(255, 255, 255, 0.5);
+  font-weight: 300;
   -webkit-transition: all 250ms linear;
   -moz-transition: all 250ms linear;
   -o-transition: all 250ms linear;
@@ -1145,8 +1141,8 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   display: block;
   white-space: nowrap;
   overflow: hidden;
-  margin-left: 14px;
-  margin-right: 2px;
+  margin-left: 16px;
+  margin-right: 1px;
 }
 .kshf .panel_Basic > .breadcrumbs > .crumb > .crumbText > .crumbHeader {
   font-weight: 700;
@@ -1162,11 +1158,11 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   font-weight: 300;
 }
 .kshf .panel_Basic > .breadcrumbs > .crumb > .clearCrumbButton {
-  width: 14px;
+  width: 15px;
   height: 100%;
   position: absolute;
   pointer-events: none;
-  font-size: 11px;
+  font-size: 1em;
   padding: 1px;
   left: 0px;
   text-align: center;
@@ -1186,29 +1182,29 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   max-width: 0px;
 }
 .kshf .panel_Basic > .breadcrumbs > .crumb.crumbMode_Filter {
-  border: solid 1px #788D9B;
+  border: solid 1px #788d9b;
 }
 .kshf .panel_Basic > .breadcrumbs > .crumb.crumbMode_Filter > .clearCrumbButton {
-  background-color: #788D9B;
+  background-color: #788d9b;
+  font-size: 1em;
 }
-.kshf .panel_Basic > .breadcrumbs > .crumb.crumbMode_Filter > .clearCrumbButton > .fa::before {
+.kshf .panel_Basic > .breadcrumbs > .crumb.crumbMode_Filter > .clearCrumbButton::before {
   content: "\f0b0";
 }
 .kshf .panel_Basic > .breadcrumbs > .crumb.crumbMode_Highlight {
-  border: solid 1px orangered;
+  border: solid 1px #ff4500;
 }
 .kshf .panel_Basic > .breadcrumbs > .crumb.crumbMode_Highlight > .clearCrumbButton {
-  background-color: orangered;
+  background-color: #ff4500;
 }
-.kshf .panel_Basic > .breadcrumbs > .crumb.crumbMode_Highlight > .clearCrumbButton > .fa::before {
+.kshf .panel_Basic > .breadcrumbs > .crumb.crumbMode_Highlight > .clearCrumbButton::before {
   content: "\f245";
   position: relative;
   top: 1px;
   left: 1px;
 }
-.kshf .panel_Basic > .breadcrumbs > .crumb[class*='crumbMode_Compare'] > .clearCrumbButton > .fa::before {
+.kshf .panel_Basic > .breadcrumbs > .crumb[class*='crumbMode_Compare'] > .clearCrumbButton::before {
   content: "\f023";
-  font-size: 1.1em;
   position: relative;
   top: 1px;
 }
@@ -1219,10 +1215,10 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   background-color: #2f4f4f;
 }
 .kshf .panel_Basic > .breadcrumbs > .crumb[class*='crumbMode_Compare_B'] {
-  border: solid 1px #2fd71b;
+  border: solid 1px #ff126a;
 }
 .kshf .panel_Basic > .breadcrumbs > .crumb[class*='crumbMode_Compare_B'] > .clearCrumbButton {
-  background-color: #2fd71b;
+  background-color: #ff126a;
 }
 .kshf .panel_Basic > .breadcrumbs > .crumb[class*='crumbMode_Compare_C'] {
   border: solid 1px #fff810;
@@ -1237,7 +1233,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .kshf .panel_Basic > .breadcrumbs > .crumb:hover > .crumbText {
   text-decoration: line-through;
 }
-.kshf .panel_Basic > .breadcrumbs > .crumb:hover > .clearCrumbButton > .fa::before {
+.kshf .panel_Basic > .breadcrumbs > .crumb:hover > .clearCrumbButton::before {
   content: "\f00d";
 }
 .kshf .panel_Basic > .filterClearAll {
@@ -1246,10 +1242,10 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   top: 2px;
   height: 1em;
   cursor: pointer;
-  color: #252112;
+  color: white;
   font-weight: 300;
   border: 1px #685b2b solid;
-  background-color: #E9E2CE;
+  background-color: #685b2b;
   white-space: nowrap;
   -webkit-transition: background-color 100ms linear, opacity 300ms linear;
   -moz-transition: background-color 100ms linear, opacity 300ms linear;
@@ -1258,13 +1254,12 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 }
 .kshf .panel_Basic > .filterClearAll .title {
   padding: 0px 2px;
-  font-size: 0.8em;
-  font-weight: 500;
+  font-size: 0.7em;
+  font-weight: 300;
   vertical-align: top;
 }
 .kshf .panel_Basic > .filterClearAll:hover {
-  background-color: white;
-  box-shadow: none;
+  text-decoration: underline;
 }
 .kshf .panel_Basic > .filterClearAll[active=true] {
   display: inline-block;
@@ -1282,10 +1277,16 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .kshf .panel_Basic > .rightBoxes > .fa:hover {
   color: #cb5454;
 }
-.kshf .panel_Basic > .rightBoxes > .showConfigButton {
+.kshf .panel_Basic > .rightBoxes > .showHelpIn {
+  -webkit-animation: helpInFlip 3s infinite ease-in-out;
+  -moz-animation: helpInFlip 3s infinite ease-in-out;
+  -o-animation: helpInFlip 3s infinite ease-in-out;
+  animation: helpInFlip 3s infinite ease-in-out;
+}
+.kshf .panel_Basic > .rightBoxes > .authorButton {
   display: inline-block;
 }
-.kshf .panel_Basic > .rightBoxes > .showConfigButton:hover {
+.kshf .panel_Basic > .rightBoxes > .authorButton:hover {
   animation: fa-spin 2s infinite linear;
   -webkit-animation: fa-spin 2s infinite linear;
 }
@@ -1529,6 +1530,9 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   border-style: dashed;
   display: block;
 }
+.kshf .panel > .panelAdjustWidth[helpin] {
+  display: block;
+}
 .kshf .panel.panel_bottom {
   display: -webkit-box;
   display: -moz-box;
@@ -1654,25 +1658,25 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   height: 100%;
   width: 100%;
   z-index: 2000;
-  transform: scale(1);
   text-align: center;
   -webkit-transition: -webkit-transform 500ms ease-in-out, opacity 500ms;
   -moz-transition: -moz-transform 500ms ease-in-out, opacity 500ms;
   -o-transition: -o-transform 500ms ease-in-out, opacity 500ms;
   transition: -webkit-transform 500ms ease-in-out,-moz-transform 500ms ease-in-out,-o-transform 500ms ease-in-out,transform 500ms ease-in-out, opacity 500ms;
 }
-.kshf .panel.panel_overlay > .background {
+.kshf .panel.panel_overlay > .kshfBackground {
   width: 100%;
   height: 100%;
   z-index: -2;
-  background: #0b0b0b;
-  opacity: 0.8;
+  background-color: black;
+  opacity: 0;
   position: absolute;
   -webkit-transition: opacity 0.5s;
   -moz-transition: opacity 0.5s;
   -o-transition: opacity 0.5s;
   transition: opacity 0.5s;
   border-radius: 5px;
+  pointer-events: none;
 }
 .kshf .panel.panel_overlay > .overlay_content {
   display: none;
@@ -1694,6 +1698,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   top: 3px;
   cursor: pointer;
   color: gray;
+  padding: 1px;
 }
 .kshf .panel.panel_overlay > .overlay_content > .overlay_Close:hover {
   color: orangered;
@@ -1701,11 +1706,9 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .kshf .panel.panel_overlay > .overlay_source {
   background-color: white;
   width: 550px;
-  height: 200px;
   position: absolute;
-  top: 0;
+  top: 50px;
   left: 0;
-  bottom: 0;
   right: 0;
 }
 .kshf .panel.panel_overlay > .overlay_source .fa-info-circle {
@@ -1724,7 +1727,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .kshf .panel.panel_overlay > .overlay_source > .source_wrapper {
   width: 530px;
   display: inline-block;
-  margin: 5px;
+  margin: 5px 5px 15px 5px;
   padding: 5px;
   border: solid 1px lightgray;
   border-radius: 5px;
@@ -1871,7 +1874,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   display: inline-block;
   border: solid 1px gray;
   padding: 5px;
-  margin: 5px;
+  margin: 15px;
   border-radius: 5px;
   background-color: white;
   font-weight: 300;
@@ -1885,6 +1888,17 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   cursor: pointer;
   box-shadow: 1px 1px 1px gray;
   background-color: #EEE;
+}
+.kshf .panel.panel_overlay > .overlay_source > .dataImportNotes {
+  font-size: 0.8em;
+  font-weight: 300;
+  border-top: solid 1px lightgray;
+  padding: 10px;
+  margin-top: 10px;
+  line-height: 2em;
+}
+.kshf .panel.panel_overlay > .overlay_source > .dataImportNotes > a {
+  color: black;
 }
 .kshf .panel.panel_overlay > .overlay_loading {
   width: 300px;
@@ -2012,19 +2026,39 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .kshf .panel.panel_overlay[show="none"] {
   pointer-events: none;
 }
-.kshf .panel.panel_overlay[show="none"] > .background {
-  opacity: 0;
-}
 .kshf .panel.panel_overlay[show="loading"] > .overlay_loading {
   display: inline-block;
+}
+.kshf .panel.panel_overlay[show="loading"] > .kshfBackground {
+  opacity: 0.7;
+  pointer-events: all;
 }
 .kshf .panel.panel_overlay[show="infobox"] > .overlay_infobox {
   display: inline-block;
 }
+.kshf .panel.panel_overlay[show="infobox"] > .kshfBackground {
+  opacity: 0.7;
+  pointer-events: all;
+}
 .kshf .panel.panel_overlay[show="source"] > .overlay_source {
   display: inline-block;
 }
-.kshf .panel.panel_overlay[show="help"] > .overlay_help {
+.kshf .panel.panel_overlay[show="source"] > .kshfBackground {
+  opacity: 0.7;
+  pointer-events: all;
+}
+.kshf .panel.panel_overlay[show="help-browse"] > .kshfBackground {
+  opacity: 0.7;
+  pointer-events: all;
+}
+.kshf .panel.panel_overlay[show="help-browse"] > .overlay_help {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.kshf .panel.panel_overlay[show="help-pointnlearn"] > .overlay_help {
   display: -webkit-box;
   display: -moz-box;
   display: -webkit-flex;
@@ -2039,15 +2073,11 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   display: flex;
 }
 .kshf .panel.panel_overlay[show="answer"] > .overlay_answer {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  pointer-events: none;
+  display: block;
 }
-.kshf .panel.panel_overlay[show="answer"] > .background {
-  opacity: 0;
+.kshf .panel.panel_overlay[show="recordDetails"] > .kshfBackground {
+  opacity: 0.7;
+  pointer-events: all;
 }
 .kshf .panel.panel_overlay[show="recordDetails"] > .overlay_recordDetails {
   -webkit-animation: recordDetails 500ms forwards;
@@ -2085,40 +2115,37 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   right: 1px;
 }
 .kshf .clearFilterButton {
-  width: 14px;
-  height: 100%;
   display: inline-block;
-  cursor: pointer;
+  opacity: 0;
+  background-color: #788d9b;
+  border: solid 1px #788d9b;
+  color: white;
+  height: 16px;
+  width: 16px;
+  line-height: 14px;
+  position: relative;
+  vertical-align: top;
+  font-size: 0.8em;
   font-weight: 700;
   font-size: 11px;
   text-align: center;
-  -webkit-transition: background-color 100ms linear,color 100ms linear, opacity 400ms;
-  -moz-transition: background-color 100ms linear,color 100ms linear, opacity 400ms;
-  -o-transition: background-color 100ms linear,color 100ms linear, opacity 400ms;
-  transition: background-color 100ms linear,color 100ms linear, opacity 400ms;
-  background-color: #635d46;
-  color: #eeebe0;
-  border: solid 1px #635d46;
+  pointer-events: none;
+  cursor: pointer;
+  -webkit-transition: background-color 100ms linear, color 100ms linear, opacity 400ms;
+  -moz-transition: background-color 100ms linear, color 100ms linear, opacity 400ms;
+  -o-transition: background-color 100ms linear, color 100ms linear, opacity 400ms;
+  transition: background-color 100ms linear, color 100ms linear, opacity 400ms;
+}
+.kshf .clearFilterButton:before {
+  content: "\f0b0";
 }
 .kshf .clearFilterButton:hover {
-  background-color: #B6AF96;
-  color: #635d46;
+  background-color: white;
+  color: #cb5454;
+  border-color: #cb5454;
 }
-.kshf .clearFilterButton.inSummary {
-  display: none;
-  vertical-align: top;
-  pointer-events: all;
-  margin-top: 1px;
-  font-size: 0.8em;
-}
-.kshf .clearFilterButton.inSummary > .fa-times {
-  position: relative;
-}
-.kshf .clearFilterButton.allFilter {
-  display: inline-block;
-  vertical-align: top;
-  border-width: 0px 0px 0px 1px;
-  line-height: 16px;
+.kshf .clearFilterButton:hover:before {
+  content: "\f00d";
 }
 .kshf .measurePercentControl {
   pointer-events: all;
@@ -2140,13 +2167,16 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .kshf .measurePercentControl:after {
   content: '#';
 }
-.kshf .measurePercentControl[highlight="true"] {
-  color: orangered;
+.kshf[measurePercentControl] .measurePercentControl {
+  color: #cb5454;
   background-color: #d3d9c5;
   border: solid 1px #99ab92;
 }
-.kshf .measurePercentControl[highlight="true"]:after {
+.kshf[measurePercentControl] .measurePercentControl:after {
   content: '%';
+}
+.kshf[measurePercentControl][percentLabelMode] .measurePercentControl::after {
+  content: "%";
 }
 .kshf .chartAxis_Measure {
   pointer-events: none;
@@ -2217,10 +2247,6 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   border-top: none;
   border-bottom: none;
 }
-.kshf .summaryConfigControl {
-  display: none;
-  color: gray;
-}
 .kshf .headerGroup {
   position: relative;
   text-align: center;
@@ -2272,54 +2298,64 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .kshf .headerGroup .save_filter_as_set:hover {
   color: black;
 }
-.kshf .headerGroup .clearFilterButton.rowFilter {
-  pointer-events: all;
-  height: 14px;
-  width: 14px;
-  line-height: 12px;
-}
-.kshf .headerGroup .summaryIcons {
+.kshf .headerGroup > .summaryIcons {
   top: 3px;
   right: 2px;
   position: absolute;
   font-size: 0.9em;
 }
-.kshf .headerGroup .summaryIcons > .fa {
+.kshf .headerGroup > .summaryIcons > .fa {
+  display: none;
   color: gray;
   cursor: pointer;
   margin-left: 2px;
   vertical-align: top;
+  -webkit-transition: opacity 500ms linear;
+  -moz-transition: opacity 500ms linear;
+  -o-transition: opacity 500ms linear;
+  transition: opacity 500ms linear;
 }
-.kshf .headerGroup .summaryIcons > .fa:hover {
-  color: orangered;
+.kshf .headerGroup > .summaryIcons > .fa:hover {
+  color: #cb5454;
 }
-.kshf .headerGroup .summaryIcons > .summaryDescription {
-  display: none;
+.kshf .headerGroup > .summaryIcons > .fa[helpin] {
+  opacity: 1;
+}
+.kshf .headerGroup > .summaryIcons > .summaryConfigControl {
+  display: inline-block;
+  color: gray;
+  opacity: 0;
+  pointer-events: none;
+}
+.kshf .headerGroup > .summaryIcons > .summaryDescription {
   cursor: default;
+  width: 10px;
 }
-.kshf .headerGroup .summaryIcons > .summaryViewAs {
-  display: none;
-  cursor: pointer;
+.kshf .headerGroup > .summaryIcons > .summaryDescription:hover {
+  color: black;
+}
+.kshf .headerGroup > .summaryIcons > .summaryViewAs {
   width: 15px;
   text-align: center;
 }
-.kshf .headerGroup .summaryIcons > .summaryViewAs[viewAs="map"]:before {
+.kshf .headerGroup > .summaryIcons > .summaryViewAs[viewAs="map"]:before {
   content: "\f0ca";
 }
-.kshf .headerGroup .summaryIcons > .summaryViewAs[viewAs="map"]:hover:before {
+.kshf .headerGroup > .summaryIcons > .summaryViewAs[viewAs="map"]:hover:before {
   content: "\f0ac";
 }
-.kshf .headerGroup .summaryIcons > .summaryViewAs[viewAs="list"]:before {
+.kshf .headerGroup > .summaryIcons > .summaryViewAs[viewAs="list"]:before {
   content: "\f0ac";
 }
-.kshf .headerGroup .summaryIcons > .summaryViewAs[viewAs="list"]:hover:before {
+.kshf .headerGroup > .summaryIcons > .summaryViewAs[viewAs="list"]:hover:before {
   content: "\f0ca";
 }
-.kshf .headerGroup .summaryIcons > .useForRecordDisplay {
-  display: none;
+.kshf .headerGroup > .summaryIcons > .useForRecordDisplay {
+  opacity: 0;
+  pointer-events: none;
 }
-.kshf .headerGroup .summaryIcons > .setMatrixButton {
-  display: none;
+.kshf .headerGroup > .summaryIcons > .setMatrixButton[helpin] {
+  display: inline-block;
 }
 .kshf .headerGroup > .header_display_control {
   display: block;
@@ -2327,10 +2363,10 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   font-size: 0.9em;
   top: 3px;
   left: 2px;
-  -webkit-transition: color 250ms linear, opacity 100ms linear ;
-  -moz-transition: color 250ms linear, opacity 100ms linear ;
-  -o-transition: color 250ms linear, opacity 100ms linear ;
-  transition: color 250ms linear, opacity 100ms linear ;
+  -webkit-transition: color 250ms linear, opacity 100ms linear;
+  -moz-transition: color 250ms linear, opacity 100ms linear;
+  -o-transition: color 250ms linear, opacity 100ms linear;
+  transition: color 250ms linear, opacity 100ms linear;
   -webkit-transform-origin: 50% 50%;
   -moz-transform-origin: 50% 50%;
   -ms-transform-origin: 50% 50%;
@@ -2348,13 +2384,16 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   height: 14px;
   width: 13px;
   height: 13px;
-  -webkit-transition: color 250ms linear, opacity 100ms linear ;
-  -moz-transition: color 250ms linear, opacity 100ms linear ;
-  -o-transition: color 250ms linear, opacity 100ms linear ;
-  transition: color 250ms linear, opacity 100ms linear ;
+  -webkit-transition: color 250ms linear, opacity 500ms linear;
+  -moz-transition: color 250ms linear, opacity 500ms linear;
+  -o-transition: color 250ms linear, opacity 500ms linear;
+  transition: color 250ms linear, opacity 500ms linear;
 }
 .kshf .headerGroup > .header_display_control > .fa:hover {
-  color: orangered;
+  color: #cb5454;
+}
+.kshf .headerGroup > .header_display_control > .fa[helpin] {
+  opacity: 1;
 }
 .kshf .headerGroup > .header_display_control > .buttonSummaryCollapse::before {
   content: "\f066";
@@ -2440,7 +2479,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   background-color: #2f4f4f;
 }
 .kshf .aggrGlyph > span[class^="measure_Compare_B"] {
-  background-color: #2fd71b;
+  background-color: #ff126a;
 }
 .kshf .aggrGlyph > span[class^="measure_Compare_C"] {
   background-color: #fffedc;
@@ -2535,7 +2574,7 @@ top:calc(50% - 5px);
   stroke: #2f4f4f;
 }
 .kshf .aggrGlyph.setPairGlyph > .measure_Compare_B {
-  stroke: #2fd71b;
+  stroke: #ff126a;
 }
 .kshf .aggrGlyph.setPairGlyph > .measure_Compare_C {
   stroke: #fffedc;
@@ -2726,25 +2765,30 @@ top:calc(50% - 5px);
   display: none;
   vertical-align: top;
   width: 18px;
-  cursor: pointer;
   font-weight: 700;
-}
-.kshf div.kshfRecord > .recordToggleDetail > .item_details_toggle {
-  -webkit-transition: -webkit-transform 500ms;
-  -moz-transition: -moz-transform 500ms;
-  -o-transition: -o-transform 500ms;
-  transition: -webkit-transform 500ms,-moz-transform 500ms,-o-transform 500ms,transform 500ms;
+  text-align: center;
   color: gray;
-  position: relative;
+  cursor: pointer;
+  -webkit-transform-origin: 9px 9px;
+  -moz-transform-origin: 9px 9px;
+  -ms-transform-origin: 9px 9px;
+  -o-transform-origin: 9px 9px;
+  transform-origin: 9px 9px;
+  -webkit-transition: color 200ms linear, -webkit-transform 500ms ease-in-out;
+  -moz-transition: color 200ms linear, -moz-transform 500ms ease-in-out;
+  -o-transition: color 200ms linear, -o-transform 500ms ease-in-out;
+  transition: color 200ms linear,-webkit-transform 500ms ease-in-out,-moz-transform 500ms ease-in-out,-o-transform 500ms ease-in-out,transform 500ms ease-in-out;
 }
-.kshf div.kshfRecord > .recordToggleDetail > .item_details_toggle:hover {
-  color: black;
+.kshf div.kshfRecord > .recordToggleDetail:hover {
+  color: #cb5454;
+}
+.kshf div.kshfRecord .item_details {
+  display: none;
 }
 .kshf div.kshfRecord[details="true"] {
   max-height: none;
 }
-.kshf div.kshfRecord[details="true"] .item_details_toggle {
-  display: inline-block;
+.kshf div.kshfRecord[details="true"] > .recordToggleDetail {
   -webkit-transform: rotate(180deg);
   -moz-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
@@ -2753,12 +2797,6 @@ top:calc(50% - 5px);
 }
 .kshf div.kshfRecord[details="true"] .item_details {
   display: block;
-}
-.kshf div.kshfRecord[details="false"] .item_details_toggle {
-  display: inline-block;
-}
-.kshf div.kshfRecord[details="false"] .item_details {
-  display: none;
 }
 .kshf div.kshfRecord[selection^="onRecord"] {
   padding: 0px;
@@ -2785,15 +2823,15 @@ top:calc(50% - 5px);
   background-image: linear-gradient(to right, #bed8d8 0%, #bed8d8 20%, #ffece5 80%, #ffece5 100%);
 }
 .kshf div.kshfRecord[rec_compared^="B"] {
-  background-color: #a2f299;
-  border: solid 1px #25aa15 !important;
+  background-color: #ffabca;
+  border: solid 1px #de0052 !important;
 }
 .kshf div.kshfRecord[rec_compared^="B"][selection="highlighted"] {
-  background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMSAxIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48bGluZWFyR3JhZGllbnQgaWQ9Imxlc3NoYXQtZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNhMmYyOTkiIHN0b3Atb3BhY2l0eT0iMSIvPjxzdG9wIG9mZnNldD0iMjAlIiBzdG9wLWNvbG9yPSIjYTJmMjk5IiBzdG9wLW9wYWNpdHk9IjEiLz48c3RvcCBvZmZzZXQ9IjgwJSIgc3RvcC1jb2xvcj0iI2ZmZWNlNSIgc3RvcC1vcGFjaXR5PSIxIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZmZlY2U1IiBzdG9wLW9wYWNpdHk9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjbGVzc2hhdC1nZW5lcmF0ZWQpIiAvPjwvc3ZnPg==);
-  background-image: -webkit-linear-gradient(left, #a2f299 0%, #a2f299 20%, #ffece5 80%, #ffece5 100%);
-  background-image: -moz-linear-gradient(left, #a2f299 0%, #a2f299 20%, #ffece5 80%, #ffece5 100%);
-  background-image: -o-linear-gradient(left, #a2f299 0%, #a2f299 20%, #ffece5 80%, #ffece5 100%);
-  background-image: linear-gradient(to right, #a2f299 0%, #a2f299 20%, #ffece5 80%, #ffece5 100%);
+  background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMSAxIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48bGluZWFyR3JhZGllbnQgaWQ9Imxlc3NoYXQtZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmZmFiY2EiIHN0b3Atb3BhY2l0eT0iMSIvPjxzdG9wIG9mZnNldD0iMjAlIiBzdG9wLWNvbG9yPSIjZmZhYmNhIiBzdG9wLW9wYWNpdHk9IjEiLz48c3RvcCBvZmZzZXQ9IjgwJSIgc3RvcC1jb2xvcj0iI2ZmZWNlNSIgc3RvcC1vcGFjaXR5PSIxIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZmZlY2U1IiBzdG9wLW9wYWNpdHk9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjbGVzc2hhdC1nZW5lcmF0ZWQpIiAvPjwvc3ZnPg==);
+  background-image: -webkit-linear-gradient(left, #ffabca 0%, #ffabca 20%, #ffece5 80%, #ffece5 100%);
+  background-image: -moz-linear-gradient(left, #ffabca 0%, #ffabca 20%, #ffece5 80%, #ffece5 100%);
+  background-image: -o-linear-gradient(left, #ffabca 0%, #ffabca 20%, #ffece5 80%, #ffece5 100%);
+  background-image: linear-gradient(to right, #ffabca 0%, #ffabca 20%, #ffece5 80%, #ffece5 100%);
 }
 .kshf div.kshfRecord[rec_compared^="C"] {
   background-color: #fffda9;
@@ -2873,7 +2911,7 @@ top:calc(50% - 5px);
   background-color: #2f4f4f;
 }
 .kshf .summaryConfig .configOption > .bl_Compare_B {
-  background-color: #2fd71b;
+  background-color: #ff126a;
 }
 .kshf .summaryConfig .configOption > .bl_Compare_C {
   background-color: #fff810;
@@ -2926,7 +2964,12 @@ top:calc(50% - 5px);
   z-index: 120;
   color: gray;
   pointer-events: none;
-  display: none;
+  display: block;
+  opacity: 0;
+  -webkit-transition: opacity 500ms linear;
+  -moz-transition: opacity 500ms linear;
+  -o-transition: opacity 500ms linear;
+  transition: opacity 500ms linear;
 }
 .kshf .percentileGroup[percentileChartVisible="Basic"] > .percentileChart_Active > .quantile {
   height: 11px;
@@ -2935,7 +2978,7 @@ top:calc(50% - 5px);
   height: 28px;
 }
 .kshf .percentileGroup:hover > .percentileTitle {
-  display: block;
+  opacity: 1;
 }
 .kshf *[class^="percentileChart"] {
   -webkit-box-flex: 1;
@@ -3038,16 +3081,16 @@ top:calc(50% - 5px);
   background-color: #aecfcf;
 }
 .kshf .percentileChart_Compare_B > .quantile.q_40_60 {
-  background-color: #25aa15;
+  background-color: #de0052;
 }
 .kshf .percentileChart_Compare_B > .quantile.q_30_70 {
-  background-color: #2dce1a;
+  background-color: #ff0864;
 }
 .kshf .percentileChart_Compare_B > .quantile.q_20_80 {
-  background-color: #58e847;
+  background-color: #ff4f90;
 }
 .kshf .percentileChart_Compare_B > .quantile.q_10_90 {
-  background-color: #8eef82;
+  background-color: #ff92ba;
 }
 .kshf .percentileChart_Compare_C > .quantile.q_40_60 {
   background-color: #908b00;
@@ -3152,7 +3195,7 @@ top:calc(50% - 5px);
   transition: opacity 200ms linear;
 }
 .kshf .kshfSummary > .wrapper > .summaryCategorical > .summaryControls > .catSortButton:hover {
-  color: #ff4500;
+  color: #cb5454;
 }
 .kshf .kshfSummary > .wrapper > .summaryCategorical > .summaryControls > .catSortButton:before {
   content: "\f161";
@@ -3162,6 +3205,9 @@ top:calc(50% - 5px);
 }
 .kshf .kshfSummary > .wrapper > .summaryCategorical > .summaryControls > .catSortButton[resort="true"]:before {
   content: "\f175" !important;
+}
+.kshf .kshfSummary > .wrapper > .summaryCategorical > .summaryControls > .catSortButton[helpin] {
+  opacity: 1;
 }
 .kshf .kshfSummary > .wrapper > .summaryCategorical > .summaryControls > .sortOptionSelectGroup {
   display: block;
@@ -3252,6 +3298,9 @@ top:calc(50% - 5px);
   display: none;
   height: 100%;
   z-index: 25;
+}
+.kshf .kshfSummary > .wrapper > .summaryCategorical > .aggrGroup > .chartBackground > .chartCatLabelResize[helpin] {
+  display: block;
 }
 .kshf .kshfSummary > .wrapper > .summaryCategorical > .aggrGroup > .catGlyph {
   white-space: nowrap;
@@ -3473,7 +3522,7 @@ top:calc(50% - 8px);
   stroke: #2f4f4f;
 }
 .kshf .kshfSummary > .wrapper > .summaryInterval > .histogram > .timeSVG > .measure_Compare_Line_B {
-  stroke: #2fd71b;
+  stroke: #ff126a;
 }
 .kshf .kshfSummary > .wrapper > .summaryInterval > .histogram > .timeSVG > .measure_Compare_Line_C {
   stroke: #fffedc;
@@ -3499,7 +3548,7 @@ top:calc(50% - 8px);
   stroke: #2f4f4f;
 }
 .kshf .kshfSummary > .wrapper > .summaryInterval > .histogram > .timeSVG > .measure_Compare_Area_B {
-  stroke: #2fd71b;
+  stroke: #ff126a;
 }
 .kshf .kshfSummary > .wrapper > .summaryInterval > .histogram > .timeSVG > .measure_Compare_Area_C {
   stroke: #fffedc;
@@ -3653,6 +3702,9 @@ top:calc(50% - 8px);
 .kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .zoomControl[sign="minus"]:before {
   content: "\f010";
 }
+.kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .zoomControl[helpin] {
+  display: block;
+}
 .kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .controlLine {
   height: 11px;
   cursor: ew-resize;
@@ -3729,46 +3781,70 @@ top:calc(50% - 8px);
 .kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .controlLine > .base.active:hover {
   background-color: orangered !important;
 }
-.kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .controlLine > .handle {
+.kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .controlLine > .rangeHandle {
+  position: absolute;
+  cursor: col-resize;
+  z-index: 10;
+  top: 1px;
+  width: 5px;
+  pointer-events: none;
+}
+.kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .controlLine > .rangeHandle::before {
+  content: "";
+  display: block;
   position: absolute;
   width: 6px;
   height: 8px;
+  bottom: 0px;
   background-color: white;
   border-width: 1px;
   border-color: black;
   border-style: solid;
+  pointer-events: all;
+}
+.kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .controlLine > .rangeHandle::after {
+  content: "";
+  position: absolute;
+  display: none;
+  width: 5px;
+  -lh-property: 0;
+height:-webkit-calc(100% - 10px);
+height:-moz-calc(100% - 10px);
+height:calc(100% - 10px);
+;
   cursor: col-resize;
-  z-index: 10;
-  top: 1px;
+  box-shadow: 0px 0px 2px white, 0px 0px 4px white;
+  border-style: dotted;
+  border-width: 0px;
+  border-color: #30b8c4;
 }
-.kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .controlLine > .handle:hover {
+.kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .controlLine > .rangeHandle:hover:after {
   background-color: orangered !important;
+  border-color: orangered !important;
 }
-.kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .controlLine > .handle.min {
+.kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .controlLine > .rangeHandle:hover:before {
+  border-color: orangered !important;
+}
+.kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .controlLine > .rangeHandle.min {
   left: -5px;
+}
+.kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .controlLine > .rangeHandle.min:before {
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 }
-.kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .controlLine > .handle.min > .rangeLimitOnChart {
-  left: 3px;
+.kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .controlLine > .rangeHandle.min:after {
+  border-right-width: 2px;
 }
-.kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .controlLine > .handle.max {
+.kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .controlLine > .rangeHandle.max:before {
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
 }
-.kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .controlLine > .handle.max > .rangeLimitOnChart {
-  left: -2px;
+.kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .controlLine > .rangeHandle.max:after {
+  border-left-width: 2px;
 }
-.kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .controlLine > .handle > .rangeLimitOnChart {
-  position: absolute;
-  display: none;
-  width: 2px;
-  border-left: dotted 2px #30b8c4;
-  cursor: col-resize;
-  box-shadow: 0px 0px 2px white, 0px 0px 4px white;
-}
-.kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .controlLine > .handle > .rangeLimitOnChart:hover {
-  border-left: solid 2px #30b8c4;
+.kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .controlLine > .rangeHandle[dragging]:after {
+  border-style: solid;
+  background-color: #30b8c4;
 }
 .kshf .kshfSummary > .wrapper > .summaryInterval > .intervalSlider > .labelGroup {
   cursor: default;
@@ -3821,6 +3897,9 @@ top:calc(50% - 8px);
 .kshf .kshfSummary[collapsed=true] .headerGroup > .header_display_control > .fa.buttonSummaryCollapse::before {
   content: "\f065" !important;
 }
+.kshf .kshfSummary[collapsed=true] .summaryConfigControl {
+  display: none;
+}
 .kshf .kshfSummary[collapsed=true] > .headerGroup .summaryName {
   cursor: pointer;
 }
@@ -3843,9 +3922,13 @@ top:calc(50% - 8px);
   display: none;
 }
 .kshf .kshfSummary[filtered=true] > .headerGroup .clearFilterButton {
-  display: inline-block;
+  opacity: 1;
+  pointer-events: all;
 }
-.kshf .kshfSummary[filtered=true] .rangeLimitOnChart {
+.kshf .kshfSummary[filtered=true] .rangeHandle {
+  pointer-events: all !important;
+}
+.kshf .kshfSummary[filtered=true] .rangeHandle:after {
   display: block !important;
 }
 .kshf .kshfSummary[filtered=true]:hover > .wrapper > .summaryInterval > .intervalSlider > .zoomControl {
@@ -3873,9 +3956,6 @@ top:calc(50% - 8px);
 .kshf .kshfSummary[isMultiValued=true]:hover .setMatrixButton {
   display: inline-block !important;
 }
-.kshf .kshfSummary[filtered_range=true] .clearFilterButton.rangeFilter {
-  display: inline-block;
-}
 .kshf .kshfSummary:hover > .headerGroup {
   box-shadow: 0px 0px 2px #646464, 0px 0px 5px #999;
 }
@@ -3888,8 +3968,9 @@ top:calc(50% - 8px);
 .kshf .kshfSummary[hasMap="true"][collapsed="false"] .summaryViewAs {
   display: inline-block;
 }
-.kshf .kshfSummary[usedForSorting="true"] .headerGroup .summaryIcons > .useForRecordDisplay {
-  display: inline-block;
+.kshf .kshfSummary[usedForSorting="true"] .headerGroup > .summaryIcons > .useForRecordDisplay {
+  opacity: 1;
+  pointer-events: all;
   color: black;
 }
 .kshf .kshfSummary[viewType="map"] .summaryCategorical > .summaryControls .sortOptionSelectGroup {
@@ -3923,14 +4004,20 @@ top:calc(50% - 8px);
 .kshf .kshfSummary[viewType="line"] .summaryConfig_UnitName {
   display: none;
 }
-.kshf .kshfSummary[summary_type='interval']:hover .headerGroup .summaryIcons > .useForRecordDisplay {
-  display: inline-block;
+.kshf .kshfSummary[summary_type='interval'] .useForRecordDisplay {
+  display: inline-block !important;
+}
+.kshf .kshfSummary[summary_type='interval']:hover .useForRecordDisplay {
+  opacity: 1 !important;
+  pointer-events: all !important;
 }
 .kshf .kshfSummary[collapsed=false][viewType='bar']:hover .summaryConfigControl {
-  display: inline-block !important;
+  opacity: 1 !important;
+  pointer-events: all !important;
 }
 .kshf .kshfSummary[collapsed=false][summary_type='categorical'][viewType='list']:hover .summaryConfigControl {
-  display: inline-block !important;
+  opacity: 1 !important;
+  pointer-events: all !important;
 }
 .kshf .kshfSummary[collapsed=false] > .headerGroup[allCatsInDisplay="false"] .buttonSummaryExpand {
   display: inline-block !important;
@@ -3941,9 +4028,12 @@ top:calc(50% - 8px);
   pointer-events: all;
 }
 .kshf .kshfSummary[showConfig=true] .summaryConfigControl {
-  display: inline-block;
-  color: black;
+  opacity: 1 !important;
+  pointer-events: all !important;
+  color: black !important;
   -webkit-animation: fa-spin 4s infinite linear;
+  -moz-animation: fa-spin 4s infinite linear;
+  -o-animation: fa-spin 4s infinite linear;
   animation: fa-spin 4s infinite linear;
 }
 .kshf .kshfSummary.setPairSummary {
@@ -4126,7 +4216,7 @@ top:calc(50% - 8px);
   color: #2f4f4f !important;
 }
 .kshf[measureLabelType="Compare_B"] .aggrGlyph > .measureLabel {
-  color: #25aa15 !important;
+  color: #de0052 !important;
 }
 .kshf[measureLabelType="Compare_C"] .aggrGlyph > .measureLabel {
   color: #fffda9 !important;
@@ -4286,8 +4376,8 @@ top:calc(50% - 8px);
   box-shadow: 0px 0px 20px #2f4f4f;
 }
 .kshf .recordDisplay .recordMap_Base .spatialQueryBox.spatialQueryBox_Compare_B {
-  border-color: #2fd71b;
-  box-shadow: 0px 0px 20px #2fd71b;
+  border-color: #ff126a;
+  box-shadow: 0px 0px 20px #ff126a;
 }
 .kshf .recordDisplay .recordMap_Base .spatialQueryBox.spatialQueryBox_Compare_C {
   border-color: #fffedc;
@@ -4468,7 +4558,7 @@ top:calc(50% - 8px);
   stroke: #2f4f4f;
 }
 .kshf .recordDisplay[displayType="map"] .kshfRecord[rec_compared^="B"] {
-  stroke: #2fd71b;
+  stroke: #ff126a;
 }
 .kshf .recordDisplay[displayType="map"] .kshfRecord[rec_compared^="C"] {
   stroke: #fffedc;
@@ -4546,7 +4636,7 @@ top:calc(50% - 8px);
   stroke: #2f4f4f;
 }
 .kshf .recordDisplay[displayType="nodelink"] g.kshfRecord[rec_compared^="B"] > circle {
-  stroke: #2fd71b;
+  stroke: #ff126a;
 }
 .kshf .recordDisplay[displayType="nodelink"] g.kshfRecord[rec_compared^="C"] > circle {
   stroke: #fffedc;
@@ -4664,8 +4754,7 @@ top:calc(50% - 8px);
   padding-right: 2px;
 }
 .kshf .recordDisplay[displayType="list"][hasrecordview="true"] .kshfRecord > .recordToggleDetail {
-  width: 18px;
-  text-align: center;
+  padding-top: 1px;
 }
 .kshf .recordDisplay[displayType="list"][hasrecordview="true"] .kshfRecord > .content {
   -webkit-box-flex: 1;
@@ -4677,13 +4766,13 @@ top:calc(50% - 8px);
 .kshf .recordDisplay[detailsToggle="zoom"] .recordGroup > .kshfRecord > .recordToggleDetail {
   display: inline-block;
 }
-.kshf .recordDisplay[detailsToggle="zoom"] .recordGroup > .kshfRecord > .recordToggleDetail > .item_details_toggle:before {
+.kshf .recordDisplay[detailsToggle="zoom"] .recordGroup > .kshfRecord > .recordToggleDetail:before {
   content: "\f05a";
 }
 .kshf .recordDisplay[detailsToggle="one"] .recordGroup > .kshfRecord > .recordToggleDetail {
   display: inline-block;
 }
-.kshf .recordDisplay[detailsToggle="one"] .recordGroup > .kshfRecord > .recordToggleDetail > .item_details_toggle:before {
+.kshf .recordDisplay[detailsToggle="one"] .recordGroup > .kshfRecord > .recordToggleDetail:before {
   content: "\f078";
 }
 .kshf .recordDisplay[hasRecordView="false"] > .recordDisplayHeader {
@@ -4714,7 +4803,7 @@ top:calc(50% - 8px);
 .kshf .recordDisplay[hasRecordView="true"] > .dropZone_recordView {
   position: absolute;
 }
-.kshf .recordDisplay:hover > .recordDisplayHeader > .sortColumn {
+.kshf .recordDisplay:hover > .recordDisplayHeader > .recordSortButton {
   opacity: 1;
   pointer-events: all;
 }
@@ -5053,7 +5142,7 @@ top:calc(50% - 8px);
   width: 100%;
   bottom: 0px;
 }
-.kshf .recordDisplayHeader > .sortColumn {
+.kshf .recordDisplayHeader > .recordSortButton {
   opacity: 0;
   -webkit-align-self: flex-end;
   -ms-flex-item-align: end;
@@ -5069,12 +5158,18 @@ top:calc(50% - 8px);
   -o-transition: opacity 250ms linear;
   transition: opacity 250ms linear;
 }
+.kshf .recordDisplayHeader > .recordSortButton[helpin] {
+  opacity: 1;
+}
 .kshf .recordDisplayHeader > .buttonRecordViewRemove {
   display: none;
   cursor: pointer;
 }
 .kshf .recordDisplayHeader > .buttonRecordViewRemove:hover {
   color: orangered;
+}
+.kshf .recordDisplayHeader > .buttonRecordViewRemove[helpin] {
+  display: inline-block;
 }
 .kshf .recordDisplayHeader > .scrollToTop {
   padding-top: 2px;
@@ -5152,8 +5247,7 @@ top:calc(50% - 8px);
 }
 .kshf .recordDisplayHeader > .recordTextSearch > .searchIcon {
   display: none;
-  font-size: 0.8em;
-  padding-left: 1px;
+  font-size: 0.9em;
   color: #cb5454;
 }
 .kshf .recordDisplayHeader > .recordTextSearch > .clearSearchText {
@@ -5238,7 +5332,7 @@ top:calc(50% - 8px);
   fill: #1c2f2f;
 }
 .kshf #kshfLineChartTip_Compare_B {
-  fill: #25aa15;
+  fill: #de0052;
 }
 .kshf #kshfLineChartTip_Compare_C {
   fill: #fff810;
@@ -5338,50 +5432,19 @@ top:calc(50% - 8px);
     background-color: #fa7746;
   }
 }
-@-webkit-keyframes mapPreviewAnimation {
-  0% {
-    opacity: 0;
-  }
-  90%,
-  100% {
-    opacity: 1;
-  }
+lesshat-selector {
+  -lh-property: 0; } 
+@-webkit-keyframes mapPreviewAnimation{ 0% { opacity: 0; } 90%, 100% { opacity: 1; }}
+@-moz-keyframes mapPreviewAnimation{ 0% { opacity: 0; } 90%, 100% { opacity: 1; }}
+@-o-keyframes mapPreviewAnimation{ 0% { opacity: 0; } 90%, 100% { opacity: 1; }}
+@keyframes mapPreviewAnimation{ 0% { opacity: 0; } 90%, 100% { opacity: 1; };
 }
-@-moz-keyframes mapPreviewAnimation {
-  0% {
-    opacity: 0;
-  }
-  90%,
-  100% {
-    opacity: 1;
-  }
-}
-@-ms-keyframes mapPreviewAnimation {
-  0% {
-    opacity: 0;
-  }
-  90%,
-  100% {
-    opacity: 1;
-  }
-}
-@-o-keyframes mapPreviewAnimation {
-  0% {
-    opacity: 0;
-  }
-  90%,
-  100% {
-    opacity: 1;
-  }
-}
-@keyframes mapPreviewAnimation {
-  0% {
-    opacity: 0;
-  }
-  90%,
-  100% {
-    opacity: 1;
-  }
+lesshat-selector {
+  -lh-property: 0; } 
+@-webkit-keyframes helpInFlip{ 0%, 60%, 90%{ -webkit-transform: scale(1); } 80%{ -webkit-transform: scale(-1, 1); }}
+@-moz-keyframes helpInFlip{ 0%, 60%, 90%{ -moz-transform: scale(1); } 80%{ -moz-transform: scale(-1, 1); }}
+@-o-keyframes helpInFlip{ 0%, 60%, 90%{ -o-transform: scale(1); } 80%{ -o-transform: scale(-1, 1); }}
+@keyframes helpInFlip{ 0%, 60%, 90%{-webkit-transform: scale(1);-moz-transform: scale(1);-ms-transform: scale(1);transform: scale(1); } 80%{-webkit-transform: scale(-1, 1);-moz-transform: scale(-1, 1);-ms-transform: scale(-1, 1);transform: scale(-1, 1); };
 }
 .tipsy {
   font-size: 10px;
@@ -5418,12 +5481,6 @@ top:calc(50% - 8px);
 .tipsy .mapTooltipLabel {
   font-size: 0.9em;
   font-weight: 300;
-}
-.tipsy.tipsyFilterLock .tipsy-inner {
-  background-color: #2f4f4f;
-}
-.tipsy.tipsyFilterLock .tipsy-arrow {
-  border-color: #2f4f4f;
 }
 /* Uncomment for shadow */
 /*.tipsy-inner { box-shadow: 0 0 5px #000000; -webkit-box-shadow: 0 0 5px #000000; -moz-box-shadow: 0 0 5px #000000; }*/
