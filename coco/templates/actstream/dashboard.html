@@ -33,19 +33,24 @@ $(document).ready( function() {
     loadedCb: function(){
     },
             summaries: [
-                {name: "actor", textSearch: "actor"},
-                {name: "verb", textSearch: "verb"},
+                {name: "actor", textSearch: "actor", panel: "left"},
+                {name: "verb", textSearch: "verb", panel: "left"},
+                {name: "target", panel: "left"},
                 {name: "Date", value: function () {
                     return new Date(this.timestamp);
                 }, panel: "bottom", optimumTickWidth: 20},
+                {name: "object_type", panel: "right"},
                 {name: "object_name", panel: "right"},
-                {name: "url", panel: "right" }
+                {name: "url", panel: "right" },
+                {name: "success", panel: "right"},
+                {name: "score", panel: "right"}
     ],
     itemDisplay: {
         sortBy: { name: 'Date', inverse: true},
         sortColWidth: 45,
         textSearch: "",
         recordView: function(){
+            var _this = this;
             var date = this.timestamp.split("T")[0];
             var time = this.timestamp.split("T")[1].substr(0, 8);
             var str = "";
@@ -53,7 +58,17 @@ $(document).ready( function() {
             str += "<div class='event-attr event event-time'>" + time + "</div> ";
             str += "<div class='event-attr event-actor'>" + this.actor + "</div> ";
             str += "<div class='event-attr event-verb'>" + this.verb + "</div> ";
-            str += "<div class='event-attr event-object'>" + this.object_name + "</div>";
+            if (this.object_name) {
+                str += "<div class='event-attr event-object'>" + this.object_type + " <a href='" + this.object_url + "'>" + this.object_name + "</a></div>";
+            }
+            if (this.url) {
+                str += "<div class='event-attr event-url'><a href='" + this.url + "'>" + this.url + "</a></div>";
+            }
+            [ 'result', 'score', 'success', 'target', 'query' ].forEach(function (k) {
+                if (_this[k]) {
+                    str += "<div class='event-attr event-" + k + "'>" + _this[k] + "</div>";
+                }
+            });
             str += "</div>";
             return str;
         }
@@ -85,7 +100,7 @@ $(document).ready( function() {
       }
       .kshf .recordDisplay,
       .kshfSummary {
-          max-height: 500px;
+          max-height: 440px;
       }
     </style>
     </head>
