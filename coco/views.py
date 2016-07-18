@@ -803,13 +803,27 @@ class UpdateProfile(UpdateWithInlinesView):
 @user_passes_test(lambda u: u.is_staff)
 @require_http_methods(["GET"])
 def access_log(request, *args, **kw):
-    return JsonResponse([
-        {'actor': a.actor.username,
-         'verb': a.verb,
-         'object_id': a.action_object.get_absolute_url() if a.action_object else "",
-         'object_name': a.action_object.title_or_description if a.action_object else "",
-         "url": a.data.get('url', '') if a.data else '',
-         'result': a.data.get('result', {}) if a.data else {},
-         'timestamp': a.timestamp.isoformat(),
-        } for a in Action.objects.all()
-    ], safe=False)
+    def serialize_action(a):
+        s = { 'timestamp': a.timestamp.isoformat(),
+              'actor': a.actor.username,
+              'verb': a.verb }
+        if a.action_object:
+            s['object_type'] = unicode(a.action_object.element_type)
+            s['object_name'] = a.action_object.title_or_description
+            s['object_url'] = a.action_object.get_absolute_url()
+        else:
+            s['object_type'] = ""
+            s['object_name'] = ""
+            s['object_url'] = ""
+        if a.data:
+            for k in ('url', 'query'):
+                v = a.data.get(k, '')
+                if v:
+                    s[k] = v
+            v = a.data.get('result')
+            if v:
+                s['score'] = v.get('score', '')
+                s['success'] = v.get('success', '')
+        s['target'] = a.target or ""
+        return s
+    return JsonResponse([ serialize_action(a) for a in Action.objects.all() ], safe=False)
