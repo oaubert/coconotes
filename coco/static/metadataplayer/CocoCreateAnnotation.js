@@ -144,7 +144,6 @@ IriSP.Widgets.CocoCreateAnnotation.prototype.onSubmit = function () {
 
     /*
      * Will fill the generated annotation object's data
-     * WARNING: If we're on a MASHUP, these datas must refer the ORIGINAL MEDIA
      * */
     _annotation.setMedia(this.source.currentMedia.id); /* Annotated media ID */
 
@@ -184,7 +183,12 @@ IriSP.Widgets.CocoCreateAnnotation.prototype.onSubmit = function () {
                 _this.resetInput();
                 _this.showScreen('Saved');
                 _export.getAnnotations().removeElement(_annotation, true); /* We delete the sent annotation to avoid redundancy */
+                _export.source = _this.source;
                 _export.deSerialize(_data); /* Data deserialization */
+                _export.getAnnotations().forEach(function (a) {
+                    // Set main source as reference for created annotation
+                    a.source = _this.source;
+                });
                 _this.source.merge(_export); /* We merge the deserialized data with the current source data */
                 if (_this.pause_on_write && _this.media.getPaused()) {
                     _this.media.play();

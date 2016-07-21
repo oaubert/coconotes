@@ -314,7 +314,8 @@ IriSP.Widgets.EnrichedPlan.prototype.init_component = function () {
         update_level(this, -1);
     });
 
-    _this.container.find(".Ldt-EnrichedPlan-Search-Input").on("search", function () {
+    var inputField = _this.container.find(".Ldt-EnrichedPlan-Search-Input");
+    inputField.on('onsearch' in inputField[0] ? "search" : "keyup", function () {
         var q = IriSP.jQuery(this).val().toLocaleLowerCase();
         if (q === "") {
             // Show all
