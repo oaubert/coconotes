@@ -1428,3 +1428,46 @@ h1:hover .adminactions,
 @media only screen and (max-width: 780px) and (orientation: portrait) {
     /* portrait phones */
 }
+
+@media print {
+    html, body {
+        background-image: none;
+        background: #fff;
+    }
+    header,
+    .player_usage,
+    .videoplayer,
+    .controlscontainer,
+    .splitter-bar,
+    .tabnames,
+    .videodetails,
+    .Ldt-EnrichedPlan-Controls,
+    .Ldt-EnrichedPlan-SlideExpander,
+    #coco_annotation_input_widget {
+        display: none !important;
+    }
+    .Ldt-EnrichedPlan-SlideThumbnail img {
+        max-width: 480px !important;
+        max-height: 320px !important;
+    }
+    .Ldt-EnrichedPlan-SlideThumbnail {
+        display: inline !important;
+    }
+    .Ldt-EnrichedPlan-SlideContent {
+        width: auto;
+        margin-left: 34px;
+    }
+    .coco_rightcolumn,
+    .player {
+        width: 95% !important;
+        page-break-after: avoid;
+        page-break-before: avoid;
+    }
+    .titleblock {
+        page-break-after: avoid;
+        page-break-before: avoid;
+    }
+    #content, .main {
+        height: auto;
+    }
+}
