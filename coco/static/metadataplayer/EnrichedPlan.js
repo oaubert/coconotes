@@ -4,6 +4,9 @@ IriSP.Widgets.EnrichedPlan = function (player, config) {
     this.throttledRefresh = IriSP._.throttle(function (full) {
         _this.update_content();
     }, 800, {leading: false});
+    this.throttledAutoscroll = IriSP._.throttle(function (annotation) {
+        _this.do_autoscroll(annotation);
+    }, 800, {leading: true});
 
 };
 
@@ -71,7 +74,6 @@ IriSP.Widgets.EnrichedPlan.prototype.defaults = {
 
 IriSP.Widgets.EnrichedPlan.prototype.template =
       '<div class="Ldt-EnrichedPlan-Container {{#flat_mode}}Ldt-EnrichedPlan-FlatMode{{/flat_mode}}">'
-    + '<div class="Ldt-EnrichedPlan-Content"></div>'
     + '<form class="Ldt-EnrichedPlan-Controls">'
     + '{{#show_controls}}'
     + '<div class="Ldt-EnrichedPlan-ControlMenu">'
@@ -108,6 +110,7 @@ IriSP.Widgets.EnrichedPlan.prototype.template =
     + '{{/show_controls}}'
     + '<input class="Ldt-EnrichedPlan-Search-Input {{^show_controls}}Ldt-EnrichedPlan-Search-Input-Full{{/show_controls}}" type="search" incremental placeholder="{{ l10n.search }}"/>'
     + '</form>'
+    + '<div class="Ldt-EnrichedPlan-Content"></div>'
     + '</div>';
 
 IriSP.Widgets.EnrichedPlan.prototype.barTemplate =
@@ -513,6 +516,16 @@ IriSP.Widgets.EnrichedPlan.prototype.update_content = function () {
     });
 };
 
+IriSP.Widgets.EnrichedPlan.prototype.do_autoscroll = function (a) {
+    var _this = this;
+    if (_this.autoscroll) {
+        _this.container.find("[data-id=" + a.id + "]").not(".filtered_out").each(function () {
+            this.scrollIntoView(true);
+        });
+    }
+    return true;
+};
+
 IriSP.Widgets.EnrichedPlan.prototype.draw = function () {
     var _this = this;
     _this.init_component();
@@ -520,5 +533,8 @@ IriSP.Widgets.EnrichedPlan.prototype.draw = function () {
 
     _this.onMdpEvent("AnnotationsList.refresh", function () {
         _this.throttledRefresh(false);
+    });
+    _this.media.on("enter-annotation", function(_a) {
+        _this.throttledAutoscroll(_a);
     });
 };
