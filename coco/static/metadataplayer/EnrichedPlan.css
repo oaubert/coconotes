@@ -226,22 +226,26 @@
     font-size: 10px;
 }
 
-.Ldt-EnrichedPlan-Content {
-    margin-top: 37px;
+.Ldt-EnrichedPlan-Container {
+    overflow-y: hidden;
+    height: 100%;
 }
 
 .Ldt-EnrichedPlan-Controls {
     height: 36px;
     padding: 9px 0 5px 0;
     border-bottom: 1px solid #000;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
     z-index: 1;
     background-color: #fff;
     display: flex;
 }
+
+.Ldt-EnrichedPlan-Content {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100% - 37px);
+}
+
 
 .Ldt-EnrichedPlan-Control-Label {
     display: inline-block;
