@@ -14,6 +14,10 @@ try:
 except ImportError:
     options = {}
 
+# If http_proxy is specified in local_settings, use it to initialize the appropriate conf. variables
+if 'http_proxy' in options:
+    os.environ['https_proxy'] = os.environ['http_proxy'] = options['http_proxy']
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = options.get('secret_key', 'no_secret_at_all_key')
 
