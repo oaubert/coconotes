@@ -80,15 +80,8 @@ INSTALLED_APPS = [
     # The Django sites framework is required by allauth
     'django.contrib.sites',
     'django.contrib.humanize',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-#    'allauth.socialaccount.providers.facebook',
-    #'allauth.socialaccount.providers.google',
-    #'allauth.socialaccount.providers.openid',
-    #'allauth.socialaccount.providers.twitter',
-    #'allauth.socialaccount.providers.vimeo',
-    'actstream'
+    'actstream',
+    'django_cas_ng',
 ]
 if DEBUG:
     INSTALLED_APPS.insert(-1, 'debug_toolbar')
@@ -106,7 +99,7 @@ MIDDLEWARE_CLASSES = (
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
+    'coco.backends.CustomCASBackend',
 )
 
 TEMPLATES = [
@@ -190,6 +183,10 @@ STATIC_ROOT = APPROOT + 'static/'
 
 # Allauth configuration
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+
+CAS_SERVER_URL = 'https://cas-ha.univ-nantes.fr/esup-cas-server/'
+CAS_FORCE_CHANGE_USERNAME_CASE = 'lower'
+CAS_CREATE_USER = False
 
 if options.get('raven_dsn'):
     INSTALLED_APPS += ( 'raven.contrib.django.raven_compat', )
