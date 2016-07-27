@@ -174,7 +174,7 @@ class Element(models.Model):
 
     @property
     def element_type(self):
-        return _(self.__class__.__name__)
+        return self.__class__.__name__
 
     @property
     def title_or_description(self):
@@ -515,7 +515,7 @@ class Annotation(UserContent):
 
     @property
     def element_type(self):
-        return _(self.annotationtype.title.rstrip("s"))
+        return self.annotationtype.title.rstrip("s")
 
     def element_information(self):
         return "%s - %s" % (_(self.annotationtype.title.rstrip("s")),
