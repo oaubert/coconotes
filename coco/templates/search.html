@@ -192,6 +192,17 @@
       width: 100%;
       margin: 40px 0;
   }
+
+  .result_filter:hover {
+      background-color: #dcf0ff;
+  }
+
+  .result_summary .filtered_out {
+      opacity: .5;
+  }
+  .result_list .filtered_out {
+      display: none;
+  }
   </style>
 {% endblock %}
 
@@ -278,4 +289,33 @@
   </div>
 </section>
 
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+<script type="text/javascript">
+    $(".result_filter").on("click", function () {
+        var _type = this.dataset.type;
+        if ($(this).is(".active_filter")) {
+            $(this).removeClass("active_filter");
+            $(".search_results .filtered_out").removeClass("filtered_out");
+        } else {
+            $(".active_filter").removeClass("active_filter");
+            $(this).addClass("active_filter");
+            $(".search_results .result_type").each(function () {
+                if ($(this).is(".result_type-" + _type)) {
+                    $(this).removeClass("filtered_out");
+                } else {
+                    $(this).addClass("filtered_out");
+                }
+            });
+            // Hide searchcapsules with no visible result
+            $(".searchcapsule").each(function() {
+                if ($(this).find(".result_type").length == $(this).find(".filtered_out").length) {
+                    $(this).addClass("filtered_out");
+                }
+            });
+        }
+    });
+</script>
 {% endblock %}
