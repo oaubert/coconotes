@@ -311,9 +311,7 @@
             });
             // Hide searchcapsules with no visible result
             $(".searchcapsule").each(function() {
-                if ($(this).find(".result_type").length == $(this).find(".filtered_out").length) {
-                    $(this).addClass("filtered_out");
-                }
+                $(this).toggleClass("filtered_out", $(this).find(".result_type").length == $(this).find(".filtered_out").length);
             });
         }
     });
