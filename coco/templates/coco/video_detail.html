@@ -73,9 +73,9 @@
 <div class="coco_rightcolumn">
   <div id="metadata" class="tabcomponent">
     <ul class="tabnames">
-      <li class="tab-plan {% if not user.is_authenticated %}selected{% endif %}" data-placeholder="{% blocktrans %}Enter a personal note{% endblocktrans %}">{% trans "Plan" %}</li>
+      <li class="tab-plan selected" data-placeholder="{% blocktrans %}Enter a personal note{% endblocktrans %}">{% trans "Plan" %}</li>
       {% if user.is_authenticated %}
-      <li class="tab-mynotes selected" data-placeholder="{% blocktrans %}Enter a personal note{% endblocktrans %}">{% trans "Own notes" %}</li>
+      <li class="tab-mynotes" data-placeholder="{% blocktrans %}Enter a personal note{% endblocktrans %}">{% trans "Own notes" %}</li>
       {% endif %}
       <li class="tab-public" data-group-id="-1" data-placeholder="{% blocktrans %}Share a note with all users{% endblocktrans %}">{% trans "Public notes" %}</li>
       {% for g in groups %}
@@ -83,11 +83,11 @@
       {% endfor %}
     </ul>
     <div class="coco_tabcontents">
-      <div class="tabcontent tab-plan {% if not user.is_authenticated %}selected{% endif %}">
+      <div class="tabcontent tab-plan selected">
         <div id="PlanContainer" class="EnrichedPlanContainer"></div>
       </div>
       {% if user.is_authenticated %}
-      <div class="tabcontent selected tab-mynotes">
+      <div class="tabcontent tab-mynotes">
         <div id="OwnAnnotationsContainer" class="EnrichedPlanContainer"></div>
       </div>
       {% endif %}
