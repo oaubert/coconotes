@@ -83,11 +83,11 @@
       {% endfor %}
     </ul>
     <div class="coco_tabcontents">
-      <div class="tabcontent tab-plan {% if not user.is_authenticated %}selected{% endif %}">
+      <div class="tabcontent tab-plan selected">
         <div id="PlanContainer" class="EnrichedPlanContainer"></div>
       </div>
       {% if user.is_authenticated %}
-      <div class="tabcontent selected tab-mynotes">
+      <div class="tabcontent tab-mynotes">
         <div id="OwnAnnotationsContainer" class="EnrichedPlanContainer"></div>
       </div>
       {% endif %}
