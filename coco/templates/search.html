@@ -147,14 +147,16 @@
   .searchcapsule_annotations ul {
       list-style: none;
   }
-  .searchcapsule_annotation_title {
+  .searchcapsule_annotation_title,
+  .searchcapsule_comment_title {
       text-decoration: none;
       font-family: Roboto;
       font-style: italic;
       font-size: 14px;
       color: #000;
   }
-  .searchcapsule_annotation_creator {
+  .searchcapsule_annotation_creator,
+  .searchcapsule_comment_creator {
       text-transform: uppercase;
       font-size: 10px;
       font-weight: normal;
@@ -166,12 +168,14 @@
       font-size: 9px;
       font-family: Roboto;
   }
-  .searchcapsule_annotations li {
+  .searchcapsule_note_content,
+  .searchcapsule_comment {
       margin: 8px;
       display: flex;
       flex-direction: row;
   }
-  .searchcapsule_annotations li:hover {
+  .searchcapsule_note_content:hover,
+  .searchcapsule_comment:hover {
       background-color: #fff;
   }
 
@@ -272,13 +276,27 @@
             <ul>
               {% for a in v.children %}
               <li class="searchcapsule_note">
-                <span class="result_type result_type-{{a.element.element_type}}">
-                  <span>
-                    <a href="{{a.element.contextualized_link}}" class="searchcapsule_annotation_title">{{ a.snippet|term_highlight:query_string }}</a>
-                    <span class="searchcapsule_annotation_creator">{{ a.creator }}</span>
-                    <time class="searchcapsule_annotation_timecode">{{a.element.begin|format_timecode}}</time>
+                <div class="searchcapsule_note_content">
+                  <span class="result_type result_type-{{a.element.element_type}}">
+                    <span>
+                      <a href="{{a.element.contextualized_link}}" class="searchcapsule_annotation_title">{{ a.snippet|term_highlight:query_string }}</a>
+                      <span class="searchcapsule_annotation_creator">{{ a.creator }}</span>
+                      <time class="searchcapsule_annotation_timecode">{{a.element.begin|format_timecode}}</time>
+                    </span>
                   </span>
-                </span>
+                </div>
+                <ul class="searchcapsule_comments">
+                  {% for c in a.children %}
+                  <li class="searchcapsule_comment">
+                    <span class="result_type result_type-{{c.element.element_type}}">
+                      <span>
+                        <a href="{{a.element.contextualized_link}}" class="searchcapsule_comment_title">{{ c.snippet|term_highlight:query_string }}</a>
+                        <span class="searchcapsule_comment_creator">{{ c.creator }}</span>
+                      </span>
+                    </span>
+                  </li>
+                  {% endfor %}
+                </ul>
               </li>
               {% endfor %}
             </ul>

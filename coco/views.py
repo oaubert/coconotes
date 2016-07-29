@@ -350,6 +350,13 @@ def search(request, **kw):
                          for el in generic_search(request, model, fields, 'q')
                          if el.can_access(request.user) ]
 
+    comments = {}
+    # Add annotations from matching comments to matching annotations
+    for comment in found[Comment]:
+        if not comment.parent_annotation in found[Annotation]:
+            found[Annotation].append(comment.parent_annotation)
+            comments.setdefault(comment.parent_annotation, []).append(comment)
+
     # Filter out quiz elements
     found[Annotation] = [ el
                           for el in found[Annotation]
@@ -379,7 +386,11 @@ def search(request, **kw):
                            'snippet': get_snippet(query, v, [ "description" ]),
                            'children': [ { 'element': a,
                                            'creator': a.creator if a.annotationtype.title == TYPE_NOTES else "",
-                                           'snippet': get_snippet(query, a) or a.title_or_description }
+                                           'snippet': get_snippet(query, a) or a.title_or_description,
+                                           'children': [ { 'element': c,
+                                                           'creator': c.creator,
+                                                           'snippet': get_snippet(query, c) or c.title_or_description }
+                                                         for c in comments.get(a, []) ] }
                                          for a in found[Annotation]
                                          if a.video == v ]
                          }
