@@ -186,7 +186,7 @@ STATIC_ROOT = APPROOT + 'static/'
 
 # Allauth configuration
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
-ACCOUNT_ADAPTER = 'coco.account_adapter.NoNewUsersAccountAdapter'
+#ACCOUNT_ADAPTER = 'coco.account_adapter.NoNewUsersAccountAdapter'
 
 if options.get('raven_dsn'):
     INSTALLED_APPS += ( 'raven.contrib.django.raven_compat', )
