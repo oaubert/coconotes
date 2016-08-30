@@ -30,6 +30,11 @@
         color: #444;
         font-size: 80%;
     }
+
+    .profile_consent a {
+        font-weight: bold;
+    }
+
   </style>
 {% endblock %}
 
@@ -66,6 +71,7 @@
       <h4>{{ user.get_full_name|default:user.username }}</h4>
       <span class="profile_email">{{ user.email }}</span>
       <div class="profile_description">{{ user.metadata.description }}</div>
+      <div class="profile_consent">Vous {% if user.metadata.config.consent == 'y' %}avez{% else %}n'avez pas{% endif %} accepté de participer à l'étude. Vous pouvez consulter le <a href="/accounts/profile/consent">formulaire de consentement.</a></div>
       {% if user.teacher_for.count %}
       <div class="teacher_info">
         {% blocktrans %}You are a teacher for the following chapters :{% endblocktrans %}

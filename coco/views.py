@@ -18,6 +18,7 @@ from django.contrib.auth.decorators import login_required, permission_required, 
 from django.views.decorators.http import require_http_methods
 from django.utils.decorators import method_decorator
 from django.utils.html import strip_tags, escape
+from django.utils.http import is_safe_url
 from django.views.generic import CreateView, UpdateView, DeleteView, RedirectView, DetailView, ListView, View
 from django.template.defaultfilters import pluralize
 from django.contrib.staticfiles.templatetags.staticfiles import static
@@ -31,7 +32,7 @@ from .serializers import ChannelSerializer, ChapterSerializer, ActivitySerialize
 from .serializers import AnnotationSerializer, CommentSerializer, ResourceSerializer, NewsitemSerializer, AnnotationTypeSerializer
 from .utils import generic_search, update_object_history, log_access
 from .permissions import IsOwnerOrReadOnly
-from .forms import AnnotationEditForm, CommentEditForm
+from .forms import AnnotationEditForm, CommentEditForm, ConsentEditForm
 from .templatetags.coco import parse_timecode
 from .actions import registry
 
@@ -781,6 +782,31 @@ class UserSettingForm(UserSetting):
             return HttpResponseRedirect(request.GET.get('next', ''))
         return HttpResponse(content="Invalid parameter", status=422)
 
+class ConsentForm(UserSetting):
+    """Display consent form
+    """
+    def get(self, request, name=None, **kw):
+        f = ConsentEditForm(user=request.user)
+        redirect_to = request.POST.get('next', request.GET.get('next', '/'))
+        redirect_to = (redirect_to
+                       if is_safe_url(redirect_to, request.get_host())
+                       else '/')
+        return render_to_response('account/consent_form.html', { 'form': f,
+                                                                 'next': redirect_to },
+                                  context_instance=RequestContext(request))
+
+    def post(self, request, name=None, **kw):
+        val = request.POST.get('consent')
+        if val in ('y', 'n'):
+            if request.user.metadata.config is None:
+                request.user.metadata.config = {}
+            request.user.metadata.config['consent'] = val
+            request.user.metadata.save()
+        redirect_to = request.POST.get('next', request.GET.get('next', '/'))
+        redirect_to = (redirect_to
+                       if is_safe_url(redirect_to, request.get_host())
+                       else '/')
+        return HttpResponseRedirect(redirect_to)
 
 class UserMetadataInline(InlineFormSet):
     model = UserMetadata

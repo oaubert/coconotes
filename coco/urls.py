@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.generic import ListView, DetailView, TemplateView
 import django.views.static
 from django.views.defaults import page_not_found
@@ -24,14 +24,19 @@ router.register(r'annotation', views.AnnotationViewSet)
 router.register(r'annotationtype', views.AnnotationTypeViewSet)
 router.register(r'news', views.NewsitemViewSet)
 
+# Check if consent config data is set
+consent_test = lambda f: login_required(user_passes_test(lambda u: u.metadata.config.get('consent', None),
+                                                         login_url="/accounts/profile/consent")(f))
+
 urlpatterns = [
-    url(r'^$', login_required(views.home), name='root'),
+    url(r'^$', consent_test(views.home), name='root'),
 
     url(r'^i18n/', include('django.conf.urls.i18n')),
 
     url(r'^about/', TemplateView.as_view(template_name="about.html"), name='about'),
     url(r'^accounts/profile/log$', views.log_action, name='profile-log'),
     url(r'^accounts/profile/edit/?$', views.UpdateProfile.as_view(), name='profile-update'),
+    url(r'^accounts/profile/consent$', views.ConsentForm.as_view(), name='profile-consent-form'),
     url(r'^accounts/profile/(?P<name>.+)/form$', views.UserSettingForm.as_view(), name='profile-setting-form'),
     url(r'^accounts/profile/(?P<name>.+)$', views.UserSetting.as_view(), name='profile-setting'),
     url(r'^accounts/profile', views.profile, name='profile'),
@@ -59,10 +64,10 @@ urlpatterns = [
         DetailView.as_view(model=Activity, context_object_name='activity'),
         name='view-activity-detail'),
     url(r'^video/$', ListView.as_view(model=Video), name='view-video-list'),
-    url(r'^video/(?P<pk>%s)/$' % uuid_regexp, login_required(views.VideoDetailView.as_view()), name='view-video-detail'),
-    url(r'^video/(?P<slug>[\w\d_-]+)/$', login_required(views.VideoDetailView.as_view()), name='view-video-detail'),
-    url(r'^video/(?P<pk>%s)/cinelab$' % uuid_regexp, login_required(views.cinelab), name='video-cinelab'),
-    url(r'^video/(?P<slug>[\w\d_-]+)/cinelab$', login_required(views.cinelab), name='video-cinelab-slug'),
+    url(r'^video/(?P<pk>%s)/$' % uuid_regexp, consent_test(views.VideoDetailView.as_view()), name='view-video-detail'),
+    url(r'^video/(?P<slug>[\w\d_-]+)/$', consent_test(views.VideoDetailView.as_view()), name='view-video-detail'),
+    url(r'^video/(?P<pk>%s)/cinelab$' % uuid_regexp, consent_test(views.cinelab), name='video-cinelab'),
+    url(r'^video/(?P<slug>[\w\d_-]+)/cinelab$', consent_test(views.cinelab), name='video-cinelab-slug'),
 
     url(r'^video/(?P<pk>%s)/info/$' % uuid_regexp,
         DetailView.as_view(model=Video, template_name='coco/video_info.html'),

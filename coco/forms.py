@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django import forms
 from django.utils.translation import ugettext as _
 
@@ -58,3 +59,20 @@ class CommentEditForm(forms.Form):
         self.fields['description'].widget.attrs['autofocus'] = ""
         if self.comment and not self.comment.title:
             self.fields['title'].widget.attrs['class'] = 'hide_element'
+
+class ConsentEditForm(forms.Form):
+    consent = forms.ChoiceField(choices=[ ('y', "J'accepte de participer à l'étude"),
+                                          ('n', "Je refuse que mes données soient utilisées dans le cadre de l'étude") ])
+
+    class Media:
+        css = {
+             'all': ('css/consent_edit.css',)
+         }
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super(ConsentEditForm, self).__init__(*args, **kwargs)
+        if self.user.metadata.config.get('consent', 'y') == 'y':
+            self.fields['consent'].initial = 'y'
+        else:
+            self.fields['consent'].initial = 'n'
