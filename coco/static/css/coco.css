@@ -699,7 +699,9 @@ div.pagetitle {
     text-decoration: none;
     color: inherit;
 }
-
+.capsule a:hover, .minicapsule a:hover, .infoblock a:hover {
+    text-decoration: underline;
+}
 .capsule h4, .capsule h4 a, .minicapsule h4, .infoblock h4 {
     font-family: Roboto;
     font-variant: small-caps;
