@@ -86,11 +86,9 @@
       <div class="tabcontent tab-plan selected">
         <div id="PlanContainer" class="EnrichedPlanContainer"></div>
       </div>
-      {% if user.is_authenticated %}
-      <div class="tabcontent tab-mynotes">
+      <div class="tabcontent tab-mynotes {% if not user.is_authenticated %}hide_element{% endif %}">
         <div id="OwnAnnotationsContainer" class="EnrichedPlanContainer"></div>
       </div>
-      {% endif %}
       <div class="tabcontent tab-public">
         <div id="PublicAnnotationsContainer" class="EnrichedPlanContainer"></div>
       </div>
