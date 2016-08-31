@@ -231,6 +231,81 @@ $(document).ready(function () {
         }
     }
 
+    function take_the_tour() {
+        var on_close = function () {
+            window.localStorage['coconotes-toured'] = true;
+        };
+        // Start the tour!
+        hopscotch.startTour({
+            id: "hello-coconotes",
+            steps: [
+                {
+                    title: l10n.tour_welcome_title,
+                    content: l10n.tour_welcome_content,
+                    target: "header",
+                    placement: "bottom"
+                },
+                {
+                    title: l10n.tour_video_title,
+                    content: l10n.tour_video_content,
+                    target: ".Ldt-SlideVideoPlayer",
+                    placement: "right"
+                },
+                {
+                    title: l10n.tour_timeline_title,
+                    content: l10n.tour_timeline_content,
+                    target: "#AnnotationBarContainer",
+                    placement: "top"
+                },
+                {
+                    title: l10n.tour_slides_title,
+                    content: l10n.tour_slides_content,
+                    target: ".tabcontent.tab-plan",
+                    placement: "left"
+                },
+                {
+                    title: l10n.tour_notetaking_title,
+                    content: l10n.tour_notetaking_content,
+                    target: ".Ldt-CocoCreateAnnotation-Form",
+                    placement: "top"
+                },
+                {
+                    title: l10n.tour_notes_title,
+                    content: l10n.tour_notes_content,
+                    target: ".tabcontent",
+                    placement: "left"
+                },
+                {
+                    title: l10n.tour_filter_title,
+                    content: l10n.tour_filter_content,
+                    target: ".Ldt-EnrichedPlan-Search-Input",
+                    placement: "top"
+                },
+                {
+                    title: l10n.tour_search_title,
+                    content: l10n.tour_search_content,
+                    target: "#form",
+                    placement: "bottom"
+                },
+                {
+                    title: l10n.tour_end_title,
+                    content: l10n.tour_end_content,
+                    target: ".profilemenu_help",
+                    placement: "bottom"
+                }
+
+            ],
+            showPrevButton: true,
+            zindex: 950,
+            showCloseButton: true,
+            onStart: function () {
+                // $("#take_the_tour").hide();
+            },
+            onEnd: on_close,
+            onClose: on_close
+        });
+    };
+
     _myPlayer.on("trace-ready", function () {
         var tracer = tracemanager.get_trace("test");
 
@@ -278,7 +353,9 @@ $(document).ready(function () {
                 "url": document.URL
             });
         });
-
+        if (!window.localStorage['coconotes-toured']) {
+            window.setTimeout(take_the_tour, 2000);
+        };
     });
     document._myPlayer = _myPlayer;
 
@@ -547,5 +624,9 @@ $(document).ready(function () {
                 });
             }
         });
+    });
+    $('.profilemenu_help_tour').on("click", function () {
+        $("#profilemenu_help_menu")[0].checked = false;
+        take_the_tour();
     });
 });

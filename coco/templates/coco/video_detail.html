@@ -11,6 +11,7 @@
 {% endblock %}
 {% block extra_head %}
 <link rel="stylesheet" href="{% static "libs/jquery.touchsplitter.css" %}">
+<link rel="stylesheet" href="{% static "css/hopscotch.css" %}">
 {% endblock %}
 
 {% block extrajs %}
@@ -26,12 +27,33 @@
         username: "{{user.username}}",
         is_authenticated: {% if user.is_authenticated %}true{% else %}false{% endif %}
     };
+  var l10n = {
+      tour_welcome_title: "{% blocktrans %}Welcome{% endblocktrans %}",
+      tour_welcome_content: "{% blocktrans %}Welcome on this video enriched by the COCo project. You can play the video, navigate using associated notes and take your own notes.{% endblocktrans %}",
+      tour_video_title: "{% blocktrans %}Video and presentation{% endblocktrans %}",
+      tour_video_content: "{% blocktrans %}You will find here the video recording, synchronized with the presentation slides. You can switch between video or slides as main view. There are shortcuts to control the video player (see help).{% endblocktrans %}",
+      tour_timeline_title: "{% blocktrans %}Slides - timeline{% endblocktrans %}",
+      tour_timeline_content: "{% blocktrans %}Slides are also accessible via the timeline, which allows to perceive their duration...{% endblocktrans %}",
+      tour_slides_title: "{% blocktrans %}Slides - tab{% endblocktrans %}",
+      tour_slides_content: "{% blocktrans %}... or via the right column Plan tab{% endblocktrans %}",
+      tour_notetaking_title: "{% blocktrans %}Notetaking{% endblocktrans %}",
+      tour_notetaking_content: "{% blocktrans %}To take a note, synchronized with the video, enter the text in this area and validate with Enter.{% endblocktrans %}",
+      tour_notes_title: "{% blocktrans %}Notes - tab{% endblocktrans %}",
+      tour_notes_content: "{% blocktrans %}You personal notes will be presented in the tab at the right of the video. You can choose to share them with group members or with the whole platform audience (public).{% endblocktrans %}",
+      tour_filter_title: "{% blocktrans %}Filter{% endblocktrans %}",
+      tour_filter_content: "{% blocktrans %}The filter field allows to easily locate contents and moments from the current video.{% endblocktrans %}",
+      tour_search_title: "{% blocktrans %}Search{% endblocktrans %}",
+      tour_search_content: "{% blocktrans %}The search field searches for text in slides and notes for all videos.{% endblocktrans %}",
+      tour_end_title: "{% blocktrans %}Your turn!{% endblocktrans %}",
+      tour_end_content: "{% blocktrans %}You can take this tour again and see more help in the help menu. Enjoy the platform!{% endblocktrans %}",
+  };
 </script>
 <script type="text/javascript" src="{% static "metadataplayer/LdtPlayer-core.js" %}"></script>
 <script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
 <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
 <script type="text/javascript" src="{% static "libs/jquery.touchsplitter.js" %}"></script>
 <script type="text/javascript" src="{% static "js/js.cookie.js" %}"></script>
+<script type="text/javascript" src="{% static "js/hopscotch.js" %}"></script>
 <script type="text/javascript" src="{% static "js/coco.js" %}"></script>
 {% endblock %}
 

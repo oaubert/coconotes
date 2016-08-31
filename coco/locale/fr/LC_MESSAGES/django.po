@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-06 18:05+0200\n"
-"PO-Revision-Date: 2016-07-06 18:06+0200\n"
+"POT-Creation-Date: 2016-08-31 15:59+0200\n"
+"PO-Revision-Date: 2016-08-31 16:00+0200\n"
 "Last-Translator: Olivier Aubert <olivier.aubert@univ-nantes.fr>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -57,7 +57,7 @@ msgstr "publique"
 msgid "Private"
 msgstr "Privé"
 
-#: models.py:82 templates/coco/video_detail.html:82
+#: models.py:82 templates/coco/video_detail.html:104
 #: templates/group_activity.html:32 templates/group_activity.html.py:34
 #: templates/group_detail.html:11 templates/group_detail.html.py:13
 msgid "Group"
@@ -437,52 +437,124 @@ msgstr "Pas de nouvelles, bonne nouvelle."
 msgid "Add news item"
 msgstr "Ajouter une nouvelle"
 
+#: templates/coco/video_detail.html:31 templates/home.html:16
+msgid "Welcome"
+msgstr "Bienvenue"
+
+#: templates/coco/video_detail.html:32
+msgid "Welcome on this video enriched by the COCo project. You can play the video, navigate using associated notes and take your own notes."
+msgstr "Bienvenue sur cette vidéo enrichie par le projet COCo. Vous pouvez jouer la vidéo, consulter les notes associées et prendre vos propres notes."
+
+#: templates/coco/video_detail.html:33
+msgid "Video and presentation"
+msgstr "Vidéo et présentation"
+
+#: templates/coco/video_detail.html:34
+msgid "You will find here the video recording, synchronized with the presentation slides. You can switch between video or slides as main view. There are shortcuts to control the video player (see help)."
+msgstr "Vous pouvez voir ici l'enregistrement vidéo, synchronisé avec les transparents de présentation. Vous pouvez choisir d'afficher de préférence la vidéo ou les transparents comme vue principale. Il y a des raccourcis pour contrôler le lecteur vidéo (regardez l'aide)."
+
+#: templates/coco/video_detail.html:35
+msgid "Slides - timeline"
+msgstr "Présentation - timeline"
+
+#: templates/coco/video_detail.html:36
+msgid "Slides are also accessible via the timeline, which allows to perceive their duration..."
+msgstr "Les transparents sont également accessibles via leur présentation dans la timeline, ce qui permet d'en percevoir la durée..."
+
+#: templates/coco/video_detail.html:37
+msgid "Slides - tab"
+msgstr "Présentation - onglet"
+
+#: templates/coco/video_detail.html:38
+msgid "... or via the right column Plan tab"
+msgstr "... ou encore via l'onglet Plan"
+
+#: templates/coco/video_detail.html:39
+msgid "Notetaking"
+msgstr "Saisie des notes"
+
+#: templates/coco/video_detail.html:40
+msgid "To take a note, synchronized with the video, enter the text in this area and validate with Enter."
+msgstr "Pour saisir une note, synchronisée avec la vidéo, saisissez le texte dans cette zone et validez avec Entrée."
+
+#: templates/coco/video_detail.html:41
+msgid "Notes - tab"
+msgstr "Notes - onglet"
+
+#: templates/coco/video_detail.html:42
+msgid "You personal notes will be presented in the tab at the right of the video. You can choose to share them with group members or with the whole platform audience (public)."
+msgstr "Vos notes personnelles seront présentées dans l'onglet Notes perso. à droite de la vidéo. Vous pouvez ensuite les partager avec les membres du groupe ou plus largement (public)"
+
 #: templates/coco/video_detail.html:43
+msgid "Filter"
+msgstr "Filtre"
+
+#: templates/coco/video_detail.html:44
+msgid "The filter field allows to easily locate contents and moments from the current video."
+msgstr "Le champ de filtrage permet de localiser facilement des contenus et des moments dans la vidéo courante."
+
+#: templates/coco/video_detail.html:45 templates/search.html:9
+msgid "Search"
+msgstr "Recherche"
+
+#: templates/coco/video_detail.html:46
+msgid "The search field searches for text in slides and notes for all videos."
+msgstr "Le champ de recherche recherche du texte dans les transparents et les notes de toutes les vidéos."
+
+#: templates/coco/video_detail.html:47
+msgid "Your turn!"
+msgstr "À vous de jouer !"
+
+#: templates/coco/video_detail.html:48
+msgid "You can take this tour again and see more help in the help menu. Enjoy the platform!"
+msgstr "Vous pouvez voir ce tour à nouveau et consulter de l'aide via le menu Aide. Bonne utilisation de la plateforme !"
+
+#: templates/coco/video_detail.html:65
 msgid "This platform is a product of the <a title=\"Projet COCo - CominOpenCourseware\" href=\"https://comin-ocw.org/\">COCo project</a>. Please see our website for overall information."
 msgstr "Cette plateforme est réalisée dans le cadre du <a title=\"Projet COCo - CominOpenCourseware\" href=\"https://comin-ocw.org/\">projet COCo</a>. Consultez notre site web pour plus de détails."
 
-#: templates/coco/video_detail.html:44
+#: templates/coco/video_detail.html:66
 msgid "Some usage information:"
 msgstr "Quelques informations d'utilisation :"
 
-#: templates/coco/video_detail.html:46
+#: templates/coco/video_detail.html:68
 msgid "There are keyboard shortcuts to control the video player: Control-Space toggles play/pause, Control-left arrow and Control-right arrow move backwards/forward in the video."
 msgstr "Le lecteur vidéo peut être contrôlé via des raccourcis clavier:  Contrôle-espace pour jouer/mettre en pause, Contrôle-flèche à gauche et Contrôle-flèche à droite pour se déplacer dans la vidéo."
 
-#: templates/coco/video_detail.html:47
+#: templates/coco/video_detail.html:69
 msgid "If you pause the video, the page URL is updated to reflect your current position (using the <a href=\"http://www.w3.org/TR/media-frags/‎\">MediaFragment</a> syntax). You can then bookmark it, copy it in an e-mail..."
 msgstr "Si vous mettez la vidéo en pause, l'URL de la page sera mise à jour pour correspondre à votre position actuelle (en utilisant la syntaxe <a href=\"http://www.w3.org/TR/media-frags/‎\">MediaFragment</a>). Vous pouvez alors la copier en signet, l'échanger par mail..."
 
-#: templates/coco/video_detail.html:76 templates/coco/video_detail.html:78
+#: templates/coco/video_detail.html:98 templates/coco/video_detail.html:100
 msgid "Enter a personal note"
 msgstr "Entrez une note personnelle"
 
-#: templates/coco/video_detail.html:76
+#: templates/coco/video_detail.html:98
 msgid "Plan"
 msgstr "Plan"
 
-#: templates/coco/video_detail.html:78
+#: templates/coco/video_detail.html:100
 msgid "Own notes"
 msgstr "Notes perso."
 
-#: templates/coco/video_detail.html:80
+#: templates/coco/video_detail.html:102
 msgid "Share a note with all users"
 msgstr "Partagez une note avec tous les utilisateurs"
 
-#: templates/coco/video_detail.html:80
+#: templates/coco/video_detail.html:102
 msgid "Public notes"
 msgstr "Notes publiques"
 
-#: templates/coco/video_detail.html:82
+#: templates/coco/video_detail.html:104
 #, python-format
 msgid "Share a note with group %(groupname)s"
 msgstr "Partagez une note avec le groupe %(groupname)s"
 
-#: templates/coco/video_detail.html:103
+#: templates/coco/video_detail.html:123
 msgid "Select visible tabs"
 msgstr "Sélectionner les onglets visibles"
 
-#: templates/coco/video_detail.html:106
+#: templates/coco/video_detail.html:126
 #, python-format
 msgid "Please <a href=\"/accounts/login/?next=%(currenturl)s\">log in</a> to be able to comment on the video."
 msgstr "Veuillez vous <a href=\"/accounts/login/?next=%(currenturl)s\">connecter</a> pour pouvoir commenter la vidéo."
@@ -607,10 +679,6 @@ msgstr "Vidéos les plus annotées"
 #: templates/group_detail.html:89
 msgid "notes"
 msgstr "notes"
-
-#: templates/home.html:16
-msgid "Welcome"
-msgstr "Bienvenue"
 
 #: templates/home.html:20
 msgid ""
@@ -741,10 +809,6 @@ msgstr "vous avez modifié la note"
 msgid "you created the note"
 msgstr "vous avez créé la note"
 
-#: templates/search.html:9
-msgid "Search"
-msgstr "Recherche"
-
 #: templates/search.html:12
 msgid "COCo project"
 msgstr "Projet COCo"
@@ -753,15 +817,15 @@ msgstr "Projet COCo"
 msgid "search for"
 msgstr "recherche de"
 
-#: templates/search.html:203
+#: templates/search.html:218
 msgid "Results"
 msgstr "Résultats"
 
-#: templates/search.html:206
+#: templates/search.html:221
 msgid "No results for "
 msgstr "Pas de résultat pour "
 
-#: templates/search.html:222 templates/search.html.py:250
+#: templates/search.html:237 templates/search.html.py:265
 msgid "Channel:"
 msgstr "Chaîne:"
 
