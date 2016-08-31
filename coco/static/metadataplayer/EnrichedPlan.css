@@ -478,6 +478,7 @@ label:hover:before {
     flex-direction: column;
     width: 100%;
     padding-top: 10px;
+    padding-left: 1em;
 }
 
 .Ldt-EnrichedPlan-Comment-New.Ldt-EnrichedPlan-Expanded {

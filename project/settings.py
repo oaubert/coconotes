@@ -183,6 +183,7 @@ STATIC_ROOT = APPROOT + 'static/'
 
 # Allauth configuration
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+#ACCOUNT_ADAPTER = 'coco.account_adapter.NoNewUsersAccountAdapter'
 
 CAS_SERVER_URL = 'https://cas-ha.univ-nantes.fr/esup-cas-server/'
 CAS_FORCE_CHANGE_USERNAME_CASE = 'lower'

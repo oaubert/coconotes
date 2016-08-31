@@ -138,7 +138,7 @@ IriSP.Widgets.EnrichedPlan.prototype.annotationTemplate =
       '<div title="{{ begin }} - {{ atitle }}" data-id="{{ id }}" data-timecode="{{begin_ms}}" class="Ldt-EnrichedPlan-SlideItem Ldt-EnrichedPlan-Note {{category}} {{filtered}} Ldt-EnrichedPlan-{{visibility}} {{#featured}}Ldt-EnrichedPlan-Note-Featured{{/featured}} Ldt-TraceMe" trace-info="annotation-id:{{id}}, media-id:{{media_id}}"> \
   <div class="Ldt-EnrichedPlan-NoteTimecode">{{ begin }}</div>\
   <a class="Ldt-EnrichedPlan-Note-Link" href="{{ url }}"><span class="Ldt-EnrichedPlan-Note-Text">{{{ text }}}</span></a> \
-  <span class="Ldt-EnrichedPlan-Note-Author">{{ author }}</span> \
+  <span class="Ldt-EnrichedPlan-Note-Author">{{ creator }}</span> \
   {{#can_edit}}<span class="Ldt-EnrichedPlan-EditControl">\
     {{#is_admin}}<span data-id="{{id}}" title="{{l10n.toggle_featured}}" class="Ldt-EnrichedPlan-EditControl-Featured"></span>{{/is_admin}}\
     <span data-id="{{id}}" class="Ldt-EnrichedPlan-EditControl-Edit"></span>\
@@ -152,9 +152,9 @@ IriSP.Widgets.EnrichedPlan.prototype.annotationTemplate =
   {{/comments.length}}\
   <div class="Ldt-EnrichedPlan-Comments" data-id="{{id}}" data-length="{{comments.length}}">\
     {{#comments}}\
-    <div class="Ldt-EnrichedPlan-Comment" data-id="{{id}}">\
+    <div class="Ldt-EnrichedPlan-Comment" data-id="{{id}}" data-date="{{modified}}" data-creator="{{creator}}">\
       <span class="Ldt-EnrichedPlan-Comment-Description">{{description}}</span>\
-      <span class="Ldt-EnrichedPlan-Comment-Date">{{modified}}</span>\
+      <span class="Ldt-EnrichedPlan-Comment-Date">{{modified|slice:10}}</span>\
       <span class="Ldt-EnrichedPlan-Comment-Author">{{creator}}</span>\
     </div>\
     {{/comments}}\
@@ -477,7 +477,7 @@ IriSP.Widgets.EnrichedPlan.prototype.update_content = function () {
                     media_id: a.media.id,
                     text: IriSP.textFieldHtml(a.getTitleOrDescription()),
                     url: document.location.href.replace(/#.*$/, '') + '#id=' + a.id + '&t=' + (a.begin / 1000.0),
-                    author: a.creator,
+                    creator: a.creator,
                     begin: a.begin.toString(),
                     begin_ms: a.begin.milliseconds,
                     end_ms: a.end.milliseconds,
