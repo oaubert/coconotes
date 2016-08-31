@@ -240,53 +240,60 @@ $(document).ready(function () {
             id: "hello-coconotes",
             steps: [
                 {
-                    title: "Welcome",
-                    content: "Welcome on this video enriched by the COCo project. You can play the video, navigate using associated notes and take your own notes.",
+                    title: l10n.tour_welcome_title,
+                    content: l10n.tour_welcome_content,
                     target: "header",
                     placement: "bottom"
                 },
                 {
-                    title: "Video and presentation",
-                    content: "You will find here the video recording, synchronized with the presentation slides. You can switch between video or slides as main view.",
+                    title: l10n.tour_video_title,
+                    content: l10n.tour_video_content,
                     target: ".Ldt-SlideVideoPlayer",
                     placement: "right"
                 },
                 {
-                    title: "Slides - timeline",
-                    content: "Slides are also accessible via the timeline, which allows to perceive their duration...",
+                    title: l10n.tour_timeline_title,
+                    content: l10n.tour_timeline_content,
                     target: "#AnnotationBarContainer",
                     placement: "top"
                 },
                 {
-                    title: "Slides - tab",
-                    content: "... or via the right column Plan tab",
+                    title: l10n.tour_slides_title,
+                    content: l10n.tour_slides_content,
                     target: ".tabcontent.tab-plan",
                     placement: "left"
                 },
                 {
-                    title: "Notetaking",
-                    content: "To take a note, synchronized with the video, enter the text in this area and validate with Enter.",
+                    title: l10n.tour_notetaking_title,
+                    content: l10n.tour_notetaking_content,
                     target: ".Ldt-CocoCreateAnnotation-Form",
                     placement: "top"
                 },
                 {
-                    title: "Notes - tab",
-                    content: "You personal notes will be presented in the tab at the right of the video. You can choose to share them with group members or with the whole platform audience (public).",
+                    title: l10n.tour_notes_title,
+                    content: l10n.tour_notes_content,
                     target: ".tabcontent",
                     placement: "left"
                 },
                 {
-                    title: "Filter",
-                    content: "The filter field allows to easily locate contents and moments from the current video.",
+                    title: l10n.tour_filter_title,
+                    content: l10n.tour_filter_content,
                     target: ".Ldt-EnrichedPlan-Search-Input",
                     placement: "top"
                 },
                 {
-                    title: "Search",
-                    content: "The search field searches for text in slides and notes for all videos.",
+                    title: l10n.tour_search_title,
+                    content: l10n.tour_search_content,
                     target: "#form",
                     placement: "bottom"
+                },
+                {
+                    title: l10n.tour_end_title,
+                    content: l10n.tour_end_content,
+                    target: ".profilemenu_help",
+                    placement: "bottom"
                 }
+
             ],
             showPrevButton: true,
             zindex: 950,
