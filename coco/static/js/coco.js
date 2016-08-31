@@ -231,6 +231,74 @@ $(document).ready(function () {
         }
     }
 
+    function take_the_tour() {
+        var on_close = function () {
+            window.localStorage['coconotes-toured'] = true;
+        };
+        // Start the tour!
+        hopscotch.startTour({
+            id: "hello-coconotes",
+            steps: [
+                {
+                    title: "Welcome",
+                    content: "Welcome on this video enriched by the COCo project. You can play the video, navigate using associated notes and take your own notes.",
+                    target: "header",
+                    placement: "bottom"
+                },
+                {
+                    title: "Video and presentation",
+                    content: "You will find here the video recording, synchronized with the presentation slides. You can switch between video or slides as main view.",
+                    target: ".Ldt-SlideVideoPlayer",
+                    placement: "right"
+                },
+                {
+                    title: "Slides - timeline",
+                    content: "Slides are also accessible via the timeline, which allows to perceive their duration...",
+                    target: "#AnnotationBarContainer",
+                    placement: "top"
+                },
+                {
+                    title: "Slides - tab",
+                    content: "... or via the right column Plan tab",
+                    target: ".tabcontent.tab-plan",
+                    placement: "left"
+                },
+                {
+                    title: "Notetaking",
+                    content: "To take a note, synchronized with the video, enter the text in this area and validate with Enter.",
+                    target: ".Ldt-CocoCreateAnnotation-Form",
+                    placement: "top"
+                },
+                {
+                    title: "Notes - tab",
+                    content: "You personal notes will be presented in the tab at the right of the video. You can choose to share them with group members or with the whole platform audience (public).",
+                    target: ".tabcontent",
+                    placement: "left"
+                },
+                {
+                    title: "Filter",
+                    content: "The filter field allows to easily locate contents and moments from the current video.",
+                    target: ".Ldt-EnrichedPlan-Search-Input",
+                    placement: "top"
+                },
+                {
+                    title: "Search",
+                    content: "The search field searches for text in slides and notes for all videos.",
+                    target: "#form",
+                    placement: "bottom"
+                }
+            ],
+            showPrevButton: true,
+            zindex: 950,
+            showCloseButton: true,
+            onStart: function () {
+                // $("#take_the_tour").hide();
+            },
+            onEnd: on_close,
+            onClose: on_close
+        });
+    };
+
     _myPlayer.on("trace-ready", function () {
         var tracer = tracemanager.get_trace("test");
 
@@ -278,7 +346,9 @@ $(document).ready(function () {
                 "url": document.URL
             });
         });
-
+        if (!window.localStorage['coconotes-toured']) {
+            window.setTimeout(take_the_tour, 2000);
+        };
     });
     document._myPlayer = _myPlayer;
 
@@ -547,5 +617,9 @@ $(document).ready(function () {
                 });
             }
         });
+    });
+    $('.profilemenu_help_tour').on("click", function () {
+        $("#profilemenu_help_menu")[0].checked = false;
+        take_the_tour();
     });
 });
