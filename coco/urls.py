@@ -3,6 +3,7 @@ from django.conf import settings
 from django.views.generic import ListView, DetailView, TemplateView
 import django.views.static
 from django.views.defaults import page_not_found
+from django.contrib.admin.views.decorators import staff_member_required
 
 from rest_framework.routers import DefaultRouter
 from ajax_select import urls as ajax_select_urls
@@ -101,7 +102,7 @@ urlpatterns = [
     url(r'^comment/(?P<pk>[\w\d_-]+)/$', views.CommentDetailView.as_view(), name='view-comment-detail'),
     url(r'^comment/(?P<pk>[\w\d_-]+)/edit/$', views.comment_edit, name='view-comment-update'),
 
-    url(r'^actions/dashboard$', TemplateView.as_view(template_name="actstream/dashboard.html"), name='access-log'),
+    url(r'^actions/dashboard$', staff_member_required(TemplateView.as_view(template_name="actstream/dashboard.html")), name='access-log'),
 
     # REST API
     url(r'^api/v1/annotation_add$', views.annotation_add, name='api-annotation-add'),
