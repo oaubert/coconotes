@@ -17,8 +17,7 @@ class AnnotationEditForm(forms.Form):
 
     def sharing_choices(self, user):
         return [('private', _("private"))] + \
-            [('shared-%s' % group.id, _("shared with %s") % group.name) for group in user.groups.all()] + \
-            [('public', _("public"))]
+            [('shared-%s' % group.id, _("shared with %s") % group.name) for group in user.groups.all()]
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
@@ -47,8 +46,7 @@ class CommentEditForm(forms.Form):
 
     def sharing_choices(self, user):
         return [('private', _("private"))] + \
-            [('shared-%s' % group.id, _("shared with %s") % group.name) for group in user.groups.all()] + \
-            [('public', _("public"))]
+            [('shared-%s' % group.id, _("shared with %s") % group.name) for group in user.groups.all()]
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')

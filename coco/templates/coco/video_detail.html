@@ -99,7 +99,6 @@
       {% if user.is_authenticated %}
       <li class="tab-mynotes" data-placeholder="{% blocktrans %}Enter a personal note{% endblocktrans %}">{% trans "Own notes" %}</li>
       {% endif %}
-      <li class="tab-public" data-group-id="-1" data-placeholder="{% blocktrans %}Share a note with all users{% endblocktrans %}">{% trans "Public notes" %}</li>
       {% for g in groups %}
       <li class="tab-group-{{g.id}}" data-group-id="{{g.id}}" data-group-name="{{g.name}}" data-placeholder="{% blocktrans with groupname=g.name %}Share a note with group {{groupname}}{% endblocktrans %}">{% trans "Group" %} {{ g.name }}</li>
       {% endfor %}
@@ -110,9 +109,6 @@
       </div>
       <div class="tabcontent tab-mynotes {% if not user.is_authenticated %}hide_element{% endif %}">
         <div id="OwnAnnotationsContainer" class="EnrichedPlanContainer"></div>
-      </div>
-      <div class="tabcontent tab-public">
-        <div id="PublicAnnotationsContainer" class="EnrichedPlanContainer"></div>
       </div>
       {% for g in groups %}
       <div class="tabcontent tab-group-{{g.id}}">
