@@ -291,7 +291,7 @@ $(document).ready(function () {
                     title: l10n.tour_end_title,
                     content: l10n.tour_end_content,
                     target: ".profilemenu_help",
-                    placement: "bottom"
+                    placement: "left"
                 }
 
             ],
