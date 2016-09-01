@@ -97,7 +97,7 @@
     <ul class="tabnames">
       <li class="tab-plan selected" data-placeholder="{% blocktrans %}Enter a personal note{% endblocktrans %}">{% trans "Plan" %}</li>
       {% if user.is_authenticated %}
-      <li class="tab-mynotes" data-placeholder="{% blocktrans %}Enter a personal note{% endblocktrans %}">{% trans "Own notes" %}</li>
+      <li class="tab-mynotes" data-placeholder="{% blocktrans %}Enter a personal note{% endblocktrans %}">{% trans "My notes" %}</li>
       {% endif %}
       {% for g in groups %}
       <li class="tab-group-{{g.id}}" data-group-id="{{g.id}}" data-group-name="{{g.name}}" data-placeholder="{% blocktrans with groupname=g.name %}Share a note with group {{groupname}}{% endblocktrans %}">{% trans "Group" %} {{ g.name }}</li>
