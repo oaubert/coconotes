@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-31 15:59+0200\n"
+"POT-Creation-Date: 2016-09-01 16:42+0200\n"
 "PO-Revision-Date: 2016-08-31 16:00+0200\n"
 "Last-Translator: Olivier Aubert <olivier.aubert@univ-nantes.fr>\n"
 "Language: fr\n"
@@ -533,9 +533,9 @@ msgstr "Entrez une note personnelle"
 msgid "Plan"
 msgstr "Plan"
 
-#: templates/coco/video_detail.html:100
-msgid "Own notes"
-msgstr "Notes perso."
+#: templates/coco/video_detail.html:100 templates/profile.html:157
+msgid "My notes"
+msgstr "Mes notes"
 
 #: templates/coco/video_detail.html:102
 msgid "Share a note with all users"
@@ -624,7 +624,7 @@ msgid "%(user)s created the annotation"
 msgstr "%(user)s a créé l'annotation"
 
 #: templates/group_activity.html:88 templates/group_detail.html:57
-#: templates/profile.html:118 templates/profile.html.py:197
+#: templates/profile.html:118 templates/profile.html.py:205
 msgid "on"
 msgstr "sur"
 
@@ -663,7 +663,7 @@ msgstr "par"
 #: templates/group_detail.html:63 templates/group_detail.html.py:78
 #: templates/group_detail.html:92 templates/profile.html:123
 #: templates/profile.html.py:137 templates/profile.html:151
-#: templates/profile.html.py:201
+#: templates/profile.html.py:209
 msgid "You do not have much activity yet."
 msgstr "Vous n'avez pas encore d'activité."
 
@@ -761,10 +761,6 @@ msgstr "Voir tous mes groupes"
 msgid "Latest viewed videos"
 msgstr "Dernières vidéos vues"
 
-#: templates/profile.html:157
-msgid "My notes"
-msgstr "Mes notes"
-
 #: templates/profile.html:166
 #, python-format
 msgctxt "profile"
@@ -773,7 +769,7 @@ msgid_plural "%(count)s notes"
 msgstr[0] "%(count)s note"
 msgstr[1] "%(count)s notes"
 
-#: templates/profile.html:167
+#: templates/profile.html:169
 #, python-format
 msgctxt "profile"
 msgid "%(count)s private"
@@ -781,7 +777,7 @@ msgid_plural "%(count)s private"
 msgstr[0] "%(count)s privée"
 msgstr[1] "%(count)s privées"
 
-#: templates/profile.html:168
+#: templates/profile.html:172
 #, python-format
 msgctxt "profile"
 msgid "%(count)s group"
@@ -789,7 +785,7 @@ msgid_plural "%(count)s group"
 msgstr[0] "%(count)s de groupe"
 msgstr[1] "%(count)s de groupe"
 
-#: templates/profile.html:169
+#: templates/profile.html:175
 #, python-format
 msgctxt "profile"
 msgid "%(count)s public"
@@ -797,15 +793,15 @@ msgid_plural "%(count)s public"
 msgstr[0] "%(count)s publique"
 msgstr[1] "%(count)s publiques"
 
-#: templates/profile.html:182
+#: templates/profile.html:190
 msgid "My recent activity"
 msgstr "Mon activité récente"
 
-#: templates/profile.html:192
+#: templates/profile.html:200
 msgid "you modified the note"
 msgstr "vous avez modifié la note"
 
-#: templates/profile.html:194
+#: templates/profile.html:202
 msgid "you created the note"
 msgstr "vous avez créé la note"
 
@@ -828,6 +824,9 @@ msgstr "Pas de résultat pour "
 #: templates/search.html:237 templates/search.html.py:265
 msgid "Channel:"
 msgstr "Chaîne:"
+
+#~ msgid "Own notes"
+#~ msgstr "Notes perso."
 
 #~ msgid ""
 #~ "\n"
