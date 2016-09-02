@@ -8,7 +8,7 @@
 {% block extra_head %}
 <style type="text/css">
   .consent_category {
-    font-weight: bold;
+      font-weight: bold;
   }
   .consent_text p {
       padding-top: 1em;
@@ -26,6 +26,38 @@
   h1, h2 {
       text-align: center;
   }
+  fieldset {
+      margin-top: 1em;
+      border: none;
+      max-width: 60em;
+  }
+  label {
+      display: flex;
+      flex-direction: row;
+  }
+  label input {
+      order: -1;
+  }
+  .control-group {
+      margin-top: 1em;
+  }
+  .controls {
+      margin-left: 2em;
+  }
+  #submit-id-submit {
+      font-weight: bold;
+      font-size: 18px;
+      width: 100%;
+      color: #fff;
+      border: none;
+      background-color: #000;
+      text-transform: uppercase;
+      padding: 4px;
+      margin: 1em;
+  }
+  .asteriskField {
+      display: none;
+  }
 </style>
 {% endblock %}
 
@@ -35,9 +67,10 @@
     <img src="{% static "img/logo_un.png" %}">
     <img src="{% static "img/logo_coco.svg" %}">
   </div>
+<p>Vous ne pourrez accéder à la plate-forme qu'après avoir indiqué si vous consentez ou non à participer à l'étude.</p>
   <h1>Formulaire de consentement éclairé</h2>
   <h2>Étude COCo - SPIN Santé</h3>
-  <p>En signant ce formulaire, je déclare que je consens volontairement à participer à l’étude « COCo - SPIN Santé », piloté par les Professeurs David Laplaud et Yannick Prié, dont le projet a été approuvé par les responsables académiques de l’université de Nantes. J’ai par ailleurs pris connaissance de toutes les informations données aux participants de la recherche et portant sur :</p>
+  <p>En validant ce formulaire, je déclare que je consens volontairement à participer à l’étude « COCo - SPIN Santé », piloté par les Professeurs David Laplaud et Yannick Prié, dont le projet a été approuvé par les responsables académiques de l’université de Nantes. J’ai par ailleurs pris connaissance de toutes les informations données aux participants de la recherche et portant sur :</p>
   <p><span class="consent_category">Objectifs</span> | Disposer de nouveaux outils de travail et de collaboration entre étudiants afin de compléter un dispositif pédagogique en place et de favoriser les interactions grâce aux annotations vidéo. Étudier l’utilisabilité et l’utilité de la plateforme COCoNotes, ainsi qu’explorer l’impact de l’anonymat/non-anonymat sur les pratiques.</p>
   <p><span class="consent_category">Méthode</span> | Les liens Madoc  pour chacune des ressources vidéo proposées pointent vers les vidéos dans la plate-forme COCoNotes. Les étudiants accèdent à chaque vidéo et utilisent l’outil d’annotation partagé et répondent à des QCM, proposés au fil de l’eau. Ils sont répartis dans des groupes distincts : un groupe en situation d’anonymat (pseudonyme affecté au hasard), un autre en accès nominatif. Les enseignants accèdent à COCoNotes pour consulter sur un tableau de bord les notes partagées, les statistiques d’usage des vidéo et les scores aux QCM.</p>
   <p><span class="consent_category">Durée</span> | L’expérimentation se déroulera de septembre à décembre 2016.</p>
@@ -47,21 +80,25 @@
   <p><span class="consent_category">Consentement</span> | Après avoir discuté librement et obtenu réponse à toutes mes questions, j’accepte de participer à cette étude. Mon consentement ne décharge pas les organisateurs de la recherche de leurs responsabilités. Je conserve tous mes droits garantis par la loi. J’ai bien compris que si j'ai la moindre question à propos de l'étude, je peux contacter les responsables de ce projet (Pr. David Laplaud  - david.laplaud@univ-nantes.fr / Pr.  Yannick Prié - yannick.prie@univ-nantes.fr)</p>
 </div>
 
-<form action="{% url 'profile-consent-form' %}" class="consent_edit_form" method="post">
-  {% csrf_token %}
-  {{form|crispy}}
-  <div class="tabconfig_edit_form_validate">
-    <input type="submit" value="{% blocktrans %}Validate{% endblocktrans %}" />
-  </div>
-  {% if next %}
-  <input type="hidden" name="next" value="{{ next }}" />
-  {% endif %}
-  {% if form.errors %}
-  <ol>
-      {% for error in form.errors %}
-      <li><strong>{{ error|escape }}</strong></li>
-      {% endfor %}
-    </ol>
-    {% endif %}
-</form>
+{% crispy form %}
+
+<script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+<script type="text/javascript">
+  /* Hide form fields only if javascript is available. */
+  $(".consent_edit_form fieldset").hide();
+  $("#submit-id-submit").hide();
+  $(".consent_edit_form fieldset:nth-of-type(1)").show();
+
+  $("#id_consent_1").on("change", function () {
+     $("#submit-id-submit").show();
+     $(".consent_edit_form fieldset").show().first().each(function () {
+          this.scrollIntoView(true);
+     });
+  });
+  $("#id_consent_2").on("change", function () {
+     $("#submit-id-submit").show().each(function () {
+          this.scrollIntoView(true);
+      });
+  });
+</script>
 {% endblock %}

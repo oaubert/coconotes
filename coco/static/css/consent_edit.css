@@ -1,8 +1,4 @@
 /* */
-#div_id_consent {
-    text-align: right;
+.consent_edit_form {
 }
 
-#div_id_consent label {
-    display: none;
-}

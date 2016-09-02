@@ -797,11 +797,11 @@ class ConsentForm(UserSetting):
     """Display consent form
     """
     def get(self, request, name=None, **kw):
-        f = ConsentEditForm(user=request.user)
         redirect_to = request.POST.get('next', request.GET.get('next', '/'))
         redirect_to = (redirect_to
                        if is_safe_url(redirect_to, request.get_host())
                        else '/')
+        f = ConsentEditForm(user=request.user, redirect=redirect_to)
         return render_to_response('account/consent_form.html', { 'form': f,
                                                                  'next': redirect_to },
                                   context_instance=RequestContext(request))
