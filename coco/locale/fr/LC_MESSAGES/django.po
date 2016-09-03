@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-01 17:03+0200\n"
-"PO-Revision-Date: 2016-09-01 17:04+0200\n"
+"POT-Creation-Date: 2016-09-03 18:08+0200\n"
+"PO-Revision-Date: 2016-09-03 18:09+0200\n"
 "Last-Translator: Olivier Aubert <olivier.aubert@univ-nantes.fr>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -40,24 +40,20 @@ msgstr "Spécifique à la vidéo"
 msgid "Channel specific"
 msgstr "Spécifique à la chaîne"
 
-#: forms.py:18 forms.py:48
+#: forms.py:22 forms.py:51
 msgid "private"
 msgstr "privée"
 
-#: forms.py:19 forms.py:49
+#: forms.py:23 forms.py:52
 #, python-format
 msgid "shared with %s"
 msgstr "partagée avec %s"
-
-#: forms.py:20 forms.py:50
-msgid "public"
-msgstr "publique"
 
 #: models.py:81
 msgid "Private"
 msgstr "Privé"
 
-#: models.py:82 templates/coco/video_detail.html:104
+#: models.py:82 templates/coco/video_detail.html:103
 #: templates/group_activity.html:32 templates/group_activity.html.py:34
 #: templates/group_detail.html:11 templates/group_detail.html.py:13
 msgid "Group"
@@ -126,7 +122,7 @@ msgstr "chaînes"
 #: models.py:249 templates/coco/channel.html:7
 #: templates/coco/channel_detail.html:8 templates/coco/channel_detail.html:10
 #: templates/coco/chapter_detail.html:8 templates/coco/video_detail.html:9
-#: templates/coco/video_info.html:8 templates/profile.html:161
+#: templates/coco/video_info.html:8 templates/profile.html:167
 msgid "Channel"
 msgstr "Chaîne"
 
@@ -298,22 +294,13 @@ msgstr "À propos"
 msgid "Sign In"
 msgstr "Connexion"
 
-#: templates/account/login.html:22
+#: templates/account/login.html:20
 msgid "Forgot Password?"
 msgstr "Mot de passe oublié ?"
 
-#: templates/account/login.html:24
+#: templates/account/login.html:22
 msgid "Connect"
 msgstr "Se connecter"
-
-#: templates/account/login.html:27 templates/account/signup.html:25
-msgid "or connect with"
-msgstr "ou se connecter avec"
-
-#: templates/account/login.html:45
-#, python-format
-msgid "New on  %(site_name)s? Please <a href=\"%(signup_url)s\">sign up</a> first."
-msgstr "Nouveau sur %(site_name)s? <a href=\"%(signup_url)s\">créez un compte</a> d'abord."
 
 #: templates/account/logout.html:5 templates/account/logout.html.py:9
 msgid "Sign Out"
@@ -331,6 +318,10 @@ msgstr "Oui, je me déconnecte"
 #: templates/account/signup.html:22
 msgid "Sign Up"
 msgstr "Inscription"
+
+#: templates/account/signup.html:25
+msgid "or connect with"
+msgstr "ou se connecter avec"
 
 #: templates/account/signup.html:42
 #, python-format
@@ -354,21 +345,21 @@ msgstr "Déconnexion"
 msgid "Log in"
 msgstr "Connexion"
 
-#: templates/base.html:31
-msgid "Sign in"
-msgstr "Inscription"
-
-#: templates/base.html:35
+#: templates/base.html:33
 msgid "Help"
 msgstr "Aide"
 
-#: templates/base.html:38
+#: templates/base.html:36
 msgid "Guided tour"
 msgstr "Visite guidée"
 
-#: templates/base.html:39
+#: templates/base.html:37
 msgid "Usage"
 msgstr "Usage"
+
+#: templates/base.html:39
+msgid "Support"
+msgstr "Support"
 
 #: templates/base.html:50
 msgid "Search for videos, slides or notes"
@@ -420,12 +411,12 @@ msgstr "Tous les éléments"
 
 #: templates/coco/newsitem_detail.html:7 templates/coco/newsitem_list.html:7
 #: templates/group_activity.html:34 templates/group_detail.html:13
-#: templates/group_list.html:10 templates/profile.html:36
+#: templates/group_list.html:10 templates/profile.html:41
 #: templates/userprofile.html:22
 msgid "COCo platform"
 msgstr "Plateforme COCo"
 
-#: templates/coco/newsitem_list.html:7 templates/home.html:31
+#: templates/coco/newsitem_list.html:7 templates/home.html:30
 msgid "News"
 msgstr "Nouvelles"
 
@@ -482,8 +473,8 @@ msgid "Notes - tab"
 msgstr "Notes - onglet"
 
 #: templates/coco/video_detail.html:42
-msgid "You personal notes will be presented in the tab at the right of the video. You can choose to share them with group members or with the whole platform audience (public)."
-msgstr "Vos notes personnelles seront présentées dans l'onglet Notes perso. à droite de la vidéo. Vous pouvez ensuite les partager avec les membres du groupe ou plus largement (public)"
+msgid "You personal notes will be presented in the My notes tab at the right of the video. You can choose to share them with group members."
+msgstr "Vos notes personnelles seront présentées dans l'onglet \"Mes notes\" à droite de la vidéo. Vous pouvez ensuite les partager avec les membres de votre groupe."
 
 #: templates/coco/video_detail.html:43
 msgid "Filter"
@@ -533,32 +524,24 @@ msgstr "Entrez une note personnelle"
 msgid "Plan"
 msgstr "Plan"
 
-#: templates/coco/video_detail.html:100 templates/profile.html:157
+#: templates/coco/video_detail.html:100 templates/profile.html:163
 msgid "My notes"
 msgstr "Mes notes"
 
-#: templates/coco/video_detail.html:102
-msgid "Share a note with all users"
-msgstr "Partagez une note avec tous les utilisateurs"
-
-#: templates/coco/video_detail.html:102
-msgid "Public notes"
-msgstr "Notes publiques"
-
-#: templates/coco/video_detail.html:104
+#: templates/coco/video_detail.html:103
 #, python-format
 msgid "Share a note with group %(groupname)s"
 msgstr "Partagez une note avec le groupe %(groupname)s"
 
-#: templates/coco/video_detail.html:104
+#: templates/coco/video_detail.html:103
 msgid "My group"
 msgstr "Mon groupe"
 
-#: templates/coco/video_detail.html:123
+#: templates/coco/video_detail.html:119
 msgid "Select visible tabs"
 msgstr "Sélectionner les onglets visibles"
 
-#: templates/coco/video_detail.html:126
+#: templates/coco/video_detail.html:122
 #, python-format
 msgid "Please <a href=\"/accounts/login/?next=%(currenturl)s\">log in</a> to be able to comment on the video."
 msgstr "Veuillez vous <a href=\"/accounts/login/?next=%(currenturl)s\">connecter</a> pour pouvoir commenter la vidéo."
@@ -628,7 +611,7 @@ msgid "%(user)s created the annotation"
 msgstr "%(user)s a créé l'annotation"
 
 #: templates/group_activity.html:88 templates/group_detail.html:57
-#: templates/profile.html:118 templates/profile.html.py:205
+#: templates/profile.html:124 templates/profile.html.py:211
 msgid "on"
 msgstr "sur"
 
@@ -656,7 +639,7 @@ msgid "latest %(latest)s"
 msgstr "dernière note %(latest)s"
 
 # Les dernières vidéos
-#: templates/group_detail.html:52 templates/profile.html:113
+#: templates/group_detail.html:52 templates/profile.html:119
 msgid "Latest edited notes"
 msgstr "Dernières notes"
 
@@ -665,14 +648,14 @@ msgid "by"
 msgstr "par"
 
 #: templates/group_detail.html:63 templates/group_detail.html.py:78
-#: templates/group_detail.html:92 templates/profile.html:123
-#: templates/profile.html.py:137 templates/profile.html:151
-#: templates/profile.html.py:209
+#: templates/group_detail.html:92 templates/profile.html:129
+#: templates/profile.html.py:143 templates/profile.html:157
+#: templates/profile.html.py:215
 msgid "You do not have much activity yet."
 msgstr "Vous n'avez pas encore d'activité."
 
 # Les dernières vidéos
-#: templates/group_detail.html:69 templates/profile.html:129
+#: templates/group_detail.html:69 templates/profile.html:135
 msgid "Latest edited comments"
 msgstr "Derniers commentaires"
 
@@ -687,85 +670,82 @@ msgstr "notes"
 #: templates/home.html:20
 msgid ""
 "\n"
-"        The COCoNotes platform is a place to find high\n"
-"        quality education resources, most of them free to use/reuse.\n"
+"        This version of the COCoNotes platform is aimed at pedagogical experimentations at University of Nantes.\n"
 "        "
-msgstr ""
-"\n"
-"Vous pourrez trouver sur la plateforme COCo des ressources de qualité, pour la plupart libres d'utilisation et de réutilisation."
+msgstr "\nCette version de la plateforme COCoNotes est destinée à des expérimentations à l'Université de Nantes."
 
-#: templates/home.html:26
+#: templates/home.html:25
 msgid "The <a href=\"http://comin-ocw.org/\">COCo project</a> is funded both by a French government support granted to the <a title=\"managed by the National Research Agency in the 'Investments for the Future' program under reference ANR-JO-LABX-07-0J\" href=\"http://www.cominlabs.ueb.eu/\">COMIN Labs excellence laboratory</a>, and <a class=\"sponsor\" title=\"Région Pays de la Loire\" href=\"http://www.paysdelaloire.fr/\" target=\"_blank\">Région Pays de Loire</a>."
 msgstr "Le <a href=\"http://comin-ocw.org/\">projet COCo</a> est co-financé par un soutien du gouvernement français accordé au <a title=\"géré par l'Agence Nationale de la Recherche dans le programme  'Investissements d'avenir' sous la référence ANR-JO-LABX-07-0J\" href=\"http://www.cominlabs.ueb.eu/\">Labex CominLabs</a>, et la <a class=\"sponsor\" title=\"Région Pays de la Loire\" href=\"http://www.paysdelaloire.fr/\" target=\"_blank\">Région Pays de Loire</a>."
 
-#: templates/home.html:48
+#: templates/home.html:47
 msgid "Read more"
 msgstr "Lire plus"
 
-#: templates/home.html:60
+#: templates/home.html:59
 msgid "Featured"
 msgstr "À la une"
 
 # Les dernières vidéos
-#: templates/home.html:71
+#: templates/home.html:70
 msgid "Latest videos"
 msgstr "Les dernières vidéos"
 
-#: templates/profile.html:39 templates/userprofile.html:25
+#: templates/profile.html:44 templates/userprofile.html:25
 #: templates/userprofile.html.py:30
 msgid "Profile"
 msgstr "Profil"
 
-#: templates/profile.html:44
+#: templates/profile.html:49
 msgid "My profile"
 msgstr "Mon profil"
 
-#: templates/profile.html:49
+#: templates/profile.html:54
 msgid "Edit profile"
 msgstr "Éditer mon profil"
 
-#: templates/profile.html:50
+#: templates/profile.html:55
 msgid "Change password"
 msgstr "Changer le mot de passe"
 
-#: templates/profile.html:51
+#: templates/profile.html:56
 msgid "Configuration of displayed tabs"
 msgstr "Configuration des onglets affichés"
 
-#: templates/profile.html:53
+#: templates/profile.html:58
 msgid "Access the administration interface"
 msgstr "Accéder à l'interface d'administration"
 
-#: templates/profile.html:71
+#: templates/profile.html:77
 msgid "You are a teacher for the following chapters :"
 msgstr "Vous êtes enseignants pour les chapitres suivants :"
 
-#: templates/profile.html:82
+#: templates/profile.html:88
 msgid "My groups"
 msgstr "Mes groupes"
 
-#: templates/profile.html:85
+#: templates/profile.html:91
 #, python-format
 msgid "You are member of the unique group %(group)s."
 msgstr "Vous êtes membre du seul groupe %(group)s."
 
-#: templates/profile.html:87
+#: templates/profile.html:93
 #, python-format
 msgid "You are not member of any group"
 msgid_plural "You are member of %(count)s groups."
 msgstr[0] "Vous n'êtes membre d'aucun groupe."
 msgstr[1] "Vous êtes membre de %(count)s groupes."
 
-#: templates/profile.html:104
+#: templates/profile.html:110
 msgid "See all my groups"
 msgstr "Voir tous mes groupes"
 
 # Les dernières vidéos
-#: templates/profile.html:143
+#: templates/profile.html:149
 msgid "Latest viewed videos"
 msgstr "Dernières vidéos vues"
 
-#: templates/profile.html:166
+#: templates/profile.html:172
 #, python-format
 msgctxt "profile"
 msgid "%(count)s note"
@@ -773,7 +753,7 @@ msgid_plural "%(count)s notes"
 msgstr[0] "%(count)s note"
 msgstr[1] "%(count)s notes"
 
-#: templates/profile.html:169
+#: templates/profile.html:175
 #, python-format
 msgctxt "profile"
 msgid "%(count)s private"
@@ -781,7 +761,7 @@ msgid_plural "%(count)s private"
 msgstr[0] "%(count)s privée"
 msgstr[1] "%(count)s privées"
 
-#: templates/profile.html:172
+#: templates/profile.html:178
 #, python-format
 msgctxt "profile"
 msgid "%(count)s group"
@@ -789,7 +769,7 @@ msgid_plural "%(count)s group"
 msgstr[0] "%(count)s de groupe"
 msgstr[1] "%(count)s de groupe"
 
-#: templates/profile.html:175
+#: templates/profile.html:181
 #, python-format
 msgctxt "profile"
 msgid "%(count)s public"
@@ -797,15 +777,15 @@ msgid_plural "%(count)s public"
 msgstr[0] "%(count)s publique"
 msgstr[1] "%(count)s publiques"
 
-#: templates/profile.html:190
+#: templates/profile.html:196
 msgid "My recent activity"
 msgstr "Mon activité récente"
 
-#: templates/profile.html:200
+#: templates/profile.html:206
 msgid "you modified the note"
 msgstr "vous avez modifié la note"
 
-#: templates/profile.html:202
+#: templates/profile.html:208
 msgid "you created the note"
 msgstr "vous avez créé la note"
 
@@ -829,14 +809,32 @@ msgstr "Pas de résultat pour "
 msgid "Channel:"
 msgstr "Chaîne:"
 
-#~ msgid "Own notes"
-#~ msgstr "Notes perso."
+#~ msgid "public"
+#~ msgstr "publique"
+
+#~ msgid "New on  %(site_name)s? Please <a href=\"%(signup_url)s\">sign up</a> first."
+#~ msgstr "Nouveau sur %(site_name)s? <a href=\"%(signup_url)s\">créez un compte</a> d'abord."
+
+#~ msgid "Sign in"
+#~ msgstr "Inscription"
+
+#~ msgid "Share a note with all users"
+#~ msgstr "Partagez une note avec tous les utilisateurs"
+
+#~ msgid "Public notes"
+#~ msgstr "Notes publiques"
 
 #~ msgid ""
 #~ "\n"
-#~ "        This version of the COCoNotes platform is aimed at pedagogical experimentations at University of Nantes.\n"
+#~ "        The COCoNotes platform is a place to find high\n"
+#~ "        quality education resources, most of them free to use/reuse.\n"
 #~ "        "
-#~ msgstr "Cette version de la plateforme COCoNotes est destinée à des expérimentations à l'Université de Nantes."
+#~ msgstr ""
+#~ "\n"
+#~ "Vous pourrez trouver sur la plateforme COCo des ressources de qualité, pour la plupart libres d'utilisation et de réutilisation."
+
+#~ msgid "Own notes"
+#~ msgstr "Notes perso."
 
 #~ msgid "Credits"
 #~ msgstr "Crédits"
