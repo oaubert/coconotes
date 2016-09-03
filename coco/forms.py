@@ -112,9 +112,23 @@ class ConsentEditForm(forms.Form):
                                    ('tempsentemps', "de temps en temps"),
                                    ('jamais', 'jamais')
                                ])
-    video_playlist = forms.BooleanField(label="Avez-vous réalisé des playlists sur un site de vidéos en ligne ?")
-    video_upload = forms.BooleanField(label="Avez-vous déjà déposé une vidéo sur un site de vidéos en ligne ?")
-    video_create = forms.BooleanField(label="Avez-vous déjà réalisé une vidéo ?")
+    consent = forms.ChoiceField(label="",
+                                widget=forms.RadioSelect,
+                                choices=[ ('y', "J'accepte de participer à l'étude"),
+                                          ('n', "Je refuse que mes données soient utilisées dans le cadre de l'étude") ])
+
+    video_playlist = forms.ChoiceField(label="Avez-vous réalisé des playlists sur un site de vidéos en ligne ?",
+                                       widget=forms.RadioSelect,
+                                       choices=[ (True, "Oui"),
+                                                 (False, "Non") ])
+    video_upload = forms.ChoiceField(label="Avez-vous déjà déposé une vidéo sur un site de vidéos en ligne ?",
+                                       widget=forms.RadioSelect,
+                                       choices=[ (True, "Oui"),
+                                                 (False, "Non") ])
+    video_create = forms.ChoiceField(label="Avez-vous déjà réalisé une vidéo ?",
+                                       widget=forms.RadioSelect,
+                                       choices=[ (True, "Oui"),
+                                                 (False, "Non") ])
 
     class Media:
         css = {
