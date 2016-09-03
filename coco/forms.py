@@ -94,6 +94,7 @@ class ConsentEditForm(forms.Form):
     video_type = forms.MultipleChoiceField(label="Quels types de vidéos regardez-vous généralement sur Internet ?",
                                            widget=forms.CheckboxSelectMultiple,
                                            choices = [
+                                               ('aucun', 'Aucun'),
                                                ('musique', 'Vidéo clips musicaux'),
                                                ('docu', 'Documentaires'),
                                                ('actus', 'Actualités'),
@@ -103,7 +104,8 @@ class ConsentEditForm(forms.Form):
                                                ('anime', 'Animations ou dessins animés'),
                                                ('demos', 'Démos de jeux vidéo'),
                                                ('tutoriels', 'Conseils et tutoriels'),
-                                               ('enseignement', 'Vidéos d’enseignement ') ])
+                                               ('enseignement', 'Vidéos d’enseignement '),
+                                               ('autres', 'Autres') ])
 
     video_commentaire = forms.ChoiceField(label="À quelle fréquence commentez-vous des vidéos sur un site de vidéos en ligne ?",
                                choices = [
