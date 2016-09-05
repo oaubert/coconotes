@@ -154,7 +154,7 @@ $(document).ready(function () {
                 show_controls: true,
                 show_slides: true,
                 show_featured_notes: true,
-                show_other_notes: false,
+                show_other_notes: true,
                 show_own_notes: true,
                 is_admin: metadata.is_admin,
                 is_authenticated: metadata.is_authenticated,
