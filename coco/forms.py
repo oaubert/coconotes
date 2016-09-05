@@ -75,11 +75,11 @@ class ConsentEditForm(forms.Form):
                                                           ('snapchat', 'Snapchat'),
                                                           ('autre', 'Autre') ])
 
-    fb_promo = forms.MultipleChoiceField(label="Utilisez-vous le groupe FB de la promo",
+    fb_promo = forms.MultipleChoiceField(label="Utilisez-vous le groupe FaceBook de la promo :",
                                          widget=forms.CheckboxSelectMultiple,
-                                         choices = [ ('consulter', 'Pour consulter les informations ?'),
-                                                     ('ajouter', 'Pour ajouter des  informations ?'),
-                                                     ('repondre', 'Pour répondre à des sondages ?'),
+                                         choices = [ ('consulter', 'Pour consulter les informations'),
+                                                     ('ajouter', 'Pour ajouter des  informations'),
+                                                     ('repondre', 'Pour répondre à des sondages'),
                                                      ('non', 'Je n’utilise pas') ])
 
     # 2- Utilisation des vidéos sur internet
