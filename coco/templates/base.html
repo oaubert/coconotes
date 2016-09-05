@@ -23,6 +23,11 @@
       </div>
         <div id="profilemenu">{% if user.is_authenticated %}
           <a href="/accounts/profile"><span id="loginname" class="profilemenu_item">{{ user.username }}</span></a>
+          {% if user.groups.count == 1 %}
+          {% for g in user.groups.all %}
+          ({% trans "Groupe" %} <a href="{{g.metadata.get_absolute_url}}">{{ g.name }}</a>)
+          {% endfor %}
+          {% endif %}
           <a href="/accounts/logout/"><span class="profilemenu_item">{% blocktrans %}Log out{% endblocktrans %}</span></a>
           {% else %}
           <span class="profilemenu_item">
