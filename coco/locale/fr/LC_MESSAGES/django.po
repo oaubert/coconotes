@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-03 18:08+0200\n"
-"PO-Revision-Date: 2016-09-03 18:09+0200\n"
+"PO-Revision-Date: 2016-09-05 14:35+0200\n"
 "Last-Translator: Olivier Aubert <olivier.aubert@univ-nantes.fr>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -474,7 +474,7 @@ msgstr "Notes - onglet"
 
 #: templates/coco/video_detail.html:42
 msgid "You personal notes will be presented in the My notes tab at the right of the video. You can choose to share them with group members."
-msgstr "Vos notes personnelles seront présentées dans l'onglet \"Mes notes\" à droite de la vidéo. Vous pouvez ensuite les partager avec les membres de votre groupe."
+msgstr "Vos notes personnelles seront présentées dans l'onglet Mes notes à droite de la vidéo. Vous pouvez ensuite les partager avec les membres de votre groupe."
 
 #: templates/coco/video_detail.html:43
 msgid "Filter"
