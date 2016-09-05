@@ -801,22 +801,28 @@ class ConsentForm(UserSetting):
         redirect_to = (redirect_to
                        if is_safe_url(redirect_to, request.get_host())
                        else '/')
-        f = ConsentEditForm(user=request.user, redirect=redirect_to)
+        f = ConsentEditForm(request.user.metadata.config.get('survey', {}),
+                            user=request.user,
+                            redirect=redirect_to)
         return render_to_response('account/consent_form.html', { 'form': f,
                                                                  'next': redirect_to },
                                   context_instance=RequestContext(request))
 
     def post(self, request, name=None, **kw):
-        val = request.POST.get('consent')
-        if val in ('y', 'n'):
-            if request.user.metadata.config is None:
-                request.user.metadata.config = {}
-            request.user.metadata.config['consent'] = val
-            request.user.metadata.save()
         redirect_to = request.POST.get('next', request.GET.get('next', '/'))
         redirect_to = (redirect_to
                        if is_safe_url(redirect_to, request.get_host())
                        else '/')
+        f = ConsentEditForm(request.POST, user=request.user, redirect=redirect_to)
+        if not f.is_valid():
+            return self.get(request)
+        if request.user.metadata.config is None:
+            request.user.metadata.config = {}
+        consent = f.cleaned_data.get('consent')
+        if consent in ('y', 'n'):
+            request.user.metadata.config['consent'] = consent
+        request.user.metadata.config['survey'] = dict(f.cleaned_data)
+        request.user.metadata.save()
         return HttpResponseRedirect(redirect_to)
 
 class UserMetadataInline(InlineFormSet):

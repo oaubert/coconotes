@@ -98,10 +98,14 @@
 
 <script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
 <script type="text/javascript">
-  /* Hide form fields only if javascript is available. */
-  $(".consent_edit_form fieldset").hide();
-  $("#submit-id-submit").hide();
-  $(".consent_edit_form fieldset:nth-of-type(1)").show();
+  if (! $("#id_consent_1").is(":checked")) {
+    /* Hide form fields only if javascript is available. */
+    $(".consent_edit_form fieldset").hide();
+    $(".consent_edit_form fieldset:nth-of-type(1)").show();
+    if (! $("#id_consent_2").is(":checked")) {
+      $("#submit-id-submit").hide();
+    }
+  }
 
   $("#id_consent_1").on("change", function () {
      $("#submit-id-submit").show();
@@ -110,6 +114,10 @@
      });
   });
   $("#id_consent_2").on("change", function () {
+    if ($(this).is(":checked")) {
+      $(".consent_edit_form fieldset").hide();
+      $(".consent_edit_form fieldset:nth-of-type(1)").show();
+     }
      $("#submit-id-submit").show().each(function () {
           this.scrollIntoView(true);
       });
