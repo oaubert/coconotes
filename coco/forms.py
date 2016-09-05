@@ -63,11 +63,13 @@ class CommentEditForm(forms.Form):
 
 class ConsentEditForm(forms.Form):
     consent = forms.ChoiceField(label="",
+                                required=False,
                                 widget=forms.RadioSelect,
                                 choices=[ ('y', "J'accepte de participer à l'étude"),
                                           ('n', "Je refuse que mes données soient utilisées dans le cadre de l'étude") ])
     # 1- Utilisation des réseaux sociaux :
     reseaux_sociaux = forms.MultipleChoiceField(label="Parmi ces réseaux sociaux, lesquels utilisez-vous régulièrement (plus d’une fois par semaine)",
+                                                required=False,
                                                 widget=forms.CheckboxSelectMultiple,
                                                 choices=[ ('facebook', 'Facebook'),
                                                           ('twitter', 'Twitter'),
@@ -76,6 +78,7 @@ class ConsentEditForm(forms.Form):
                                                           ('autre', 'Autre') ])
 
     fb_promo = forms.MultipleChoiceField(label="Utilisez-vous le groupe FaceBook de la promo :",
+                                         required=False,
                                          widget=forms.CheckboxSelectMultiple,
                                          choices = [ ('consulter', 'Pour consulter les informations'),
                                                      ('ajouter', 'Pour ajouter des  informations'),
@@ -84,14 +87,16 @@ class ConsentEditForm(forms.Form):
 
     # 2- Utilisation des vidéos sur internet
     video_frequence = forms.ChoiceField(label="À quelle fréquence regardez-vous des vidéos sur Internet (Facebook, YouTube, Dailymotion, etc.) ?",
-                               choices = [
-                                   ('jour', "plusieurs fois par jour"),
-                                   ('semaine', "plusieurs fois par semaine"),
-                                   ('tempsentemps', "de temps en temps"),
-                                   ('rarement', 'rarement')
-                               ])
+                                        required=False,
+                                        choices = [
+                                            ('jour', "plusieurs fois par jour"),
+                                            ('semaine', "plusieurs fois par semaine"),
+                                            ('tempsentemps', "de temps en temps"),
+                                            ('rarement', 'rarement')
+                                        ])
 
     video_type = forms.MultipleChoiceField(label="Quels types de vidéos regardez-vous généralement sur Internet ?",
+                                           required=False,
                                            widget=forms.CheckboxSelectMultiple,
                                            choices = [
                                                ('aucun', 'Aucun'),
@@ -108,29 +113,34 @@ class ConsentEditForm(forms.Form):
                                                ('autres', 'Autres') ])
 
     video_commentaire = forms.ChoiceField(label="À quelle fréquence commentez-vous des vidéos sur un site de vidéos en ligne ?",
-                               choices = [
-                                   ('jour', "plusieurs fois par jour"),
-                                   ('semaine', "plusieurs fois par semaine"),
-                                   ('tempsentemps', "de temps en temps"),
-                                   ('jamais', 'jamais')
-                               ])
+                                          required=False,
+                                          choices = [
+                                              ('jour', "plusieurs fois par jour"),
+                                              ('semaine', "plusieurs fois par semaine"),
+                                              ('tempsentemps', "de temps en temps"),
+                                              ('jamais', 'jamais')
+                                          ])
     consent = forms.ChoiceField(label="",
+                                required=False,
                                 widget=forms.RadioSelect,
                                 choices=[ ('y', "J'accepte de participer à l'étude"),
                                           ('n', "Je refuse que mes données soient utilisées dans le cadre de l'étude") ])
 
     video_playlist = forms.ChoiceField(label="Avez-vous réalisé des playlists sur un site de vidéos en ligne ?",
+                                       required=False,
                                        widget=forms.RadioSelect,
-                                       choices=[ (True, "Oui"),
-                                                 (False, "Non") ])
+                                       choices=[ ('y', "Oui"),
+                                                 ('n', "Non") ])
     video_upload = forms.ChoiceField(label="Avez-vous déjà déposé une vidéo sur un site de vidéos en ligne ?",
-                                       widget=forms.RadioSelect,
-                                       choices=[ (True, "Oui"),
-                                                 (False, "Non") ])
+                                     required=False,
+                                     widget=forms.RadioSelect,
+                                     choices=[ ('y', "Oui"),
+                                               ('n', "Non") ])
     video_create = forms.ChoiceField(label="Avez-vous déjà réalisé une vidéo ?",
-                                       widget=forms.RadioSelect,
-                                       choices=[ (True, "Oui"),
-                                                 (False, "Non") ])
+                                     required=False,
+                                     widget=forms.RadioSelect,
+                                     choices=[ ('y', "Oui"),
+                                               ('n', "Non") ])
 
     class Media:
         css = {
@@ -166,5 +176,3 @@ class ConsentEditForm(forms.Form):
             Submit('submit', 'Valider', css_class='button white')
         )
         super(ConsentEditForm, self).__init__(*args, **kwargs)
-        #self.fields['consent'].initial = self.user.metadata.config.get('consent')
-        self.fields['consent'].initial = None
