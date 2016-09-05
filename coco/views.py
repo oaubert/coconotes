@@ -10,6 +10,7 @@ from django.conf import settings
 from django.contrib.auth.models import Group, User
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.contrib.sites.models import Site
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import RequestContext
@@ -823,6 +824,7 @@ class ConsentForm(UserSetting):
             request.user.metadata.config['consent'] = consent
         request.user.metadata.config['survey'] = dict(f.cleaned_data)
         request.user.metadata.save()
+        messages.success(request, 'Merci pour votre reponse, vous pouvez maintenant utiliser la plate-forme.')
         return HttpResponseRedirect(redirect_to)
 
 class UserMetadataInline(InlineFormSet):
