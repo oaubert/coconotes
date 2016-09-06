@@ -78,7 +78,7 @@ IriSP.Widgets.EnrichedPlan.prototype.template =
     + '{{#show_controls}}'
     + '<div class="Ldt-EnrichedPlan-ControlMenu">'
     + ' <label for="{{ prefix }}control_menu" class="Ldt-EnrichedPlan-Toggle"></label>'
-    + ' <input type="checkbox" class="Ldt-EnrichedPlan-ControlMenuHome" id="{{ prefix }}control_menu"/>'
+    + ' <input type="checkbox" class="Ldt-EnrichedPlan-ControlMenuHome Ldt-TraceMe" id="{{ prefix }}control_menu"/>'
     + '<ul>'
     + ' <li class="Ldt-EnrichedPlan-Control-Label Ldt-EnrichedPlan-Tabconfig">{{l10n.popup_tabconfig}}</li>'
     + ' <li>'
@@ -210,7 +210,7 @@ IriSP.Widgets.EnrichedPlan.prototype.init_component = function () {
     });
     _this.container.on("click", ".Ldt-EnrichedPlan-Control-Checkbox", function () {
         var classname = _.first(_.filter(this.classList, function (s) {
-            return s != "Ldt-EnrichedPlan-Control-Checkbox";
+            return s != "Ldt-EnrichedPlan-Control-Checkbox" && s.indexOf("Ldt-EnrichedPlan") == 0;
         }));
         if (classname !== undefined) {
             if (IriSP.jQuery(this).is(':checked')) {
@@ -218,11 +218,13 @@ IriSP.Widgets.EnrichedPlan.prototype.init_component = function () {
                 if (_this.bar) {
                     _this.bar.find("." + classname).removeClass("filtered_out");
                 }
+                _this.player.trigger("EnrichedPlan.SettingCheck", classname);
             } else {
                 _this.content.find(".Ldt-EnrichedPlan-Slide ." + classname).addClass("filtered_out");
                 if (_this.bar) {
                     _this.bar.find("." + classname).addClass("filtered_out");
                 }
+                _this.player.trigger("EnrichedPlan.SettingUncheck", classname);
             }
         }
     });
@@ -320,6 +322,7 @@ IriSP.Widgets.EnrichedPlan.prototype.init_component = function () {
     var inputField = _this.container.find(".Ldt-EnrichedPlan-Search-Input");
     inputField.length && inputField.on('onsearch' in inputField[0] ? "search" : "keyup", function () {
         var q = IriSP.jQuery(this).val().toLocaleLowerCase();
+        _this.player.trigger("EnrichedPlan.filter", q);
         if (q === "") {
             // Show all
             IriSP.jQuery(".Ldt-EnrichedPlan-Content").unmark().find(".non_matching").removeClass("non_matching");

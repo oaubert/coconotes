@@ -354,6 +354,15 @@ $(document).ready(function () {
                 "url": document.URL
             });
         });
+        _myPlayer.on("EnrichedPlan.filter", function (q) {
+            tracer.trace("EnrichedPlanFilter", { "query": q });
+        });
+        _myPlayer.on("EnrichedPlan.SettingCheck", function (name) {
+            tracer.trace("EnrichedPlanSettingCheck", { "name": name });
+        });
+        _myPlayer.on("EnrichedPlan.SettingUncheck", function (name) {
+            tracer.trace("EnrichedPlanSettingUncheck", { "name": name });
+        });
         if (!window.localStorage['coconotes-toured']) {
             window.setTimeout(take_the_tour, 2000);
         };
