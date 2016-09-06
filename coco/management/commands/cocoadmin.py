@@ -426,7 +426,7 @@ class Command(BaseCommand):
                     print "Impossible to fix config metadata for %s" % u.user.username
 
     @register
-    def create_user(self, email, username="", fullname=""):
+    def create_user(self, email, username="", fullname="", groupname=""):
         """Create a new user.
         """
         if not username:
@@ -447,6 +447,10 @@ class Command(BaseCommand):
             self.stdout.write("Created user %s (%s)" % (username, email))
         else:
             self.stdout.write("User %s already exists" % username)
+
+        if groupname:
+            g, gcreated = Group.objects.get_or_create(name=groupname)
+            g.user_set.add(user)
 
     def add_arguments(self, parser):
         def arg_signature(f):
