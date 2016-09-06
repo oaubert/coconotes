@@ -339,7 +339,7 @@ $(document).ready(function () {
         }
 
         // Hook trace sensors
-        tracer.trace("PlayerStart", { url: document.URL, useragent: navigator.userAgent, width: screen.width, height: screen.height });
+        tracer.trace("PlayerStart", { url: document.URL, useragent: navigator.userAgent, width: screen.width, height: screen.height, username: metadata.username });
         $(".TraceMe").on("mousedown mouseenter mouseleave", function (_e) {
             tracer.trace('Mdp_' + _e.type,
                          {
