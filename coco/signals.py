@@ -1,4 +1,4 @@
-from django.db.models.signals import pre_save, post_save
+from django.db.models.signals import pre_save, post_save, pre_delete
 from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.dispatch import receiver
 from .models import Annotation, VISIBILITY_PUBLIC, VISIBILITY_GROUP
@@ -35,6 +35,13 @@ def sig_pre_save(sender, instance, raw, using, update_fields, **kwargs):
         if old.title != instance.title or old.description != instance.description:
             action.send(instance.contributor, verb="updated", action_object=instance)
 
+@receiver(pre_delete, sender=Annotation)
+def sig_pre_delete(sender, instance, using, **kwargs):
+    action.send(instance.contributor, verb="deleted",
+                content=instance.title_or_description,
+                video=instance.video.slug or instance.video.pk,
+                timecode=instance.begin,
+                object_type='annotation')
 
 @receiver(post_save, sender=Annotation)
 def sig_post_save(sender, instance, created, raw, using, update_fields, **kwargs):
