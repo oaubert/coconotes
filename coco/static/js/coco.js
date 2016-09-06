@@ -49,6 +49,7 @@ $(document).ready(function () {
     }
     var user_uuid = localStorage.getItem('mla-uuid') || generateUuid();
     localStorage.setItem('mla-uuid', user_uuid);
+    var tracer = undefined;
 
     function action_url(action, elementid) {
         switch (action) {
@@ -225,7 +226,7 @@ $(document).ready(function () {
     function find_widgets_by_type(typ) {
         if (_myPlayer.widgets) {
             return _myPlayer.widgets.filter(function (w) {
-                return w.type == typ; });
+                return w && w.type == typ; });
         } else {
             return [];
         }
@@ -307,7 +308,7 @@ $(document).ready(function () {
     };
 
     _myPlayer.on("trace-ready", function () {
-        var tracer = tracemanager.get_trace("test");
+        tracer = tracemanager.get_trace("test");
 
         find_widgets_by_type("CocoController")[0].onMediaEvent("play", function (e) {
             var media = this;
@@ -365,6 +366,7 @@ $(document).ready(function () {
             $(".tabcomponent .selected").removeClass("selected");
             $(".tabcomponent ." + tabname[0]).addClass("selected");
             find_widgets_by_type("CocoCreateAnnotation")[0].set_placeholder(this.dataset.placeholder);
+            if (tracer) { tracer.trace("TabSwitch", { tabname: tabname[0] }); }
         }
     });
 
@@ -386,6 +388,7 @@ $(document).ready(function () {
 
     _myPlayer.on("Annotation.edit", function (annotation_id) {
         var edit_url = action_url('edit', annotation_id);
+        if (tracer) { tracer.trace("AnnotationEdit", { annotation_id: annotation_id }); };
         IriSP.jQuery('<div/>', {'class': 'element-form-dialog', 'id': IriSP.generateUuid() })
             .load(edit_url, function () {
                 function validate(dialog) {
@@ -435,6 +438,7 @@ $(document).ready(function () {
                             {
                                 text: "Save",
                                 click: function () {
+                                    if (tracer) { tracer.trace("AnnotationSave", { annotation_id: annotation_id }); };
                                     validate(this);
                                 }
                             },
@@ -448,6 +452,7 @@ $(document).ready(function () {
                                 text: "Delete",
                                 click: function () {
                                     var dialog = this;
+                                    if (tracer) { tracer.trace("AnnotationDelete", { annotation_id: annotation_id }); };
                                     // Delete annotation
                                     IriSP.jQuery.ajax({
                                         url: edit_url,
@@ -510,6 +515,7 @@ $(document).ready(function () {
         check_tablabels_overflow();
     });
     function popup_tabconfig_dialog() {
+        if (tracer) { tracer.trace("TabConfigStart"); };
         $('<div/>', {'class': 'tabconfig-form-dialog', 'id': IriSP.generateUuid() })
             .load("/accounts/profile/tabconfig/form", function () {
                 $(this).appendTo('body').dialog({
@@ -531,6 +537,7 @@ $(document).ready(function () {
                             text: "Validate",
                             click: function () {
                                 var dialog = $(this);
+                                if (tracer) { tracer.trace("TabConfigValidate"); };
                                 var form = $(dialog).find("form");
                                 $.ajax({
                                     type: form.attr("method"),
@@ -552,6 +559,7 @@ $(document).ready(function () {
                         {
                             text: "Close",
                             click: function () {
+                                if (tracer) { tracer.trace("TabConfigClose"); };
                                 $(this).dialog("close");
                             }
                         }
@@ -566,6 +574,7 @@ $(document).ready(function () {
     $(".playertitle").on("click touchstart", function (e) {
         e.stopPropagation();
         e.preventDefault();
+        if (tracer) { tracer.trace("ShowVideoInfo"); };
         $('<div/>', {'class': 'element-form-dialog', 'id': IriSP.generateUuid() })
             .load("/video/" + metadata.video_id + "/info/", function () {
                 $(this).appendTo('body').dialog({
@@ -587,6 +596,7 @@ $(document).ready(function () {
     _myPlayer.on("Player.tweet", function () {
         var title = $(".videotitle").text();
         var mf = find_widgets_by_type("Mediafragment");
+        if (tracer) { tracer.trace("ShareTwitter"); };
         if (mf.length) {
             // Update URL
             mf[0].setHashToTime();
@@ -610,6 +620,7 @@ $(document).ready(function () {
 
     $('.profilemenu_help_usage').on("click", function () {
         $("#profilemenu_help_menu")[0].checked = false;
+        if (tracer) { tracer.trace("HelpMenuUsage"); };
         $(".player_usage").dialog({
             width: "60%",
             closeOnEscape: true,
@@ -627,6 +638,7 @@ $(document).ready(function () {
     });
     $('.profilemenu_help_tour').on("click", function () {
         $("#profilemenu_help_menu")[0].checked = false;
+        if (tracer) { tracer.trace("HelpMenuTakeTheTour"); };
         take_the_tour();
     });
 });
