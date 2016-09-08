@@ -822,6 +822,7 @@ class ConsentForm(UserSetting):
         consent = f.cleaned_data.get('consent')
         if consent in ('y', 'n'):
             request.user.metadata.config['consent'] = consent
+            action.send(self.request.user, verb='completed', object_type='ConsentForm', result=consent)
         request.user.metadata.config['survey'] = dict(f.cleaned_data)
         request.user.metadata.save()
         messages.success(request, 'Merci pour votre reponse, vous pouvez maintenant utiliser la plate-forme.')
