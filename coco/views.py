@@ -852,7 +852,9 @@ def access_log(request, *args, **kw):
         """Generate a string stream of the JSON list serialization
         """
         yield '['
-        it = Action.objects.all().prefetch_related('actor', 'action_object')
+        # Note: we cannot use prefetch_related on action_object since it is not homogeneous.
+        # Cf https://djangosnippets.org/snippets/2492/ if there is a need to further optimize.
+        it = Action.objects.all().prefetch_related('actor', 'actor__groups')
         # We do not use .iterator() since it would disable the
         # prefetch_related effect.  And anyway, even using .iterator()
         # does not disable data caching so the whole data structure
