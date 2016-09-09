@@ -869,8 +869,12 @@ def access_log(request, *args, **kw):
                     s[k] = v
             v = a.data.get('result')
             if v:
-                s['score'] = v.get('score', '')
-                s['success'] = v.get('success', '')
+                try:
+                    s['score'] = v.get('score', '')
+                    s['success'] = v.get('success', '')
+                except AttributeError:
+                    # Maybe a unicode string
+                    s['result'] = v
         s['target'] = a.target or ""
         return s
     return JsonResponse([ serialize_action(a) for a in Action.objects.all() ], safe=False)
