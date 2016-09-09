@@ -870,5 +870,5 @@ def access_log(request, *args, **kw):
         # Enable debugging (esp. query count) through django-debug-toolbar
         return HttpResponse(content='<html><head><title>test</title></head><body><h1>OK</h1><pre>%s</pre></body></html>' % "".join(stream_serializer()), status=200)
     else:
-        return StreamingHttpResponse(stream_serializer(),
-                                     content_type='application/json')
+        return HttpResponse("".join(stream_serializer()),
+                            content_type='application/json')
