@@ -857,6 +857,8 @@ def access_log(request, *args, **kw):
               'verb': a.verb }
         if a.actor.groups.count() == 1:
             s['actor_group'] = a.actor.groups.first()
+        else:
+            s['actor_group'] = 'multiple'
         if a.action_object:
             s['object_type'] = unicode(a.action_object.element_type)
             s['object_name'] = a.action_object.title_or_description
@@ -906,5 +908,5 @@ def access_log(request, *args, **kw):
         # Enable debugging (esp. query count) through django-debug-toolbar
         return HttpResponse(content='<html><head><title>test</title></head><body><h1>OK</h1><script>data=%s</script></body></html>' % "".join(stream_serializer()), status=200)
     else:
-        return StreamingHttpResponse(stream_serializer(),
+        return HttpResponse(stream_serializer(),
                                      content_type='application/json')
