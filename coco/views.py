@@ -10,8 +10,9 @@ from django.conf import settings
 from django.contrib.auth.models import Group, User
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.contrib.sites.models import Site
+from django.core.serializers.json import DjangoJSONEncoder
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, StreamingHttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, render
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
@@ -842,4 +843,28 @@ def access_log(request, *args, **kw):
                     s['result'] = v
         s['target'] = a.target or ""
         return s
-    return JsonResponse([ serialize_action(a) for a in Action.objects.all() ], safe=False)
+
+    def stream_serializer():
+        """Generate a string stream of the JSON list serialization
+        """
+        yield '['
+        it = Action.objects.all().prefetch_related('actor', 'action_object')
+        # We do not use .iterator() since it would disable the
+        # prefetch_related effect.  And anyway, even using .iterator()
+        # does not disable data caching so the whole data structure
+        # will be loaded in memory.  What is gained from using a
+        # StreamingHttpResponse is avoiding to store the whole json
+        # representation.
+        it = iter(it)
+        yield json.dumps(serialize_action(it.next()), cls=DjangoJSONEncoder)
+        for i, a in enumerate(it):
+            yield ",\n" + json.dumps(serialize_action(it.next()), cls=DjangoJSONEncoder)
+        yield ']\n'
+        return
+
+    if settings.DEBUG and request.GET.get('debug'):
+        # Enable debugging (esp. query count) through django-debug-toolbar
+        return HttpResponse(content='<html><head><title>test</title></head><body><h1>OK</h1><pre>%s</pre></body></html>' % "".join(stream_serializer()), status=200)
+    else:
+        return StreamingHttpResponse(stream_serializer(),
+                                     content_type='application/json')
