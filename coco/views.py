@@ -855,6 +855,8 @@ def access_log(request, *args, **kw):
         s = { 'timestamp': a.timestamp.isoformat(),
               'actor': a.actor.username,
               'verb': a.verb }
+        if a.actor.groups.count() == 1:
+            s['actor_group'] = a.actor.groups.first()
         if a.action_object:
             s['object_type'] = unicode(a.action_object.element_type)
             s['object_name'] = a.action_object.title_or_description
