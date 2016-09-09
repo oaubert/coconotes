@@ -883,7 +883,10 @@ def access_log(request, *args, **kw):
         """Generate a string stream of the JSON list serialization
         """
         yield '['
-        it = Action.objects.all().prefetch_related('actor', 'action_object')
+        # Note: we cannot use prefetch_related on action_object since it is not homogeneous.
+        # Cf https://djangosnippets.org/snippets/2492/ if there is a need to further optimize.
+        it = Action.objects.all().prefetch_related('actor')
+
         # We do not use .iterator() since it would disable the
         # prefetch_related effect.  And anyway, even using .iterator()
         # does not disable data caching so the whole data structure
@@ -899,7 +902,7 @@ def access_log(request, *args, **kw):
 
     if settings.DEBUG and request.GET.get('debug'):
         # Enable debugging (esp. query count) through django-debug-toolbar
-        return HttpResponse(content='<html><head><title>test</title></head><body><h1>OK</h1><pre>%s</pre></body></html>' % "".join(stream_serializer()), status=200)
+        return HttpResponse(content='<html><head><title>test</title></head><body><h1>OK</h1><script>data=%s</script></body></html>' % "".join(stream_serializer()), status=200)
     else:
         return StreamingHttpResponse(stream_serializer(),
                                      content_type='application/json')
