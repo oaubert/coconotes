@@ -822,6 +822,8 @@ def access_log(request, *args, **kw):
               'verb': a.verb }
         if a.actor.groups.count() == 1:
             s['actor_group'] = a.actor.groups.first()
+        else:
+            s['actor_group'] = 'multiple'
         if a.action_object:
             s['object_type'] = unicode(a.action_object.element_type)
             s['object_name'] = a.action_object.title_or_description
