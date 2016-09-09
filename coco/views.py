@@ -889,8 +889,7 @@ def access_log(request, *args, **kw):
         yield '['
         # Note: we cannot use prefetch_related on action_object since it is not homogeneous.
         # Cf https://djangosnippets.org/snippets/2492/ if there is a need to further optimize.
-        it = Action.objects.all().prefetch_related('actor')
-
+        it = Action.objects.all().prefetch_related('actor', 'actor__groups')
         # We do not use .iterator() since it would disable the
         # prefetch_related effect.  And anyway, even using .iterator()
         # does not disable data caching so the whole data structure
@@ -908,5 +907,5 @@ def access_log(request, *args, **kw):
         # Enable debugging (esp. query count) through django-debug-toolbar
         return HttpResponse(content='<html><head><title>test</title></head><body><h1>OK</h1><script>data=%s</script></body></html>' % "".join(stream_serializer()), status=200)
     else:
-        return HttpResponse(stream_serializer(),
-                                     content_type='application/json')
+        return HttpResponse("".join(stream_serializer()),
+                            content_type='application/json')
