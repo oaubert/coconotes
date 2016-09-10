@@ -863,10 +863,9 @@ def access_log(request, *args, **kw):
         # representation.
         it = iter(it)
         yield json.dumps(serialize_action(it.next()), cls=DjangoJSONEncoder)
-        for i, a in enumerate(it):
-            yield ",\n" + json.dumps(serialize_action(it.next()), cls=DjangoJSONEncoder)
+        for a in it:
+            yield ",\n" + json.dumps(serialize_action(a), cls=DjangoJSONEncoder)
         yield ']\n'
-        return
 
     if settings.DEBUG and request.GET.get('debug'):
         # Enable debugging (esp. query count) through django-debug-toolbar
