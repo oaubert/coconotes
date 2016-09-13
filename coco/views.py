@@ -8,11 +8,12 @@ from actstream.models import actor_stream, Action
 
 from django.conf import settings
 from django.contrib.auth.models import Group, User
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.contrib.sites.models import Site
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, StreamingHttpResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, render
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
@@ -816,18 +817,38 @@ class UpdateProfile(UpdateWithInlinesView):
 @user_passes_test(lambda u: u.is_staff)
 @require_http_methods(["GET"])
 def access_log(request, *args, **kw):
+    # Cache of group information, indexed by username. Contains list of groupnames.
+    GROUPCACHE = {}
+    # Cache of video object indexed by content type id then uuid
+    OBJECT_CACHE = {}
+
+    def get_action_object(a):
+        obj = None
+        try:
+            obj = OBJECT_CACHE[a.action_object_content_type_id][a.action_object_object_id]
+        except KeyError:
+            obj = a.action_object
+        return obj
+
     def serialize_action(a):
+        username = a.actor.username
         s = { 'timestamp': a.timestamp.isoformat(),
-              'actor': a.actor.username,
+              'actor': username,
               'verb': a.verb }
-        if a.actor.groups.count() == 1:
-            s['actor_group'] = a.actor.groups.first()
+        gs = GROUPCACHE.get(username)
+        if gs is None:
+            gs = a.actor.groups.values_list('name')
+        if len(gs) == 1:
+            g = gs[0]
         else:
-            s['actor_group'] = 'multiple'
-        if a.action_object:
-            s['object_type'] = unicode(a.action_object.element_type)
-            s['object_name'] = a.action_object.title_or_description
-            s['object_url'] = a.action_object.get_absolute_url()
+            g = 'multiple'
+        s['actor_group'] = g
+
+        obj = get_action_object(a)
+        if obj:
+            s['object_type'] = unicode(obj.element_type)
+            s['object_name'] = obj.title_or_description
+            s['object_url'] = obj.get_absolute_url()
         else:
             s['object_type'] = ""
             s['object_name'] = ""
@@ -854,7 +875,7 @@ def access_log(request, *args, **kw):
         yield '['
         # Note: we cannot use prefetch_related on action_object since it is not homogeneous.
         # Cf https://djangosnippets.org/snippets/2492/ if there is a need to further optimize.
-        it = Action.objects.all().prefetch_related('actor', 'actor__groups')
+        it = Action.objects.all().prefetch_related('actor')
         # We do not use .iterator() since it would disable the
         # prefetch_related effect.  And anyway, even using .iterator()
         # does not disable data caching so the whole data structure
@@ -866,6 +887,22 @@ def access_log(request, *args, **kw):
         for a in it:
             yield ",\n" + json.dumps(serialize_action(a), cls=DjangoJSONEncoder)
         yield ']\n'
+
+    # Initialize GROUPCACHE
+    for name, group in User.objects.values_list('username', 'groups__name'):
+        GROUPCACHE.setdefault(name, []).append(group)
+
+    # Initialize OBJECT_CACHE:
+    for t in (Video, Annotation):
+        ct = ContentType.objects.get_for_model(t).pk
+        d = OBJECT_CACHE[ct] = {}
+        if hasattr(t, 'annotationtype'):
+            queryset = t.objects.prefetch_related('annotationtype').all()
+        else:
+            queryset = t.objects.all()
+
+        for o in queryset:
+            d[str(o.pk)] = o
 
     if settings.DEBUG and request.GET.get('debug'):
         # Enable debugging (esp. query count) through django-debug-toolbar
