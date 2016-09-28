@@ -226,7 +226,7 @@ $(document).ready(function () {
     function find_widgets_by_type(typ) {
         if (_myPlayer.widgets) {
             return _myPlayer.widgets.filter(function (w) {
-                return w && w.type == typ; });
+                return w !== null && w.type == typ; });
         } else {
             return [];
         }
@@ -307,20 +307,32 @@ $(document).ready(function () {
         });
     };
 
+    function trace_action(action, params) {
+        if (params === undefined) {
+            params = {};
+        };
+        params.action = action;
+        IriSP.jQuery.ajax({
+            url: action_url("log"),
+            timeout: 2000,
+            type: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify(params),
+            dataType: 'json'});
+    };
+
     _myPlayer.on("trace-ready", function () {
+        var controller = find_widgets_by_type("CocoController")[0];
         tracer = tracemanager.get_trace("test");
 
-        find_widgets_by_type("CocoController")[0].onMediaEvent("play", function (e) {
+        controller.onMediaEvent("play", function (e) {
             var media = this;
-            IriSP.jQuery.ajax({
-                url: action_url("log"),
-                timeout: 2000,
-                type: "POST",
-                contentType: 'application/json',
-                data: JSON.stringify({ action: "played",
-                                       object: media.id,
-                                       time: media.currentTime.milliseconds }),
-                dataType: 'json'});
+            trace_action("played", { object: media.id, time: media.currentTime.milliseconds });
+            return false;
+        });
+        controller.onMediaEvent("pause", function (e) {
+            var media = this;
+            trace_action("paused", { object: media.id, time: media.currentTime.milliseconds });
             return false;
         });
         // Setup CSRF globally

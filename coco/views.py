@@ -707,7 +707,7 @@ def log_action(request, **kw):
         except:
             return HttpResponse("Malformed data", status=400)
         verb = info.get('action', None)
-        if verb == 'played':
+        if verb == 'played' or verb == 'paused':
             vid = info.get('object', None)
             try:
                 obj = Video.objects.get(pk=vid)
