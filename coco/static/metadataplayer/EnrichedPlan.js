@@ -156,6 +156,9 @@ IriSP.Widgets.EnrichedPlan.prototype.annotationTemplate =
       <span class="Ldt-EnrichedPlan-Comment-Description">{{description}}</span>\
       <span class="Ldt-EnrichedPlan-Comment-Date">{{modified|slice:10}}</span>\
       <span class="Ldt-EnrichedPlan-Comment-Author">{{creator}}</span>\
+      {{#can_edit}}\
+         <span data-id="{{id}}" class="Ldt-EnrichedPlan-Comment-Edit"></span>\
+      {{/can_edit}}\
     </div>\
     {{/comments}}\
     {{#is_authenticated}}\
@@ -497,7 +500,7 @@ IriSP.Widgets.EnrichedPlan.prototype.update_content = function () {
                     comments: a.meta['coco:comments'],
                     filtered: ((cat == 'Own' && !_this.show_own_notes)
                                 || (cat == 'Other' && !_this.show_other_notes)
-                                || (cat == 'Featured' && !_this.show_featured_notes)
+                                || (a.meta['coco:featured'] && !_this.show_featured_notes)
                                || (cat == 'Quiz' && !_this.show_quiz_notes)
                               ) ? 'filtered_out' : ''
                 };
