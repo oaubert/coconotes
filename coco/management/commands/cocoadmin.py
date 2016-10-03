@@ -79,7 +79,7 @@ class Command(BaseCommand):
         adminuser = get_user('coco')
         dirname = os.path.dirname(os.path.abspath(info))
         try:
-            c = Channel.objects.get(title=channel)
+            c = Channel.objects.get(Q(title=channel) | Q(slug=channel))
         except Channel.DoesNotExist:
             c = Channel(creator=adminuser, contributor=adminuser, title=channel, slug=slugify(channel))
             c.save()
