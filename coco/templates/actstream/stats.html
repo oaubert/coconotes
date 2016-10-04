@@ -46,8 +46,10 @@
     <h2 class="video_detail_title">{{video.title}}</h2>
     {% with stats=video.summarized_information %}
     <div class="video_detail_info">
-      <p class="video_detail_access">{{stats.accesses|length}} accesses</p>
-      <p class="video_detail_notes">{{stats.annotations|length}} notes taken</p>
+      <span class="video_detail_access">{{stats.accesses|length}} accesses</span> -
+      <span class="video_detail_notes_shared"></span>
+      <span class="video_detail_notes">{{stats.annotations|length}} total notes taken</span>
+
       <div class="access_timeline" id="access_timeline_{{video.uuid}}"></div>
       <div class="notes_timeline" id="notes_timeline_{{video.uuid}}"></div>
     </div>
@@ -90,6 +92,14 @@
 
         for (uuid in stats) {
             var data = stats[uuid];
+
+            var node = $("#video_detail_" + uuid);
+            var shared = data.annotations.filter(function (a) {
+                return a.shared != 'private';
+            });
+            if (shared.length) {
+                node.find(".video_detail_notes_shared").text(shared.length + " shared notes on ");
+            }
 
             // Draw the access histogram
             var margin = { top: 10, right: 30, bottom: 30, left: 50 },
