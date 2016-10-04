@@ -73,7 +73,8 @@
         var formatCount = d3.format(",.0f");
         var start_timestamp = dateParser.parse("2016-09-06T00:00:00.000");
         var end_timestamp = dateParser.parse("2016-11-31T00:00:00.000");
-        var max_note_number = 30;
+        var max_note_number = 100;
+        var max_access_number = 100;
 
         var mainWidth = $(".channel_detail").width() - 100;
         // Generic layout methods
@@ -129,8 +130,8 @@
 
             // Scale the range of the data by setting the domain
             x.domain(d3.extent(dailyBins));
-            y.domain([0, d3.max(accessData, function(d) { return d.y; })]);
-            y2.domain([0, d3.max(notesData, function(d) { return d.y; })]);
+            y.domain([0, max_access_number]);
+            y2.domain([0, max_note_number]);
 
             // Set up one bar for each bin
             svg.selectAll(".bar")
