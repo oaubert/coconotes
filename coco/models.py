@@ -5,6 +5,8 @@ import json
 import re
 import uuid
 
+from actstream.models import Action
+
 from django.db import models
 from django.db.models import Q
 from django.contrib.auth.models import User, Group
@@ -401,6 +403,26 @@ class Video(Element):
             }
         }
 
+    def summarized_information(self):
+        data = {
+            'title': self.title,
+            'uuid': self.pk,
+            'url': self.get_absolute_url(),
+            'duration': self.duration,
+            'channel': self.channel.pk,
+            'channeltitle': self.channel.title,
+            'accesses': [ a.timestamp.isoformat() for a in Action.objects.filter(verb='accessed',
+                                                                                 action_object_content_type=ContentType.objects.get_for_model(Video).pk,
+                                                                                 action_object_object_id=str(self.pk)) ],
+            'annotations': [
+                {
+                    'begin': a.begin,
+                    'timestamp': a.modified,
+                    'video': str(self.pk),
+                    'shared': a.visibility_serialize
+                } for a in Annotation.objects.filter(video_id=self.pk, annotationtype=AnnotationType.objects.get(title=TYPE_NOTES)) ]
+        }
+        return data
 
 class UserContent(Element):
     # We cannot use JSONField here since there may be other content-types

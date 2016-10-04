@@ -910,3 +910,14 @@ def access_log(request, *args, **kw):
     else:
         return HttpResponse("".join(stream_serializer()),
                             content_type='application/json')
+
+@login_required
+@require_http_methods(["GET"])
+def stats(request, *args, **kw):
+    """Generate global stats
+    """
+    data = {
+        str(v.pk): v.summarized_information()
+        for v in Video.objects.all()
+    }
+    return JsonResponse(data)

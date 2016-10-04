@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% load coco %}
+{% load i18n %}
+{% load admin_urls %}
+{% load humanize %}
+{% load staticfiles %}
+
+{% block extra_head %}
+  <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.css" />
+  <style type="text/css">
+    .video_detail {
+      margin-left: 2em;
+    }
+    .bar {
+        fill: steelblue;
+        shape-rendering: crispEdges;
+    }
+    .notesbar {
+        fill: red;
+        shape-rendering: crispEdges;
+    }
+    .axis path, .axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+    }
+	</style>
+  </style>
+{% endblock %}
+
+{% block breadcrumb %}
+<span class="topmenu_item"><a href="../">{% trans "Home" %}</a></span>
+<span class="topmenu_item active"><a href="#">{% trans "Stats" %}</a></span>
+{% endblock %}
+{% block title %}{% blocktrans %}COCo platform{% endblocktrans %} - {% blocktrans %}Stats{% endblocktrans %}{% endblock %}
+
+{% block content %}
+<h1 class="pagetitle highlighted">{% blocktrans %}Stats{% endblocktrans %}</h1>
+
+{% for channel in channel_list %}
+<section class="channel_detail infoblock">
+  <h2 class="channel_detail_title">{{channel.title}}</h2>
+  {% for video in channel.videos %}
+  <section class="video_detail infoblock" id="video_detail_{{video.uuid}}">
+    <h2 class="video_detail_title">{{video.title}}</h2>
+    {% with stats=video.summarized_information %}
+    <div class="video_detail_info">
+      <p class="video_detail_access">{{stats.accesses|length}} accesses</p>
+      <p class="video_detail_notes">{{stats.annotations|length}} notes taken</p>
+      <div class="access_timeline" id="access_timeline_{{video.uuid}}"></div>
+      <div class="notes_timeline" id="notes_timeline_{{video.uuid}}"></div>
+    </div>
+    {% endwith %}
+  </section>
+  {% endfor %}
+</section>
+{% endfor %}
+
+</section>
+
+
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+<script type="text/javascript" src="http://dc-js.github.io/dc.js/js/d3.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.min.js"></script>
+<script type="text/javascript">
+    $.getJSON("/api/v1/stats", function (stats) {
+        var dateParser = d3.time.format.iso;
+        var formatDate = d3.time.format("%d/%m");
+        var formatCount = d3.format(",.0f");
+        var start_timestamp = dateParser.parse("2016-09-06T00:00:00.000");
+        var end_timestamp = dateParser.parse("2016-11-31T00:00:00.000");
+        var max_note_number = 30;
+
+        var mainWidth = $(".channel_detail").width() - 100;
+        // Generic layout methods
+
+        // Create one bin per day, use an offset to include the first and last days
+        var dailyBins = d3.time.days(d3.time.day.offset(start_timestamp, -1),
+                                     d3.time.day.offset(end_timestamp, 1));
+
+        // Use the histogram layout to create a function that will bin the data
+        var binByDay = d3.layout.histogram()
+            .value(function(d) { return d.date; })
+            .bins(dailyBins);
+
+        for (uuid in stats) {
+            var data = stats[uuid];
+
+            // Draw the access histogram
+            var margin = { top: 10, right: 30, bottom: 30, left: 50 },
+                width = mainWidth - margin.left - margin.right,
+                height = 200 - margin.top - margin.bottom;
+
+            var x = d3.time.scale().range([0, width]);
+            var y = d3.scale.linear().range([height, 0]);
+            var y2 = d3.scale.linear().range([height, 0]);
+
+            var xAxis = d3.svg.axis().scale(x)
+                .orient("bottom").tickFormat(formatDate);
+            var yAxis = d3.svg.axis().scale(y)
+                .orient("left").ticks(5);
+            var y2Axis = d3.svg.axis().scale(y2)
+                .orient("left").ticks(5);
+
+            // Create the SVG drawing area
+            var svg = d3.select("#access_timeline_" + uuid)
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            // Bin the data by day
+            var accessData = binByDay(data.accesses.map(function (t) {
+                return {
+                    "date": dateParser.parse(t),
+                    "timestamp": t
+                }
+            }));
+
+            var notesData = binByDay(data.annotations.map(function (a) {
+                a.date = dateParser.parse(a.timestamp);
+                return a;
+            }));
+
+            // Scale the range of the data by setting the domain
+            x.domain(d3.extent(dailyBins));
+            y.domain([0, d3.max(accessData, function(d) { return d.y; })]);
+            y2.domain([0, d3.max(notesData, function(d) { return d.y; })]);
+
+            // Set up one bar for each bin
+            svg.selectAll(".bar")
+                .data(accessData)
+                .enter().append("rect")
+                .attr("class", "bar")
+                .attr("x", function(d) { return x(d.x); })
+                .attr("width", function(d) { return (x(new Date(d.x.getTime() + d.dx)) - x(d.x) - 1) / 2; })
+                .attr("y", function(d) { return y(d.y); })
+                .attr("height", function(d) { return height - y(d.y); });
+
+            svg.selectAll(".notesbar")
+                .data(notesData)
+                .enter().append("rect")
+                .attr("class", "notesbar")
+                .attr("x", function(d) { return x(d.x) + x(d.dx) / 2; })
+                .attr("width", function(d) { return (x(new Date(d.x.getTime() + d.dx)) - x(d.x) - 1) / 2; })
+                .attr("y", function(d) { return y2(d.y); })
+                .attr("height", function(d) { return height - y2(d.y); });
+
+            // Add the X Axis
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+
+            // Add the Y Axis and label
+            svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis)
+                .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", -50)
+                .attr("dy", ".71em")
+                .style("text-anchor", "end")
+                .text("Number of Accesses");
+        }
+    });
+</script>
+{% endblock %}

@@ -103,10 +103,12 @@ urlpatterns = [
     url(r'^comment/(?P<pk>[\w\d_-]+)/edit/$', views.comment_edit, name='view-comment-update'),
 
     url(r'^actions/dashboard$', staff_member_required(TemplateView.as_view(template_name="actstream/dashboard.html")), name='access-log'),
+    url(r'^actions/stats$', ListView.as_view(model=Channel, template_name="actstream/stats.html"), name='stats-log'),
 
     # REST API
     url(r'^api/v1/annotation_add$', views.annotation_add, name='api-annotation-add'),
     url(r'^api/v1/access_log(.json)?$', views.access_log, name='api-access-log'),
+    url(r'^api/v1/stats(.json)?$', views.stats, name='api-stats'),
     url(r'^api/v1/', include(router.urls)),
 
     url(r'^ajax_select/', include(ajax_select_urls)),
