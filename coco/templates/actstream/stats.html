@@ -12,11 +12,11 @@
     .video_detail {
       margin-left: 2em;
     }
-    .bar {
+    .bar, .access {
         fill: steelblue;
         shape-rendering: crispEdges;
     }
-    .notesbar {
+    .notesbar, .note {
         fill: red;
         shape-rendering: crispEdges;
     }
@@ -165,6 +165,7 @@
                 .attr("class", "y axis")
                 .call(yAxis)
                 .append("text")
+                .attr("class", "access")
                 .attr("transform", "rotate(-90)")
                 .attr("y", -50)
                 .attr("dy", ".71em")
@@ -177,6 +178,7 @@
                 .attr("transform", "translate(" + width + ",0)")
                 .call(y2Axis)
                 .append("text")
+                .attr("class", "note")
                 .attr("transform", "rotate(-90)")
                 .attr("y", 15)
                 .attr("dy", ".71em")
