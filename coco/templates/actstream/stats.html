@@ -73,7 +73,7 @@
         var formatCount = d3.format(",.0f");
         var start_timestamp = dateParser.parse("2016-09-06T00:00:00.000");
         var end_timestamp = dateParser.parse("2016-11-31T00:00:00.000");
-        var max_note_number = 100;
+        var max_note_number = 200;
         var max_access_number = 100;
 
         var mainWidth = $(".channel_detail").width() - 100;
@@ -124,8 +124,10 @@
             }));
 
             var notesData = binByDay(data.annotations.map(function (a) {
-                a.date = dateParser.parse(a.timestamp);
-                return a;
+                return {
+                    "date": dateParser.parse(a.timestamp),
+                    "timestamp": a.timestamp
+                }
             }));
 
             // Scale the range of the data by setting the domain
@@ -147,7 +149,7 @@
                 .data(notesData)
                 .enter().append("rect")
                 .attr("class", "notesbar")
-                .attr("x", function(d) { return x(d.x) + x(d.dx) / 2; })
+                .attr("x", function(d) { return x(d.x) + (x(new Date(d.x.getTime() + d.dx)) - x(d.x) - 1) / 2; })
                 .attr("width", function(d) { return (x(new Date(d.x.getTime() + d.dx)) - x(d.x) - 1) / 2; })
                 .attr("y", function(d) { return y2(d.y); })
                 .attr("height", function(d) { return height - y2(d.y); });
@@ -168,6 +170,18 @@
                 .attr("dy", ".71em")
                 .style("text-anchor", "end")
                 .text("Number of Accesses");
+
+            // Add the Y2 Axis and label
+            svg.append("g")
+                .attr("class", "y2 axis")
+                .attr("transform", "translate(" + width + ",0)")
+                .call(y2Axis)
+                .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 15)
+                .attr("dy", ".71em")
+                .style("text-anchor", "end")
+                .text("Number of notes");
         }
     });
 </script>
