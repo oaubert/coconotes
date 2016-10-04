@@ -17,15 +17,46 @@
         shape-rendering: crispEdges;
     }
     .notesbar, .note {
-        fill: red;
+        fill: #6cf;
         shape-rendering: crispEdges;
+    }
+    .notesbar:hover, .bar:hover {
+        fill: blue;
     }
     .axis path, .axis line {
         fill: none;
         stroke: #000;
         shape-rendering: crispEdges;
     }
-	</style>
+    .d3-tip {
+        line-height: 1;
+        font-weight: bold;
+        padding: 12px;
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        border-radius: 2px;
+    }
+
+    /* Creates a small triangle extender for the tooltip */
+    .d3-tip:after {
+        box-sizing: border-box;
+        display: inline;
+        font-size: 10px;
+        width: 100%;
+        line-height: 1;
+        color: rgba(0, 0, 0, 0.8);
+        content: "\25BC";
+        position: absolute;
+        text-align: center;
+    }
+
+    /* Style northward tooltips differently */
+    .d3-tip.n:after {
+        margin: -1px 0 0 0;
+        top: 100%;
+        left: 0;
+    }
+  </style>
   </style>
 {% endblock %}
 
@@ -67,8 +98,8 @@
 {% block extrajs %}
 <script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
 <script type="text/javascript" src="http://dc-js.github.io/dc.js/js/d3.js"></script>
-<script type="text/javascript" src="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.min.js"></script>
-<script type="text/javascript">
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+  <script type="text/javascript">
     $.getJSON("/api/v1/stats", function (stats) {
         var dateParser = d3.time.format.iso;
         var formatDate = d3.time.format("%d/%m");
@@ -89,6 +120,13 @@
         var binByDay = d3.layout.histogram()
             .value(function(d) { return d.date; })
             .bins(dailyBins);
+
+        var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-10, 0])
+            .html(function(d) {
+                return "<span>" + formatDate(d[0].date) + " - </span> <strong>" + d.length + "</strong> " + d[0].type;
+            })
 
         for (uuid in stats) {
             var data = stats[uuid];
@@ -125,18 +163,22 @@
                 .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+            svg.call(tip);
+
             // Bin the data by day
             var accessData = binByDay(data.accesses.map(function (t) {
                 return {
                     "date": dateParser.parse(t),
-                    "timestamp": t
+                    "timestamp": t,
+                    "type": "accesses"
                 }
             }));
 
             var notesData = binByDay(data.annotations.map(function (a) {
                 return {
                     "date": dateParser.parse(a.timestamp),
-                    "timestamp": a.timestamp
+                    "timestamp": a.timestamp,
+                    "type": "notes"
                 }
             }));
 
@@ -153,7 +195,9 @@
                 .attr("x", function(d) { return x(d.x); })
                 .attr("width", function(d) { return (x(new Date(d.x.getTime() + d.dx)) - x(d.x) - 1) / 2; })
                 .attr("y", function(d) { return y(d.y); })
-                .attr("height", function(d) { return height - y(d.y); });
+                .attr("height", function(d) { return height - y(d.y); })
+                .on('mouseover', tip.show)
+                .on('mouseout', tip.hide);
 
             svg.selectAll(".notesbar")
                 .data(notesData)
@@ -162,7 +206,9 @@
                 .attr("x", function(d) { return x(d.x) + (x(new Date(d.x.getTime() + d.dx)) - x(d.x) - 1) / 2; })
                 .attr("width", function(d) { return (x(new Date(d.x.getTime() + d.dx)) - x(d.x) - 1) / 2; })
                 .attr("y", function(d) { return y2(d.y); })
-                .attr("height", function(d) { return height - y2(d.y); });
+                .attr("height", function(d) { return height - y2(d.y); })
+                .on('mouseover', tip.show)
+                .on('mouseout', tip.hide);
 
             // Add the X Axis
             svg.append("g")
