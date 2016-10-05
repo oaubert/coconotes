@@ -11,6 +11,10 @@
   <style type="text/css">
     .video_detail {
       margin-left: 2em;
+      margin-top: 40px;
+    }
+    .video_detail h3 {
+        text-align: center;
     }
     .bar, .access {
         fill: steelblue;
@@ -20,7 +24,15 @@
         fill: #6cf;
         shape-rendering: crispEdges;
     }
-    .notesbar:hover, .bar:hover {
+    .annotationbar, .annotation {
+        fill: steelblue;
+        shape-rendering: crispEdges;
+    }
+    .shared {
+        fill: red;
+    }
+
+    .notesbar:hover, .bar:hover, .annotationbar:hover {
         fill: blue;
     }
     .axis path, .axis line {
@@ -81,9 +93,12 @@
       <span class="video_detail_access">{{stats.accesses|length}} accesses</span> -
       <span class="video_detail_notes_shared"></span>
       <span class="video_detail_notes">{{stats.annotations|length}} total notes taken</span>
-
+      <h3>{% blocktrans %}Video access and annotation creation history{% endblocktrans %}</h3>
       <div class="access_timeline" id="access_timeline_{{video.uuid}}"></div>
-      <div class="notes_timeline" id="notes_timeline_{{video.uuid}}"></div>
+      {% if stats.annotations %}
+        <h3>{% blocktrans %}Distribution of notes along the video{% endblocktrans %}</h3>
+        <div class="notes_timeline" id="notes_timeline_{{video.uuid}}"></div>
+      {% endif %}
     </div>
     {% endwith %}
   </section>
@@ -101,160 +116,256 @@
 <script type="text/javascript" src="http://dc-js.github.io/dc.js/js/d3.js"></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
   <script type="text/javascript">
-    $.getJSON("/api/v1/stats", function (stats) {
-        var dateParser = d3.time.format.iso;
-        var formatDate = d3.time.format("%d/%m");
-        var formatCount = d3.format(",.0f");
-        var start_timestamp = dateParser.parse("2016-09-06T00:00:00.000");
-        var end_timestamp = dateParser.parse("2016-11-31T00:00:00.000");
-        var max_note_number = 200;
-        var max_access_number = 100;
+  var dateParser = d3.time.format.iso;
+  var formatDate = d3.time.format("%d/%m");
+  var formatCount = d3.format(",.0f");
+  var formatNumber = d3.format("02d");
+  var formatTime = function (t) {
+      return formatNumber(Math.floor(t / 60)) + ":" + formatNumber(t % 60);
+  }
+  var start_timestamp = dateParser.parse("2016-09-06T00:00:00.000");
+  var end_timestamp = dateParser.parse("2016-11-31T00:00:00.000");
+  var max_note_number = 200;
+  var max_note_number_timeline = 30;
+  var max_access_number = 100;
 
-        var mainWidth = $(".channel_detail").width() - 100;
-        // Generic layout methods
+  var mainWidth = $(".channel_detail").width() - 100;
+  // Generic layout methods
 
-        // Create one bin per day, use an offset to include the first and last days
-        var dailyBins = d3.time.days(d3.time.day.offset(start_timestamp, -1),
-                                     d3.time.day.offset(end_timestamp, 1));
+  // Create one bin per day, use an offset to include the first and last days
+  var dailyBins = d3.time.days(d3.time.day.offset(start_timestamp, -1),
+                               d3.time.day.offset(end_timestamp, 1));
 
-        // Use the histogram layout to create a function that will bin the data
-        var binByDay = d3.layout.histogram()
-            .value(function(d) { return d.date; })
-            .bins(dailyBins);
+  // Use the histogram layout to create a function that will bin the data
+  var binByDay = d3.layout.histogram()
+      .value(function(d) { return d.date; })
+      .bins(dailyBins);
 
-        var tip = d3.tip()
-            .attr('class', 'd3-tip')
-            .offset([-10, 0])
-            .html(function(d) {
-                return "<span>" + formatDate(d[0].date) + " - </span> <strong>" + d.length + "</strong> " + d[0].type;
-            })
+  var tip = d3.tip()
+      .attr('class', 'd3-tip')
+      .offset([-10, 0])
+      .html(function(d) {
+          return "<span>" + formatDate(d[0].date) + " - </span> <strong>" + d.length + "</strong> " + d[0].type;
+      })
+  var timelinetip = d3.tip()
+      .attr('class', 'd3-tip')
+      .offset([-10, 0])
+      .html(function(d) {
+          return "<span>" + d.length + " notes</span>, <span>" + d.filter(function (a) { return a.sharing != 'private'; }).length + " shared</span>";
+      })
 
-        var channelinfo_notes = {};
-        var channelinfo_shared = {};
+  function draw_histogram(selector, data) {
+      var margin = { top: 10, right: 30, bottom: 30, left: 50 },
+          width = mainWidth - margin.left - margin.right,
+          height = 200 - margin.top - margin.bottom;
 
-        for (uuid in stats) {
-            var data = stats[uuid];
+      var x = d3.time.scale().range([0, width]);
+      var y = d3.scale.linear().range([height, 0]);
+      var y2 = d3.scale.linear().range([height, 0]);
 
-            var node = $("#video_detail_" + uuid);
-            var shared = data.annotations.filter(function (a) {
-                return a.shared != 'private';
-            });
-            if (shared.length) {
-                node.find(".video_detail_notes_shared").text(shared.length + " shared notes on ");
-            }
-            channelinfo_notes[data.channel] = (channelinfo_notes[data.channel] | 0) + data.annotations.length;
-            channelinfo_shared[data.channel] = (channelinfo_shared[data.channel] | 0) + shared.length;
+      var xAxis = d3.svg.axis().scale(x)
+          .orient("bottom").tickFormat(formatDate);
+      var yAxis = d3.svg.axis().scale(y)
+          .orient("left").ticks(5);
+      var y2Axis = d3.svg.axis().scale(y2)
+          .orient("left").ticks(5);
 
-            // Draw the access histogram
-            var margin = { top: 10, right: 30, bottom: 30, left: 50 },
-                width = mainWidth - margin.left - margin.right,
-                height = 200 - margin.top - margin.bottom;
+      // Create the SVG drawing area
+      var svg = d3.select(selector)
+          .append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-            var x = d3.time.scale().range([0, width]);
-            var y = d3.scale.linear().range([height, 0]);
-            var y2 = d3.scale.linear().range([height, 0]);
+      svg.call(tip);
 
-            var xAxis = d3.svg.axis().scale(x)
-                .orient("bottom").tickFormat(formatDate);
-            var yAxis = d3.svg.axis().scale(y)
-                .orient("left").ticks(5);
-            var y2Axis = d3.svg.axis().scale(y2)
-                .orient("left").ticks(5);
+      // Bin the data by day
+      var accessData = binByDay(data.accesses.map(function (t) {
+          return {
+              "date": dateParser.parse(t),
+              "timestamp": t,
+              "type": "accesses"
+          }
+      }));
 
-            // Create the SVG drawing area
-            var svg = d3.select("#access_timeline_" + uuid)
-                .append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-                .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      var notesData = binByDay(data.annotations.map(function (a) {
+          return {
+              "date": dateParser.parse(a.timestamp),
+              "timestamp": a.timestamp,
+              "type": "notes"
+          }
+      }));
 
-            svg.call(tip);
+      // Scale the range of the data by setting the domain
+      x.domain(d3.extent(dailyBins));
+      y.domain([0, max_access_number]);
+      y2.domain([0, max_note_number]);
 
-            // Bin the data by day
-            var accessData = binByDay(data.accesses.map(function (t) {
-                return {
-                    "date": dateParser.parse(t),
-                    "timestamp": t,
-                    "type": "accesses"
-                }
-            }));
+      // Set up one bar for each bin
+      svg.selectAll(".bar")
+          .data(accessData)
+          .enter().append("rect")
+          .attr("class", "bar")
+          .attr("x", function(d) { return x(d.x); })
+          .attr("width", function(d) { return (x(new Date(d.x.getTime() + d.dx)) - x(d.x) - 1) / 2; })
+          .attr("y", function(d) { return y(d.y); })
+          .attr("height", function(d) { return height - y(d.y); })
+          .on('mouseover', tip.show)
+          .on('mouseout', tip.hide);
 
-            var notesData = binByDay(data.annotations.map(function (a) {
-                return {
-                    "date": dateParser.parse(a.timestamp),
-                    "timestamp": a.timestamp,
-                    "type": "notes"
-                }
-            }));
+      svg.selectAll(".notesbar")
+          .data(notesData)
+          .enter().append("rect")
+          .attr("class", "notesbar")
+          .attr("x", function(d) { return x(d.x) + (x(new Date(d.x.getTime() + d.dx)) - x(d.x) - 1) / 2; })
+          .attr("width", function(d) { return (x(new Date(d.x.getTime() + d.dx)) - x(d.x) - 1) / 2; })
+          .attr("y", function(d) { return y2(d.y); })
+          .attr("height", function(d) { return height - y2(d.y); })
+          .on('mouseover', tip.show)
+          .on('mouseout', tip.hide);
 
-            // Scale the range of the data by setting the domain
-            x.domain(d3.extent(dailyBins));
-            y.domain([0, max_access_number]);
-            y2.domain([0, max_note_number]);
+      // Add the X Axis
+      svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis);
 
-            // Set up one bar for each bin
-            svg.selectAll(".bar")
-                .data(accessData)
-                .enter().append("rect")
-                .attr("class", "bar")
-                .attr("x", function(d) { return x(d.x); })
-                .attr("width", function(d) { return (x(new Date(d.x.getTime() + d.dx)) - x(d.x) - 1) / 2; })
-                .attr("y", function(d) { return y(d.y); })
-                .attr("height", function(d) { return height - y(d.y); })
-                .on('mouseover', tip.show)
-                .on('mouseout', tip.hide);
+      // Add the Y Axis and label
+      svg.append("g")
+          .attr("class", "y axis")
+          .call(yAxis)
+          .append("text")
+          .attr("class", "access")
+          .attr("transform", "rotate(-90)")
+          .attr("y", -50)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Number of Accesses");
 
-            svg.selectAll(".notesbar")
-                .data(notesData)
-                .enter().append("rect")
-                .attr("class", "notesbar")
-                .attr("x", function(d) { return x(d.x) + (x(new Date(d.x.getTime() + d.dx)) - x(d.x) - 1) / 2; })
-                .attr("width", function(d) { return (x(new Date(d.x.getTime() + d.dx)) - x(d.x) - 1) / 2; })
-                .attr("y", function(d) { return y2(d.y); })
-                .attr("height", function(d) { return height - y2(d.y); })
-                .on('mouseover', tip.show)
-                .on('mouseout', tip.hide);
+      // Add the Y2 Axis and label
+      svg.append("g")
+          .attr("class", "y2 axis")
+          .attr("transform", "translate(" + width + ",0)")
+          .call(y2Axis)
+          .append("text")
+          .attr("class", "note")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 15)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Number of notes");
+  }
 
-            // Add the X Axis
-            svg.append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(0," + height + ")")
-                .call(xAxis);
+  function draw_timeline(selector, data) {
+      // Draw a video timeline illustrating annotations
+      var margin = { top: 10, right: 30, bottom: 30, left: 50 },
+          width = (mainWidth * .8) - margin.left - margin.right,
+          height = 120 - margin.top - margin.bottom;
 
-            // Add the Y Axis and label
-            svg.append("g")
-                .attr("class", "y axis")
-                .call(yAxis)
-                .append("text")
-                .attr("class", "access")
-                .attr("transform", "rotate(-90)")
-                .attr("y", -50)
-                .attr("dy", ".71em")
-                .style("text-anchor", "end")
-                .text("Number of Accesses");
+      var x = d3.time.scale().range([0, width]);
+      var y = d3.scale.linear().range([height, 0]);
+      var xAxis = d3.svg.axis().scale(x)
+          .orient("bottom").tickFormat(formatTime);
+      var yAxis = d3.svg.axis().scale(y)
+          .orient("left").ticks(5);
 
-            // Add the Y2 Axis and label
-            svg.append("g")
-                .attr("class", "y2 axis")
-                .attr("transform", "translate(" + width + ",0)")
-                .call(y2Axis)
-                .append("text")
-                .attr("class", "note")
-                .attr("transform", "rotate(-90)")
-                .attr("y", 15)
-                .attr("dy", ".71em")
-                .style("text-anchor", "end")
-                .text("Number of notes");
-        };
-        for (channel in channelinfo_notes) {
-            $("#channel_detail_" + channel)
-                .find(".channel_detail_info")
-                .text(channelinfo_shared[channel]
-                      + " shared notes on a total of "
-                      + channelinfo_notes[channel]
-                      + " notes.");
-        }
-    });
+      // Create the SVG drawing area
+      var svg = d3.select(selector)
+          .append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      svg.call(timelinetip);
+
+      // A bin every 20 seconds
+      var binBySeconds = d3.layout.histogram()
+          .value(function(d) { return d.begin; })
+          .bins(data.duration / 20);
+
+      var notesData = binBySeconds(data.annotations.map(function (a) {
+          return {
+              "begin": a.begin,
+              "sharing": a.shared
+          }
+      }));
+
+      // Scale the range of the data by setting the domain
+      x.domain([0, data.duration]);
+      y.domain([0, max_note_number_timeline]);
+
+      // Set up one bar for each bin
+      svg.selectAll(".annotationbar")
+          .data(notesData)
+       .enter().append("rect")
+          .attr("class", function (d) {
+              if (d.filter(function(a) { return a.sharing != "private"; }).length) {
+                  return "annotationbar shared";
+              } else
+              {
+                  return "annotationbar";
+              }
+          })
+          .attr("x", function(d) { return x(d.x); })
+          .attr("width", function(d) { return x(d.dx); })
+          .attr("y", function(d) { return y(d.y); })
+          .attr("height", function(d) { return height - y(d.y); })
+          .on('mouseover', timelinetip.show)
+          .on('mouseout', timelinetip.hide);
+
+      // Add the X Axis
+      svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis);
+
+      // Add the Y Axis and label
+      svg.append("g")
+          .attr("class", "y axis")
+          .call(yAxis)
+          .append("text")
+          .attr("class", "access")
+          .attr("transform", "rotate(-90)")
+          .attr("y", -50)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("# of notes");
+
+  }
+
+  $.getJSON("/api/v1/stats", function (stats) {
+      var channelinfo_notes = {};
+      var channelinfo_shared = {};
+
+      for (uuid in stats) {
+          var data = stats[uuid];
+
+          var node = $("#video_detail_" + uuid);
+          var shared = data.annotations.filter(function (a) {
+              return a.shared != 'private';
+          });
+          if (shared.length) {
+              node.find(".video_detail_notes_shared").text(shared.length + " shared notes on ");
+          }
+          channelinfo_notes[data.channel] = (channelinfo_notes[data.channel] | 0) + data.annotations.length;
+          channelinfo_shared[data.channel] = (channelinfo_shared[data.channel] | 0) + shared.length;
+
+          // Draw the access histogram
+          draw_histogram("#access_timeline_" + uuid, data);
+          if (data.annotations.length) {
+              draw_timeline("#notes_timeline_" + uuid, data);
+          }
+      };
+      for (channel in channelinfo_notes) {
+          $("#channel_detail_" + channel)
+              .find(".channel_detail_info")
+              .text(channelinfo_shared[channel]
+                    + " shared notes on a total of "
+                    + channelinfo_notes[channel]
+                    + " notes.");
+      }
+  });
 </script>
 {% endblock %}
