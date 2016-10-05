@@ -70,8 +70,9 @@
 <h1 class="pagetitle highlighted">{% blocktrans %}Stats{% endblocktrans %}</h1>
 
 {% for channel in channel_list %}
-<section class="channel_detail infoblock">
+<section class="channel_detail infoblock" id="channel_detail_{{channel.uuid}}">
   <h2 class="channel_detail_title">{{channel.title}}</h2>
+  <span class="channel_detail_info"></span>
   {% for video in channel.videos %}
   <section class="video_detail infoblock" id="video_detail_{{video.uuid}}">
     <h2 class="video_detail_title">{{video.title}}</h2>
@@ -128,6 +129,9 @@
                 return "<span>" + formatDate(d[0].date) + " - </span> <strong>" + d.length + "</strong> " + d[0].type;
             })
 
+        var channelinfo_notes = {};
+        var channelinfo_shared = {};
+
         for (uuid in stats) {
             var data = stats[uuid];
 
@@ -138,6 +142,8 @@
             if (shared.length) {
                 node.find(".video_detail_notes_shared").text(shared.length + " shared notes on ");
             }
+            channelinfo_notes[data.channel] = (channelinfo_notes[data.channel] | 0) + data.annotations.length;
+            channelinfo_shared[data.channel] = (channelinfo_shared[data.channel] | 0) + shared.length;
 
             // Draw the access histogram
             var margin = { top: 10, right: 30, bottom: 30, left: 50 },
@@ -240,6 +246,14 @@
                 .attr("dy", ".71em")
                 .style("text-anchor", "end")
                 .text("Number of notes");
+        };
+        for (channel in channelinfo_notes) {
+            $("#channel_detail_" + channel)
+                .find(".channel_detail_info")
+                .text(channelinfo_shared[channel]
+                      + " shared notes on a total of "
+                      + channelinfo_notes[channel]
+                      + " notes.");
         }
     });
 </script>
