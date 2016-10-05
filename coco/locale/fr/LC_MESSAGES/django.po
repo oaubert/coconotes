@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-01 17:03+0200\n"
-"PO-Revision-Date: 2016-09-01 17:04+0200\n"
+"POT-Creation-Date: 2016-10-05 15:08+0200\n"
+"PO-Revision-Date: 2016-10-05 15:09+0200\n"
 "Last-Translator: Olivier Aubert <olivier.aubert@univ-nantes.fr>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Metadata"
 msgstr "Métadonnées"
 
-#: admin.py:32 admin.py:196 admin.py:226 models.py:407
+#: admin.py:32 admin.py:196 admin.py:226 models.py:429
 msgid "Content"
 msgstr "Contenu"
 
@@ -28,7 +28,7 @@ msgstr "Contenu"
 msgid "Tags"
 msgstr "Tags"
 
-#: admin.py:36 models.py:445
+#: admin.py:36 models.py:466
 msgid "User content"
 msgstr "Contenu utilisateur"
 
@@ -53,231 +53,232 @@ msgstr "partagée avec %s"
 msgid "public"
 msgstr "publique"
 
-#: models.py:81
+#: models.py:83
 msgid "Private"
 msgstr "Privé"
 
-#: models.py:82 templates/coco/video_detail.html:104
+#: models.py:84 templates/coco/video_detail.html:104
+#: templates/custom_dashboard.html:32 templates/custom_dashboard.html.py:34
 #: templates/group_activity.html:32 templates/group_activity.html.py:34
 #: templates/group_detail.html:11 templates/group_detail.html.py:13
 msgid "Group"
 msgstr "Groupe"
 
-#: models.py:83
+#: models.py:85
 msgid "Public"
 msgstr "Public"
 
-#: models.py:104
+#: models.py:106
 msgid "Creation date"
 msgstr "Date de création"
 
-#: models.py:105
+#: models.py:107
 msgid "Element creation date"
 msgstr "Date de création de l'élément"
 
-#: models.py:112
+#: models.py:114
 msgid "Modification date"
 msgstr "Date de  modification"
 
-#: models.py:113
+#: models.py:115
 msgid "Element modification date"
 msgstr "Date de modification de l'élément"
 
-#: models.py:117
+#: models.py:119
 msgid "State"
 msgstr "État"
 
-#: models.py:121 models.py:199
+#: models.py:123 models.py:201
 msgid "Title"
 msgstr "Titre"
 
-#: models.py:125 models.py:768
+#: models.py:127 models.py:789
 msgid "Description"
 msgstr "Description"
 
-#: models.py:135
+#: models.py:137
 msgid "Promoted"
 msgstr "Promue"
 
-#: models.py:136
+#: models.py:138
 msgid "Promoted level - 0 by default"
 msgstr "Niveau de promotion - 0 par défaut"
 
-#: models.py:203 models.py:214 models.py:323
+#: models.py:205 models.py:216 models.py:325
 msgid "URL"
 msgstr "URL"
 
-#: models.py:228 models.py:672
+#: models.py:230 models.py:693
 msgid "Category"
 msgstr "Catégorie"
 
-#: models.py:232
+#: models.py:234
 msgid "Syllabus"
 msgstr "Syllabus"
 
-#: models.py:238
+#: models.py:240
 msgid "channel"
 msgstr "chaîne"
 
-#: models.py:239
+#: models.py:241
 msgid "channels"
 msgstr "chaînes"
 
-#: models.py:249 templates/coco/channel.html:7
+#: models.py:251 templates/coco/channel.html:7
 #: templates/coco/channel_detail.html:8 templates/coco/channel_detail.html:10
 #: templates/coco/chapter_detail.html:8 templates/coco/video_detail.html:9
 #: templates/coco/video_info.html:8 templates/profile.html:161
 msgid "Channel"
 msgstr "Chaîne"
 
-#: models.py:253
+#: models.py:255
 #, python-format
 msgid "Channel - %(count)d %(name)s"
 msgstr "Chaîne - %(count)d %(name)s"
 
-#: models.py:255 models.py:292
+#: models.py:257 models.py:294
 msgid "video,videos"
 msgstr "vidéo,vidéos"
 
-#: models.py:267
+#: models.py:269
 msgid "chapter"
 msgstr "chapitre"
 
-#: models.py:268
+#: models.py:270
 msgid "chapters"
 msgstr "chapitres"
 
-#: models.py:272 templates/coco/chapter_detail.html:9
+#: models.py:274 templates/coco/chapter_detail.html:9
 #: templates/coco/chapter_detail.html:11 templates/coco/chapter_detail.html:16
 msgid "Chapter"
 msgstr "Chapitre"
 
-#: models.py:290
+#: models.py:292
 #, python-format
 msgid "Chapter - %(count)d %(name)s"
 msgstr "Chapitre - %(count)d %(name)s"
 
-#: models.py:302
+#: models.py:304
 msgid "activity"
 msgstr "activité"
 
-#: models.py:303
+#: models.py:305
 msgid "activities"
 msgstr "activités"
 
-#: models.py:333
+#: models.py:335
 msgid "Duration"
 msgstr "Durée"
 
-#: models.py:334
+#: models.py:336
 msgid "Video duration in seconds"
 msgstr "Durée de la vidéo en secondes"
 
-#: models.py:343
+#: models.py:345
 msgid "video"
 msgstr "vidéo"
 
-#: models.py:344
+#: models.py:346
 msgid "videos"
 msgstr "vidéos"
 
-#: models.py:348 templates/coco/video_detail.html:10
+#: models.py:350 templates/coco/video_detail.html:10
 msgid "Video"
 msgstr "Vidéo"
 
-#: models.py:409
+#: models.py:431
 msgid "Content-Type"
 msgstr "Type de contenu"
 
-#: models.py:413
+#: models.py:435
 msgid "Visibility"
 msgstr "Visibilité"
 
-#: models.py:415
+#: models.py:437
 msgid "Content visibility"
 msgstr "Visibilité du contenu"
 
-#: models.py:474
+#: models.py:495
 msgid "annotation type"
 msgstr "type d'annotation"
 
-#: models.py:475
+#: models.py:496
 msgid "annotation types"
 msgstr "types d'annotation"
 
-#: models.py:477
+#: models.py:498
 msgid "Can update slide content"
 msgstr "Peut mettre à jour les slides"
 
-#: models.py:478
+#: models.py:499
 msgid "Can delete slide content"
 msgstr "Peut supprimer des slides"
 
-#: models.py:479
+#: models.py:500
 msgid "Can add slide content"
 msgstr "Peut ajouter des slides"
 
-#: models.py:498
+#: models.py:519
 msgid "Begin"
 msgstr "Début"
 
-#: models.py:499
+#: models.py:520
 msgid "Annotation begin time (in seconds)"
 msgstr "Temps de début de l'annotation (en secondes)"
 
-#: models.py:501
+#: models.py:522
 msgid "End"
 msgstr "Fin"
 
-#: models.py:502
+#: models.py:523
 msgid "Annotation end time (in seconds)"
 msgstr "Temps de fin de l'annotation (en secondes)"
 
-#: models.py:513
+#: models.py:534
 msgid "annotation"
 msgstr "annotation"
 
-#: models.py:514
+#: models.py:535
 msgid "annotations"
 msgstr "annotations"
 
-#: models.py:634
+#: models.py:655
 msgid "comment"
 msgstr "commentaire"
 
-#: models.py:635
+#: models.py:656
 msgid "comments"
 msgstr "commentaires"
 
-#: models.py:669
+#: models.py:690
 msgid "news item"
 msgstr "nouvelle"
 
-#: models.py:670
+#: models.py:691
 msgid "news items"
 msgstr "nouvelles"
 
-#: models.py:677 models.py:678
+#: models.py:698 models.py:699
 msgid "Publication date"
 msgstr "Date de publication"
 
-#: models.py:681
+#: models.py:702
 msgid "Title (english)"
 msgstr "Titre (anglais)"
 
-#: models.py:685
+#: models.py:706
 msgid "Description (english)"
 msgstr "Description (anglais)"
 
-#: models.py:699 models.py:700
+#: models.py:720 models.py:721
 msgid "group metadata"
 msgstr "métadonnées du groupe"
 
-#: models.py:763 models.py:764
+#: models.py:784 models.py:785
 msgid "user metadata"
 msgstr "métadonnées utilisateur"
 
-#: models.py:775
+#: models.py:796
 msgid "Configuration"
 msgstr "Configuration"
 
@@ -346,6 +347,41 @@ msgstr "Vous pouvez indiquer les groupes affichés dans les onglets."
 msgid "Validate"
 msgstr "Valider"
 
+#: templates/actstream/stats.html:76 templates/base.html:53
+msgid "Home"
+msgstr "Accueil"
+
+#: templates/actstream/stats.html:77 templates/actstream/stats.html.py:79
+#: templates/actstream/stats.html:82
+msgid "Stats"
+msgstr "Statistiques"
+
+#: templates/actstream/stats.html:79 templates/coco/newsitem_detail.html:7
+#: templates/coco/newsitem_list.html:7 templates/custom_dashboard.html:34
+#: templates/group_activity.html:34 templates/group_detail.html:13
+#: templates/group_list.html:10 templates/profile.html:36
+#: templates/userprofile.html:22
+msgid "COCo platform"
+msgstr "Plateforme COCo"
+
+#: templates/actstream/stats.html:93
+#, python-format
+msgid "%(count)s accesses"
+msgstr "%(count)s accès"
+
+#: templates/actstream/stats.html:95
+#, python-format
+msgid "%(count)s total notes taken"
+msgstr "%(count)s notes prises"
+
+#: templates/actstream/stats.html:96
+msgid "Daily video access and annotation creation history"
+msgstr "Historique quotidien d'accès vidéo et de création d'annotation"
+
+#: templates/actstream/stats.html:99
+msgid "Distribution of notes along the video"
+msgstr "Distribution des notes sur la vidéo"
+
 #: templates/base.html:26
 msgid "Log out"
 msgstr "Déconnexion"
@@ -373,10 +409,6 @@ msgstr "Usage"
 #: templates/base.html:50
 msgid "Search for videos, slides or notes"
 msgstr "Recherchez des vidéos, des diapos ou des notes"
-
-#: templates/base.html:53
-msgid "Home"
-msgstr "Accueil"
 
 #: templates/base.html:55
 msgid "All channels"
@@ -417,13 +449,6 @@ msgstr "Ce commentaire est"
 #: templates/coco/element_list.html:6
 msgid "All elements"
 msgstr "Tous les éléments"
-
-#: templates/coco/newsitem_detail.html:7 templates/coco/newsitem_list.html:7
-#: templates/group_activity.html:34 templates/group_detail.html:13
-#: templates/group_list.html:10 templates/profile.html:36
-#: templates/userprofile.html:22
-msgid "COCo platform"
-msgstr "Plateforme COCo"
 
 #: templates/coco/newsitem_list.html:7 templates/home.html:31
 msgid "News"
@@ -582,57 +607,59 @@ msgid_plural "%(count)s videos"
 msgstr[0] "%(count)s vidéo"
 msgstr[1] "%(count)s vidéos"
 
-#: templates/group_activity.html:31 templates/group_detail.html:10
-#: templates/group_list.html:8 templates/group_list.html.py:10
-#: templates/group_list.html:13
+#: templates/custom_dashboard.html:31 templates/group_activity.html:31
+#: templates/group_detail.html:10 templates/group_list.html:8
+#: templates/group_list.html.py:10 templates/group_list.html:13
 msgid "Groups"
 msgstr "Groupes"
 
-#: templates/group_activity.html:37
+#: templates/custom_dashboard.html:37 templates/group_activity.html:37
 #, python-format
 msgid "%(groupname)s activity"
 msgstr "Activité de %(groupname)s"
 
-#: templates/group_activity.html:41
+#: templates/custom_dashboard.html:41 templates/group_activity.html:41
 msgid "Members"
 msgstr "Membres"
 
-#: templates/group_activity.html:45
+#: templates/custom_dashboard.html:45 templates/group_activity.html:45
 msgid "Videos"
 msgstr "Vidéos"
 
+#: templates/custom_dashboard.html:51 templates/custom_dashboard.html.py:72
 #: templates/group_activity.html:51 templates/group_activity.html.py:72
 msgid "Timeline"
 msgstr "Historique"
 
-#: templates/group_activity.html:56
+#: templates/custom_dashboard.html:56 templates/group_activity.html:56
 msgid "Annotated videos"
 msgstr "Vidéos annotées"
 
-#: templates/group_activity.html:66 templates/group_detail.html:41
-#: templates/group_list.html:26
+#: templates/custom_dashboard.html:66 templates/group_activity.html:66
+#: templates/group_detail.html:41 templates/group_list.html:26
 #, python-format
 msgid "%(count)s shared note"
 msgid_plural "%(count)s shared notes"
 msgstr[0] "%(count)s note partagée"
 msgstr[1] "%(count)s notes partagées"
 
-#: templates/group_activity.html:80
+#: templates/custom_dashboard.html:80 templates/group_activity.html:80
 #, python-format
 msgid "%(user)s modified the annotation"
 msgstr "%(user)s a modifié l'annotation"
 
-#: templates/group_activity.html:84
+#: templates/custom_dashboard.html:84 templates/group_activity.html:84
 #, python-format
 msgid "%(user)s created the annotation"
 msgstr "%(user)s a créé l'annotation"
 
-#: templates/group_activity.html:88 templates/group_detail.html:57
-#: templates/profile.html:118 templates/profile.html.py:205
+#: templates/custom_dashboard.html:88 templates/group_activity.html:88
+#: templates/group_detail.html:57 templates/profile.html:118
+#: templates/profile.html.py:205
 msgid "on"
 msgstr "sur"
 
-#: templates/group_activity.html:92
+#: templates/custom_dashboard.html:92 templates/group_activity.html:92
 msgid "The group does not have much activity yet."
 msgstr "Le groupe n'a pas encore d'activité."
 

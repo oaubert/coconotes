@@ -90,13 +90,13 @@
     <h2 class="video_detail_title">{{video.title}}</h2>
     {% with stats=video.summarized_information %}
     <div class="video_detail_info">
-      <span class="video_detail_access">{{stats.accesses|length}} accesses</span> -
+      <span class="video_detail_access">{% blocktrans with count=stats.accesses|length %}{{count}} accesses{% endblocktrans %}</span> -
       <span class="video_detail_notes_shared"></span>
-      <span class="video_detail_notes">{{stats.annotations|length}} total notes taken</span>
-      <h3>{% blocktrans %}Video access and annotation creation history{% endblocktrans %}</h3>
+      <span class="video_detail_notes">{% blocktrans with count=stats.annotations|length %}{{count}} total notes taken{% endblocktrans %}</span>
+      <h3>{% blocktrans %}Daily video access and annotation creation history{% endblocktrans %}</h3>
       <div class="access_timeline" id="access_timeline_{{video.uuid}}"></div>
       {% if stats.annotations %}
-        <h3>{% blocktrans %}Distribution of notes along the video{% endblocktrans %}</h3>
+      <h3>{% blocktrans %}Distribution of notes along the video{% endblocktrans %}</h3>
         <div class="notes_timeline" id="notes_timeline_{{video.uuid}}"></div>
       {% endif %}
     </div>
