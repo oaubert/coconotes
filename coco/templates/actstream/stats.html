@@ -312,7 +312,8 @@
           .attr("y", function(d) { return y(d.y); })
           .attr("height", function(d) { return height - y(d.y); })
           .on('mouseover', timelinetip.show)
-          .on('mouseout', timelinetip.hide);
+          .on('mouseout', timelinetip.hide)
+          .on('click', function (d) { window.open(data.url + "#t=" + d[0].begin); });
 
       // Add the X Axis
       svg.append("g")
