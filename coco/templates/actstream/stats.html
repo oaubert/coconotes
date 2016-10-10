@@ -149,7 +149,7 @@
       .attr('class', 'd3-tip')
       .offset([-10, 0])
       .html(function(d) {
-          return "<span>" + d.length + " notes</span>, <span>" + d.filter(function (a) { return a.sharing != 'private'; }).length + " shared</span>";
+          return "<p><span>" + d.length + " notes</span>, <span>" + d.filter(function (a) { return a.sharing != 'private'; }).length + " shared</span></p><p>{% blocktrans %}Click to access video{% endblocktrans %}</p>";
       })
 
   function draw_histogram(selector, data) {
